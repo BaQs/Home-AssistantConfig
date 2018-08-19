@@ -1,0 +1,4 @@
+# Customize all entities in a domain
+    humidity:
+      icon: mdi:cctv
+      friendly_name: Hum

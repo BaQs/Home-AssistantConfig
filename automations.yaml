@@ -1,0 +1,167 @@
+- id: '1533471702628'
+  alias: Pierre leaves
+  trigger:
+  - entity_id: device_tracker.pierre_ipierre
+    platform: state
+    from: home
+    to: not_home
+  condition: []
+  action:
+  - data:
+      message: Pierre est parti!
+      title: Pierre leaves
+    service: notify.telegram
+- alias: Start HomeKit
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay: 00:05
+  - service: homekit.start
+  - data:
+      message: Homekit est démarré
+      title: Home Assistant
+    service: notify.telegram
+  id: 3e566d3adc654ab884dcbe4a2322bc3d
+- id: arm_alarm_when_pierre_leaves
+  alias: Arm alarm when Pierre leaves
+  trigger:
+  - entity_id: device_tracker.pierre_ipierre
+    from: home
+    platform: state
+  action:
+  - data:
+      message: Pierre est parti!
+      title: Pierre leaves
+    service: notify.telegram
+  - data: {}
+    service: alarm_control_panel.alarm_arm_away
+- id: trigger_alarm_while_armed_away
+  alias: Trigger alarm when armed away
+  trigger:
+  - entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_sensor_158d0001ab34c1
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_sensor_158d0001e163a1
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_sensor_158d0001b1cff9
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_away
+  action:
+  - entity_id: alarm_control_panel.home_alarm
+    service: alarm_control_panel.alarm_trigger
+- id: send_notification_when_alarm_triggered
+  alias: Send notification when alarm triggered
+  trigger:
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: triggered
+  action:
+  - service: script.presence_notifications_when_alarm_triggered
+- alias: Telegram bot that reply pong to ping
+  trigger:
+    platform: event
+    event_type: telegram_command
+    event_data:
+      command: /ping
+  action:
+  - service: notify.telegram
+    data:
+      message: pong
+  id: c9409bc577fc4f749688d33b1f7dfd9e
+- alias: Start HomeKit
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay: 00:05
+  - service: homekit.start
+  - data:
+      message: Homekit est démarré
+      title: Home Assistant
+    service: notify.telegram
+  id: 3e566d3adc654ab884dcbe4a2322bc3d
+- id: disarm_alarm_when_pierre_is_back
+  alias: Disarm alarm when Pierre is back home
+  trigger:
+  - entity_id: device_tracker.pierre_ipierre
+    platform: state
+    to: home
+  action:
+  - data:
+      message: Pierre est de retour!
+      title: Pierre is back home
+    service: notify.telegram
+  - data: {}
+    service: alarm_control_panel.alarm_disarm
+- id: telegramDisarmAlarm
+  alias: 'Telegram bot answer to command: /disarm_alarm'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /disarm_alarm
+  action:
+  - service: alarm_control_panel.alarm_disarm
+  - service: notify.telegram
+    data:
+      message: Alarme désarmée
+- id: telegramPresenceTriggered
+  alias: 'Telegram bot answer to command: /presence_triggered_alarm'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /cameras
+  action:
+  - service: script.telegram_snapshots_all_cameras
+- id: '1534607568202'
+  alias: 'Light: Enlight floor1'
+  trigger:
+  - entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    platform: state
+    to: 'on'
+  condition:
+  - after: sunset
+    before: sunrise
+    condition: sun
+  action:
+  - alias: ''
+    data:
+      brightness: '100'
+      entity_id: light.gateway_light_7811dcb7afd1
+      rgb_color: '[50, 0, 50]'
+    service: light.turn_on
+- id: '1534616122412'
+  alias: 'Motion: Parking space!'
+  trigger:
+  - entity_id: binary_sensor.foscam_c1_motion_sensor
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: device_tracker.pierre_ipierre
+    state: home
+  action:
+  - data:
+      message: La place est libre!
+      title: Parking
+      data:
+        photo:
+        - url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture
+            }}
+          caption: La Place est libre!
+    service: notify.telegram

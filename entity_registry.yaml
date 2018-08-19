@@ -1,0 +1,895 @@
+media_player.xiaomi_network_speaker_airplay:
+  config_entry_id:
+  name: Xiaomi Speaker
+  platform: squeezebox
+  unique_id: aa:aa:2e:c5:6a:bb
+media_player.mibox3:
+  config_entry_id:
+  name: Mi Box 3
+  platform: squeezebox
+  unique_id: cc:cc:04:46:47:b5
+media_player.salon:
+  config_entry_id:
+  name:
+  platform: squeezebox
+  unique_id: cc:cc:dd:d4:1e:39
+media_player.mibox3_2:
+  config_entry_id:
+  name:
+  platform: cast
+  unique_id: a0784b77-738a-26b5-3edb-9455b7af5c66
+media_player.google_home__salon:
+  config_entry_id: 469985a2875f4f679fdb67b52c12bf8b
+  name: Google Home Salon
+  platform: cast
+  unique_id: 80db9a3d-a2dc-87bb-9b60-4d0e4a8a6fc1
+sensor.humidity_158d0001e421d9:
+  config_entry_id:
+  name: Humidité Salle De Douche
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001e421d9
+sensor.temperature_158d0001ab1858:
+  config_entry_id:
+  name: Température Chambre 2è Jardin
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001ab1858
+sensor.pressure_158d0001ab1858:
+  config_entry_id:
+  name: Pression Chambre 2è Jardin
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001ab1858
+sensor.temperature_158d0001d6dae3:
+  config_entry_id:
+  name: Température Couloir Entrée
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001d6dae3
+sensor.temperature_158d0001720782:
+  config_entry_id:
+  name: Température Chambre Bébé
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001720782
+sensor.humidity_158d0001ab75f3:
+  config_entry_id:
+  name: Humidité Chambre Parentale
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001ab75f3
+sensor.temperature_158d0001a4b91d:
+  config_entry_id:
+  name: Température Bibliothèque
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001a4b91d
+sensor.pressure_158d0001db60d9:
+  config_entry_id:
+  name: Pression Salon
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001db60d9
+sensor.pressure_158d0001ab75f3:
+  config_entry_id:
+  name: Pression Chambre Parentale
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001ab75f3
+sensor.humidity_158d0001d6dae3:
+  config_entry_id:
+  name: Humidité Couloir Entrée
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001d6dae3
+sensor.pressure_158d0001713f49:
+  config_entry_id:
+  name: Pression Chambre 2è Rue
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001713f49
+sensor.humidity_158d0001a4b91d:
+  config_entry_id:
+  name: Humidité Bibliothèque
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001a4b91d
+sensor.temperature_158d0001e421d9:
+  config_entry_id:
+  name: Température Salle De Douche
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001e421d9
+sensor.humidity_158d0001720782:
+  config_entry_id:
+  name: Chambre Bébé
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001720782
+sensor.humidity_158d0001715c53:
+  config_entry_id:
+  name: Humidité Cuisine
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001715c53
+sensor.illumination_34ce008c1873:
+  config_entry_id:
+  name: Xiaomi GW Cuisine
+  platform: xiaomi_aqara
+  unique_id: illumination34ce008c1873
+sensor.pressure_158d0001715c53:
+  config_entry_id:
+  name: Pression Cuisine
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001715c53
+sensor.pressure_158d0001720782:
+  config_entry_id:
+  name: Chambre Bébé
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001720782
+sensor.illumination_7811dcb7afd1:
+  config_entry_id:
+  name: Xiaomi GW Etage 1
+  platform: xiaomi_aqara
+  unique_id: illumination7811dcb7afd1
+sensor.humidity_158d0001ab75da:
+  config_entry_id:
+  name: Humidité Salle De Bain
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001ab75da
+sensor.temperature_158d0001a1f903:
+  config_entry_id:
+  name: Température Entrée
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001a1f903
+sensor.temperature_158d0001db60d9:
+  config_entry_id:
+  name: Température Salon
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001db60d9
+sensor.humidity_158d0001a1f903:
+  config_entry_id:
+  name: Humidité Entrée
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001a1f903
+sensor.temperature_158d0001713f49:
+  config_entry_id:
+  name: Température Chambre 2è Rue
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001713f49
+sensor.temperature_158d0001ab75f3:
+  config_entry_id:
+  name: Température Chambre Parentale
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001ab75f3
+sensor.pressure_158d0001a4b91d:
+  config_entry_id:
+  name: Pression Bibliothèque
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001a4b91d
+sensor.pressure_158d0001ab75da:
+  config_entry_id:
+  name: Pression Salle De Bain
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001ab75da
+sensor.temperature_158d0001ab75da:
+  config_entry_id:
+  name: Température Salle De Bain
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001ab75da
+sensor.temperature_158d0001715c53:
+  config_entry_id:
+  name: Temperature Cuisine
+  platform: xiaomi_aqara
+  unique_id: temperature158d0001715c53
+sensor.humidity_158d0001713f49:
+  config_entry_id:
+  name: Humidité Chambre 2è Rue
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001713f49
+sensor.pressure_158d0001d6dae3:
+  config_entry_id:
+  name: Pression Couloir Entrée
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001d6dae3
+sensor.humidity_158d0001ab1858:
+  config_entry_id:
+  name: Humidité Chambre 2è Jardin
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001ab1858
+sensor.pressure_158d0001a1f903:
+  config_entry_id:
+  name: Pression Entrée
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001a1f903
+sensor.humidity_158d0001db60d9:
+  config_entry_id:
+  name: Humidité Salon
+  platform: xiaomi_aqara
+  unique_id: humidity158d0001db60d9
+sensor.pressure_158d0001e421d9:
+  config_entry_id:
+  name: Pression Salle De Douche
+  platform: xiaomi_aqara
+  unique_id: pressure158d0001e421d9
+binary_sensor.switch_158d00016bdf8b:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d00016bdf8b
+binary_sensor.door_window_sensor_158d0001d84ec7:
+  config_entry_id:
+  name: Véranda Droite - HS
+  platform: xiaomi_aqara
+  unique_id: status158d0001d84ec7
+binary_sensor.water_leak_sensor_158d0001bb87df:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001bb87df
+binary_sensor.switch_158d0001a666f6:
+  config_entry_id:
+  name: Bouton Table Basse
+  platform: xiaomi_aqara
+  unique_id: status158d0001a666f6
+binary_sensor.door_window_sensor_158d00015b5fc7:
+  config_entry_id:
+  name: Courrier
+  platform: xiaomi_aqara
+  unique_id: status158d00015b5fc7
+binary_sensor.door_window_sensor_158d00015af81e:
+  config_entry_id:
+  name: Fenêtre Chambre Bébé
+  platform: xiaomi_aqara
+  unique_id: status158d00015af81e
+binary_sensor.water_leak_sensor_158d0001bb884f:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001bb884f
+binary_sensor.switch_158d000123dfa1:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d000123dfa1
+binary_sensor.door_window_sensor_158d0001e4522a:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001e4522a
+binary_sensor.switch_158d0001a675b8:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001a675b8
+binary_sensor.door_window_sensor_158d000170428f:
+  config_entry_id:
+  name: Fenêtre
+  platform: xiaomi_aqara
+  unique_id: status158d000170428f
+binary_sensor.door_window_sensor_158d00019df284:
+  config_entry_id:
+  name: Véranda Gauche
+  platform: xiaomi_aqara
+  unique_id: status158d00019df284
+binary_sensor.door_window_sensor_158d0001e44c14:
+  config_entry_id:
+  name: Porte
+  platform: xiaomi_aqara
+  unique_id: status158d0001e44c14
+binary_sensor.door_window_sensor_158d0001e45220:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001e45220
+binary_sensor.door_window_sensor_158d0001d3ad69:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001d3ad69
+binary_sensor.switch_158d0001a67225:
+  config_entry_id:
+  name:
+  platform: xiaomi_aqara
+  unique_id: status158d0001a67225
+binary_sensor.switch_158d0001a66720:
+  config_entry_id:
+  name: Bouton Chambre Parentale
+  platform: xiaomi_aqara
+  unique_id: status158d0001a66720
+binary_sensor.switch_158d0001a6671d:
+  config_entry_id:
+  name: Bouton Entrée
+  platform: xiaomi_aqara
+  unique_id: status158d0001a6671d
+binary_sensor.door_window_sensor_158d00019ff246:
+  config_entry_id:
+  name: Veranda Droite
+  platform: xiaomi_aqara
+  unique_id: status158d00019ff246
+binary_sensor.door_window_sensor_158d00015b63fb:
+  config_entry_id:
+  name: Porte
+  platform: xiaomi_aqara
+  unique_id: status158d00015b63fb
+binary_sensor.door_window_sensor_158d00017010c1:
+  config_entry_id:
+  name: Fenêtre Chambre Parentale
+  platform: xiaomi_aqara
+  unique_id: status158d00017010c1
+light.gateway_light_34ce008c1873:
+  config_entry_id:
+  name: Xiaomi GW Cuisine
+  platform: xiaomi_aqara
+  unique_id: rgb34ce008c1873
+light.gateway_light_7811dcb7afd1:
+  config_entry_id:
+  name: Xiaomi GW Etage 1
+  platform: xiaomi_aqara
+  unique_id: rgb7811dcb7afd1
+media_player.55ez950_series:
+  config_entry_id:
+  name:
+  platform: panasonic_viera
+  unique_id: 4D454930-0200-1000-8001-D8AFF1EC4A0A
+binary_sensor.motion_sensor_158d0001ddb2d3:
+  config_entry_id:
+  name: Présence Salon
+  platform: xiaomi_aqara
+  unique_id: status158d0001ddb2d3
+binary_sensor.motion_sensor_158d0001e163a1:
+  config_entry_id:
+  name: Présence Entrée
+  platform: xiaomi_aqara
+  unique_id: status158d0001e163a1
+binary_sensor.motion_sensor_158d0001ab34c1:
+  config_entry_id:
+  name: Présence Bibliothèque
+  platform: xiaomi_aqara
+  unique_id: status158d0001ab34c1
+binary_sensor.motion_sensor_158d0001ab34e1:
+  config_entry_id:
+  name: Présence Etage 1
+  platform: xiaomi_aqara
+  unique_id: status158d0001ab34e1
+binary_sensor.motion_sensor_158d0001b1cff9:
+  config_entry_id:
+  name: Présente Etage 2
+  platform: xiaomi_aqara
+  unique_id: status158d0001b1cff9
+sensor.illumination_158d0001ab34c1:
+  config_entry_id:
+  name: Luminosité Bibliothèque
+  platform: xiaomi_aqara
+  unique_id: lux158d0001ab34c1
+sensor.illumination_158d0001ab34e1:
+  config_entry_id:
+  name: Luminosité Etage 1
+  platform: xiaomi_aqara
+  unique_id: lux158d0001ab34e1
+sensor.illumination_158d0001b1cff9:
+  config_entry_id:
+  name: Luminosité Etage 2
+  platform: xiaomi_aqara
+  unique_id: lux158d0001b1cff9
+sensor.illumination_158d0001e163a1:
+  config_entry_id:
+  name: Luminosité Entrée
+  platform: xiaomi_aqara
+  unique_id: lux158d0001e163a1
+sensor.illumination_158d0001ddb2d3:
+  config_entry_id:
+  name: Luminosité Salon
+  platform: xiaomi_aqara
+  unique_id: lux158d0001ddb2d3
+sensor.ipierre_battery_state:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: state_ipierre
+sensor.ipierre_battery_level:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: level_ipierre
+sensor.ipierre_battery_state_2:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: state_iPhone-Pierre
+sensor.ipierre_battery_level_2:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: level_iPhone-Pierre
+zwave.aeotec_zw090_zstick_gen5_eu:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-1
+sensor.qubino_zmnhadx_flush_1_relay_alarm_type:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594144636929
+sensor.qubino_zmnhadx_flush_1_relay_alarm_level:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594144636945
+binary_sensor.qubino_zmnhadx_flush_1_relay_int2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594143571968
+binary_sensor.qubino_zmnhadx_flush_1_relay_int3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-144115188181499904
+zwave.qubino_zmnhadx_flush_1_relay:
+  config_entry_id:
+  name: Sèche Serviette
+  platform: zwave
+  unique_id: node-6
+switch.qubino_zmnhadx_flush_1_relay_switch:
+  config_entry_id:
+  name: Sèche Serviette Salle de Douche
+  platform: zwave
+  unique_id: 6-72057594143391744
+zwave.fibaro_system_fgd212_dimmer_2:
+  config_entry_id:
+  name: Lumière Salon
+  platform: zwave
+  unique_id: node-7
+zwave.fibaro_system_fgd212_dimmer_2_2:
+  config_entry_id:
+  name: Lumière Salle à Manger
+  platform: zwave
+  unique_id: node-17
+zwave.fibaro_system_fgd212_dimmer_2_3:
+  config_entry_id:
+  name: Lumière Cuisine
+  platform: zwave
+  unique_id: node-18
+zwave.qubino_zmnhjd1_flush_dimmer_pilot_wire:
+  config_entry_id:
+  name: Radiateur Chambre Bébé
+  platform: zwave
+  unique_id: node-19
+zwave.neo_coolcam_power_plug_12a:
+  config_entry_id:
+  name: Prise Machine à Laver
+  platform: zwave
+  unique_id: node-22
+zwave.unknown_node_5:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-5
+sensor.qubino_zmnhadx_flush_1_relay_energy:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594143604738
+sensor.qubino_zmnhadx_flush_1_relay_power:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594143604866
+sensor.qubino_zmnhadx_flush_1_relay_exporting:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594143605248
+light.fibaro_system_fgd212_dimmer_2_level:
+  config_entry_id:
+  name: Lumière Salon
+  platform: zwave
+  unique_id: 7-72057594160185345
+sensor.fibaro_system_fgd212_dimmer_2_energy:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594160381954
+sensor.fibaro_system_fgd212_dimmer_2_alarm_type:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594161414145
+sensor.fibaro_system_fgd212_dimmer_2_alarm_level:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594161414161
+sensor.fibaro_system_fgd212_dimmer_2_power:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594160382082
+sensor.fibaro_system_fgd212_dimmer_2_exporting:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594160382464
+sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594161414177
+sensor.fibaro_system_fgd212_dimmer_2_heat:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594161414257
+sensor.fibaro_system_fgd212_dimmer_2_power_management:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594161414321
+sensor.fibaro_system_fgd212_dimmer_2_system:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594161414337
+light.fibaro_system_fgd212_dimmer_2_level_2:
+  config_entry_id:
+  name: Lumière Salle à Manger (inutile)
+  platform: zwave
+  unique_id: 17-144115188365885441
+light.fibaro_system_fgd212_dimmer_2_level_3:
+  config_entry_id:
+  name: Lumière Cuisine
+  platform: zwave
+  unique_id: 18-144115188382662657
+binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 19-72057594361675776
+binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 19-144115188399603712
+binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 19-216172782437531648
+switch.neo_coolcam_power_plug_12a_switch:
+  config_entry_id:
+  name: Prise Machine à Laver
+  platform: zwave
+  unique_id: 22-72057594411827200
+sensor.neo_coolcam_power_plug_12a_alarm_type:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594413072385
+sensor.neo_coolcam_power_plug_12a_alarm_level:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594413072401
+sensor.neo_coolcam_power_plug_12a_energy:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040194
+sensor.neo_coolcam_power_plug_12a_power:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040322
+sensor.neo_coolcam_power_plug_12a_voltage:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040450
+sensor.neo_coolcam_power_plug_12a_current:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040514
+sensor.neo_coolcam_power_plug_12a_exporting:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040704
+sensor.neo_coolcam_power_plug_12a_sourcenodeid:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594413072417
+sensor.neo_coolcam_power_plug_12a_power_management:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594413072561
+light.fibaro_system_fgd212_dimmer_2_level_4:
+  config_entry_id:
+  name: Lumière Salle à Manger
+  platform: zwave
+  unique_id: 17-72057594327957505
+sensor.fibaro_system_fgd212_dimmer_2_energy_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594328154114
+sensor.fibaro_system_fgd212_dimmer_2_alarm_type_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594329186305
+sensor.fibaro_system_fgd212_dimmer_2_alarm_level_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594329186321
+sensor.fibaro_system_fgd212_dimmer_2_power_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594328154242
+sensor.fibaro_system_fgd212_dimmer_2_exporting_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594328154624
+sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594329186337
+sensor.fibaro_system_fgd212_dimmer_2_heat_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594329186417
+sensor.fibaro_system_fgd212_dimmer_2_power_management_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594329186481
+sensor.fibaro_system_fgd212_dimmer_2_system_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594329186497
+light.fibaro_system_fgd212_dimmer_2_level_5:
+  config_entry_id:
+  name: Lumière Cuisine
+  platform: zwave
+  unique_id: 18-72057594344734721
+sensor.fibaro_system_fgd212_dimmer_2_energy_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594344931330
+sensor.fibaro_system_fgd212_dimmer_2_alarm_type_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594345963521
+sensor.fibaro_system_fgd212_dimmer_2_alarm_level_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594345963537
+sensor.fibaro_system_fgd212_dimmer_2_power_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594344931458
+sensor.fibaro_system_fgd212_dimmer_2_exporting_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594344931840
+sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594345963553
+sensor.fibaro_system_fgd212_dimmer_2_heat_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594345963633
+sensor.fibaro_system_fgd212_dimmer_2_power_management_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594345963697
+sensor.fibaro_system_fgd212_dimmer_2_system_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594345963713
+sensor.qubino_zmnhadx_flush_1_relay_previous_reading:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594143604754
+sensor.qubino_zmnhadx_flush_1_relay_interval:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 6-72057594143604771
+sensor.fibaro_system_fgd212_dimmer_2_power_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 7-72057594160365634
+sensor.neo_coolcam_power_plug_12a_previous_reading:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040210
+sensor.neo_coolcam_power_plug_12a_interval:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040227
+sensor.neo_coolcam_power_plug_12a_previous_reading_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040338
+sensor.neo_coolcam_power_plug_12a_interval_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040355
+sensor.neo_coolcam_power_plug_12a_previous_reading_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040466
+sensor.neo_coolcam_power_plug_12a_previous_reading_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040530
+sensor.neo_coolcam_power_plug_12a_interval_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040547
+sensor.fibaro_system_fgd212_dimmer_2_power_5:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 17-72057594328137794
+sensor.fibaro_system_fgd212_dimmer_2_power_6:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 18-72057594344915010
+switch.qubino_zmnhjd1_flush_dimmer_pilot_wire_switch:
+  config_entry_id:
+  name: Radiateur Chambre Bébé
+  platform: zwave
+  unique_id: 19-72057594361495552
+light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level:
+  config_entry_id:
+  name: Radiateur Chambre Bébé
+  platform: zwave
+  unique_id: 19-72057594361511937
+sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_temperature:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 19-72057594361692178
+binary_sensor.fibaro_system_fgms001_motion_sensor_sensor:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 11-72057594227458048
+zwave.fibaro_system_fgms001_motion_sensor:
+  config_entry_id:
+  name: Oeil Cuisine
+  platform: zwave
+  unique_id: node-11
+sensor.fibaro_system_fgms001_motion_sensor_temperature:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 11-72057594227474450
+sensor.fibaro_system_fgms001_motion_sensor_luminance:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 11-72057594227474482
+sensor.fibaro_system_fgms001_motion_sensor_general:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 11-72057594229227521
+zwave.fibaro_system_fgfs101_flood_sensor:
+  config_entry_id:
+  name: Flood Sensor Buanderie
+  platform: zwave
+  unique_id: node-14
+binary_sensor.fibaro_system_fgfs101_flood_sensor_sensor:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 14-72057594277789696
+binary_sensor.fibaro_system_fgfs101_flood_sensor_general:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 14-72057594279559169
+binary_sensor.fibaro_system_fgfs101_flood_sensor_flood:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 14-72057594279559249
+sensor.fibaro_system_fgfs101_flood_sensor_temperature:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 14-72057594277806098
+zwave.fibaro_system_fgfs101_flood_sensor_2:
+  config_entry_id:
+  name: Flood Sensor Ballon d'Eau Chaude
+  platform: zwave
+  unique_id: node-10
+binary_sensor.fibaro_system_fgfs101_flood_sensor_sensor_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594210680832
+binary_sensor.fibaro_system_fgfs101_flood_sensor_general_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594212450305
+binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594212450385
+sensor.fibaro_system_fgfs101_flood_sensor_temperature_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594210697234
+light.unknown_node_5_level:
+  config_entry_id:
+  name: Radiateur Chambre Parentale
+  platform: zwave
+  unique_id: 5-72057594126630913
+zwave.unknown_node_3:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: node-3
+binary_sensor.unknown_node_3_sensor:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 3-72057594093240320
+sensor.fibaro_system_fgfs101_flood_sensor_alarm_type:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745793
+sensor.fibaro_system_fgfs101_flood_sensor_alarm_level:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 10-72057594211745809
+sensor.fibaro_system_fgfs101_flood_sensor_alarm_type_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 14-72057594278854657
+sensor.fibaro_system_fgfs101_flood_sensor_alarm_level_2:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 14-72057594278854673
+sensor.neo_coolcam_power_plug_12a_interval_4:
+  config_entry_id:
+  name:
+  platform: zwave
+  unique_id: 22-72057594412040483
+sensor.ipierre_battery_level_3:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: level_iPierre
+sensor.ipierre_battery_state_3:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: state_iPierre

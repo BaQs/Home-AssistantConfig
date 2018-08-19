@@ -1,0 +1,150 @@
+  default_view:
+    name: Default
+    view: no
+    icon: mdi:home
+    entities:
+      - group.home
+      - group.salon
+      - group.kitchen
+      - group.bedroom_baby
+      - group.bedroom_parents
+      - group.entrance
+      - group.library
+      - group.floor1
+      - group.floor2
+      - group.shower
+      - group.bedroom_2_road
+      - group.bedroom_2_garden
+      - group.bathroom
+      - group.shower
+  home:
+    name: Home
+    view: yes
+    entities:
+      - alarm_control_panel.home_alarm
+      - device_tracker.pierre_ipierre 
+      - weather.dark_sky 
+  kitchen:
+    name: Cuisine
+    entities:
+      - binary_sensor.door_window_sensor_158d00017010c1
+      - sensor.humidity_158d0001715c53
+      - sensor.pressure_158d0001715c53
+      - sensor.temperature_158d0001715c53
+      - sensor.illumination_34ce008c1873
+      - light.gateway_light_34ce008c1873
+  salon:
+    name: Salon
+    view: yes
+    entities:
+      - binary_sensor.door_window_sensor_158d00019ff246
+      - binary_sensor.door_window_sensor_158d00019df284
+      - binary_sensor.switch_158d0001a666f6
+      - sensor.pressure_158d0001db60d9
+      - sensor.temperature_158d0001db60d9
+      - sensor.humidity_158d0001db60d9
+      - remote.harmony_hub
+      - vacuum.xiaomi_vacuum_cleaner
+      - sensor.illumination_158d0001ddb2d3
+      - binary_sensor.motion_sensor_158d0001ddb2d3
+#      - media_player.salon
+#       - media_player.mibox3_2
+#       - media_player.mibox3
+#       - media_player.google_home_salon
+#       - media_player.55ez950_series
+#       - camera.welcam
+  bedroom_baby:
+    name: Chambre Bébé
+    entities:
+      - sensor.temperature_158d0001720782
+      - sensor.humidity_158d0001720782
+      - sensor.pressure_158d0001720782
+      - binary_sensor.door_window_sensor_158d00015af81e
+  library:
+    name: Bibliothèque
+    entities:
+      - sensor.temperature_158d0001a4b91d
+      - sensor.humidity_158d0001a4b91d
+      - sensor.pressure_158d0001a4b91d
+      - binary_sensor.door_window_sensor_158d000170428f
+      - binary_sensor.motion_sensor_158d0001ab34c1
+      - sensor.illumination_158d0001ab34c1
+  bedroom_2_garden:
+    name: Chambre 2e Jardin
+    entities:
+      - sensor.temperature_158d0001ab1858
+      - sensor.pressure_158d0001ab1858
+      - sensor.humidity_158d0001ab1858
+  bedroom_2_road:
+    name: Chambre 2e Rue
+    entities:
+      - sensor.temperature_158d0001713f49
+      - sensor.pressure_158d0001713f49
+      - sensor.humidity_158d0001713f49
+  bedroom_parents:
+    name: Chambre Parentale
+    entities:
+      - binary_sensor.switch_158d0001a66720
+      - sensor.temperature_158d0001ab75f3
+      - sensor.humidity_158d0001ab75f3
+      - sensor.pressure_158d0001ab75f3
+      - binary_sensor.door_window_sensor_158d0001e44c14
+      - binary_sensor.door_window_sensor_158d00017010c1
+  entrance:
+    name: Entrée
+    entities:
+      - sensor.temperature_158d0001a1f903
+      - sensor.pressure_158d0001a1f903
+      - sensor.humidity_158d0001a1f903
+      - binary_sensor.switch_158d0001a6671d
+      - binary_sensor.door_window_sensor_158d00015b63fb
+      - binary_sensor.door_window_sensor_158d00015b5fc7
+      - sensor.temperature_158d0001d6dae3
+      - sensor.humidity_158d0001d6dae3
+      - sensor.pressure_158d0001d6dae3
+      - binary_sensor.motion_sensor_158d0001e163a1
+      - sensor.illumination_158d0001e163a1
+  floor2:
+    name: Etage 2
+    entities:
+      - sensor.illumination_158d0001b1cff9
+      - binary_sensor.motion_sensor_158d0001b1cff9
+  floor1:
+    name: Etage 1
+    entities:
+      - binary_sensor.motion_sensor_158d0001ab34e1
+      - sensor.illumination_158d0001ab34e1
+      - sensor.illumination_7811dcb7afd1
+      - light.gateway_light_7811dcb7afd1
+  bathroom:
+    name: Salle de Bain
+    entities:
+      - sensor.humidity_158d0001ab75da
+      - sensor.pressure_158d0001ab75da
+      - sensor.temperature_158d0001ab75da
+  shower:
+    name: Salle de Douche
+    entities:
+      - sensor.humidity_158d0001e421d9
+      - sensor.pressure_158d0001e421d9
+      - sensor.temperature_158d0001e421d9
+  automation_view:
+    name: Automation
+    view: yes
+    entities:
+      - group.all_automations
+      - group.all_scripts
+  cameras:
+    name: Caméras
+    view: yes
+    entities:
+      - camera.welcam
+      - camera.welcam_3
+      - camera.foscam_camera 
+  multimedia:
+    name: Multimedia
+    view: yes
+    entities:
+      - media_player.xiaomi_network_speaker_airplay
+      - media_player.salon
+      - media_player.google_home__salon

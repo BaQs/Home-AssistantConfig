@@ -1,0 +1,443 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 50.6605716
+  longitude: 3.1379015999999638
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Paris
+  # Customization file
+  customize: !include customize.yaml
+  #customize_domain: !include customize_domain.yaml
+
+#  whitelist_external_dirs: 
+#    - '/home/homeassistant/.homeassistant/downloads'
+  
+#  customize_glob:
+#    "sensor.humidity_*":
+#      friendly_name: Humidity
+#    "sensor.pressure_*":
+#      friendly_name: Pression
+#    "sensor.temperature_*":
+#      friendly_name: Temperature
+#    "sensor.illumination_*":
+#      friendly_name: Illumination
+#    "binary_sensor.switch_*":
+#      friendly_name: Button
+
+# Show links to resources in log and frontend
+#introduction:
+
+zone:
+  - name: Work
+    latitude: 50.6917
+    longitude: 3.202308
+    radius: 200
+    icon: mdi:work
+
+  # This will override the default home zone
+  - name: Home
+    latitude: 50.6605716
+    longitude: 3.1379015999999638
+    radius: 30
+    icon: mdi:accountmultiple
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+   api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+   base_url: https://hassio.ourdouille.maison
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+
+weather:
+  - platform: darksky
+    api_key: 24e4ee7f484b03ac92373760682388ab
+    units: ca
+
+# Weather prediction
+sensor:
+#   - platform: yr
+#
+#   not needed any more, home assistant ios app does it
+#  - platform: template
+#    sensors:
+#      ipierre_battery:
+#        friendly_name: iPierre
+#        unit_of_measurement: "%"
+#        value_template: '{{ states.device_tracker.pierre_ipierre.attributes.battery|int }}'
+#        device_class: battery
+#
+  - platform: rfxtrx
+    automatic_add: True
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+media_player:
+  - platform: squeezebox
+    host: 192.168.0.27
+#  - platform: cast
+
+cast:
+        #  media_player:
+
+netatmo:
+  api_key: 58c5d052ac34a5aa398b514c
+  secret_key: lWWRYNPh04xBbECIQT2sb8UX4V7Y0MiM4vxanVG7CSG
+  username: pierre@ourdouille.fr
+  password: !secret netatmo_password 
+
+#camera:
+#  - platform: netatmo
+camera:
+  - platform: foscam
+    ip: 192.168.0.26
+    username: BaQs
+    password: !secret foscam_password
+
+# Replace admin and password with an "Admin" privileged Foscam user
+# Replace ipaddress with the local IP address of your Foscam
+#switch:
+# platform: command_line
+# switches:
+#   #Switch for Foscam Motion Detection
+#   foscam_motion:
+#     command_on: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=1&usr=BaQs&pwd=s3r4r13n"'
+#     command_off: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=0&usr=BaQs&pwd=s3r4r13n"'
+#     command_state: 'curl -k --silent "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getMotionDetectConfig&usr=BaQs&pwd=s3r4r13n" | grep -o "(?<=isEnable>).*?(?=</isEnable>)"'
+#     value_template: '{{ value == "1" }}'
+
+
+
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - key: CFA0AF000906405A
+      host: 192.168.0.23
+      mac:
+    - key: 56E64B9549E24C0B
+      host: 192.168.0.22
+      mac:
+
+
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.0.35
+    token: 397378744235507975515251344c6c73
+
+
+
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: https://hassio.ourdouille.maison/configurat0r/
+#  pihole:
+#    title: Pi-hole
+#    icon: mdi:block-helper
+#    url: http://192.168.0.24/admin/index.php
+
+zwave:
+   usb_path: /dev/ttyACM0
+   network_key: "0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10"
+
+
+rfxtrx:
+   device: /dev/ttyUSB0
+   debug: true
+
+
+light:
+  - platform: rfxtrx
+    automatic_add: True
+
+
+switch:
+  platform: rfxtrx
+  automatic_add: True
+  devices:
+          "0B110000464D8E6909000090":
+                  name: Prise Cave
+#         "0B1100002025EA1909010F90":
+          "0B1100002025EA1909000090":
+                  name: Prise Bambi
+#          0B11002F67134A5A03010F70
+          "0B11002F67134A5A03010F70"
+                  name: Radiateur Bibliothèque
+          "0B11002F144637B903010F70"
+                  name: Radiateur Cuisine
+          "0B11002F6BD03FB803010F70"
+                  name: 'Radiateur 1 Salon'
+          "0B11002F57651E4D03010F70"
+                  name: 'Radiateur 2 Salon'
+#         "0B110000445BBC9B09010F90"
+          "0B110000445BBC9B09000090"
+                  name: Prise Lampe Boule
+          "0B11002F0144449209000090"
+                  name: Sonnette
+
+
+device_tracker:
+  - platform: owntracks_http
+    # - platform: bluetooth_tracker
+    # - platform: bluetooth_le_tracker
+#  - platform: icloud
+#    username: !secret icloud_username
+#    password: !secret icloud_password
+  - platform: nmap_tracker
+    hosts:
+            - 192.168.0.19
+            - 192.168.0.20
+
+notify:
+  - name: Telegram
+    platform: telegram
+    chat_id: 317444046
+
+telegram_bot:
+        #- platform: webhooks
+  - platform: polling
+    # jeedom
+    #api_key: 307112869:AAGw8pNelwkZgaULYonS9f1_SBQLxIfnBN0
+    # hassio_ourdouille_bot
+    api_key: 610188114:AAESgNaty-o1hyIQgTVcgnHdF4BF_86DwCI
+    allowed_chat_ids:  
+       - 317444046
+# for webhooks mode only
+    parse_mode: html
+    trusted_networks:
+
+binary_sensor:
+  - platform: rfxtrx
+    automatic_add: True
+  - platform: rest
+    name: "Foscam C1 Motion Sensor"
+    resource: https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getDevState&usr=BaQs&pwd=s3r4r13n
+    verify_ssl: false
+    device_class: motion
+    scan_interval: 5
+    value_template: >-
+      {%- if "<motionDetectAlarm>2</motionDetectAlarm>" in value -%}
+        {{ true }}
+      {%- else -%}
+        {{ false }}
+      {%- endif -%}
+
+      - 192.168.0.0/16
+  - platform: 'bayesian'
+    prior: 0.75
+    name: 'Pierre Home'
+    probabiliby_threshold: 0.95 
+    observations:
+    - entity_id: 'device_tracker.ipierre'
+          prob_given_true: 0.8
+          prob_given_false: 0.2
+          platform: 'state'
+          to_state: 'home'
+    - entity_id: 'device_tracker.ipierre_2'
+          prob_given_true: 0.8
+          prob_given_false: 0.2
+          platform: 'state'
+          to_state: 'home'
+    - entity_id: 'device_tracker.pierre_ipierre'
+          prob_given_true: 0.8
+          prob_given_false: 0.2
+          platform: 'state'
+          to_state: 'home'
+  # - entity_id: 'binary_sensor.welcam_someone_known'
+
+  - name: 'in_bed'
+    platform: 'bayesian'
+    prior: 0.25
+    probability_threshold: 0.95
+    observations:
+	# presence salon
+      - entity_id: 'binary_sensor.motion_sensor_158d0001ddb2d3'
+        prob_given_true: 0.4
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'off'
+	# lights are off
+      - entity_id: 'sensor.basement_motion'
+        prob_given_true: 0.5
+        prob_given_false: 0.4
+        platform: 'state'
+        to_state: 'off'
+	# TV off
+      - entity_id: 'remote.harmony_hub'
+        prob_given_true: 0.5
+        platform: 'state'
+        to_state: 'Off'
+	# iPhone plugged in
+      - entity_id: 'sensor.ipierre_battery_state_2'
+        prob_given_true: 0.5
+        platform: 'state'
+        to_state: 'Plugged'
+      - entity_id: 'sun.sun'
+        prob_given_true: 0.7
+        platform: 'state'
+        to_state: 'below_horizon'
+
+google_assistant:
+  project_id: hassio-71d07
+  client_id: sete9eYiephee3ph
+  access_token: cahx8hooV2aizodahw2Shohshau6eesaeheiL5quatahxohVechae4jag0kohneifohy8jeitoo2iech
+  # agent_user_id: [a string to identify user]
+#  api_key: AIzaSyBVn9-a3C_V8jAiCWcipvBqZXII0ugRsQI
+  api_key: AIzaSyDVKFlDNZPSaVxyO-MewXrXTzAL1DZmHB8
+#  expose_by_default: false
+  exposed_domains:
+    - switch
+    - light
+    - group
+#  entity_config:
+#    switch.kitchen:
+#      name: Custom Name for Google Assistant
+#      aliases:
+#        - bright lights
+#        - entry lights
+#    light.living_room:
+#      expose: false
+#      room: living room
+
+ios:
+
+# Example using a delay after start of Home Assistant
+homekit:
+  auto_start: False
+
+# Example configuration.yaml entry
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    #code: 1234
+    disarm_after_trigger: false
+# time to leave
+    pending_time: 30
+# time to disarm
+    delay_time: 20
+    trigger_time: 120
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+    armed_away:
+      pending_time: 60
+      delay_time: 0
+
+
+#
+#binary_sensor:
+#  - platform: rest
+#    name: "Foscam C1 Motion Sensor"
+#    resource: https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getDevState&usr=BaQs&pwd=s3r4r13n
+#    verify_ssl: false
+#    device_class: motion
+#    scan_interval: 5
+#    value_template: >-
+#      {%- if "<motionDetectAlarm>2</motionDetectAlarm>" in value -%}
+#        {{ true }}
+#      {%- else -%}
+#        {{ false }}
+#      {%- endif -%}
+#
+#
+#    account_name: accountname
+
+#
+#switch:
+# platform: command_line
+# switches:
+#   #Switch for Foscam Motion Detection
+#   foscam_motion:
+#     command_on: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=1&usr=BaQs&pwd=s3r4r13n"'
+#     command_off: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=0&usr=BaQs&pwd=s3r4r13n"'
+#     command_state: 'curl -k --silent "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getMotionDetectConfig&usr=BaQs&pwd=s3r4r13n" | grep -oP "(?<=isEnable>).*?(?=</isEnable>)"'
+#     value_template: '{{ value == "2" }}'
+#
+
+
+
+ - platform: template
+   sensors:
+     period_of_day:
+       friendly_name: 'Period of the day'
+       value_template: >-
+         {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+           dusk
+         {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+           dawn
+         {% elif (states.sun.sun.attributes.elevation) < -4 %}
+           night
+         {% else %}
+           day
+         {% endif %}
+       icon_template: >-
+         {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+           mdi:weather-sunset-down
+         {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+           mdi:weather-sunset-up
+         {% elif (states.sun.sun.attributes.elevation) < -4 %}
+           mdi:weather-night
+         {% else %}
+           mdi:weather-sunny
+         {% endif %}
+
+# can be used this way:
+#  - alias: 'turn on light in entry hall when main door opens'
+#    trigger:
+#      platform: state
+#      entity_id: sensor.main_entrance_door
+#      to: "open"
+#    condition:
+#      - condition: template
+#        value_template: "{{ states.sensor.period_of_day.state != 'day' }}"
+#    action:
+#      - service: homeassistant.turn_on
+#        entity_id: switch.aeotec_zw075_smart_switch_gen5_switch
