@@ -107,6 +107,47 @@ sensor:
 #
   - platform: rfxtrx
     automatic_add: True
+
+  - platform: template
+    sensors:
+      period_of_day:
+        friendly_name: 'Period of the day'
+        value_template: >-
+          {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+            dusk
+          {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+            dawn
+          {% elif (states.sun.sun.attributes.elevation) < -4 %}
+            night
+          {% else %}
+            day
+          {% endif %}
+        icon_template: >-
+          {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+            mdi:weather-sunset-down
+          {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+            mdi:weather-sunset-up
+          {% elif (states.sun.sun.attributes.elevation) < -4 %}
+            mdi:weather-night
+          {% else %}
+            mdi:weather-sunny
+          {% endif %}
+ 
+# can be used this way:
+#  - alias: 'turn on light in entry hall when main door opens'
+#    trigger:
+#      platform: state
+#      entity_id: sensor.main_entrance_door
+#      to: "open"
+#    condition:
+#      - condition: template
+#        value_template: "{{ states.sensor.period_of_day.state != 'day' }}"
+#    action:
+#      - service: homeassistant.turn_on
+#        entity_id: switch.aeotec_zw075_smart_switch_gen5_switch
+
+
+
 # Text to speech
 tts:
   - platform: google
@@ -207,18 +248,18 @@ switch:
           "0B1100002025EA1909000090":
                   name: Prise Bambi
 #          0B11002F67134A5A03010F70
-          "0B11002F67134A5A03010F70"
+          "0B11002F67134A5A03010F70":
                   name: Radiateur Bibliothèque
-          "0B11002F144637B903010F70"
+          "0B11002F144637B903010F70":
                   name: Radiateur Cuisine
-          "0B11002F6BD03FB803010F70"
+          "0B11002F6BD03FB803010F70":
                   name: 'Radiateur 1 Salon'
-          "0B11002F57651E4D03010F70"
+          "0B11002F57651E4D03010F70":
                   name: 'Radiateur 2 Salon'
 #         "0B110000445BBC9B09010F90"
-          "0B110000445BBC9B09000090"
+          "0B110000445BBC9B09000090":
                   name: Prise Lampe Boule
-          "0B11002F0144449209000090"
+          "0B11002F0144449209000090":
                   name: Sonnette
 
 
@@ -251,6 +292,7 @@ telegram_bot:
 # for webhooks mode only
     parse_mode: html
     trusted_networks:
+      - 192.168.0.0/16
 
 binary_sensor:
   - platform: rfxtrx
@@ -268,52 +310,50 @@ binary_sensor:
         {{ false }}
       {%- endif -%}
 
-      - 192.168.0.0/16
-  - platform: 'bayesian'
-    prior: 0.75
+  - platform: bayesian
     name: 'Pierre Home'
+    prior: 0.75
     probabiliby_threshold: 0.95 
     observations:
-    - entity_id: 'device_tracker.ipierre'
-          prob_given_true: 0.8
-          prob_given_false: 0.2
-          platform: 'state'
-          to_state: 'home'
-    - entity_id: 'device_tracker.ipierre_2'
-          prob_given_true: 0.8
-          prob_given_false: 0.2
-          platform: 'state'
-          to_state: 'home'
-    - entity_id: 'device_tracker.pierre_ipierre'
-          prob_given_true: 0.8
-          prob_given_false: 0.2
-          platform: 'state'
-          to_state: 'home'
-  # - entity_id: 'binary_sensor.welcam_someone_known'
+      - entity_id: 'device_tracker.ipierre'
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.ipierre_2'
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
+      - entity_id: 'device_tracker.pierre_ipierre'
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
 
   - name: 'in_bed'
     platform: 'bayesian'
     prior: 0.25
     probability_threshold: 0.95
     observations:
-	# presence salon
+# presence salon
       - entity_id: 'binary_sensor.motion_sensor_158d0001ddb2d3'
         prob_given_true: 0.4
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'off'
-	# lights are off
+# lights are off
       - entity_id: 'sensor.basement_motion'
         prob_given_true: 0.5
         prob_given_false: 0.4
         platform: 'state'
         to_state: 'off'
-	# TV off
+# TV off
       - entity_id: 'remote.harmony_hub'
         prob_given_true: 0.5
         platform: 'state'
         to_state: 'Off'
-	# iPhone plugged in
+# iPhone plugged in
       - entity_id: 'sensor.ipierre_battery_state_2'
         prob_given_true: 0.5
         platform: 'state'
@@ -404,40 +444,3 @@ alarm_control_panel:
 
 
 
- - platform: template
-   sensors:
-     period_of_day:
-       friendly_name: 'Period of the day'
-       value_template: >-
-         {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
-           dusk
-         {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
-           dawn
-         {% elif (states.sun.sun.attributes.elevation) < -4 %}
-           night
-         {% else %}
-           day
-         {% endif %}
-       icon_template: >-
-         {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
-           mdi:weather-sunset-down
-         {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
-           mdi:weather-sunset-up
-         {% elif (states.sun.sun.attributes.elevation) < -4 %}
-           mdi:weather-night
-         {% else %}
-           mdi:weather-sunny
-         {% endif %}
-
-# can be used this way:
-#  - alias: 'turn on light in entry hall when main door opens'
-#    trigger:
-#      platform: state
-#      entity_id: sensor.main_entrance_door
-#      to: "open"
-#    condition:
-#      - condition: template
-#        value_template: "{{ states.sensor.period_of_day.state != 'day' }}"
-#    action:
-#      - service: homeassistant.turn_on
-#        entity_id: switch.aeotec_zw075_smart_switch_gen5_switch
