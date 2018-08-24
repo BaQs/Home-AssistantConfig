@@ -14,6 +14,16 @@ homeassistant:
   customize: !include customize.yaml
   #customize_domain: !include customize_domain.yaml
 
+
+#logger:
+# default: warn
+#  logs:
+#    homeassistant.components.xiaomi_aqara: debug
+#    homeassistant.components.binary_sensor.xiaomi_aqara: debug
+#    homeassistant.components.sensor.xiaomi_aqara: debug
+#    homeassistant.components.light.xiaomi_aqara: debug
+#    homeassistant.components.switch.xiaomi_aqara: debug
+
 #  whitelist_external_dirs: 
 #    - '/home/homeassistant/.homeassistant/downloads'
   
@@ -69,7 +79,9 @@ updater:
   # include_used_components: true
 
 # Discover some devices automatically
-discovery:
+# discovery:
+#
+hassio:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -79,13 +91,20 @@ history:
 
 # View all events in a logbook
 logbook:
-
+  include:
+    entities:
+      - light.gateway_light_7811dcb7afd1
+      - binary_sensor.motion_sensor_158d0001ab34e1
 # Enables a map showing the location of tracked devices
 map:
 
 # Track the sun
 sun:
 
+remote:
+  - platform: harmony
+    name: harmony hub
+    host: 192.168.0.29
 
 weather:
   - platform: darksky
@@ -133,6 +152,20 @@ sensor:
             mdi:weather-sunny
           {% endif %}
  
+  - name: "Home to OVH"
+    platform: google_travel_time
+    api_key: !secret google_maps_api_key 
+    origin: "24 rue de l'église, Villeneuve-d'Ascq"
+    destination: "OVH Roubaix"
+  - name: "OVH to Home"
+    platform: google_travel_time
+    api_key: !secret google_maps_api_key 
+    destination: "24 rue de l'église, Villeneuve-d'Ascq"
+    origin: "OVH Roubaix"
+    options:
+      arrival_time: "19:45:00"
+
+
 # can be used this way:
 #  - alias: 'turn on light in entry hall when main door opens'
 #    trigger:
@@ -198,12 +231,12 @@ camera:
 xiaomi_aqara:
   discovery_retry: 5
   gateways:
-    - key: CFA0AF000906405A
+    - key: 4C3037850C3F4696
       host: 192.168.0.23
-      mac:
+      mac: 78:11:DC:B7:AF:D1
     - key: 56E64B9549E24C0B
       host: 192.168.0.22
-      mac:
+      mac: 34:CE:00:8C:18:73
 
 
 vacuum:
@@ -222,6 +255,14 @@ panel_iframe:
 #    title: Pi-hole
 #    icon: mdi:block-helper
 #    url: http://192.168.0.24/admin/index.php
+
+#panel_custom:
+#  - name: alarm
+#    sidebar_title: Alarm
+#    sidebar_icon: mdi:security-home
+#    config:
+#      alarmid: alarm_control_panel.home_alarm ## USE THE SAME ID AS USED IN YOUR ALARM.YAML
+
 
 zwave:
    usb_path: /dev/ttyACM0
@@ -264,7 +305,7 @@ switch:
 
 
 device_tracker:
-  - platform: owntracks_http
+#  - platform: owntracks_http
     # - platform: bluetooth_tracker
     # - platform: bluetooth_le_tracker
 #  - platform: icloud
@@ -273,7 +314,7 @@ device_tracker:
   - platform: nmap_tracker
     hosts:
             - 192.168.0.19
-            - 192.168.0.20
+            - 192.168.0.32
 
 notify:
   - name: Telegram
@@ -311,53 +352,49 @@ binary_sensor:
       {%- endif -%}
 
   - platform: bayesian
-    name: 'Pierre Home'
-    prior: 0.75
-    probabiliby_threshold: 0.95 
+    name: 'Pierre is Home'
+    prior: 0.5
+    probabiliby_threshold: 0.90 
     observations:
       - entity_id: 'device_tracker.ipierre'
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.5
+        #prob_given_false: 0.5
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.ipierre_2'
-        prob_given_true: 0.8
-        prob_given_false: 0.2
-        platform: 'state'
-        to_state: 'home'
-      - entity_id: 'device_tracker.pierre_ipierre'
-        prob_given_true: 0.8
-        prob_given_false: 0.2
+        prob_given_true: 0.5
+        # prob_given_false: 0.5
         platform: 'state'
         to_state: 'home'
 
-  - name: 'in_bed'
-    platform: 'bayesian'
-    prior: 0.25
-    probability_threshold: 0.95
+  - platform: bayesian
+    name: 'In Bed'
+    prior: 0.4
+    probability_threshold: 0.85
     observations:
 # presence salon
       - entity_id: 'binary_sensor.motion_sensor_158d0001ddb2d3'
         prob_given_true: 0.4
-        prob_given_false: 0.2
+        #prob_given_false: 0.2
         platform: 'state'
         to_state: 'off'
 # lights are off
-      - entity_id: 'sensor.basement_motion'
+      - entity_id: 'sensor.illumination_158d0001ddb2d3'
         prob_given_true: 0.5
-        prob_given_false: 0.4
-        platform: 'state'
-        to_state: 'off'
+        #prob_given_false: 0.4
+        platform: 'numeric_state'
+        below: '50'
 # TV off
       - entity_id: 'remote.harmony_hub'
-        prob_given_true: 0.5
+        prob_given_true: 0.2
+        #prob_given_false: 0.1
         platform: 'state'
         to_state: 'Off'
 # iPhone plugged in
-      - entity_id: 'sensor.ipierre_battery_state_2'
+      - entity_id: 'sensor.ipierre_battery_state'
         prob_given_true: 0.5
         platform: 'state'
-        to_state: 'Plugged'
+        to_state: 'Charging'
       - entity_id: 'sun.sun'
         prob_given_true: 0.7
         platform: 'state'
@@ -384,7 +421,10 @@ google_assistant:
 #    light.living_room:
 #      expose: false
 #      room: living room
-
+#
+#
+#      
+#
 ios:
 
 # Example using a delay after start of Home Assistant

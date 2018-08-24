@@ -372,22 +372,7 @@ sensor.ipierre_battery_state:
   config_entry_id:
   name:
   platform: ios
-  unique_id: state_ipierre
-sensor.ipierre_battery_level:
-  config_entry_id:
-  name:
-  platform: ios
-  unique_id: level_ipierre
-sensor.ipierre_battery_state_2:
-  config_entry_id:
-  name:
-  platform: ios
-  unique_id: state_iPhone-Pierre
-sensor.ipierre_battery_level_2:
-  config_entry_id:
-  name:
-  platform: ios
-  unique_id: level_iPhone-Pierre
+  unique_id: state_iPierre
 zwave.aeotec_zw090_zstick_gen5_eu:
   config_entry_id:
   name:
@@ -810,7 +795,7 @@ binary_sensor.fibaro_system_fgfs101_flood_sensor_general:
   unique_id: 14-72057594279559169
 binary_sensor.fibaro_system_fgfs101_flood_sensor_flood:
   config_entry_id:
-  name:
+  name: Fibaro Flood Sensor 1
   platform: zwave
   unique_id: 14-72057594279559249
 sensor.fibaro_system_fgfs101_flood_sensor_temperature:
@@ -835,7 +820,7 @@ binary_sensor.fibaro_system_fgfs101_flood_sensor_general_2:
   unique_id: 10-72057594212450305
 binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2:
   config_entry_id:
-  name:
+  name: Fibaro Flood Sensor 2
   platform: zwave
   unique_id: 10-72057594212450385
 sensor.fibaro_system_fgfs101_flood_sensor_temperature_2:
@@ -883,13 +868,28 @@ sensor.neo_coolcam_power_plug_12a_interval_4:
   name:
   platform: zwave
   unique_id: 22-72057594412040483
-sensor.ipierre_battery_level_3:
+sensor.ipierre_battery_level:
   config_entry_id:
   name:
   platform: ios
   unique_id: level_iPierre
+sensor.ipierre_battery_state_2:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: state_ipierre
+sensor.ipierre_battery_level_2:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: level_ipierre
 sensor.ipierre_battery_state_3:
   config_entry_id:
   name:
   platform: ios
-  unique_id: state_iPierre
+  unique_id: state_iPhone-Pierre
+sensor.ipierre_battery_level_3:
+  config_entry_id:
+  name:
+  platform: ios
+  unique_id: level_iPhone-Pierre

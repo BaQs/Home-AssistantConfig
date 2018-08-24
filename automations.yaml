@@ -1,10 +1,9 @@
 - id: '1533471702628'
   alias: Pierre leaves
   trigger:
-  - entity_id: device_tracker.pierre_ipierre
+  - entity_id: binary_sensor.pierre_home
     platform: state
-    from: home
-    to: not_home
+    to: 'off'
   condition: []
   action:
   - data:
@@ -26,9 +25,9 @@
 - id: arm_alarm_when_pierre_leaves
   alias: Arm alarm when Pierre leaves
   trigger:
-  - entity_id: device_tracker.pierre_ipierre
-    from: home
+  - entity_id: binary_sensor.pierre_home
     platform: state
+    to: 'off'
   action:
   - data:
       message: Pierre est parti!
@@ -95,9 +94,9 @@
 - id: disarm_alarm_when_pierre_is_back
   alias: Disarm alarm when Pierre is back home
   trigger:
-  - entity_id: device_tracker.pierre_ipierre
+  - entity_id: binary_sensor.pierre_home
     platform: state
-    to: home
+    to: 'on'
   action:
   - data:
       message: Pierre est de retour!
@@ -135,15 +134,19 @@
     platform: state
     to: 'on'
   condition:
-  - after: sunset
-    before: sunrise
-    condition: sun
+  - below: '200'
+    condition: numeric_state
+    entity_id: sensor.illumination_158d0001ab34e1
   action:
-  - alias: ''
-    data:
+  - data:
       brightness: '100'
+      color_name: blue
       entity_id: light.gateway_light_7811dcb7afd1
-      rgb_color: '[50, 0, 50]'
+    service: light.turn_on
+  - data:
+      brightness: '100'
+      color_name: blue
+      entity_id: light.gateway_light_34ce008c1873
     service: light.turn_on
 - id: '1534616122412'
   alias: 'Motion: Parking space!'
@@ -153,19 +156,18 @@
     to: 'on'
   condition:
   - condition: state
-    entity_id: device_tracker.pierre_ipierre
-    state: home
+    entity_id: binary_sensor.pierre_home
+    state: 'on'
   action:
   - data:
-      message: La place est libre!
-      title: Parking
       data:
         photo:
-        - url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture
+        - caption: La Place est libre!
+          url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture
             }}
-          caption: La Place est libre!
+      message: Ca bouge sur le parking !
+      title: Parking
     service: notify.telegram
-
 - id: telegramStart
   alias: 'Telegram: HA started'
   trigger:
@@ -173,7 +175,48 @@
     event: start
   action:
   - data:
-      message: "HA démarre"
+      message: HA démarre
       title: Home Assistant
     service: notify.telegram
-
+- id: Sunset
+  alias: 'Script: Sunset'
+  trigger:
+  - event: sunset
+    offset: -00:30:00
+    platform: sun
+  action:
+  - service: script.sunset
+- id: Sunrise
+  alias: 'Script: Sunrise'
+  trigger:
+  - event: sunrise
+    offset: +00:30:00
+    platform: sun
+  action:
+  - service: script.sunrise
+- id: light_floor1_back_normal
+  alias: 'Light: Floor1 back to normal'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    to: 'off'
+    for:
+      minutes: 10
+  action:
+  - data:
+      brightness: '10'
+      color_name: blue
+      entity_id: light.gateway_light_7811dcb7afd1
+    service: light.turn_on
+  - data:
+      brightness: '10'
+      color_name: blue
+      entity_id: light.gateway_light_34ce008c1873
+    service: light.turn_on
+  condition:
+  - condition: state
+    entity_id: light.gateway_light_7811dcb7afd1
+    state: 'on'
+  - condition: state
+    entity_id: sensor.period_of_day
+    state: night

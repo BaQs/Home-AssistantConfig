@@ -1,6 +1,6 @@
   default_view:
     name: Default
-    view: no
+    view: yes
     icon: mdi:home
     entities:
       - group.home
@@ -17,13 +17,45 @@
       - group.bedroom_2_garden
       - group.bathroom
       - group.shower
+      - group.cave
+      - group.washroom
   home:
     name: Home
     view: yes
     entities:
+      - sun.sun
       - alarm_control_panel.home_alarm
-      - device_tracker.pierre_ipierre 
       - weather.dark_sky 
+      - sensor.period_of_day
+      - binary_sensor.in_bed
+      - binary_sensor.pierre_home
+      - device_tracker.igaetane
+      - binary_sensor.welcam_3__porte_someone_known
+      - binary_sensor.welcam_someone_known
+      - binary_sensor.welcam_3__porte_someone_unknown
+      - binary_sensor.welcam_someone_unknown
+      - group.pierre
+      - group.gaetane
+  Gaetane:
+    name: Gaetane
+    view: no
+    entities:
+      - device_tracker.igaetane
+  Pierre:
+    name: Pierre
+    view: no
+    entities:
+      - sensor.ipierre_battery_state
+      - sensor.ipierre_battery_level
+      - device_tracker.ipierre 
+      - device_tracker.ipierre_2
+      - binary_sensor.pierre_home
+  washroom:
+    name: Buanderie 
+    entities:
+      - zwave.neo_coolcam_power_plug_12a
+      - sensor.neo_coolcam_power_plug_12a_power
+      - sensor.neo_coolcam_power_plug_12a_voltage
   kitchen:
     name: Cuisine
     entities:
@@ -33,9 +65,12 @@
       - sensor.temperature_158d0001715c53
       - sensor.illumination_34ce008c1873
       - light.gateway_light_34ce008c1873
+      - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+      - switch.radiateur_cuisine
+      - light.fibaro_system_fgd212_dimmer_2_level_3
   salon:
     name: Salon
-    view: yes
+    view: no
     entities:
       - binary_sensor.door_window_sensor_158d00019ff246
       - binary_sensor.door_window_sensor_158d00019df284
@@ -47,6 +82,11 @@
       - vacuum.xiaomi_vacuum_cleaner
       - sensor.illumination_158d0001ddb2d3
       - binary_sensor.motion_sensor_158d0001ddb2d3
+      - switch.prise_lampe_boule
+      - switch.radiateur_1_salon
+      - switch.radiateur_2_salon
+      - light.fibaro_system_fgd212_dimmer_2_level
+      - light.fibaro_system_fgd212_dimmer_2_level_4
 #      - media_player.salon
 #       - media_player.mibox3_2
 #       - media_player.mibox3
@@ -60,6 +100,9 @@
       - sensor.humidity_158d0001720782
       - sensor.pressure_158d0001720782
       - binary_sensor.door_window_sensor_158d00015af81e
+      - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood
+      - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2
+      - switch.prise_bambi
   library:
     name: Bibliothèque
     entities:
@@ -69,6 +112,7 @@
       - binary_sensor.door_window_sensor_158d000170428f
       - binary_sensor.motion_sensor_158d0001ab34c1
       - sensor.illumination_158d0001ab34c1
+      - switch.radiateur_bibliotheque
   bedroom_2_garden:
     name: Chambre 2e Jardin
     entities:
@@ -104,6 +148,8 @@
       - sensor.pressure_158d0001d6dae3
       - binary_sensor.motion_sensor_158d0001e163a1
       - sensor.illumination_158d0001e163a1
+      - binary_sensor.foscam_c1_motion_sensor
+      - switch.sonnette
   floor2:
     name: Etage 2
     entities:
@@ -128,6 +174,10 @@
       - sensor.humidity_158d0001e421d9
       - sensor.pressure_158d0001e421d9
       - sensor.temperature_158d0001e421d9
+  cave:
+    name: Cave
+    entities:
+      - switch.prise_cave
   automation_view:
     name: Automation
     view: yes

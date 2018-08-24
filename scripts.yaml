@@ -26,3 +26,35 @@
                caption: "Salon"
              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
                caption: "Entrée"
+  sunrise:
+    alias: "Sunrise"
+    sequence:
+    - service: notify.telegram
+      data:
+        title: "Sunset!"
+        message: "Sun has rised 30min ago"
+    - data:
+        entity_id: light.gateway_light_7811dcb7afd1
+      service: light.turn_off
+    - data:
+        entity_id: light.gateway_light_34ce008c1873
+      service: light.turn_off
+
+  sunset:
+    alias: "Sunset"
+    sequence:
+    - service: notify.telegram
+      data:
+        title: "Sunset!"
+        message: "Sunset is coming in 30min"
+     - data:
+        brightness: '10'
+        color_name: blue
+        entity_id: light.gateway_light_7811dcb7afd1
+      service: light.turn_on
+    - data:
+        brightness: '10'
+        color_name: blue
+        entity_id: light.gateway_light_34ce008c1873
+      service: light.turn_on
+ 
