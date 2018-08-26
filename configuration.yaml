@@ -88,13 +88,27 @@ conversation:
 
 # Enables support for tracking state changes over time
 history:
+  exclude:
+    entities:
+      - sensor.time
+      - sensor.hour
+      - sensor.moon
+      - sensor.dark_sky_daily_summary
+      - sensor.dark_sky_hourly_summary
+      - sensor.dark_sky_icon
+      - sensor.dark_sky_summary
+    domains:
+      - switch
+      - updater
+  include:
+    domains:
+      - group
+      - automation
+      - sensor
+      - media_player
 
 # View all events in a logbook
-logbook:
-  include:
-    entities:
-      - light.gateway_light_7811dcb7afd1
-      - binary_sensor.motion_sensor_158d0001ab34e1
+logbook: !include logbook.yaml
 # Enables a map showing the location of tracked devices
 map:
 
@@ -108,141 +122,64 @@ remote:
 
 weather:
   - platform: darksky
-    api_key: 24e4ee7f484b03ac92373760682388ab
+    api_key: !secret darksky_api_key 
     units: ca
 
 # Weather prediction
-sensor:
-#   - platform: yr
-#
-#   not needed any more, home assistant ios app does it
-#  - platform: template
-#    sensors:
-#      ipierre_battery:
-#        friendly_name: iPierre
-#        unit_of_measurement: "%"
-#        value_template: '{{ states.device_tracker.pierre_ipierre.attributes.battery|int }}'
-#        device_class: battery
-#
-  - platform: rfxtrx
-    automatic_add: True
-
-  - platform: template
-    sensors:
-      period_of_day:
-        friendly_name: 'Period of the day'
-        value_template: >-
-          {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
-            dusk
-          {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
-            dawn
-          {% elif (states.sun.sun.attributes.elevation) < -4 %}
-            night
-          {% else %}
-            day
-          {% endif %}
-        icon_template: >-
-          {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
-            mdi:weather-sunset-down
-          {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
-            mdi:weather-sunset-up
-          {% elif (states.sun.sun.attributes.elevation) < -4 %}
-            mdi:weather-night
-          {% else %}
-            mdi:weather-sunny
-          {% endif %}
- 
-  - name: "Home to OVH"
-    platform: google_travel_time
-    api_key: !secret google_maps_api_key 
-    origin: "24 rue de l'église, Villeneuve-d'Ascq"
-    destination: "OVH Roubaix"
-  - name: "OVH to Home"
-    platform: google_travel_time
-    api_key: !secret google_maps_api_key 
-    destination: "24 rue de l'église, Villeneuve-d'Ascq"
-    origin: "OVH Roubaix"
-    options:
-      arrival_time: "19:45:00"
-
-
-# can be used this way:
-#  - alias: 'turn on light in entry hall when main door opens'
-#    trigger:
-#      platform: state
-#      entity_id: sensor.main_entrance_door
-#      to: "open"
-#    condition:
-#      - condition: template
-#        value_template: "{{ states.sensor.period_of_day.state != 'day' }}"
-#    action:
-#      - service: homeassistant.turn_on
-#        entity_id: switch.aeotec_zw075_smart_switch_gen5_switch
-
-
 
 # Text to speech
 tts:
   - platform: google
+    cache: true
+    time_memory: 300
 
 # Cloud
 cloud:
 
 group: !include groups.yaml
-automation: !include automations.yaml
+# automation: !include automations.yaml
+automation: !include_dir_merge_list automations/
 script: !include scripts.yaml
+
+sensor: !include sensor.yaml
+binary_sensor: !include binary_sensor.yaml
 
 media_player:
   - platform: squeezebox
-    host: 192.168.0.27
+    host: !secret squeezebox_host
 #  - platform: cast
 
 cast:
         #  media_player:
 
 netatmo:
-  api_key: 58c5d052ac34a5aa398b514c
-  secret_key: lWWRYNPh04xBbECIQT2sb8UX4V7Y0MiM4vxanVG7CSG
-  username: pierre@ourdouille.fr
+  api_key: !secret netatmo_api_key
+  secret_key: !secret netatmo_secret_key
+  username: !secret netatmo_username
   password: !secret netatmo_password 
 
-#camera:
-#  - platform: netatmo
 camera:
   - platform: foscam
-    ip: 192.168.0.26
-    username: BaQs
+    ip: !secret foscam_ip
+    username: !secret foscam_username
     password: !secret foscam_password
-
-# Replace admin and password with an "Admin" privileged Foscam user
-# Replace ipaddress with the local IP address of your Foscam
-#switch:
-# platform: command_line
-# switches:
-#   #Switch for Foscam Motion Detection
-#   foscam_motion:
-#     command_on: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=1&usr=BaQs&pwd=s3r4r13n"'
-#     command_off: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=0&usr=BaQs&pwd=s3r4r13n"'
-#     command_state: 'curl -k --silent "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getMotionDetectConfig&usr=BaQs&pwd=s3r4r13n" | grep -o "(?<=isEnable>).*?(?=</isEnable>)"'
-#     value_template: '{{ value == "1" }}'
-
 
 
 xiaomi_aqara:
   discovery_retry: 5
   gateways:
-    - key: 4C3037850C3F4696
-      host: 192.168.0.23
-      mac: 78:11:DC:B7:AF:D1
-    - key: 56E64B9549E24C0B
-      host: 192.168.0.22
-      mac: 34:CE:00:8C:18:73
+    - key: !secret xiaomi_aqara_gw1_key
+      host: !secret xiaomi_aqara_gw1_host 
+      mac: !secret xiaomi_aqara_gw1_mac
+    - key: !secret xiaomi_aqara_gw2_key
+      host: !secret xiaomi_aqara_gw2_host 
+      mac: !secret xiaomi_aqara_gw2_mac
 
 
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.0.35
-    token: 397378744235507975515251344c6c73
+    host: !secret xiaomi_vacuum_host
+    token: !secret xiaomi_vacuum_token
 
 
 
@@ -266,12 +203,12 @@ panel_iframe:
 
 zwave:
    usb_path: /dev/ttyACM0
-   network_key: "0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10"
+   network_key: !secret zwave_network_key 
 
 
 rfxtrx:
    device: /dev/ttyUSB0
-   debug: true
+   #debug: true
 
 
 light:
@@ -279,30 +216,7 @@ light:
     automatic_add: True
 
 
-switch:
-  platform: rfxtrx
-  automatic_add: True
-  devices:
-          "0B110000464D8E6909000090":
-                  name: Prise Cave
-#         "0B1100002025EA1909010F90":
-          "0B1100002025EA1909000090":
-                  name: Prise Bambi
-#          0B11002F67134A5A03010F70
-          "0B11002F67134A5A03010F70":
-                  name: Radiateur Bibliothèque
-          "0B11002F144637B903010F70":
-                  name: Radiateur Cuisine
-          "0B11002F6BD03FB803010F70":
-                  name: 'Radiateur 1 Salon'
-          "0B11002F57651E4D03010F70":
-                  name: 'Radiateur 2 Salon'
-#         "0B110000445BBC9B09010F90"
-          "0B110000445BBC9B09000090":
-                  name: Prise Lampe Boule
-          "0B11002F0144449209000090":
-                  name: Sonnette
-
+switch: !include switch.yaml
 
 device_tracker:
 #  - platform: owntracks_http
@@ -319,7 +233,7 @@ device_tracker:
 notify:
   - name: Telegram
     platform: telegram
-    chat_id: 317444046
+    chat_id: !secret telegram_chat_id 
 
 telegram_bot:
         #- platform: webhooks
@@ -327,86 +241,22 @@ telegram_bot:
     # jeedom
     #api_key: 307112869:AAGw8pNelwkZgaULYonS9f1_SBQLxIfnBN0
     # hassio_ourdouille_bot
-    api_key: 610188114:AAESgNaty-o1hyIQgTVcgnHdF4BF_86DwCI
+    api_key: !secret telegram_api_key 
     allowed_chat_ids:  
-       - 317444046
+       - !secret telegram_chat_id 
 # for webhooks mode only
     parse_mode: html
     trusted_networks:
       - 192.168.0.0/16
 
-binary_sensor:
-  - platform: rfxtrx
-    automatic_add: True
-  - platform: rest
-    name: "Foscam C1 Motion Sensor"
-    resource: https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getDevState&usr=BaQs&pwd=s3r4r13n
-    verify_ssl: false
-    device_class: motion
-    scan_interval: 5
-    value_template: >-
-      {%- if "<motionDetectAlarm>2</motionDetectAlarm>" in value -%}
-        {{ true }}
-      {%- else -%}
-        {{ false }}
-      {%- endif -%}
-
-  - platform: bayesian
-    name: 'Pierre is Home'
-    prior: 0.5
-    probabiliby_threshold: 0.90 
-    observations:
-      - entity_id: 'device_tracker.ipierre'
-        prob_given_true: 0.5
-        #prob_given_false: 0.5
-        platform: 'state'
-        to_state: 'home'
-      - entity_id: 'device_tracker.ipierre_2'
-        prob_given_true: 0.5
-        # prob_given_false: 0.5
-        platform: 'state'
-        to_state: 'home'
-
-  - platform: bayesian
-    name: 'In Bed'
-    prior: 0.4
-    probability_threshold: 0.85
-    observations:
-# presence salon
-      - entity_id: 'binary_sensor.motion_sensor_158d0001ddb2d3'
-        prob_given_true: 0.4
-        #prob_given_false: 0.2
-        platform: 'state'
-        to_state: 'off'
-# lights are off
-      - entity_id: 'sensor.illumination_158d0001ddb2d3'
-        prob_given_true: 0.5
-        #prob_given_false: 0.4
-        platform: 'numeric_state'
-        below: '50'
-# TV off
-      - entity_id: 'remote.harmony_hub'
-        prob_given_true: 0.2
-        #prob_given_false: 0.1
-        platform: 'state'
-        to_state: 'Off'
-# iPhone plugged in
-      - entity_id: 'sensor.ipierre_battery_state'
-        prob_given_true: 0.5
-        platform: 'state'
-        to_state: 'Charging'
-      - entity_id: 'sun.sun'
-        prob_given_true: 0.7
-        platform: 'state'
-        to_state: 'below_horizon'
 
 google_assistant:
-  project_id: hassio-71d07
-  client_id: sete9eYiephee3ph
-  access_token: cahx8hooV2aizodahw2Shohshau6eesaeheiL5quatahxohVechae4jag0kohneifohy8jeitoo2iech
+  project_id: !secret google_assistant_project_id
+  client_id: !secret google_assistant_client_id
+  access_token: !secret google_assistant_access_token
   # agent_user_id: [a string to identify user]
 #  api_key: AIzaSyBVn9-a3C_V8jAiCWcipvBqZXII0ugRsQI
-  api_key: AIzaSyDVKFlDNZPSaVxyO-MewXrXTzAL1DZmHB8
+  api_key: !secret google_assistant_api_key
 #  expose_by_default: false
   exposed_domains:
     - switch
@@ -421,10 +271,10 @@ google_assistant:
 #    light.living_room:
 #      expose: false
 #      room: living room
-#
-#
-#      
-#
+
+
+      
+
 ios:
 
 # Example using a delay after start of Home Assistant
@@ -437,9 +287,9 @@ alarm_control_panel:
     name: Home Alarm
     #code: 1234
     disarm_after_trigger: false
-# time to leave
+    # time to leave
     pending_time: 30
-# time to disarm
+    # time to disarm
     delay_time: 20
     trigger_time: 120
     disarmed:
@@ -452,35 +302,16 @@ alarm_control_panel:
       delay_time: 0
 
 
-#
-#binary_sensor:
-#  - platform: rest
-#    name: "Foscam C1 Motion Sensor"
-#    resource: https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getDevState&usr=BaQs&pwd=s3r4r13n
-#    verify_ssl: false
-#    device_class: motion
-#    scan_interval: 5
-#    value_template: >-
-#      {%- if "<motionDetectAlarm>2</motionDetectAlarm>" in value -%}
-#        {{ true }}
-#      {%- else -%}
-#        {{ false }}
-#      {%- endif -%}
-#
-#
-#    account_name: accountname
-
-#
-#switch:
-# platform: command_line
-# switches:
-#   #Switch for Foscam Motion Detection
-#   foscam_motion:
-#     command_on: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=1&usr=BaQs&pwd=s3r4r13n"'
-#     command_off: 'curl -k "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=setMotionDetectConfig&isEnable=0&usr=BaQs&pwd=s3r4r13n"'
-#     command_state: 'curl -k --silent "https://192.168.0.26:443/cgi-bin/CGIProxy.fcgi?cmd=getMotionDetectConfig&usr=BaQs&pwd=s3r4r13n" | grep -oP "(?<=isEnable>).*?(?=</isEnable>)"'
-#     value_template: '{{ value == "2" }}'
-#
-
-
+input_select:
+  # Current automation mode
+  # Normal - normal day to day life, work etc.
+  # On Vacation - nobody is at home for a long period of time
+  # Have guests - we have guests staying over
+  system_mode:
+    name: House Mode
+    options:
+      - Normal
+      - On vacation
+      - Have guests
+    initial: Normal
 

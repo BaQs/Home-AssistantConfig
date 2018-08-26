@@ -19,6 +19,8 @@
       - group.shower
       - group.cave
       - group.washroom
+      - group.all_lights
+      - group.motion_detectors
   home:
     name: Home
     view: yes
@@ -28,7 +30,7 @@
       - weather.dark_sky 
       - sensor.period_of_day
       - binary_sensor.in_bed
-      - binary_sensor.pierre_home
+      - binary_sensor.pierre_is_home
       - device_tracker.igaetane
       - binary_sensor.welcam_3__porte_someone_known
       - binary_sensor.welcam_someone_known
@@ -36,6 +38,8 @@
       - binary_sensor.welcam_someone_unknown
       - group.pierre
       - group.gaetane
+      - group.all_lights
+      - group.motion_detectors
   Gaetane:
     name: Gaetane
     view: no
@@ -49,7 +53,8 @@
       - sensor.ipierre_battery_level
       - device_tracker.ipierre 
       - device_tracker.ipierre_2
-      - binary_sensor.pierre_home
+      - binary_sensor.pierre_is_home
+      - sensor.pierre_home
   washroom:
     name: Buanderie 
     entities:
@@ -198,3 +203,28 @@
       - media_player.xiaomi_network_speaker_airplay
       - media_player.salon
       - media_player.google_home__salon
+
+
+  motion_detectors:
+    name: Motion Detectors
+    view: no
+    entities:
+      - binary_sensor.motion_sensor_158d0001ddb2d3
+      - binary_sensor.motion_sensor_158d0001e163a1
+      - binary_sensor.motion_sensor_158d0001ab34c1
+      - binary_sensor.motion_sensor_158d0001ab34e1
+      - binary_sensor.motion_sensor_158d0001b1cff9
+      - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+  
+  
+  all_lights:
+    name: All Lights 
+    view: no
+    entities:
+        - light.gateway_light_34ce008c1873
+        - light.gateway_light_7811dcb7afd1
+        - light.fibaro_system_fgd212_dimmer_2_level
+        - light.fibaro_system_fgd212_dimmer_2_level_2
+        - light.fibaro_system_fgd212_dimmer_2_level_3
+        - light.fibaro_system_fgd212_dimmer_2_level_4
+

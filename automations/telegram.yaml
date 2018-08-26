@@ -1,0 +1,24 @@
+- id: telegramDisarmAlarm
+  alias: 'Telegram bot answer to command: /disarm_alarm'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /disarm_alarm
+  action:
+  - service: alarm_control_panel.alarm_disarm
+  - service: notify.telegram
+    data:
+      message: Alarme désarmée
+- id: telegramPresenceTriggered
+  alias: 'Telegram bot answer to command: /presence_triggered_alarm'
+  hide_entity: true
+  trigger:
+    platform: event
+    event_type: telegram_callback
+    event_data:
+      data: /cameras
+  action:
+  - service: script.telegram_snapshots_all_cameras
+

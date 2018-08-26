@@ -755,7 +755,7 @@ sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_temperature:
   unique_id: 19-72057594361692178
 binary_sensor.fibaro_system_fgms001_motion_sensor_sensor:
   config_entry_id:
-  name:
+  name: Oeil Cuisine
   platform: zwave
   unique_id: 11-72057594227458048
 zwave.fibaro_system_fgms001_motion_sensor:

@@ -1,0 +1,34 @@
+#  include:
+#    entities:
+#      - light.gateway_light_7811dcb7afd1
+#      - binary_sensor.motion_sensor_158d0001ab34e1
+  include:
+    domains:
+      - alarm_control_panel
+      - climate
+      - cover
+      - input_boolean
+      - input_select
+      - light
+      - switch
+      - device_tracker
+      - automation
+      - script
+    entities:
+      - sensor.period_of_day
+  exclude:
+    domains:
+      - media_player
+      - sun
+      - binary_sensor
+      - camera
+      - device_tracker
+      - group
+      - input_number
+      - input_text
+      - sensor
+      - weather
+      - zone
+      - image_processing
+
+

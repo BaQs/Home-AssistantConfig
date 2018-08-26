@@ -1,0 +1,104 @@
+#   - platform: yr
+#
+#   not needed any more, home assistant ios app does it
+#  - platform: template
+#    sensors:
+#      ipierre_battery:
+#        friendly_name: iPierre
+#        unit_of_measurement: "%"
+#        value_template: '{{ states.device_tracker.pierre_ipierre.attributes.battery|int }}'
+#        device_class: battery
+#
+  - platform: rfxtrx
+    automatic_add: True
+
+  - platform: template
+    sensors:
+      period_of_day:
+        friendly_name: 'Period of the day'
+        value_template: >-
+          {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+            dusk
+          {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+            dawn
+          {% elif (states.sun.sun.attributes.elevation) < -4 %}
+            night
+          {% else %}
+            day
+          {% endif %}
+        icon_template: >-
+          {% if (as_timestamp(states.sun.sun.attributes.next_dusk)) - (as_timestamp(states.sun.sun.attributes.next_setting)) < 0 %}
+            mdi:weather-sunset-down
+          {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
+            mdi:weather-sunset-up
+          {% elif (states.sun.sun.attributes.elevation) < -4 %}
+            mdi:weather-night
+          {% else %}
+            mdi:weather-sunny
+          {% endif %}
+ 
+
+
+    # Main house state:
+    # home - we are home
+    # away - we are away from home for a short period of time
+    # on_vacation - we are away from home for a long period of time (vacation)
+    # have_guests - we have guests over
+    current_state:
+      friendly_name: Current State
+      entity_id:
+        - input_select.system_mode
+        - binary_sensor.somebody_home
+      value_template: >-
+        {% if is_state('input_select.system_mode', 'On vacation') %}
+        on_vacation
+        {% elif is_state('input_select.system_mode', 'Have guests') %}
+        have_guests
+        {% elif is_state('binary_sensor.somebody_home', 'on') %}
+        home
+        {% else %}
+        away
+        {% endif %}
+
+
+#  - name: "Home to OVH"
+#    platform: google_travel_time
+#    api_key: !secret google_maps_api_key 
+#    origin: "24 rue de l'église, Villeneuve-d'Ascq"
+#    destination: "OVH Roubaix"
+#  - name: "OVH to Home"
+#    platform: google_travel_time
+#    api_key: !secret google_maps_api_key 
+#    destination: "24 rue de l'église, Villeneuve-d'Ascq"
+#    origin: "OVH Roubaix"
+#    options:
+#      arrival_time: "19:45:00"
+#
+
+# can be used this way:
+#  - alias: 'turn on light in entry hall when main door opens'
+#    trigger:
+#      platform: state
+#      entity_id: sensor.main_entrance_door
+#      to: "open"
+#    condition:
+#      - condition: template
+#        value_template: "{{ states.sensor.period_of_day.state != 'day' }}"
+#    action:
+#      - service: homeassistant.turn_on
+#        entity_id: switch.aeotec_zw075_smart_switch_gen5_switch
+
+
+
+# to get the normal home style sensor instead of just binary
+#  - platform: template
+#    sensors:
+#      pierre_home:
+#        value_template:
+#          "{% if is_state('binary_sensor.pierre_is_home', 'on') %}
+#          home
+#          {% else %}
+#          not_home
+#          {% endif %}"
+#        friendly_name: Pierre
+# 

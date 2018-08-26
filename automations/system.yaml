@@ -1,0 +1,80 @@
+#################################################################
+## HASS Related
+#################################################################
+
+#- id: battery_alert
+#  alias: 'Battery Alert'
+#  initial_state: 'on'
+#  trigger:
+#    - platform: state
+#      entity_id: sensor.battery_status
+#  action:
+#    - service: persistent_notification.create
+#      data_template:
+#        title: Low Battery levels
+#        notification_id: low-battery-alert
+#        message: >
+#          Check battery: {{ states('sensor.battery_status') }}
+#    - service: notify.pushbullet
+#      data_template:
+#        title: "Battery status"
+#        message: >
+#          Check battery: {{ states('sensor.battery_status') }}
+- id: heal_zwave_network
+  alias: Heal Z-Wave Network
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '2:31:00'
+  action:
+    service: zwave.heal_network
+
+- id: update_available_notification
+  alias: "Update Available Notification"
+  initial_state: 'on'
+  trigger:
+    platform: template
+    value_template: "{{states('sensor.pypi_hass_version') == states('sensor.current_version') }}"
+  action:
+    - data:
+       message: "HomeAssistant {{ states('sensor.pypi_hass_version') }} is now available"
+       title: "Update HASS"
+      service: notify.telegram
+
+- alias: Start HomeKit
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay: 00:05
+  - service: homekit.start
+  - data:
+      message: Homekit est démarré
+      title: Home Assistant
+    service: notify.telegram
+  id: 3e566d3adc654ab884dcbe4a2322bc3d
+
+- alias: Start HomeKit
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay: 00:05
+  - service: homekit.start
+  - data:
+      message: Homekit est démarré
+      title: Home Assistant
+    service: notify.telegram
+  id: 3e566d3adc654ab884dcbe4a2322bc3d
+
+- id: telegramStart
+  alias: 'Telegram: HA started'
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - data:
+      message: HA démarre
+      title: Home Assistant
+    service: notify.telegram
+
