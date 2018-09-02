@@ -58,6 +58,7 @@ zone:
 
 # Enables the frontend
 frontend:
+  themes: !include_dir_merge_named themes/
 
 # Enables configuration UI
 config:
@@ -68,6 +69,14 @@ http:
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
    base_url: https://hassio.ourdouille.maison
+   trusted_proxies: 192.168.0.27
+   use_x_forwarded_for: true
+   ip_ban_enabled: false
+   login_attempts_threshold: 5
+   cors_allowed_origins:
+     - http://192.168.0.24:8234
+     - http://hassio.ourdouille.maison:8234
+     - https://hassio.ourdouille.maison
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -93,10 +102,10 @@ history:
       - sensor.time
       - sensor.hour
       - sensor.moon
-      - sensor.dark_sky_daily_summary
-      - sensor.dark_sky_hourly_summary
-      - sensor.dark_sky_icon
-      - sensor.dark_sky_summary
+#      - sensor.dark_sky_daily_summary
+#      - sensor.dark_sky_hourly_summary
+#      - sensor.dark_sky_icon
+#      - sensor.dark_sky_summary
     domains:
       - switch
       - updater
@@ -105,6 +114,7 @@ history:
       - group
       - automation
       - sensor
+      - binary_sensor
       - media_player
 
 # View all events in a logbook
@@ -119,11 +129,20 @@ remote:
   - platform: harmony
     name: harmony hub
     host: 192.168.0.29
+    activity: Regarder la TV
 
 weather:
   - platform: darksky
     api_key: !secret darksky_api_key 
     units: ca
+    language: fr
+    monitored_conditions:
+      - temperature
+      - apparent_temperature
+      - summary
+      - icon
+      - precip_probability
+
 
 # Weather prediction
 
@@ -132,6 +151,7 @@ tts:
   - platform: google
     cache: true
     time_memory: 300
+    language: 'fr'
 
 # Cloud
 cloud:
@@ -219,12 +239,12 @@ light:
 switch: !include switch.yaml
 
 device_tracker:
-#  - platform: owntracks_http
+  - platform: owntracks_http
     # - platform: bluetooth_tracker
     # - platform: bluetooth_le_tracker
-#  - platform: icloud
-#    username: !secret icloud_username
-#    password: !secret icloud_password
+  - platform: icloud
+    username: !secret icloud_username
+    password: !secret icloud_password
   - platform: nmap_tracker
     hosts:
             - 192.168.0.19

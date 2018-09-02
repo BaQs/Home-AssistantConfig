@@ -16,41 +16,65 @@
 
   - platform: bayesian
     name: 'Pierre is Home'
-    prior: 0.5
-    probabiliby_threshold: 0.90 
+    prior: 0.6
+    probability_threshold: 0.80
     observations:
       - entity_id: 'device_tracker.ipierre'
-        prob_given_true: 0.8
+        prob_given_true: 0.9
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'home'
       - entity_id: 'device_tracker.ipierre_2'
-        prob_given_true: 0.9
-        prob_given_false: 0.5
+        prob_given_true: 0.99
+        prob_given_false: 0.6
         platform: 'state'
         to_state: 'home'
+#      - entity_id: 'binary_sensor.welcam_someone_known'
+#        prob_given_true: 0.7
+#        prob_given_false: 0.5
+#        platform: 'state'
+#        to_state: 'home'
+#      - entity_id: 'binary_sensor.welcam_3_someone_known'
+#        prob_given_true: 0.7
+#        prob_given_false: 0.5
+#        platform: 'state'
+#        to_state: 'home'
+#      - entity_id: binary_sensor.motion_detected
+#        platform: state
+#        to_state: 'on'
+#        prob_given_true: 0.6
+#        prob_given_false: 0.01
+#      # Somebody at home -> likely that at least one indoor light is turned on
+#      - entity_id: group.all_lights
+#        platform: state
+#        to_state: 'on'
+#        prob_given_true: 0.7
+#
+        
+
+        
 
   - platform: bayesian
     name: 'In Bed'
-    prior: 0.4
+    prior: 0.3
     probability_threshold: 0.95
     observations:
 # presence salon
-      - entity_id: 'binary_sensor.motion_sensor_158d0001ddb2d3'
-        prob_given_true: 0.5
-        prob_given_false: 0.3
-        platform: 'state'
-        to_state: 'off'
+#      - entity_id: 'binary_sensor.motion_sensor_158d0001ddb2d3'
+#        prob_given_true: 0.5
+#        prob_given_false: 0.3
+#        platform: 'state'
+#        to_state: 'off'
 # lights are off
       - entity_id: 'sensor.illumination_158d0001ddb2d3'
-        prob_given_true: 0.9
-        #prob_given_false: 0.4
+        prob_given_true: 0.5
+        prob_given_false: 0.01
         platform: 'numeric_state'
         below: '50'
 # TV off
       - entity_id: 'remote.harmony_hub'
-        prob_given_true: 0.9
-        #prob_given_false: 0.1
+        prob_given_true: 0.4
+        prob_given_false: 0.01
         platform: 'state'
         to_state: 'Off'
 # iPhone plugged in
@@ -60,9 +84,20 @@
         platform: 'state'
         to_state: 'Charging'
       - entity_id: 'sun.sun'
-        prob_given_true: 0.99
+        prob_given_true: 0.8
         platform: 'state'
         to_state: 'below_horizon'
+      - entity_id: 'binary_sensor.motion_last30'
+        prob_given_true: 0.7
+        prob_given_false: 0.5
+        platform: 'state'
+        to_state: 'off'
+      - entity_id: 'binary_sensor.motion_last10'
+        prob_given_true: 0.8
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'off'
+  
 
   - platform: bayesian
     name: Somebody home
@@ -70,17 +105,17 @@
     probability_threshold: 0.85
     observations:
       # Somebody at home -> Very likely at least one household member is at home
-  #    - entity_id: group.household
-  #      platform: state
-  #      to_state: home
-  #      prob_given_true: 0.99
-      # Somebody at home -> Likely alarm is disarmed
-      - entity_id: alarm_control_panel.home_alarm
+      - entity_id: group.household
         platform: state
-        to_state: disarmed
-        prob_given_true: 0.7
+        to_state: home
+        prob_given_true: 0.99
+      # Somebody at home -> Likely alarm is disarmed
+#      - entity_id: alarm_control_panel.home_alarm
+#        platform: state
+#        to_state: disarmed
+#        prob_given_true: 0.7
       # Somebody at home -> likely that at least one indoor light is turned on
-      - entity_id: group.indoor_lights
+      - entity_id: group.all_lights
         platform: state
         to_state: 'on'
         prob_given_true: 0.7
@@ -88,14 +123,24 @@
       - entity_id: binary_sensor.motion_detected
         platform: state
         to_state: 'on'
-        prob_given_true: 0.8
-        prob_given_false: 0.01
-      # Somebody at home -> Very likely occupancy will detected
-      - entity_id: group.occupancy_sensors
+        prob_given_true: 0.7
+        #prob_given_false: 0.01
+      - entity_id: 'binary_sensor.welcam_3_someone_known'
+        prob_given_true: 0.7
+        prob_given_false: 0.5
+        platform: 'state'
+        to_state: 'on'
+      - entity_id: remote.harmony_hub
         platform: state
         to_state: 'on'
-        prob_given_true: 0.8
-        prob_given_false: 0.01
+        prob_given_true: 0.9
+        prob_given_false: 0.4
+      # Somebody at home -> Very likely occupancy will detected
+#      - entity_id: group.occupancy_sensors
+#        platform: state
+#        to_state: 'on'
+#        prob_given_true: 0.8
+#        prob_given_false: 0.01
  
   - platform: template
     sensors:
@@ -107,4 +152,18 @@
         entity_id:
           - group.motion_detectors
         value_template: "{{is_state('group.motion_detectors', 'on')}}"
+  
+  - platform: template
+    sensors:
+      motion_last10:
+        value_template: '{{(as_timestamp(now())-as_timestamp(states.binary_sensor.motion_detected.last_updated)) < 600 }}'
+        friendly_name: Motion in Last 10min
+        device_class: motion
+  
+  - platform: template
+    sensors:
+      motion_last30:
+        value_template: '{{(as_timestamp(now())-as_timestamp(states.binary_sensor.motion_detected.last_updated)) < 1800 }}'
+        friendly_name: Motion in Last 30min
+        device_class: motion
   

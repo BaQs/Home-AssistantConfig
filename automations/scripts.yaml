@@ -1,0 +1,26 @@
+
+- id: Sunset
+  alias: 'Script: Sunset'
+  trigger:
+    - platform: template
+#     value_template: "{% if is_state('states.sensor.period_of_day.state', 'dusk') %}true{% endif %}"
+      value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
+#  - event: sunset
+#    offset: -00:30:00
+#    platform: sun
+  action:
+  - service: script.sunset
+
+- id: Sunrise
+  alias: 'Script: Sunrise'
+  trigger:
+#  - event: sunrise
+#    offset: +00:30:00
+#    platform: sun
+   - platform: template
+     #value_template: "{% if is_state('states.sensor.period_of_day.state', 'dawn') %}true{% endif %}"
+     value_template: "{% if is_state('sensor.period_of_day', 'dawn') %}true{% endif %}"
+  action:
+  - service: script.sunrise
+
+

@@ -1,6 +1,6 @@
   default_view:
     name: Default
-    view: yes
+    view: no
     icon: mdi:home
     entities:
       - group.home
@@ -19,7 +19,6 @@
       - group.shower
       - group.cave
       - group.washroom
-      - group.all_lights
       - group.motion_detectors
   home:
     name: Home
@@ -32,14 +31,20 @@
       - binary_sensor.in_bed
       - binary_sensor.pierre_is_home
       - device_tracker.igaetane
-      - binary_sensor.welcam_3__porte_someone_known
+      - binary_sensor.welcam_3_someone_known
       - binary_sensor.welcam_someone_known
-      - binary_sensor.welcam_3__porte_someone_unknown
+      - binary_sensor.welcam_3_someone_unknown
       - binary_sensor.welcam_someone_unknown
+      - binary_sensor.somebody_home
       - group.pierre
       - group.gaetane
       - group.all_lights
       - group.motion_detectors
+      - input_select.system_mode
+      - sensor.current_state
+      - group.household
+      - binary_sensor.motion_last10
+      - binary_sensor.motion_last30
   Gaetane:
     name: Gaetane
     view: no
@@ -72,7 +77,7 @@
       - light.gateway_light_34ce008c1873
       - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
       - switch.radiateur_cuisine
-      - light.fibaro_system_fgd212_dimmer_2_level_3
+      - light.fibaro_system_fgd212_dimmer_2_level_5
   salon:
     name: Salon
     view: no
@@ -217,14 +222,22 @@
       - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
   
   
-  all_lights:
-    name: All Lights 
+#  all_lights:
+#    name: All Lights 
+#    view: no
+#    entities:
+#        - light.gateway_light_34ce008c1873
+#        - light.gateway_light_7811dcb7afd1
+#        - light.fibaro_system_fgd212_dimmer_2_level
+#        - light.fibaro_system_fgd212_dimmer_2_level_2
+#        - light.fibaro_system_fgd212_dimmer_2_level_3
+#        - light.fibaro_system_fgd212_dimmer_2_level_4
+#
+
+
+  household:
+    name: Household
     view: no
     entities:
-        - light.gateway_light_34ce008c1873
-        - light.gateway_light_7811dcb7afd1
-        - light.fibaro_system_fgd212_dimmer_2_level
-        - light.fibaro_system_fgd212_dimmer_2_level_2
-        - light.fibaro_system_fgd212_dimmer_2_level_3
-        - light.fibaro_system_fgd212_dimmer_2_level_4
-
+      - device_tracker.ipierre 
+      - device_tracker.igaetane
