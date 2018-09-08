@@ -1,0 +1,42 @@
+
+  # Customize entities matching a pattern
+customize_glob:
+  'sensor.fibaro_system_fgd212_dimmer_2*':
+    hidden: true
+    homebridge_hidden: true
+#  "sensor.fibaro_system_fgd212_dimmer_2_alarm_level*":
+#    hidden: true
+#    homebridge_hidden: true
+#  "sensor.fibaro_system_fgd212_dimmer_2_alarm_type*":
+#    hidden: true
+#    homebridge_hidden: true
+#  "sensor.fibaro_system_fgd212_dimmer_2_exporting*":
+#    hidden: true
+#    homebridge_hidden: true
+#  "sensor.fibaro_system_fgd212_dimmer_2_heat*":
+#    hidden: true
+#    homebridge_hidden: true
+#  "sensor.fibaro_system_fgd212_dimmer_2_power_management*":
+#    hidden: true
+#    homebridge_hidden: true
+#  "sensor.fibaro_system_fgd212_dimmer_2_system*":
+#    hidden: true
+#    homebridge_hidden: true
+  "sensor.fibaro_system_fgfs101_flood_sensor_alarm_type*":
+    hidden: true
+    homebridge_hidden: true
+  "sensor.neo_coolcam_power_plug_12a_interval*":
+    hidden: true
+    homebridge_hidden: true
+  "sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_temperature":
+    hidden: true
+    homebridge_hidden: true
+  "zwave.*":
+    hidden: true
+    homebridge_hidden: true
+  "binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor*":
+    hidden: true
+    homebridge_hidden: true
+  "sensor.*sourcenodeid*":
+    hidden: true
+    homebridge_hidden: true
