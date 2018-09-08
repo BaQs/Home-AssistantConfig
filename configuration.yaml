@@ -12,12 +12,58 @@ homeassistant:
   time_zone: Europe/Paris
   # Customization file
   customize: !include customize.yaml
-  #customize_domain: !include customize_domain.yaml
+  customize_domain: !include customize_domain.yaml
+  #  customize_glob: !include customize_glob.yaml
 
-
-#logger:
-# default: warn
-#  logs:
+  # Customize entities matching a pattern
+  customize_glob:
+    'sensor.fibaro_system_fgd212_dimmer_2*':
+      hidden: true
+      homebridge_hidden: true
+  #  "sensor.fibaro_system_fgd212_dimmer_2_alarm_level*":
+  #    hidden: true
+  #    homebridge_hidden: true
+  #  "sensor.fibaro_system_fgd212_dimmer_2_alarm_type*":
+  #    hidden: true
+  #    homebridge_hidden: true
+  #  "sensor.fibaro_system_fgd212_dimmer_2_exporting*":
+  #    hidden: true
+  #    homebridge_hidden: true
+  #  "sensor.fibaro_system_fgd212_dimmer_2_heat*":
+  #    hidden: true
+  #    homebridge_hidden: true
+  #  "sensor.fibaro_system_fgd212_dimmer_2_power_management*":
+  #    hidden: true
+  #    homebridge_hidden: true
+  #  "sensor.fibaro_system_fgd212_dimmer_2_system*":
+  #    hidden: true
+  #    homebridge_hidden: true
+    "sensor.fibaro_system_fgfs101_flood_sensor_alarm_type*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor.neo_coolcam_power_plug_12a_interval*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor.neo_coolcam_power_plug_12a_previous_reading*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_temperature":
+      hidden: true
+      homebridge_hidden: true
+    "zwave.*":
+      hidden: true
+      homebridge_hidden: true
+    "binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor*":
+      hidden: true
+      homebridge_hidden: true
+    "sensor.*sourcenodeid*":
+      hidden: true
+      homebridge_hidden: true
+  
+logger:
+# default: info
+# logs:
+#   homeassistant.components.teleinfo: debug
 #    homeassistant.components.xiaomi_aqara: debug
 #    homeassistant.components.binary_sensor.xiaomi_aqara: debug
 #    homeassistant.components.sensor.xiaomi_aqara: debug
@@ -109,16 +155,36 @@ history:
     domains:
       - switch
       - updater
-  include:
-    domains:
-      - group
-      - automation
-      - sensor
-      - binary_sensor
-      - media_player
-
+#  include:
+#    domains:
+#      - group
+#      - automation
+#      - sensor
+#      - binary_sensor
+#      - media_player
+#      - switch
+#
 # View all events in a logbook
 logbook: !include logbook.yaml
+
+influxdb:
+  host: 192.168.0.28
+#  include:
+#    entities:
+#      - sensor.teleinfo_hchc
+#      - sensor.teleinfo_hchp
+#      - sensor.teleinfo_hhphc
+#      - sensor.teleinfo_iinst
+#      - sensor.teleinfo_imax
+#      - sensor.teleinfo_isousc
+#      - sensor.teleinfo_papp
+#      - sensor.teleinfo_ptec
+#
+
+# APC Battery
+apcupsd:
+
+
 # Enables a map showing the location of tracked devices
 map:
 
@@ -183,7 +249,8 @@ camera:
     ip: !secret foscam_ip
     username: !secret foscam_username
     password: !secret foscam_password
-
+  - platform: arlo
+    ffmpeg_arguments: '-pred 1 -q:v 2'
 
 xiaomi_aqara:
   discovery_retry: 5
@@ -227,28 +294,33 @@ zwave:
 
 
 rfxtrx:
-   device: /dev/ttyUSB0
+   device: /dev/ttyUSB1
    #debug: true
-
-
+   #
 light:
   - platform: rfxtrx
-    automatic_add: True
+#   automatic_add: True
 
 
 switch: !include switch.yaml
 
 device_tracker:
   - platform: owntracks_http
+    max_gps_accuracy: 100
     # - platform: bluetooth_tracker
     # - platform: bluetooth_le_tracker
-  - platform: icloud
-    username: !secret icloud_username
-    password: !secret icloud_password
+# - platform: icloud
+#   username: !secret icloud_username
+#   password: !secret icloud_password
   - platform: nmap_tracker
     hosts:
             - 192.168.0.19
             - 192.168.0.32
+  - platform: icloud2
+    username: !secret icloud_username
+    password: !secret icloud_password
+    account_name: pierreIcloud2
+    filter_devices: 'phone'
 
 notify:
   - name: Telegram
@@ -320,6 +392,7 @@ alarm_control_panel:
     armed_away:
       pending_time: 60
       delay_time: 0
+  - platform: arlo
 
 
 input_select:
@@ -334,4 +407,11 @@ input_select:
       - On vacation
       - Have guests
     initial: Normal
+
+ffmpeg:
+
+arlo:
+  username: !secret arlo_username
+  password: !secret arlo_password
+
 

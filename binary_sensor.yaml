@@ -1,5 +1,5 @@
   - platform: rfxtrx
-    automatic_add: True
+#   automatic_add: True
 
   - platform: rest
     name: "Foscam C1 Motion Sensor"
@@ -50,53 +50,99 @@
 #        to_state: 'on'
 #        prob_given_true: 0.7
 #
-        
-
-        
-
+          
   - platform: bayesian
-    name: 'In Bed'
-    prior: 0.3
-    probability_threshold: 0.95
+    name: In Bed
+    prior: .33 # 33% chance that we are in bed (8 hrs out of 24hrs)
+    probability_threshold: 0.85
     observations:
-# presence salon
-#      - entity_id: 'binary_sensor.motion_sensor_158d0001ddb2d3'
-#        prob_given_true: 0.5
-#        prob_given_false: 0.3
+      # We are in bed -> vey likely at least one household member is at home
+      - entity_id: group.household
+        platform: state
+        to_state: home
+        prob_given_true: 0.99 # 99% chance that if we are in bed we are at home
+        prob_given_false: 0.7 # 70% chance that if we are not in bed we are at home
+      # we are in bed -> likely alarm will be set
+      - entity_id: alarm_control_panel.home_alarm
+        platform: state
+        to_state: armed_home
+        prob_given_true: 0.9 # 90% chance that if we are in bed alarm is armed
+        prob_given_false: 0.5 # 50% chance that if we are not in bed alarm is armed
+      # we are in bed -> vey likely no motion is detected
+      - entity_id: binary_sensor.motion_detected
+        platform: state
+        to_state: 'off'
+        prob_given_true: 0.9 # 90% chance that if we are in bed no motion is detected
+        prob_given_false: 0.7 # 70% chance that if we are not in bed no motion is detected
+      # we are in bed -> very likely it is night time
+      - entity_id: 'sensor.period_of_day'
+        platform: 'state'
+        to_state: 'night'
+        prob_given_true: 0.9 # 90% chance that if we are in bed it is night
+        prob_given_false: 0.5 # 50% chance that if we are not in bed it is night
+      # we are in bed -> likely that master bedroom light is off
+      - entity_id: 'group.all_lights'
+        platform: 'state'
+        to_state: 'off'
+        prob_given_true: 0.9 # 90% chance that if we are in bed, the light is off
+        prob_given_false: 0.7 # 70% chance that if we are not in bed the light is off
+      - entity_id: 'binary_sensor.motion_last30'
+        platform: 'state'
+        to_state: 'off'
+        prob_given_true: 0.6 # 60% chance that if we are in bed, no motion since 30min
+        prob_given_false: 0.4 # 90% chance that if we are not in bed, no motion since 30min
+      - entity_id: 'binary_sensor.motion_last10'
+        platform: 'state'
+        to_state: 'off'
+        prob_given_true: 0.5 
+        prob_given_false: 0.5 
+
+ 
+#  
+#
+#  - platform: bayesian
+#    name: 'In Bed'
+#    prior: 0.4
+#    probability_threshold: 0.95
+#    observations:
+## lights are off
+#      - entity_id: 'group.all_lights'
+#        prob_given_true: 0.3
+#        prob_given_false: 0.01
 #        platform: 'state'
 #        to_state: 'off'
-# lights are off
-      - entity_id: 'sensor.illumination_158d0001ddb2d3'
-        prob_given_true: 0.5
-        prob_given_false: 0.01
-        platform: 'numeric_state'
-        below: '50'
-# TV off
-      - entity_id: 'remote.harmony_hub'
-        prob_given_true: 0.4
-        prob_given_false: 0.01
-        platform: 'state'
-        to_state: 'Off'
-# iPhone plugged in
-      - entity_id: 'sensor.ipierre_battery_state'
-        prob_given_true: 0.9
-        prob_given_false: 0.5
-        platform: 'state'
-        to_state: 'Charging'
-      - entity_id: 'sun.sun'
-        prob_given_true: 0.8
-        platform: 'state'
-        to_state: 'below_horizon'
-      - entity_id: 'binary_sensor.motion_last30'
-        prob_given_true: 0.7
-        prob_given_false: 0.5
-        platform: 'state'
-        to_state: 'off'
-      - entity_id: 'binary_sensor.motion_last10'
-        prob_given_true: 0.8
-        prob_given_false: 0.2
-        platform: 'state'
-        to_state: 'off'
+## TV off
+#      - entity_id: 'remote.harmony_hub'
+#        prob_given_true: 0.4
+#        prob_given_false: 0.01
+#        platform: 'state'
+#        to_state: 'Off'
+## Somebody is home :)
+#      - entity_id: 'binary_sensor.somebody_home'
+#        prob_given_true: 0.6
+#        prob_given_false: 0.01
+#        platform: 'state'
+#        to_state: 'on'
+## iPhone plugged in
+#      - entity_id: 'sensor.ipierre_battery_state'
+#        prob_given_true: 0.7
+#        prob_given_false: 0.5
+#        platform: 'state'
+#        to_state: 'Charging'
+#      - entity_id: 'sensor.period_of_day'
+#        prob_given_true: 0.8
+#        platform: 'state'
+#        to_state: 'night'
+#      - entity_id: 'binary_sensor.motion_last30'
+#        prob_given_true: 0.8
+#        prob_given_false: 0.2
+#        platform: 'state'
+#        to_state: 'off'
+#      - entity_id: 'binary_sensor.motion_last10'
+#        prob_given_true: 0.7
+#        prob_given_false: 0.5
+#        platform: 'state'
+#        to_state: 'off'
   
 
   - platform: bayesian
@@ -109,11 +155,12 @@
         platform: state
         to_state: home
         prob_given_true: 0.99
+        prob_given_false: 0.2
       # Somebody at home -> Likely alarm is disarmed
-#      - entity_id: alarm_control_panel.home_alarm
-#        platform: state
-#        to_state: disarmed
-#        prob_given_true: 0.7
+      - entity_id: alarm_control_panel.home_alarm
+        platform: state
+        to_state: disarmed
+        prob_given_true: 0.7
       # Somebody at home -> likely that at least one indoor light is turned on
       - entity_id: group.all_lights
         platform: state
@@ -123,8 +170,8 @@
       - entity_id: binary_sensor.motion_detected
         platform: state
         to_state: 'on'
-        prob_given_true: 0.7
-        #prob_given_false: 0.01
+        prob_given_true: 0.8
+        prob_given_false: 0.01
       - entity_id: 'binary_sensor.welcam_3_someone_known'
         prob_given_true: 0.7
         prob_given_false: 0.5
@@ -141,6 +188,10 @@
 #        to_state: 'on'
 #        prob_given_true: 0.8
 #        prob_given_false: 0.01
+
+
+
+
  
   - platform: template
     sensors:
@@ -152,18 +203,22 @@
         entity_id:
           - group.motion_detectors
         value_template: "{{is_state('group.motion_detectors', 'on')}}"
-  
+   
   - platform: template
     sensors:
       motion_last10:
-        value_template: '{{(as_timestamp(now())-as_timestamp(states.binary_sensor.motion_detected.last_updated)) < 600 }}'
         friendly_name: Motion in Last 10min
         device_class: motion
+        #value_template: '{{(  as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))-as_timestamp(states.binary_sensor.motion_detected.last_changed)) < 600 }}'
+        #value_template: '{{(as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
+        value_template: '{{(  as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))   - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 600)}}'
   
   - platform: template
     sensors:
       motion_last30:
-        value_template: '{{(as_timestamp(now())-as_timestamp(states.binary_sensor.motion_detected.last_updated)) < 1800 }}'
         friendly_name: Motion in Last 30min
         device_class: motion
+        #value_template: '{{(  as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))-as_timestamp(states.binary_sensor.motion_detected.last_changed)) < 1800 }}'
+        #value_template: '{{(as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
+        value_template: '{{(  as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))   - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
   

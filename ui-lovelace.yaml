@@ -4,24 +4,128 @@
 
 title: Home
 views:
-  - title: Default
-    icon: mdi:home
+  - title: Home
     cards:
+      - type: picture-entity
+        title: Etage 1
+        entity: camera.etage_1
+        camera_image: camera.etage_1
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Etage 2
+        entity: camera.etage_2
+        camera_image: camera.etage_2
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Jardin
+        entity: camera.jardin
+        camera_image: camera.jardin
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Foscam Camera
+        entity: camera.foscam_camera
+        camera_image: camera.foscam_camera
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Welcam 3
+        entity: camera.welcam_3
+        camera_image: camera.welcam_3
+        show_info: true
+        tap_action: dialog
       - type: entities
         title: Home
         show_header_toggle: true
         entities:
           - sun.sun
           - alarm_control_panel.home_alarm
+          - alarm_control_panel.arlo
           - sensor.period_of_day
           - binary_sensor.in_bed
-          - binary_sensor.pierre_home
-          - binary_sensor.welcam_3__porte_someone_known
-          - binary_sensor.welcam_someone_known
-          - binary_sensor.welcam_3__porte_someone_unknown
-          - binary_sensor.welcam_someone_unknown
+          - binary_sensor.pierre_is_home
+          - device_tracker.igaetane
+          - binary_sensor.welcam_3_someone_known
+          - binary_sensor.welcam_3_someone_unknown
+          - binary_sensor.somebody_home
+          - input_select.system_mode
+          - sensor.current_state
+          - binary_sensor.motion_last10
+          - binary_sensor.motion_last30
+          - binary_sensor.motion_detected
       - type: weather-forecast
         entity: weather.dark_sky
+      - type: entities
+        title: Pierre
+        show_header_toggle: true
+        entities:
+          - sensor.ipierre_battery_state
+          - sensor.ipierre_battery_level
+          - device_tracker.iphonedepierre
+          - device_tracker.ipierre
+          - device_tracker.ipierre_2
+          - device_tracker.pierre_ipierre
+          - binary_sensor.pierre_is_home
+      - type: entities
+        title: Gaetane
+        show_header_toggle: true
+        entities:
+          - device_tracker.igaetane
+      - type: entities
+        title: all lights
+        show_header_toggle: true
+        entities:
+          - light.fibaro_system_fgd212_dimmer_2_level_4
+          - light.fibaro_system_fgd212_dimmer_2_level_2
+          - light.fibaro_system_fgd212_dimmer_2_level_5
+          - light.fibaro_system_fgd212_dimmer_2_level_3
+          - light.fibaro_system_fgd212_dimmer_2_level_7
+          - light.fibaro_system_fgd212_dimmer_2_level_6
+          - light.gateway_light_34ce008c1873
+          - light.gateway_light_7811dcb7afd1
+          - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+          - light.unknown_node_5_level_2
+      - type: entities
+        title: Motion Detectors
+        show_header_toggle: true
+        entities:
+          - binary_sensor.motion_sensor_158d0001ddb2d3
+          - binary_sensor.motion_sensor_158d0001e163a1
+          - binary_sensor.motion_sensor_158d0001ab34c1
+          - binary_sensor.motion_sensor_158d0001ab34e1
+          - binary_sensor.motion_sensor_158d0001b1cff9
+          - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+          - binary_sensor.welcam_3_motion
+      - type: entities
+        title: EDF
+        show_header_toggle: true
+        entities:
+          - sensor.teleinfo_hchc
+          - sensor.teleinfo_hchp
+          - sensor.teleinfo_hhphc
+          - sensor.teleinfo_iinst
+          - sensor.teleinfo_imax
+          - sensor.teleinfo_papp
+          - sensor.teleinfo_ptec
+          - sensor.teleinfo_isousc
+      - type: entities
+        title: Gaetane
+        show_header_toggle: true
+        entities:
+          - device_tracker.igaetane
+      - type: entities
+        title: Pierre
+        show_header_toggle: true
+        entities:
+          - sensor.ipierre_battery_state
+          - sensor.ipierre_battery_level
+          - device_tracker.iphonedepierre
+          - device_tracker.ipierre
+          - device_tracker.ipierre_2
+          - device_tracker.pierre_ipierre
+          - binary_sensor.pierre_is_home
       - type: entities
         title: Salon
         show_header_toggle: true
@@ -39,6 +143,8 @@ views:
           - switch.prise_lampe_boule
           - switch.radiateur_1_salon
           - switch.radiateur_2_salon
+          - light.fibaro_system_fgd212_dimmer_2_level_4
+          - light.fibaro_system_fgd212_dimmer_2_level_7
       - type: entities
         title: Cuisine
         show_header_toggle: true
@@ -51,6 +157,7 @@ views:
           - light.gateway_light_34ce008c1873
           - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
           - switch.radiateur_cuisine
+          - light.fibaro_system_fgd212_dimmer_2_level_5
       - type: entities
         title: "Chambre B\xE9b\xE9"
         show_header_toggle: true
@@ -154,63 +261,643 @@ views:
           - zwave.neo_coolcam_power_plug_12a
           - sensor.neo_coolcam_power_plug_12a_power
           - sensor.neo_coolcam_power_plug_12a_voltage
+      - type: entities
+        title: Motion Detectors
+        show_header_toggle: true
+        entities:
+          - binary_sensor.motion_sensor_158d0001ddb2d3
+          - binary_sensor.motion_sensor_158d0001e163a1
+          - binary_sensor.motion_sensor_158d0001ab34c1
+          - binary_sensor.motion_sensor_158d0001ab34e1
+          - binary_sensor.motion_sensor_158d0001b1cff9
+          - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+          - binary_sensor.welcam_3_motion
+      - type: entities
+        title: Gaetane
+        show_header_toggle: true
+        entities:
+          - device_tracker.igaetane
+      - type: entities
+        title: Pierre
+        show_header_toggle: true
+        entities:
+          - sensor.ipierre_battery_state
+          - sensor.ipierre_battery_level
+          - device_tracker.iphonedepierre
+          - device_tracker.ipierre
+          - device_tracker.ipierre_2
+          - device_tracker.pierre_ipierre
+          - binary_sensor.pierre_is_home
+      - type: entities
+        title: Buanderie
+        show_header_toggle: true
+        entities:
+          - zwave.neo_coolcam_power_plug_12a
+          - sensor.neo_coolcam_power_plug_12a_power
+          - sensor.neo_coolcam_power_plug_12a_voltage
+      - type: entities
+        title: Cuisine
+        show_header_toggle: true
+        entities:
+          - binary_sensor.door_window_sensor_158d00017010c1
+          - sensor.humidity_158d0001715c53
+          - sensor.pressure_158d0001715c53
+          - sensor.temperature_158d0001715c53
+          - sensor.illumination_34ce008c1873
+          - light.gateway_light_34ce008c1873
+          - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+          - switch.radiateur_cuisine
+          - light.fibaro_system_fgd212_dimmer_2_level_5
+      - type: entities
+        title: Salon
+        show_header_toggle: true
+        entities:
+          - binary_sensor.door_window_sensor_158d00019ff246
+          - binary_sensor.door_window_sensor_158d00019df284
+          - binary_sensor.switch_158d0001a666f6
+          - sensor.pressure_158d0001db60d9
+          - sensor.temperature_158d0001db60d9
+          - sensor.humidity_158d0001db60d9
+          - remote.harmony_hub
+          - vacuum.xiaomi_vacuum_cleaner
+          - sensor.illumination_158d0001ddb2d3
+          - binary_sensor.motion_sensor_158d0001ddb2d3
+          - switch.prise_lampe_boule
+          - switch.radiateur_1_salon
+          - switch.radiateur_2_salon
+          - light.fibaro_system_fgd212_dimmer_2_level_4
+          - light.fibaro_system_fgd212_dimmer_2_level_7
+      - type: entities
+        title: "Chambre B\xE9b\xE9"
+        show_header_toggle: true
+        entities:
+          - sensor.temperature_158d0001720782
+          - sensor.humidity_158d0001720782
+          - sensor.pressure_158d0001720782
+          - binary_sensor.door_window_sensor_158d00015af81e
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2
+          - switch.prise_bambi
+      - type: entities
+        title: "Biblioth\xE8que"
+        show_header_toggle: true
+        entities:
+          - sensor.temperature_158d0001a4b91d
+          - sensor.humidity_158d0001a4b91d
+          - sensor.pressure_158d0001a4b91d
+          - binary_sensor.door_window_sensor_158d000170428f
+          - binary_sensor.motion_sensor_158d0001ab34c1
+          - sensor.illumination_158d0001ab34c1
+          - switch.radiateur_bibliotheque
+      - type: entities
+        title: Chambre 2e Jardin
+        show_header_toggle: true
+        entities:
+          - sensor.temperature_158d0001ab1858
+          - sensor.pressure_158d0001ab1858
+          - sensor.humidity_158d0001ab1858
+      - type: entities
+        title: Chambre 2e Rue
+        show_header_toggle: true
+        entities:
+          - sensor.temperature_158d0001713f49
+          - sensor.pressure_158d0001713f49
+          - sensor.humidity_158d0001713f49
+      - type: entities
+        title: Chambre Parentale
+        show_header_toggle: true
+        entities:
+          - binary_sensor.switch_158d0001a66720
+          - sensor.temperature_158d0001ab75f3
+          - sensor.humidity_158d0001ab75f3
+          - sensor.pressure_158d0001ab75f3
+          - binary_sensor.door_window_sensor_158d0001e44c14
+          - binary_sensor.door_window_sensor_158d00017010c1
+      - type: entities
+        title: "Entr\xE9e"
+        show_header_toggle: true
+        entities:
+          - sensor.temperature_158d0001a1f903
+          - sensor.pressure_158d0001a1f903
+          - sensor.humidity_158d0001a1f903
+          - binary_sensor.switch_158d0001a6671d
+          - binary_sensor.door_window_sensor_158d00015b63fb
+          - binary_sensor.door_window_sensor_158d00015b5fc7
+          - sensor.temperature_158d0001d6dae3
+          - sensor.humidity_158d0001d6dae3
+          - sensor.pressure_158d0001d6dae3
+          - binary_sensor.motion_sensor_158d0001e163a1
+          - sensor.illumination_158d0001e163a1
+          - binary_sensor.foscam_c1_motion_sensor
+          - switch.sonnette
+      - type: entities
+        title: Etage 2
+        show_header_toggle: true
+        entities:
+          - sensor.illumination_158d0001b1cff9
+          - binary_sensor.motion_sensor_158d0001b1cff9
+      - type: entities
+        title: Etage 1
+        show_header_toggle: true
+        entities:
+          - binary_sensor.motion_sensor_158d0001ab34e1
+          - sensor.illumination_158d0001ab34e1
+          - sensor.illumination_7811dcb7afd1
+          - light.gateway_light_7811dcb7afd1
+      - type: entities
+        title: Salle de Bain
+        show_header_toggle: true
+        entities:
+          - sensor.humidity_158d0001ab75da
+          - sensor.pressure_158d0001ab75da
+          - sensor.temperature_158d0001ab75da
+      - type: entities
+        title: Salle de Douche
+        show_header_toggle: true
+        entities:
+          - sensor.humidity_158d0001e421d9
+          - sensor.pressure_158d0001e421d9
+          - sensor.temperature_158d0001e421d9
+      - type: entities
+        title: Cave
+        show_header_toggle: true
+        entities:
+          - switch.prise_cave
+      - type: entities
+        title: Motion Detectors
+        show_header_toggle: true
+        entities:
+          - binary_sensor.motion_sensor_158d0001ddb2d3
+          - binary_sensor.motion_sensor_158d0001e163a1
+          - binary_sensor.motion_sensor_158d0001ab34c1
+          - binary_sensor.motion_sensor_158d0001ab34e1
+          - binary_sensor.motion_sensor_158d0001b1cff9
+          - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+          - binary_sensor.welcam_3_motion
+      - type: entities
+        title: Gaetane
+        show_header_toggle: true
+        entities:
+          - device_tracker.igaetane
+      - type: entities
+        title: Pierre
+        show_header_toggle: true
+        entities:
+          - sensor.ipierre_battery_state
+          - sensor.ipierre_battery_level
+          - device_tracker.iphonedepierre
+          - device_tracker.ipierre
+          - device_tracker.ipierre_2
+          - device_tracker.pierre_ipierre
+          - binary_sensor.pierre_is_home
+      - type: entities
+        title: EDF
+        show_header_toggle: true
+        entities:
+          - sensor.teleinfo_hchc
+          - sensor.teleinfo_hchp
+          - sensor.teleinfo_hhphc
+          - sensor.teleinfo_iinst
+          - sensor.teleinfo_imax
+          - sensor.teleinfo_papp
+          - sensor.teleinfo_ptec
+          - sensor.teleinfo_isousc
+      - type: entities
+        title: APC UPS
+        show_header_toggle: true
+        entities:
+          - sensor.ups_battery
+          - sensor.ups_input_voltage
+          - sensor.ups_load
+          - sensor.ups_nominal_input_voltage
+          - sensor.ups_status
+          - sensor.ups_time_left
+          - sensor.ups_time_on_battery
+          - sensor.ups_transfer_count
+      - type: entities
+        title: Arlo
+        show_header_toggle: true
+        entities:
+          - alarm_control_panel.arlo
+          - sensor.arlo_cameras
+          - sensor.battery_level_etage_1
+          - sensor.battery_level_etage_2
+          - sensor.battery_level_jardin
+          - sensor.captured_today_etage_1
+          - sensor.captured_today_etage_2
+          - sensor.captured_today_jardin
+          - sensor.last_etage_1
+          - sensor.last_etage_2
+          - sensor.last_jardin
+          - sensor.signal_strength_etage_1
+          - sensor.signal_strength_etage_2
+          - sensor.signal_strength_jardin
+      - type: picture-entity
+        title: Etage 1
+        entity: camera.etage_1
+        camera_image: camera.etage_1
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Etage 2
+        entity: camera.etage_2
+        camera_image: camera.etage_2
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Jardin
+        entity: camera.jardin
+        camera_image: camera.jardin
+        show_info: true
+        tap_action: dialog
+      - type: entities
+        title: all scripts
+        show_header_toggle: true
+        entities:
+          - script.presence_notifications_when_alarm_triggered
+          - script.sunrise
+          - script.sunset
+          - script.telegram_snapshots_all_cameras
+      - type: entities
+        title: all switches
+        show_header_toggle: true
+        entities:
+          - switch.0a14024a07fdbe02010080
+          - switch.fluxer
+          - switch.neo_coolcam_power_plug_12a_switch
+          - switch.prise_bambi
+          - switch.prise_cave
+          - switch.prise_lampe_boule
+          - switch.qubino_zmnhadx_flush_1_relay_switch
+          - switch.qubino_zmnhjd1_flush_dimmer_pilot_wire_switch
+          - switch.radiateur_1_salon
+          - switch.radiateur_2_salon
+          - switch.radiateur_bibliotheque
+          - switch.radiateur_cuisine
+          - switch.sonnette
+      - type: entities
+        title: all lights
+        show_header_toggle: true
+        entities:
+          - light.fibaro_system_fgd212_dimmer_2_level_4
+          - light.fibaro_system_fgd212_dimmer_2_level_2
+          - light.fibaro_system_fgd212_dimmer_2_level_5
+          - light.fibaro_system_fgd212_dimmer_2_level_3
+          - light.fibaro_system_fgd212_dimmer_2_level_7
+          - light.fibaro_system_fgd212_dimmer_2_level_6
+          - light.gateway_light_34ce008c1873
+          - light.gateway_light_7811dcb7afd1
+          - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+          - light.unknown_node_5_level_2
+      - type: entities
+        title: all remotes
+        show_header_toggle: true
+        entities:
+          - remote.harmony_hub
+      - type: entities
+        title: all vacuum cleaners
+        show_header_toggle: true
+        entities:
+          - vacuum.xiaomi_vacuum_cleaner
+      - type: entities
+        title: all devices
+        show_header_toggle: true
+        entities:
+          - device_tracker.pierre_ipierre
+          - device_tracker.iphonedepierre
+          - device_tracker.ipierre
+          - device_tracker.ipierre_2
+          - device_tracker.igaetane
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.electricity_monthly_report
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.electricity_monthly_report
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.electricity_monthly_report
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.electricity_monthly_report
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.electricity_monthly_report
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.electricity_monthly_report
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: media-control
+        entity: media_player.xiaomi_network_speaker_airplay
+      - type: media-control
+        entity: media_player.google_home__salon
+      - type: weather-forecast
+        entity: weather.dark_sky
   - title: Home
     cards:
       - type: entities
         entities:
           - sun.sun
           - alarm_control_panel.home_alarm
+          - alarm_control_panel.arlo
           - sensor.period_of_day
           - binary_sensor.in_bed
-          - binary_sensor.pierre_home
-          - binary_sensor.welcam_3__porte_someone_known
-          - binary_sensor.welcam_someone_known
-          - binary_sensor.welcam_3__porte_someone_unknown
-          - binary_sensor.welcam_someone_unknown
+          - binary_sensor.pierre_is_home
+          - device_tracker.igaetane
+          - binary_sensor.welcam_3_someone_known
+          - binary_sensor.welcam_3_someone_unknown
+          - binary_sensor.somebody_home
+          - input_select.system_mode
+          - sensor.current_state
+          - binary_sensor.motion_last10
+          - binary_sensor.motion_last30
+          - binary_sensor.motion_detected
       - type: weather-forecast
         entity: weather.dark_sky
-  - title: Pierre
-    cards:
       - type: entities
+        title: Pierre
+        show_header_toggle: true
         entities:
           - sensor.ipierre_battery_state
           - sensor.ipierre_battery_level
+          - device_tracker.iphonedepierre
           - device_tracker.ipierre
           - device_tracker.ipierre_2
+          - device_tracker.pierre_ipierre
+          - binary_sensor.pierre_is_home
+      - type: entities
+        title: Gaetane
+        show_header_toggle: true
+        entities:
+          - device_tracker.igaetane
+      - type: entities
+        title: all lights
+        show_header_toggle: true
+        entities:
+          - light.fibaro_system_fgd212_dimmer_2_level_4
+          - light.fibaro_system_fgd212_dimmer_2_level_2
+          - light.fibaro_system_fgd212_dimmer_2_level_5
+          - light.fibaro_system_fgd212_dimmer_2_level_3
+          - light.fibaro_system_fgd212_dimmer_2_level_7
+          - light.fibaro_system_fgd212_dimmer_2_level_6
+          - light.gateway_light_34ce008c1873
+          - light.gateway_light_7811dcb7afd1
+          - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+          - light.unknown_node_5_level_2
+      - type: entities
+        title: Motion Detectors
+        show_header_toggle: true
+        entities:
+          - binary_sensor.motion_sensor_158d0001ddb2d3
+          - binary_sensor.motion_sensor_158d0001e163a1
+          - binary_sensor.motion_sensor_158d0001ab34c1
+          - binary_sensor.motion_sensor_158d0001ab34e1
+          - binary_sensor.motion_sensor_158d0001b1cff9
+          - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+          - binary_sensor.welcam_3_motion
+      - type: entities
+        title: EDF
+        show_header_toggle: true
+        entities:
+          - sensor.teleinfo_hchc
+          - sensor.teleinfo_hchp
+          - sensor.teleinfo_hhphc
+          - sensor.teleinfo_iinst
+          - sensor.teleinfo_imax
+          - sensor.teleinfo_papp
+          - sensor.teleinfo_ptec
+          - sensor.teleinfo_isousc
+      - type: entities
+        title: Gaetane
+        show_header_toggle: true
+        entities:
+          - device_tracker.igaetane
+      - type: entities
+        title: Pierre
+        show_header_toggle: true
+        entities:
+          - sensor.ipierre_battery_state
+          - sensor.ipierre_battery_level
+          - device_tracker.iphonedepierre
+          - device_tracker.ipierre
+          - device_tracker.ipierre_2
+          - device_tracker.pierre_ipierre
+          - binary_sensor.pierre_is_home
   - title: Automation
     cards:
       - type: entities
         title: all automations
         show_header_toggle: true
         entities:
-          - automation.arm_alarm_when_pierre_leaves
-          - automation.disarm_alarm_when_pierre_is_back_home
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.heal_zwave_network
           - automation.light_enlight_floor1
           - automation.light_floor1_back_to_normal
           - automation.motion_parking_space
+          - automation.pierre_home
           - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
           - automation.send_notification_when_alarm_triggered
           - automation.start_homekit
-          - automation.sunset__steps__table
+          - automation.start_homekit_2
+          - automation.telegram_bot_answer_to_command_alarm_disarm
           - automation.telegram_bot_answer_to_command_disarm_alarm
           - automation.telegram_bot_answer_to_command_presence_triggered_alarm
           - automation.telegram_bot_that_reply_pong_to_ping
           - automation.telegram_ha_started
           - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
       - type: entities
         title: all scripts
         show_header_toggle: true
         entities:
           - script.presence_notifications_when_alarm_triggered
+          - script.sunrise
+          - script.sunset
           - script.telegram_snapshots_all_cameras
   - title: "Cam\xE9ras"
     cards:
-      - type: picture-entity
-        title: Welcam
-        entity: camera.welcam
-        camera_image: camera.welcam
-        show_info: true
-        tap_action: dialog
       - type: picture-entity
         title: Welcam 3
         entity: camera.welcam_3
@@ -223,11 +910,27 @@ views:
         camera_image: camera.foscam_camera
         show_info: true
         tap_action: dialog
+      - type: picture-entity
+        title: Etage 1
+        entity: camera.etage_1
+        camera_image: camera.etage_1
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Etage 2
+        entity: camera.etage_2
+        camera_image: camera.etage_2
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Jardin
+        entity: camera.jardin
+        camera_image: camera.jardin
+        show_info: true
+        tap_action: dialog
   - title: Multimedia
     cards:
       - type: media-control
         entity: media_player.xiaomi_network_speaker_airplay
-      - type: media-control
-        entity: media_player.salon
       - type: media-control
         entity: media_player.google_home__salon

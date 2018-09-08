@@ -1,25 +1,41 @@
-  platform: rfxtrx
-  automatic_add: True
-  devices:
-          "0B110000464D8E6909000090":
-                  name: Prise Cave
-#         "0B1100002025EA1909010F90":
-          "0B1100002025EA1909000090":
-                  name: Prise Bambi
-#          0B11002F67134A5A03010F70
-          "0B11002F67134A5A03010F70":
-                  name: Radiateur Bibliothèque
-          "0B11002F144637B903010F70":
-                  name: Radiateur Cuisine
-          "0B11002F6BD03FB803010F70":
-                  name: 'Radiateur 1 Salon'
-          "0B11002F57651E4D03010F70":
-                  name: 'Radiateur 2 Salon'
-#         "0B110000445BBC9B09010F90"
-          "0B110000445BBC9B09000090":
-                  name: Prise Lampe Boule
-          "0B11002F0144449209000090":
-                  name: Sonnette
+  - platform: rfxtrx
+    automatic_add: True
+    devices:
+            "0B110000464D8E6909000090":
+                    name: Prise Cave
+  #         "0B1100002025EA1909010F90":
+            "0B1100002025EA1909000090":
+                    name: Prise Bambi
+  #          0B11002F67134A5A03010F70
+            "0B11002F67134A5A03010F70":
+                    name: Radiateur Bibliothèque
+            "0B11002F144637B903010F70":
+                    name: Radiateur Cuisine
+            "0B11002F6BD03FB803010F70":
+                    name: 'Radiateur 1 Salon'
+            "0B11002F57651E4D03010F70":
+                    name: 'Radiateur 2 Salon'
+  #         "0B110000445BBC9B09010F90"
+            "0B110000445BBC9B09000090":
+                    name: Prise Lampe Boule
+            "0B11002F0144449209000090":
+                    name: Sonnette
 
 
+  - platform: flux
+    lights:
+      - light.fibaro_system_fgd212_dimmer_2_level_4
+      - light.fibaro_system_fgd212_dimmer_2_level_7
+      - light.fibaro_system_fgd212_dimmer_2_level_5
+    name: Fluxer
+    start_time: '7:00'
+    stop_time: '23:00'
+    start_colortemp: 4000
+    sunset_colortemp: 3000
+    stop_colortemp: 1900
+    brightness: 200
+    disable_brightness_adjust: True
+    mode: xy
+    transition: 30
+    interval: 60
 

@@ -1,3 +1,8 @@
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date_time'
+
   - platform: darksky
     api_key: !secret darksky_api_key 
     units: ca
@@ -21,7 +26,7 @@
 #        device_class: battery
 #
   - platform: rfxtrx
-    automatic_add: True
+#   automatic_add: True
 
   - platform: template
     sensors:
@@ -113,3 +118,365 @@
 #          {% endif %}"
 #        friendly_name: Pierre
 # 
+
+  - platform: arlo
+    monitored_conditions:
+      - captured_today
+      - last_capture
+      - total_cameras
+      - battery_level
+      - signal_strength
+
+
+
+
+  - platform: teleinfo
+    name: "edf"
+    device: "/dev/ttyUSB0"
+  
+  - platform: template
+    sensors:
+      teleinfo_hchc:
+        value_template: '{{ states.sensor.edf.attributes["HCHC"] }}'
+        unit_of_measurement: 'Wh'
+        icon_template: mdi:flash
+ 
+  - platform: template
+    sensors:
+      teleinfo_hchp:
+        value_template: '{{ states.sensor.edf.attributes["HCHP"] }}'
+        unit_of_measurement: 'Wh'
+        icon_template: mdi:flash
+  
+  - platform: template
+    sensors:
+      teleinfo_hhphc:
+        value_template: '{{ states.sensor.edf.attributes["HHPHC"] }}'
+        unit_of_measurement: ''
+        icon_template: mdi:information-outline
+  
+  - platform: template
+    sensors:
+      teleinfo_iinst:
+        value_template: '{{ states.sensor.edf.attributes["IINST"] }}'
+        unit_of_measurement: 'A'
+        icon_template: mdi:flash
+  
+  - platform: template
+    sensors:
+      teleinfo_imax:
+        value_template: '{{ states.sensor.edf.attributes["IMAX"] }}'
+        unit_of_measurement: 'A'
+        icon_template: mdi:flash
+  
+  - platform: template
+    sensors:
+      teleinfo_papp:
+        value_template: '{{ states.sensor.edf.attributes["PAPP"] }}'
+        unit_of_measurement: 'vA'
+        icon_template: mdi:flash
+  
+  - platform: template
+    sensors:
+      teleinfo_ptec:
+        value_template: '{{ states.sensor.edf.attributes["PTEC"] }}'
+        unit_of_measurement: ''
+        icon_template: mdi:information-outline
+  
+  - platform: template
+    sensors:
+      teleinfo_isousc:
+        value_template: '{{ states.sensor.edf.attributes["ISOUSC"] }}'
+        unit_of_measurement: 'A'
+        icon_template: mdi:flash
+  
+  
+
+
+  - platform: apcupsd
+    resources:
+      - bcharge
+      - linev
+      - loadpct
+      - nominv
+      - numxfers
+      - status
+      - timeleft
+      - tonbatt
+
+
+
+  - platform: template
+    sensors:
+        elecbill_subscription:
+            value_template: 9.78
+            friendly_name: 'Subscription (/m.)'
+            unit_of_measurement: '€'
+
+  - platform: template
+    sensors:
+        elecbill_conso_hp:
+            value_template: 0.0895
+            friendly_name: 'HP Consumption (/kWh)'
+            unit_of_measurement: '€'
+
+  - platform: template
+    sensors:
+        elecbill_conso_hc:
+            value_template: 0.0632
+            friendly_name: 'HC Consumption (/kWh)'
+            unit_of_measurement: '€'
+
+  - platform: template
+    sensors:
+        elecbill_options:
+            value_template: 4.99
+            friendly_name: 'Options (/m.)'
+            unit_of_measurement: '€'
+
+  - platform: template
+    sensors:
+        elecbill_cspe:
+            value_template: 0.0225
+            friendly_name: 'Public Electricity Service Contribution'
+            unit_of_measurement: '€'
+
+  - platform: template
+    sensors:
+        elecbill_cta:
+            value_template: 20.52
+            friendly_name: 'CTA (/m.)'
+            unit_of_measurement: '€'
+
+  - platform: template
+    sensors:
+        elecbill_tcfe_municipal:
+            value_template: 0.00638
+            friendly_name: 'Municipal Tax on final electricity consumption'
+            unit_of_measurement: '€'
+
+  - platform: template
+    sensors:
+        elecbill_tcfe_departmental:
+            value_template: 0.00319
+            friendly_name: 'Departmental Tax on final electricity consumption'
+            unit_of_measurement: '€'
+
+
+  - platform: template
+    sensors:
+        elecbill_today_ttc:
+            value_template: '
+
+{{   
+
+(
+
+(
+(states.sensor.elecbill_subscription.state |float / 30) + 
+(states.sensor.elecbill_cta.state |float / 365)  
+) * 1.055
+
++
+
+(
+(states.sensor.hc_energy_consumed_last_day.state |float /1000 ) *(states.sensor.elecbill_conso_hc.state |float) + (states.sensor.hp_energy_consumed_last_day.state |float /1000 ) *
+(states.sensor.elecbill_conso_hp.state|float)
+
++ (states.sensor.elecbill_options.state |float /30)
+
++ 
+( 
+(states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+)
++
+( 
+(states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+)
+
+) * 1.20
+
+)|round(2)
+
+}}
+
+'
+            friendly_name: 'Energy cost today (TTC)'
+            unit_of_measurement: '€'
+
+
+  - platform: template
+    sensors:
+        elecbill_last_week_ttc:
+            value_template: '
+{{   
+
+(
+
+(
+(states.sensor.elecbill_subscription.state |float / 7) + 
+(states.sensor.elecbill_cta.state |float / 52)  
+) * 1.055
+
++
+
+(
+(states.sensor.hc_energy_consumed_last_week.state |float /1000 ) *(states.sensor.elecbill_conso_hc.state |float) + (states.sensor.hp_energy_consumed_last_week.state |float /1000 ) *
+(states.sensor.elecbill_conso_hp.state|float)
+
++ (states.sensor.elecbill_options.state |float /7)
+
++ 
+( 
+(states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+)
++
+( 
+(states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+)
+
+) * 1.20
+
+)|round(2)
+
+}} 
+
+'
+            friendly_name: 'Energy cost last week (TTC)'
+            unit_of_measurement: '€'
+
+
+
+  - platform: template
+    sensors:
+        elecbill_last_month_ttc:
+            value_template: '
+{{   
+(
+
+(
+(states.sensor.elecbill_subscription.state |float) + 
+(states.sensor.elecbill_cta.state |float / 12)  
+) * 1.055
+
++
+
+(
+(states.sensor.hc_energy_consumed_last_month.state |float /1000 ) *(states.sensor.elecbill_conso_hc.state |float) + (states.sensor.hp_energy_consumed_last_month.state |float /1000 ) *
+(states.sensor.elecbill_conso_hp.state|float)
+
++ (states.sensor.elecbill_options.state |float )
+
++ 
+( 
+(states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+)
++
+( 
+(states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+)
+
+) * 1.20
+
+)|round(2)
+
+}} 
+
+'
+            friendly_name: 'Energy cost last month (TTC)'
+            unit_of_measurement: '€'
+
+
+
+
+
+
+  - platform: influxdb
+    host: 192.168.0.28
+
+    queries:
+#
+#      - name: HC Energy Consumed (last hour)
+#        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1h'
+#        measurement: '"Wh"'
+#        group_function: spread
+#        value_template: '{{ value | round(2) }}'
+#        unit_of_measurement: Wh
+#
+#      - name: HP Energy Consumed (last hour)
+#        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1h'
+#        measurement: '"Wh"'
+#        group_function: spread
+#        value_template: '{{ value | round(2) }}'
+#        unit_of_measurement: Wh
+#
+      - name: HC Energy Consumed (last day)
+        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1d'
+        measurement: '"Wh"'
+        group_function: spread
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: Wh
+
+      - name: HP Energy Consumed (last day)
+        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1d'
+        measurement: '"Wh"'
+        group_function: spread
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: Wh
+
+      - name: HC Energy Consumed (last week)
+        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1w'
+        measurement: '"Wh"'
+        group_function: spread
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: Wh
+
+      - name: HP Energy Consumed (last week)
+        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1w'
+        measurement: '"Wh"'
+        group_function: spread
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: Wh
+
+      - name: HC Energy Consumed (last month)
+        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1m'
+        measurement: '"Wh"'
+        group_function: spread
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: Wh
+
+      - name: HP Energy Consumed (last month)
+        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1m'
+        measurement: '"Wh"'
+        group_function: spread
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: Wh
+
+#      - name: Total EDF Energy Consumed (last hour)
+#        where: '"entity_id" = ''edf'' AND time >= now() - 1h'
+#        measurement: '"edf"'
+#        group_function: spread
+#        value_template: '{{ value | round(2) }}'
+#        unit_of_measurement: Wh
+#
+#      - name: Total EDF Energy Consumed (last day)
+#        where: '"entity_id" = ''edf'' AND time >= now() - 1h'
+#        measurement: '"edf"'
+#        group_function: spread
+#        value_template: '{{ value | round(2) }}'
+#        unit_of_measurement: Wh
+#
+#      - name: Total EDF Energy Consumed (last week)
+#        where: '"entity_id" = ''edf'' AND time >= now() - 1w'
+#        measurement: '"edf"'
+#        group_function: spread
+#        value_template: '{{ value | round(2) }}'
+#        unit_of_measurement: Wh
+#
+#      - name: Total EDF Energy Consumed (last month)
+#        where: '"entity_id" = ''edf'' AND time >= now() - 1m'
+#        measurement: '"edf"'
+#        group_function: spread
+#        value_template: '{{ value | round(2) }}'
+#        unit_of_measurement: Wh
+#

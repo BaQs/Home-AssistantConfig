@@ -20,12 +20,16 @@
         message: "Cameras"
         data:
           photo:
-             - url: "https://hassio.ourdouille.maison{{ states.camera.welcam_3.attributes.entity_picture }}"
-               caption: "Cuisine"
-             - url: "https://hassio.ourdouille.maison{{ states.camera.welcam.attributes.entity_picture }}"
-               caption: "Salon"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.jardin.attributes.entity_picture }}"
+               caption: "Jardin"
              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
                caption: "Entrée"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.etage_1.attributes.entity_picture }}"
+               caption: "Etage 1"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.etage_2.attributes.entity_picture }}"
+               caption: "Etage 2"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.welcam_3.attributes.entity_picture }}"
+               caption: "Cuisine"
 
   sunrise:
     alias: "Sunrise"

@@ -84,8 +84,32 @@
       message: Ca bouge sur le parking !
       title: Parking
     service: notify.telegram
-  - service: tts.google_say
+#  - service: tts.google_say
+#    data:
+#      entity_id: media_player.google_home__salon
+#      message: "La place de parking vient de se libérer"
+
+
+- id: electricity_monthly_report
+  alias: 'Electricity: Monthly Report'
+  trigger:
+  - platform: template
+    value_template: '{{ now().strftime("%d") == "01" }}'
+# condition:
+  action:
+  - service: notify.telegram
     data:
-      entity_id: media_player.google_home__salon
-      message: "La place de parking vient de se libérer"
+      title: Electricité
+      message: |
+        Il est temps de déclarer la conso !
+        HP: {{ '<b>{0}{1}{2}{3}{4}</b>{5}{6}{7}'.format(*states.sensor.teleinfo_hchp.state) }}
+        HC: {{ '<b>{0}{1}{2}{3}{4}</b>{5}{6}{7}'.format(*states.sensor.teleinfo_hchc.state) }}
+        https://clients.direct-energie.com/ma-conso/faire-mon-e-releve/
+#       HP: {{ states.sensor.teleinfo_hchp.state  }}
+#       HC: {{ states.sensor.teleinfo_hchc.state  }} 
+#     message: Test
+#  - service: tts.google_say
+#    data:
+#      entity_id: media_player.google_home__salon
+#      message: "La place de parking vient de se libérer"
 

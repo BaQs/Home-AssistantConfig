@@ -26,6 +26,7 @@
     entities:
       - sun.sun
       - alarm_control_panel.home_alarm
+      - alarm_control_panel.arlo
       - weather.dark_sky 
       - sensor.period_of_day
       - binary_sensor.in_bed
@@ -40,11 +41,13 @@
       - group.gaetane
       - group.all_lights
       - group.motion_detectors
+      - group.teleinfo
       - input_select.system_mode
       - sensor.current_state
       - group.household
       - binary_sensor.motion_last10
       - binary_sensor.motion_last30
+      - binary_sensor.motion_detected
   Gaetane:
     name: Gaetane
     view: no
@@ -56,8 +59,10 @@
     entities:
       - sensor.ipierre_battery_state
       - sensor.ipierre_battery_level
-      - device_tracker.ipierre 
+      - device_tracker.iphonedepierre 
+      - device_tracker.ipierre
       - device_tracker.ipierre_2
+      - device_tracker.pierre_ipierre
       - binary_sensor.pierre_is_home
       - sensor.pierre_home
   washroom:
@@ -95,8 +100,9 @@
       - switch.prise_lampe_boule
       - switch.radiateur_1_salon
       - switch.radiateur_2_salon
-      - light.fibaro_system_fgd212_dimmer_2_level
+#     - light.fibaro_system_fgd212_dimmer_2_level
       - light.fibaro_system_fgd212_dimmer_2_level_4
+      - light.fibaro_system_fgd212_dimmer_2_level_7
 #      - media_player.salon
 #       - media_player.mibox3_2
 #       - media_player.mibox3
@@ -201,6 +207,10 @@
       - camera.welcam
       - camera.welcam_3
       - camera.foscam_camera 
+      - camera.etage_1
+      - camera.etage_2
+      - camera.jardin
+
   multimedia:
     name: Multimedia
     view: yes
@@ -220,6 +230,7 @@
       - binary_sensor.motion_sensor_158d0001ab34e1
       - binary_sensor.motion_sensor_158d0001b1cff9
       - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+      - binary_sensor.welcam_3_motion
   
   
 #  all_lights:
@@ -239,5 +250,79 @@
     name: Household
     view: no
     entities:
-      - device_tracker.ipierre 
-      - device_tracker.igaetane
+      - group.gaetane
+      - group.pierre
+
+  teleinfo:
+    name: EDF
+    view: no
+    entities:
+     - sensor.teleinfo_hchc
+     - sensor.teleinfo_hchp
+     - sensor.teleinfo_hhphc
+     - sensor.teleinfo_iinst
+     - sensor.teleinfo_imax
+     - sensor.teleinfo_papp
+     - sensor.teleinfo_ptec
+     - sensor.teleinfo_isousc
+
+  elecbill:
+    name: Energy Consumption
+    view: no
+    entities:
+     - sensor.elecbill_subscription
+     - sensor.elecbill_conso_hp
+     - sensor.elecbill_conso_hc
+     - sensor.elecbill_options
+     - sensor.elecbill_cspe
+     - sensor.elecbill_cta
+     - sensor.elecbill_tcfe_municipal
+     - sensor.elecbill_tcfe_departmental
+     - sensor.hp_energy_consumed_last_day
+     - sensor.hp_energy_consumed_last_week
+     - sensor.hp_energy_consumed_last_month
+     - sensor.hc_energy_consumed_last_day
+     - sensor.hc_energy_consumed_last_week
+#     - sensor.hc_energy_consumed_last_month
+#     - sensor.total_edf_energy_consumed_last_hour
+#     - sensor.total_edf_energy_consumed_last_day
+#     - sensor.total_edf_energy_consumed_last_week
+#     - sensor.total_edf_energy_consumed_last_month
+ 
+  ups:
+    name: APC UPS
+    view: no
+    entities:
+     - sensor.ups_battery
+     - sensor.ups_input_voltage
+     - sensor.ups_load
+     - sensor.ups_nominal_input_voltage
+     - sensor.ups_status
+     - sensor.ups_time_left
+     - sensor.ups_time_on_battery
+     - sensor.ups_transfer_count
+
+  arlo:
+    name: Arlo
+    view: no
+    entities:
+     - alarm_control_panel.arlo
+     - camera.etage_1
+     - camera.etage_2
+     - camera.jardin
+     - sensor.arlo_cameras
+     - sensor.battery_level_etage_1
+     - sensor.battery_level_etage_2
+     - sensor.battery_level_jardin
+     - sensor.captured_today_etage_1
+     - sensor.captured_today_etage_2
+     - sensor.captured_today_jardin
+     - sensor.last_etage_1
+     - sensor.last_etage_2
+     - sensor.last_jardin
+     - sensor.signal_strength_etage_1
+     - sensor.signal_strength_etage_2
+     - sensor.signal_strength_jardin
+
+
+
