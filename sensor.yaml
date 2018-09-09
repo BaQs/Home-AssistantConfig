@@ -3,16 +3,16 @@
       - 'time'
       - 'date_time'
 
-  - platform: darksky
-    api_key: !secret darksky_api_key 
-    units: ca
-    language: fr
-    monitored_conditions:
-      - temperature
-      - apparent_temperature
-      - summary
-      - icon
-      - precip_probability
+#  - platform: darksky
+#    api_key: !secret darksky_api_key 
+#    units: ca
+#    language: fr
+#    monitored_conditions:
+#      - temperature
+#      - apparent_temperature
+#      - summary
+#      - icon
+#      - precip_probability
 
 #   - platform: yr
 #
@@ -25,8 +25,44 @@
 #        value_template: '{{ states.device_tracker.pierre_ipierre.attributes.battery|int }}'
 #        device_class: battery
 #
+#
   - platform: rfxtrx
-#   automatic_add: True
+    automatic_add: False
+#   devices:
+#            "0B11002F0144449209000090":
+#            "0B11002F0144449209000F70":
+#            "0B11002F6BD03FB803010F70":
+#            "0B11002F014444920#BTN##VALUE#0F70";
+#            "0B11002F0144449209000090":
+#                    name: Sonnette2
+#                    data_type:
+#                      - Sound
+#                    fire_event: true
+#            "0B11002F0144449209010F90":
+#                    name: Sonnette3
+#                    data_type:
+#                      - Sound
+#                    fire_event: true
+#            "0B11002F0144449209010090":
+#                    name: Sonnette4
+#                    data_type:
+#                      - Sound
+#                    fire_event: true
+
+#            115a02078f3200000000100000ec87c9d089:
+#                    name: OWL 180
+#                    data_type:
+#                      - Energy usage
+#            08500203850100ea89_temperature:
+#                    name: RfxTrx Temp1
+#                    data_type:
+#                      - Temperature
+#            0a520104fa0100f2380189_temperature:
+#                    name: RfxTrx Temp2
+#                    data_type:
+#                      - Humidity
+#                      - Temperature
+
 
   - platform: template
     sensors:

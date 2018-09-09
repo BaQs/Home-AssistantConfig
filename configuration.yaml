@@ -13,56 +13,13 @@ homeassistant:
   # Customization file
   customize: !include customize.yaml
   customize_domain: !include customize_domain.yaml
-  #  customize_glob: !include customize_glob.yaml
+  customize_glob: !include customize_glob.yaml
 
-  # Customize entities matching a pattern
-  customize_glob:
-    'sensor.fibaro_system_fgd212_dimmer_2*':
-      hidden: true
-      homebridge_hidden: true
-  #  "sensor.fibaro_system_fgd212_dimmer_2_alarm_level*":
-  #    hidden: true
-  #    homebridge_hidden: true
-  #  "sensor.fibaro_system_fgd212_dimmer_2_alarm_type*":
-  #    hidden: true
-  #    homebridge_hidden: true
-  #  "sensor.fibaro_system_fgd212_dimmer_2_exporting*":
-  #    hidden: true
-  #    homebridge_hidden: true
-  #  "sensor.fibaro_system_fgd212_dimmer_2_heat*":
-  #    hidden: true
-  #    homebridge_hidden: true
-  #  "sensor.fibaro_system_fgd212_dimmer_2_power_management*":
-  #    hidden: true
-  #    homebridge_hidden: true
-  #  "sensor.fibaro_system_fgd212_dimmer_2_system*":
-  #    hidden: true
-  #    homebridge_hidden: true
-    "sensor.fibaro_system_fgfs101_flood_sensor_alarm_type*":
-      hidden: true
-      homebridge_hidden: true
-    "sensor.neo_coolcam_power_plug_12a_interval*":
-      hidden: true
-      homebridge_hidden: true
-    "sensor.neo_coolcam_power_plug_12a_previous_reading*":
-      hidden: true
-      homebridge_hidden: true
-    "sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_temperature":
-      hidden: true
-      homebridge_hidden: true
-    "zwave.*":
-      hidden: true
-      homebridge_hidden: true
-    "binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor*":
-      hidden: true
-      homebridge_hidden: true
-    "sensor.*sourcenodeid*":
-      hidden: true
-      homebridge_hidden: true
-  
+ 
 logger:
-# default: info
-# logs:
+ default: info
+#logs:
+#   homeassistant.components.rfxtrx: debug
 #   homeassistant.components.teleinfo: debug
 #    homeassistant.components.xiaomi_aqara: debug
 #    homeassistant.components.binary_sensor.xiaomi_aqara: debug
@@ -73,18 +30,6 @@ logger:
 #  whitelist_external_dirs: 
 #    - '/home/homeassistant/.homeassistant/downloads'
   
-#  customize_glob:
-#    "sensor.humidity_*":
-#      friendly_name: Humidity
-#    "sensor.pressure_*":
-#      friendly_name: Pression
-#    "sensor.temperature_*":
-#      friendly_name: Temperature
-#    "sensor.illumination_*":
-#      friendly_name: Illumination
-#    "binary_sensor.switch_*":
-#      friendly_name: Button
-
 # Show links to resources in log and frontend
 #introduction:
 
@@ -114,15 +59,12 @@ http:
    api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
-   base_url: https://hassio.ourdouille.maison
+   base_url: !secret base_url 
    trusted_proxies: 192.168.0.27
    use_x_forwarded_for: true
    ip_ban_enabled: false
    login_attempts_threshold: 5
-   cors_allowed_origins:
-     - http://192.168.0.24:8234
-     - http://hassio.ourdouille.maison:8234
-     - https://hassio.ourdouille.maison
+#  cors_allowed_origins:
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -138,23 +80,31 @@ updater:
 #
 hassio:
 
+
+# Recorder
+recorder:
+  purge_interval: 2
+  purge_keep_days: 30
+  db_url: !secret mariadb_connection_url
+
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
 # Enables support for tracking state changes over time
 history:
-  exclude:
-    entities:
-      - sensor.time
-      - sensor.hour
-      - sensor.moon
+#  exclude:
+#    entities:
+#      - sensor.time
+#      - sensor.hour
+#      - sensor.moon
+#      - sun.sun
 #      - sensor.dark_sky_daily_summary
 #      - sensor.dark_sky_hourly_summary
 #      - sensor.dark_sky_icon
 #      - sensor.dark_sky_summary
-    domains:
-      - switch
-      - updater
+#   domains:
+#     - switch
+#     - updater
 #  include:
 #    domains:
 #      - group
@@ -274,7 +224,11 @@ panel_iframe:
   configurator:
     title: Configurator
     icon: mdi:wrench
-    url: https://hassio.ourdouille.maison/configurat0r/
+    url: !secret panel_iframe_configurator_url 
+  grafana:
+    title: Grafana
+    icon: mdi:chart-areaspline
+    url: !secret panel_iframe_grafana_url 
 #  pihole:
 #    title: Pi-hole
 #    icon: mdi:block-helper
@@ -295,11 +249,11 @@ zwave:
 
 rfxtrx:
    device: /dev/ttyUSB1
-   #debug: true
-   #
+#  debug: true
+ 
 light:
   - platform: rfxtrx
-#   automatic_add: True
+    automatic_add: False
 
 
 switch: !include switch.yaml
@@ -308,7 +262,8 @@ device_tracker:
   - platform: owntracks_http
     max_gps_accuracy: 100
     # - platform: bluetooth_tracker
-    # - platform: bluetooth_le_tracker
+  - platform: bluetooth_le_tracker
+    track_new_devices: true
 # - platform: icloud
 #   username: !secret icloud_username
 #   password: !secret icloud_password
@@ -316,11 +271,11 @@ device_tracker:
     hosts:
             - 192.168.0.19
             - 192.168.0.32
-  - platform: icloud2
-    username: !secret icloud_username
-    password: !secret icloud_password
-    account_name: pierreIcloud2
-    filter_devices: 'phone'
+#  - platform: icloud2
+#    username: !secret icloud_username
+#    password: !secret icloud_password
+#    account_name: pierreIcloud2
+#    filter_devices: 'phone'
 
 notify:
   - name: Telegram
@@ -332,7 +287,6 @@ telegram_bot:
   - platform: polling
     # jeedom
     #api_key: 307112869:AAGw8pNelwkZgaULYonS9f1_SBQLxIfnBN0
-    # hassio_ourdouille_bot
     api_key: !secret telegram_api_key 
     allowed_chat_ids:  
        - !secret telegram_chat_id 

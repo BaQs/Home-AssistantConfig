@@ -1,5 +1,9 @@
   - platform: rfxtrx
-#   automatic_add: True
+    automatic_add: False
+#   devices:
+#            "0B1100000144449201040F60":
+#                    name: BS Sonnette
+#           '0b1100070144449201040f60':
 
   - platform: rest
     name: "Foscam C1 Motion Sensor"
@@ -63,11 +67,11 @@
         prob_given_true: 0.99 # 99% chance that if we are in bed we are at home
         prob_given_false: 0.7 # 70% chance that if we are not in bed we are at home
       # we are in bed -> likely alarm will be set
-      - entity_id: alarm_control_panel.home_alarm
-        platform: state
-        to_state: armed_home
-        prob_given_true: 0.9 # 90% chance that if we are in bed alarm is armed
-        prob_given_false: 0.5 # 50% chance that if we are not in bed alarm is armed
+#      - entity_id: alarm_control_panel.home_alarm
+#        platform: state
+#        to_state: armed_home
+#        prob_given_true: 0.9 # 90% chance that if we are in bed alarm is armed
+#        prob_given_false: 0.5 # 50% chance that if we are not in bed alarm is armed
       # we are in bed -> vey likely no motion is detected
       - entity_id: binary_sensor.motion_detected
         platform: state
@@ -170,7 +174,7 @@
       - entity_id: binary_sensor.motion_detected
         platform: state
         to_state: 'on'
-        prob_given_true: 0.8
+        prob_given_true: 0.7
         prob_given_false: 0.01
       - entity_id: 'binary_sensor.welcam_3_someone_known'
         prob_given_true: 0.7

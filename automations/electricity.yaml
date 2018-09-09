@@ -1,0 +1,73 @@
+
+- id: electricity_bill_daily
+  alias: 'Electricity: Daily Bill'
+  trigger:
+    platform: time
+    # When 'at' is used, you cannot also match on hour, minute, seconds.
+    # Military time format.
+    at: '08:00:00'
+# condition:
+  action:
+  - service: notify.telegram
+    data:
+      title: Electricité
+      message: |
+        Hier, l'électricité a coûté <b> {{ states.sensor.elecbill_today_ttc.state |float | round(2) }}</b>€
+
+- id: electricity_bill_weekly
+  alias: 'Electricity: Weekly Bill'
+  trigger:
+    platform: time
+    # When 'at' is used, you cannot also match on hour, minute, seconds.
+    # Military time format.
+    at: '08:00:00'
+  condition:
+    - condition: time
+      weekday:
+        - mon
+  action:
+  - service: notify.telegram
+    data:
+      title: Electricité
+      message: |
+        Cette semaine, l'électricité a coûté <b> {{ states.sensor.elecbill_last_week_ttc.state |float | round(2) }}</b>€
+
+- id: electricity_bill_monthly
+  alias: 'Electricity: Weekly Bill'
+  trigger:
+  - platform: template
+    value_template: '{{ now().strftime("%d") == "01" }}'
+  action:
+  - service: notify.telegram
+    data:
+      title: Electricité
+      message: |
+        Ce mois-ci, l'électricité a coûté <b> {{ states.sensor.elecbill_last_month_ttc.state |float | round(2) }}</b>€
+
+
+
+
+
+- id: electricity_monthly_report
+  alias: 'Electricity: Monthly Report'
+  trigger:
+  - platform: template
+    value_template: '{{ now().strftime("%d") == "01" }}'
+# condition:
+  action:
+  - service: notify.telegram
+    data:
+      title: Electricité
+      message: |
+        Il est temps de déclarer la conso !
+        HP: {{ '<b>{0}{1}{2}{3}{4}</b>.{5}{6}{7}'.format(*states.sensor.teleinfo_hchp.state) }}kWh
+        HC: {{ '<b>{0}{1}{2}{3}{4}</b>.{5}{6}{7}'.format(*states.sensor.teleinfo_hchc.state) }}kWh
+        https://clients.direct-energie.com/ma-conso/faire-mon-e-releve/
+#       HP: {{ states.sensor.teleinfo_hchp.state  }}
+#       HC: {{ states.sensor.teleinfo_hchc.state  }} 
+#     message: Test
+#  - service: tts.google_say
+#    data:
+#      entity_id: media_player.google_home__salon
+#      message: "La place de parking vient de se libérer"
+

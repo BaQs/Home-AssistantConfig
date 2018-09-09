@@ -48,11 +48,14 @@
       - binary_sensor.motion_last10
       - binary_sensor.motion_last30
       - binary_sensor.motion_detected
+      - group.elecbill
+      - switch.sonnette
   Gaetane:
     name: Gaetane
     view: no
     entities:
       - device_tracker.igaetane
+      - device_tracker.gaetane_igaetaneowntracks
   Pierre:
     name: Pierre
     view: no
@@ -63,7 +66,6 @@
       - device_tracker.ipierre
       - device_tracker.ipierre_2
       - device_tracker.pierre_ipierre
-      - binary_sensor.pierre_is_home
       - sensor.pierre_home
   washroom:
     name: Buanderie 
@@ -283,6 +285,10 @@
      - sensor.hp_energy_consumed_last_month
      - sensor.hc_energy_consumed_last_day
      - sensor.hc_energy_consumed_last_week
+     - sensor.hc_energy_consumed_last_month
+     - sensor.elecbill_last_month_ttc
+     - sensor.elecbill_last_week_ttc
+     - sensor.elecbill_today_ttc
 #     - sensor.hc_energy_consumed_last_month
 #     - sensor.total_edf_energy_consumed_last_hour
 #     - sensor.total_edf_energy_consumed_last_day
@@ -325,4 +331,124 @@
      - sensor.signal_strength_jardin
 
 
+  qubino:
+    name: Qubino
+    view: no
+    entities:
+     - sensor.qubino_zmnhadx_flush_1_relay_alarm_type
+     - sensor.qubino_zmnhadx_flush_1_relay_alarm_level
+     - binary_sensor.qubino_zmnhadx_flush_1_relay_int2
+     - binary_sensor.qubino_zmnhadx_flush_1_relay_int3
+     - zwave.qubino_zmnhadx_flush_1_relay
+     - switch.qubino_zmnhadx_flush_1_relay_switch
+     - zwave.qubino_zmnhjd1_flush_dimmer_pilot_wire
+     - sensor.qubino_zmnhadx_flush_1_relay_energy
+     - sensor.qubino_zmnhadx_flush_1_relay_power
+     - sensor.qubino_zmnhadx_flush_1_relay_exporting
+     - binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor
+     - binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor_2
+     - binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor_3
+     - sensor.qubino_zmnhadx_flush_1_relay_previous_reading
+     - sensor.qubino_zmnhadx_flush_1_relay_interval
+     - switch.qubino_zmnhjd1_flush_dimmer_pilot_wire_switch
+     - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+     - sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_temperature
 
+  fibaro:
+    name: Fibaro
+    view: no
+    entities:
+     - zwave.fibaro_system_fgd212_dimmer_2
+     - zwave.fibaro_system_fgd212_dimmer_2_2
+     - zwave.fibaro_system_fgd212_dimmer_2_3
+     - light.fibaro_system_fgd212_dimmer_2_level
+     - sensor.fibaro_system_fgd212_dimmer_2_energy
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_type
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_level
+     - sensor.fibaro_system_fgd212_dimmer_2_power
+     - sensor.fibaro_system_fgd212_dimmer_2_exporting
+     - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid
+     - sensor.fibaro_system_fgd212_dimmer_2_heat
+     - sensor.fibaro_system_fgd212_dimmer_2_power_management
+     - sensor.fibaro_system_fgd212_dimmer_2_system
+     - light.fibaro_system_fgd212_dimmer_2_level_2
+     - light.fibaro_system_fgd212_dimmer_2_level_3
+     - light.fibaro_system_fgd212_dimmer_2_level_4
+     - sensor.fibaro_system_fgd212_dimmer_2_energy_2
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_type_2
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_level_2
+     - sensor.fibaro_system_fgd212_dimmer_2_power_2
+     - sensor.fibaro_system_fgd212_dimmer_2_exporting_2
+     - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_2
+     - sensor.fibaro_system_fgd212_dimmer_2_heat_2
+     - sensor.fibaro_system_fgd212_dimmer_2_power_management_2
+     - sensor.fibaro_system_fgd212_dimmer_2_system_2
+     - light.fibaro_system_fgd212_dimmer_2_level_5
+     - sensor.fibaro_system_fgd212_dimmer_2_energy_3
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_type_3
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_level_3
+     - sensor.fibaro_system_fgd212_dimmer_2_power_3
+     - sensor.fibaro_system_fgd212_dimmer_2_exporting_3
+     - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_3
+     - sensor.fibaro_system_fgd212_dimmer_2_heat_3
+     - sensor.fibaro_system_fgd212_dimmer_2_power_management_3
+     - sensor.fibaro_system_fgd212_dimmer_2_system_3
+     - sensor.fibaro_system_fgd212_dimmer_2_power_4
+     - sensor.fibaro_system_fgd212_dimmer_2_power_5
+     - sensor.fibaro_system_fgd212_dimmer_2_power_6
+     - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+     - zwave.fibaro_system_fgms001_motion_sensor
+     - sensor.fibaro_system_fgms001_motion_sensor_temperature
+     - sensor.fibaro_system_fgms001_motion_sensor_luminance
+     - sensor.fibaro_system_fgms001_motion_sensor_general
+     - zwave.fibaro_system_fgfs101_flood_sensor
+     - binary_sensor.fibaro_system_fgfs101_flood_sensor_sensor
+     - binary_sensor.fibaro_system_fgfs101_flood_sensor_general
+     - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood
+     - sensor.fibaro_system_fgfs101_flood_sensor_temperature
+     - zwave.fibaro_system_fgfs101_flood_sensor_2
+     - binary_sensor.fibaro_system_fgfs101_flood_sensor_sensor_2
+     - binary_sensor.fibaro_system_fgfs101_flood_sensor_general_2
+     - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2
+     - sensor.fibaro_system_fgfs101_flood_sensor_temperature_2
+     - sensor.fibaro_system_fgfs101_flood_sensor_alarm_type
+     - sensor.fibaro_system_fgfs101_flood_sensor_alarm_level
+     - sensor.fibaro_system_fgfs101_flood_sensor_alarm_type_2
+     - sensor.fibaro_system_fgfs101_flood_sensor_alarm_level_2
+     - zwave.fibaro_system_fgd212_dimmer_2_4
+     - light.fibaro_system_fgd212_dimmer_2_level_6
+     - sensor.fibaro_system_fgd212_dimmer_2_power_7
+     - sensor.fibaro_system_fgd212_dimmer_2_exporting_4
+     - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_4
+     - sensor.fibaro_system_fgd212_dimmer_2_heat_4
+     - sensor.fibaro_system_fgd212_dimmer_2_power_management_4
+     - sensor.fibaro_system_fgd212_dimmer_2_system_4
+     - light.fibaro_system_fgd212_dimmer_2_level_7
+     - sensor.fibaro_system_fgd212_dimmer_2_energy_4
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_type_4
+     - sensor.fibaro_system_fgd212_dimmer_2_alarm_level_4
+     - sensor.fibaro_system_fgd212_dimmer_2_power_8
+
+  neo_coolcam:
+    name: Neo Coolcam
+    view: no
+    entities:
+     - zwave.neo_coolcam_power_plug_12a
+     - switch.neo_coolcam_power_plug_12a_switch
+     - sensor.neo_coolcam_power_plug_12a_alarm_type
+     - sensor.neo_coolcam_power_plug_12a_alarm_level
+     - sensor.neo_coolcam_power_plug_12a_energy
+     - sensor.neo_coolcam_power_plug_12a_power
+     - sensor.neo_coolcam_power_plug_12a_voltage
+     - sensor.neo_coolcam_power_plug_12a_current
+     - sensor.neo_coolcam_power_plug_12a_exporting
+     - sensor.neo_coolcam_power_plug_12a_sourcenodeid
+     - sensor.neo_coolcam_power_plug_12a_power_management
+     - sensor.neo_coolcam_power_plug_12a_previous_reading
+     - sensor.neo_coolcam_power_plug_12a_interval
+     - sensor.neo_coolcam_power_plug_12a_previous_reading_2
+     - sensor.neo_coolcam_power_plug_12a_interval_2
+     - sensor.neo_coolcam_power_plug_12a_previous_reading_3
+     - sensor.neo_coolcam_power_plug_12a_previous_reading_4
+     - sensor.neo_coolcam_power_plug_12a_interval_3
+     - sensor.neo_coolcam_power_plug_12a_interval_4

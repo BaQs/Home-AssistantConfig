@@ -12,15 +12,31 @@
             "0B11002F144637B903010F70":
                     name: Radiateur Cuisine
             "0B11002F6BD03FB803010F70":
-                    name: 'Radiateur 1 Salon'
+                    name: Radiateur 1 Salon
             "0B11002F57651E4D03010F70":
-                    name: 'Radiateur 2 Salon'
+                    name: Radiateur 2 Salon
   #         "0B110000445BBC9B09010F90"
             "0B110000445BBC9B09000090":
                     name: Prise Lampe Boule
-            "0B11002F0144449209000090":
+            "0B1100000144449201040F60":
                     name: Sonnette
-
+                    fire_event: true
+##            automatically added :
+#            "0B1100120144449201040F60":
+#                   0x0b 0x11 0x00 0x2c 0x01 0x44 0x44 0x92 0x01 0x04 0x0f 0x60
+#           : Recv: 0x0b 0x11 0x00 0x31 0x01 0x44 0x44 0x92 0x01 0x04 0x0f 0x60
+#           : Recv: 0x0b 0x11 0x00 0x32 0x01 0x44 0x44 0x92 0x01 0x04 0x0f 0x60
+#                    name: 'Sonnette 3'
+#                    fire_event: true
+##            automatically added in binary_sensor:
+#            "0B1100070144449201040F60":
+#                    name: 'Sonnette 4'
+#                    fire_event: true
+###            forged by myself
+#            "0B1100000144449201040F60":
+#                    name: 'Sonnette 5'
+#                    fire_event: true
+##
 
   - platform: flux
     lights:
