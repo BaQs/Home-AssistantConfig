@@ -116,6 +116,7 @@ history:
 #
 # View all events in a logbook
 logbook: !include logbook.yaml
+input_number: !include input_number.yaml
 
 influxdb:
   host: 192.168.0.28
@@ -262,8 +263,8 @@ device_tracker:
   - platform: owntracks_http
     max_gps_accuracy: 100
     # - platform: bluetooth_tracker
-  - platform: bluetooth_le_tracker
-    track_new_devices: true
+# - platform: bluetooth_le_tracker
+#   track_new_devices: true
 # - platform: icloud
 #   username: !secret icloud_username
 #   password: !secret icloud_password

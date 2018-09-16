@@ -31,7 +31,6 @@
              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
                caption: "Du courrier!"
 
-
 # TODO
 # Cave Pump
 # if the pump wasn't launch since 22h, we launch it.

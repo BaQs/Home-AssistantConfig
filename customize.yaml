@@ -1,12 +1,24 @@
-group.all_automations:
-  hidden: false
-group.all_scripts:
-  hidden: false
-media_player.55ez950_series:
-  friendly_name: Panasonic TV 55EZ950
-zwave.unknown_node_12:
-  friendly_name: Oeil 3
-zwave.unknown_node_16:
-  friendly_name: Prise Tablette
-zwave.unknown_node_5:
-  friendly_name: Radiateur Chambre Parentale
+  group.all_lights:
+    hidden: false
+  group.all_automations:
+    hidden: false
+  group.all_scripts:
+    hidden: false
+  media_player.55ez950_series:
+    friendly_name: Panasonic TV 55EZ950
+  zwave.unknown_node_12:
+    friendly_name: Oeil 3
+  zwave.unknown_node_16:
+    friendly_name: Prise Tablette
+  zwave.unknown_node_5:
+    friendly_name: Radiateur Chambre Parentale
+  
+  input_number.24hour_power_consumption:
+    persistent: true
+    icon: mdi:flash
+
+  input_number.24hour_heat_consumption:
+    persistent: true
+    icon: mdi:flash
+
+

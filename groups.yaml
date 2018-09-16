@@ -273,8 +273,8 @@
     view: no
     entities:
      - sensor.elecbill_subscription
-     - sensor.elecbill_conso_hp
-     - sensor.elecbill_conso_hc
+     - sensor.elecbill_cost_hp
+     - sensor.elecbill_cost_hc
      - sensor.elecbill_options
      - sensor.elecbill_cspe
      - sensor.elecbill_cta

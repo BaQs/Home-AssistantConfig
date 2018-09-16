@@ -71,3 +71,42 @@
 #      entity_id: media_player.google_home__salon
 #      message: "La place de parking vient de se libérer"
 
+
+
+
+
+################################################
+## Store meter readings at midnight so that power consumption per day can be caculated
+################################################
+- id: electricity_store_meter_readings_at_midnight
+  alias: 'Electricity: store metrics at midnight'
+  initial_state: 'on'
+  trigger:
+    - platform: time
+      at: '00:00:00'
+  action:
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.24hour_power_hp_consumption
+        value: "{{ (((states.sensor.teleinfo_hchp.state  | float) - states('input_number.power_hp_meter_value_at_midnight') | float ) | round(3))}}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.24hour_power_hc_consumption
+        value: "{{ (((states.sensor.teleinfo_hchc.state  | float) - states('input_number.power_hc_meter_value_at_midnight') | float ) | round(3))}}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.24hour_heat_consumption
+        value: "{{ (((  state_attr('sensor.owl_180_energy_usage', 'Total usage') | float) - states('input_number.heat_meter_value_at_midnight') | float ) | round(3))}}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.power_hp_meter_value_at_midnight
+        value: "{{ states.sensor.teleinfo_hchp.state }}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.power_hc_meter_value_at_midnight
+        value: "{{ states.sensor.teleinfo_hchc.state }}"
+    - service: input_number.set_value
+      data_template:
+        entity_id: input_number.heat_meter_value_at_midnight
+        value: "{{  state_attr('sensor.owl_180_energy_usage', 'Total usage') }}"
+

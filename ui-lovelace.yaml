@@ -7,15 +7,15 @@ views:
   - title: Home
     cards:
       - type: picture-entity
-        title: Etage 1
-        entity: camera.etage_1
-        camera_image: camera.etage_1
-        show_info: true
-        tap_action: dialog
-      - type: picture-entity
         title: Etage 2
         entity: camera.etage_2
         camera_image: camera.etage_2
+        show_info: true
+        tap_action: dialog
+      - type: picture-entity
+        title: Etage 1
+        entity: camera.etage_1
+        camera_image: camera.etage_1
         show_info: true
         tap_action: dialog
       - type: picture-entity
@@ -55,6 +55,7 @@ views:
           - binary_sensor.motion_last10
           - binary_sensor.motion_last30
           - binary_sensor.motion_detected
+          - switch.sonnette
       - type: weather-forecast
         entity: weather.dark_sky
       - type: entities
@@ -67,12 +68,12 @@ views:
           - device_tracker.ipierre
           - device_tracker.ipierre_2
           - device_tracker.pierre_ipierre
-          - binary_sensor.pierre_is_home
       - type: entities
         title: Gaetane
         show_header_toggle: true
         entities:
           - device_tracker.igaetane
+          - device_tracker.gaetane_igaetaneowntracks
       - type: entities
         title: all lights
         show_header_toggle: true
@@ -115,6 +116,7 @@ views:
         show_header_toggle: true
         entities:
           - device_tracker.igaetane
+          - device_tracker.gaetane_igaetaneowntracks
       - type: entities
         title: Pierre
         show_header_toggle: true
@@ -125,7 +127,27 @@ views:
           - device_tracker.ipierre
           - device_tracker.ipierre_2
           - device_tracker.pierre_ipierre
-          - binary_sensor.pierre_is_home
+      - type: entities
+        title: Energy Consumption
+        show_header_toggle: true
+        entities:
+          - sensor.elecbill_subscription
+          - sensor.elecbill_cost_hp
+          - sensor.elecbill_cost_hc
+          - sensor.elecbill_options
+          - sensor.elecbill_cspe
+          - sensor.elecbill_cta
+          - sensor.elecbill_tcfe_municipal
+          - sensor.elecbill_tcfe_departmental
+          - sensor.hp_energy_consumed_last_day
+          - sensor.hp_energy_consumed_last_week
+          - sensor.hp_energy_consumed_last_month
+          - sensor.hc_energy_consumed_last_day
+          - sensor.hc_energy_consumed_last_week
+          - sensor.hc_energy_consumed_last_month
+          - sensor.elecbill_last_month_ttc
+          - sensor.elecbill_last_week_ttc
+          - sensor.elecbill_today_ttc
       - type: entities
         title: Salon
         show_header_toggle: true
@@ -277,6 +299,7 @@ views:
         show_header_toggle: true
         entities:
           - device_tracker.igaetane
+          - device_tracker.gaetane_igaetaneowntracks
       - type: entities
         title: Pierre
         show_header_toggle: true
@@ -287,7 +310,6 @@ views:
           - device_tracker.ipierre
           - device_tracker.ipierre_2
           - device_tracker.pierre_ipierre
-          - binary_sensor.pierre_is_home
       - type: entities
         title: Buanderie
         show_header_toggle: true
@@ -439,6 +461,7 @@ views:
         show_header_toggle: true
         entities:
           - device_tracker.igaetane
+          - device_tracker.gaetane_igaetaneowntracks
       - type: entities
         title: Pierre
         show_header_toggle: true
@@ -449,7 +472,6 @@ views:
           - device_tracker.ipierre
           - device_tracker.ipierre_2
           - device_tracker.pierre_ipierre
-          - binary_sensor.pierre_is_home
       - type: entities
         title: EDF
         show_header_toggle: true
@@ -462,6 +484,27 @@ views:
           - sensor.teleinfo_papp
           - sensor.teleinfo_ptec
           - sensor.teleinfo_isousc
+      - type: entities
+        title: Energy Consumption
+        show_header_toggle: true
+        entities:
+          - sensor.elecbill_subscription
+          - sensor.elecbill_cost_hp
+          - sensor.elecbill_cost_hc
+          - sensor.elecbill_options
+          - sensor.elecbill_cspe
+          - sensor.elecbill_cta
+          - sensor.elecbill_tcfe_municipal
+          - sensor.elecbill_tcfe_departmental
+          - sensor.hp_energy_consumed_last_day
+          - sensor.hp_energy_consumed_last_week
+          - sensor.hp_energy_consumed_last_month
+          - sensor.hc_energy_consumed_last_day
+          - sensor.hc_energy_consumed_last_week
+          - sensor.hc_energy_consumed_last_month
+          - sensor.elecbill_last_month_ttc
+          - sensor.elecbill_last_week_ttc
+          - sensor.elecbill_today_ttc
       - type: entities
         title: APC UPS
         show_header_toggle: true
@@ -511,6 +554,113 @@ views:
         show_info: true
         tap_action: dialog
       - type: entities
+        title: Qubino
+        show_header_toggle: true
+        entities:
+          - sensor.qubino_zmnhadx_flush_1_relay_alarm_type
+          - sensor.qubino_zmnhadx_flush_1_relay_alarm_level
+          - binary_sensor.qubino_zmnhadx_flush_1_relay_int2
+          - binary_sensor.qubino_zmnhadx_flush_1_relay_int3
+          - zwave.qubino_zmnhadx_flush_1_relay
+          - switch.qubino_zmnhadx_flush_1_relay_switch
+          - zwave.qubino_zmnhjd1_flush_dimmer_pilot_wire
+          - sensor.qubino_zmnhadx_flush_1_relay_energy
+          - sensor.qubino_zmnhadx_flush_1_relay_power
+          - sensor.qubino_zmnhadx_flush_1_relay_exporting
+          - binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor
+          - binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor_2
+          - binary_sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_sensor_3
+          - sensor.qubino_zmnhadx_flush_1_relay_previous_reading
+          - sensor.qubino_zmnhadx_flush_1_relay_interval
+          - switch.qubino_zmnhjd1_flush_dimmer_pilot_wire_switch
+          - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+          - sensor.qubino_zmnhjd1_flush_dimmer_pilot_wire_temperature
+      - type: entities
+        title: Fibaro
+        show_header_toggle: true
+        entities:
+          - zwave.fibaro_system_fgd212_dimmer_2_2
+          - zwave.fibaro_system_fgd212_dimmer_2_3
+          - light.fibaro_system_fgd212_dimmer_2_level_2
+          - light.fibaro_system_fgd212_dimmer_2_level_3
+          - light.fibaro_system_fgd212_dimmer_2_level_4
+          - sensor.fibaro_system_fgd212_dimmer_2_energy_2
+          - sensor.fibaro_system_fgd212_dimmer_2_alarm_type_2
+          - sensor.fibaro_system_fgd212_dimmer_2_alarm_level_2
+          - sensor.fibaro_system_fgd212_dimmer_2_power_2
+          - sensor.fibaro_system_fgd212_dimmer_2_exporting_2
+          - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_2
+          - sensor.fibaro_system_fgd212_dimmer_2_heat_2
+          - sensor.fibaro_system_fgd212_dimmer_2_power_management_2
+          - sensor.fibaro_system_fgd212_dimmer_2_system_2
+          - light.fibaro_system_fgd212_dimmer_2_level_5
+          - sensor.fibaro_system_fgd212_dimmer_2_energy_3
+          - sensor.fibaro_system_fgd212_dimmer_2_alarm_type_3
+          - sensor.fibaro_system_fgd212_dimmer_2_alarm_level_3
+          - sensor.fibaro_system_fgd212_dimmer_2_power_3
+          - sensor.fibaro_system_fgd212_dimmer_2_exporting_3
+          - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_3
+          - sensor.fibaro_system_fgd212_dimmer_2_heat_3
+          - sensor.fibaro_system_fgd212_dimmer_2_power_management_3
+          - sensor.fibaro_system_fgd212_dimmer_2_system_3
+          - sensor.fibaro_system_fgd212_dimmer_2_power_5
+          - sensor.fibaro_system_fgd212_dimmer_2_power_6
+          - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+          - zwave.fibaro_system_fgms001_motion_sensor
+          - sensor.fibaro_system_fgms001_motion_sensor_temperature
+          - sensor.fibaro_system_fgms001_motion_sensor_luminance
+          - sensor.fibaro_system_fgms001_motion_sensor_general
+          - zwave.fibaro_system_fgfs101_flood_sensor
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_sensor
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_general
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood
+          - sensor.fibaro_system_fgfs101_flood_sensor_temperature
+          - zwave.fibaro_system_fgfs101_flood_sensor_2
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_sensor_2
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_general_2
+          - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2
+          - sensor.fibaro_system_fgfs101_flood_sensor_temperature_2
+          - sensor.fibaro_system_fgfs101_flood_sensor_alarm_type
+          - sensor.fibaro_system_fgfs101_flood_sensor_alarm_level
+          - sensor.fibaro_system_fgfs101_flood_sensor_alarm_type_2
+          - sensor.fibaro_system_fgfs101_flood_sensor_alarm_level_2
+          - zwave.fibaro_system_fgd212_dimmer_2_4
+          - light.fibaro_system_fgd212_dimmer_2_level_6
+          - sensor.fibaro_system_fgd212_dimmer_2_power_7
+          - sensor.fibaro_system_fgd212_dimmer_2_exporting_4
+          - sensor.fibaro_system_fgd212_dimmer_2_sourcenodeid_4
+          - sensor.fibaro_system_fgd212_dimmer_2_heat_4
+          - sensor.fibaro_system_fgd212_dimmer_2_power_management_4
+          - sensor.fibaro_system_fgd212_dimmer_2_system_4
+          - light.fibaro_system_fgd212_dimmer_2_level_7
+          - sensor.fibaro_system_fgd212_dimmer_2_energy_4
+          - sensor.fibaro_system_fgd212_dimmer_2_alarm_type_4
+          - sensor.fibaro_system_fgd212_dimmer_2_alarm_level_4
+          - sensor.fibaro_system_fgd212_dimmer_2_power_8
+      - type: entities
+        title: Neo Coolcam
+        show_header_toggle: true
+        entities:
+          - zwave.neo_coolcam_power_plug_12a
+          - switch.neo_coolcam_power_plug_12a_switch
+          - sensor.neo_coolcam_power_plug_12a_alarm_type
+          - sensor.neo_coolcam_power_plug_12a_alarm_level
+          - sensor.neo_coolcam_power_plug_12a_energy
+          - sensor.neo_coolcam_power_plug_12a_power
+          - sensor.neo_coolcam_power_plug_12a_voltage
+          - sensor.neo_coolcam_power_plug_12a_current
+          - sensor.neo_coolcam_power_plug_12a_exporting
+          - sensor.neo_coolcam_power_plug_12a_sourcenodeid
+          - sensor.neo_coolcam_power_plug_12a_power_management
+          - sensor.neo_coolcam_power_plug_12a_previous_reading
+          - sensor.neo_coolcam_power_plug_12a_interval
+          - sensor.neo_coolcam_power_plug_12a_previous_reading_2
+          - sensor.neo_coolcam_power_plug_12a_interval_2
+          - sensor.neo_coolcam_power_plug_12a_previous_reading_3
+          - sensor.neo_coolcam_power_plug_12a_previous_reading_4
+          - sensor.neo_coolcam_power_plug_12a_interval_3
+          - sensor.neo_coolcam_power_plug_12a_interval_4
+      - type: entities
         title: all scripts
         show_header_toggle: true
         entities:
@@ -519,10 +669,38 @@ views:
           - script.sunset
           - script.telegram_snapshots_all_cameras
       - type: entities
+        title: all automations
+        show_header_toggle: true
+        entities:
+          - automation.cave_pump
+          - automation.doorbell
+          - automation.electricity_daily_bill
+          - automation.electricity_monthly_report
+          - automation.electricity_weekly_bill
+          - automation.heal_zwave_network
+          - automation.light_enlight_floor1
+          - automation.light_floor1_back_to_normal
+          - automation.motion_parking_space
+          - automation.pierre_home
+          - automation.pierre_leaves
+          - automation.script_sunrise
+          - automation.script_sunset
+          - automation.send_notification_when_alarm_triggered
+          - automation.start_homekit
+          - automation.telegram_bot_answer_to_command_alarm_disarm
+          - automation.telegram_bot_answer_to_command_disarm_alarm
+          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
+          - automation.telegram_bot_that_reply_pong_to_ping
+          - automation.telegram_ha_started
+          - automation.trigger_alarm_when_armed_away
+          - automation.turn_off_automatic_away_mode
+          - automation.turn_on_away_mode
+          - automation.update_available_notification
+          - automation.you_ve_got_mail
+      - type: entities
         title: all switches
         show_header_toggle: true
         entities:
-          - switch.0a14024a07fdbe02010080
           - switch.fluxer
           - switch.neo_coolcam_power_plug_12a_switch
           - switch.prise_bambi
@@ -550,219 +728,29 @@ views:
           - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
           - light.unknown_node_5_level_2
       - type: entities
-        title: all remotes
-        show_header_toggle: true
-        entities:
-          - remote.harmony_hub
-      - type: entities
         title: all vacuum cleaners
         show_header_toggle: true
         entities:
           - vacuum.xiaomi_vacuum_cleaner
       - type: entities
+        title: all remotes
+        show_header_toggle: true
+        entities:
+          - remote.harmony_hub
+      - type: entities
         title: all devices
         show_header_toggle: true
         entities:
-          - device_tracker.pierre_ipierre
-          - device_tracker.iphonedepierre
           - device_tracker.ipierre
           - device_tracker.ipierre_2
           - device_tracker.igaetane
-      - type: entities
-        title: all automations
-        show_header_toggle: true
-        entities:
-          - automation.cave_pump
-          - automation.doorbell
-          - automation.heal_zwave_network
-          - automation.light_enlight_floor1
-          - automation.light_floor1_back_to_normal
-          - automation.motion_parking_space
-          - automation.pierre_home
-          - automation.pierre_leaves
-          - automation.script_sunrise
-          - automation.script_sunset
-          - automation.send_notification_when_alarm_triggered
-          - automation.start_homekit
-          - automation.start_homekit_2
-          - automation.telegram_bot_answer_to_command_alarm_disarm
-          - automation.telegram_bot_answer_to_command_disarm_alarm
-          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
-          - automation.telegram_bot_that_reply_pong_to_ping
-          - automation.telegram_ha_started
-          - automation.trigger_alarm_when_armed_away
-          - automation.turn_off_automatic_away_mode
-          - automation.turn_on_away_mode
-          - automation.update_available_notification
-          - automation.you_ve_got_mail
-      - type: entities
-        title: all automations
-        show_header_toggle: true
-        entities:
-          - automation.cave_pump
-          - automation.doorbell
-          - automation.electricity_monthly_report
-          - automation.heal_zwave_network
-          - automation.light_enlight_floor1
-          - automation.light_floor1_back_to_normal
-          - automation.motion_parking_space
-          - automation.pierre_home
-          - automation.pierre_leaves
-          - automation.script_sunrise
-          - automation.script_sunset
-          - automation.send_notification_when_alarm_triggered
-          - automation.start_homekit
-          - automation.start_homekit_2
-          - automation.telegram_bot_answer_to_command_alarm_disarm
-          - automation.telegram_bot_answer_to_command_disarm_alarm
-          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
-          - automation.telegram_bot_that_reply_pong_to_ping
-          - automation.telegram_ha_started
-          - automation.trigger_alarm_when_armed_away
-          - automation.turn_off_automatic_away_mode
-          - automation.turn_on_away_mode
-          - automation.update_available_notification
-          - automation.you_ve_got_mail
-      - type: entities
-        title: all automations
-        show_header_toggle: true
-        entities:
-          - automation.cave_pump
-          - automation.doorbell
-          - automation.electricity_monthly_report
-          - automation.heal_zwave_network
-          - automation.light_enlight_floor1
-          - automation.light_floor1_back_to_normal
-          - automation.motion_parking_space
-          - automation.pierre_home
-          - automation.pierre_leaves
-          - automation.script_sunrise
-          - automation.script_sunset
-          - automation.send_notification_when_alarm_triggered
-          - automation.start_homekit
-          - automation.start_homekit_2
-          - automation.telegram_bot_answer_to_command_alarm_disarm
-          - automation.telegram_bot_answer_to_command_disarm_alarm
-          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
-          - automation.telegram_bot_that_reply_pong_to_ping
-          - automation.telegram_ha_started
-          - automation.trigger_alarm_when_armed_away
-          - automation.turn_off_automatic_away_mode
-          - automation.turn_on_away_mode
-          - automation.update_available_notification
-          - automation.you_ve_got_mail
-      - type: entities
-        title: all automations
-        show_header_toggle: true
-        entities:
-          - automation.cave_pump
-          - automation.doorbell
-          - automation.electricity_monthly_report
-          - automation.heal_zwave_network
-          - automation.light_enlight_floor1
-          - automation.light_floor1_back_to_normal
-          - automation.motion_parking_space
-          - automation.pierre_home
-          - automation.pierre_leaves
-          - automation.script_sunrise
-          - automation.script_sunset
-          - automation.send_notification_when_alarm_triggered
-          - automation.start_homekit
-          - automation.start_homekit_2
-          - automation.telegram_bot_answer_to_command_alarm_disarm
-          - automation.telegram_bot_answer_to_command_disarm_alarm
-          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
-          - automation.telegram_bot_that_reply_pong_to_ping
-          - automation.telegram_ha_started
-          - automation.trigger_alarm_when_armed_away
-          - automation.turn_off_automatic_away_mode
-          - automation.turn_on_away_mode
-          - automation.update_available_notification
-          - automation.you_ve_got_mail
-      - type: entities
-        title: all automations
-        show_header_toggle: true
-        entities:
-          - automation.cave_pump
-          - automation.doorbell
-          - automation.electricity_monthly_report
-          - automation.heal_zwave_network
-          - automation.light_enlight_floor1
-          - automation.light_floor1_back_to_normal
-          - automation.motion_parking_space
-          - automation.pierre_home
-          - automation.pierre_leaves
-          - automation.script_sunrise
-          - automation.script_sunset
-          - automation.send_notification_when_alarm_triggered
-          - automation.start_homekit
-          - automation.start_homekit_2
-          - automation.telegram_bot_answer_to_command_alarm_disarm
-          - automation.telegram_bot_answer_to_command_disarm_alarm
-          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
-          - automation.telegram_bot_that_reply_pong_to_ping
-          - automation.telegram_ha_started
-          - automation.trigger_alarm_when_armed_away
-          - automation.turn_off_automatic_away_mode
-          - automation.turn_on_away_mode
-          - automation.update_available_notification
-          - automation.you_ve_got_mail
-      - type: entities
-        title: all automations
-        show_header_toggle: true
-        entities:
-          - automation.cave_pump
-          - automation.doorbell
-          - automation.electricity_monthly_report
-          - automation.heal_zwave_network
-          - automation.light_enlight_floor1
-          - automation.light_floor1_back_to_normal
-          - automation.motion_parking_space
-          - automation.pierre_home
-          - automation.pierre_leaves
-          - automation.script_sunrise
-          - automation.script_sunset
-          - automation.send_notification_when_alarm_triggered
-          - automation.start_homekit
-          - automation.start_homekit_2
-          - automation.telegram_bot_answer_to_command_alarm_disarm
-          - automation.telegram_bot_answer_to_command_disarm_alarm
-          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
-          - automation.telegram_bot_that_reply_pong_to_ping
-          - automation.telegram_ha_started
-          - automation.trigger_alarm_when_armed_away
-          - automation.turn_off_automatic_away_mode
-          - automation.turn_on_away_mode
-          - automation.update_available_notification
-          - automation.you_ve_got_mail
-      - type: entities
-        title: all automations
-        show_header_toggle: true
-        entities:
-          - automation.cave_pump
-          - automation.doorbell
-          - automation.electricity_monthly_report
-          - automation.heal_zwave_network
-          - automation.light_enlight_floor1
-          - automation.light_floor1_back_to_normal
-          - automation.motion_parking_space
-          - automation.pierre_home
-          - automation.pierre_leaves
-          - automation.script_sunrise
-          - automation.script_sunset
-          - automation.send_notification_when_alarm_triggered
-          - automation.start_homekit
-          - automation.start_homekit_2
-          - automation.telegram_bot_answer_to_command_alarm_disarm
-          - automation.telegram_bot_answer_to_command_disarm_alarm
-          - automation.telegram_bot_answer_to_command_presence_triggered_alarm
-          - automation.telegram_bot_that_reply_pong_to_ping
-          - automation.telegram_ha_started
-          - automation.trigger_alarm_when_armed_away
-          - automation.turn_off_automatic_away_mode
-          - automation.turn_on_away_mode
-          - automation.update_available_notification
-          - automation.you_ve_got_mail
+          - device_tracker.pierre_ipierre
+          - device_tracker.iphonedepierre
+          - device_tracker.gaetane_igaetaneowntracks
+      - type: media-control
+        entity: media_player.55ez950_series_2
+      - type: media-control
+        entity: media_player.xiaomi_network_speaker_upnp
       - type: media-control
         entity: media_player.xiaomi_network_speaker_airplay
       - type: media-control
@@ -788,6 +776,7 @@ views:
           - binary_sensor.motion_last10
           - binary_sensor.motion_last30
           - binary_sensor.motion_detected
+          - switch.sonnette
       - type: weather-forecast
         entity: weather.dark_sky
       - type: entities
@@ -800,12 +789,12 @@ views:
           - device_tracker.ipierre
           - device_tracker.ipierre_2
           - device_tracker.pierre_ipierre
-          - binary_sensor.pierre_is_home
       - type: entities
         title: Gaetane
         show_header_toggle: true
         entities:
           - device_tracker.igaetane
+          - device_tracker.gaetane_igaetaneowntracks
       - type: entities
         title: all lights
         show_header_toggle: true
@@ -848,6 +837,7 @@ views:
         show_header_toggle: true
         entities:
           - device_tracker.igaetane
+          - device_tracker.gaetane_igaetaneowntracks
       - type: entities
         title: Pierre
         show_header_toggle: true
@@ -858,7 +848,27 @@ views:
           - device_tracker.ipierre
           - device_tracker.ipierre_2
           - device_tracker.pierre_ipierre
-          - binary_sensor.pierre_is_home
+      - type: entities
+        title: Energy Consumption
+        show_header_toggle: true
+        entities:
+          - sensor.elecbill_subscription
+          - sensor.elecbill_cost_hp
+          - sensor.elecbill_cost_hc
+          - sensor.elecbill_options
+          - sensor.elecbill_cspe
+          - sensor.elecbill_cta
+          - sensor.elecbill_tcfe_municipal
+          - sensor.elecbill_tcfe_departmental
+          - sensor.hp_energy_consumed_last_day
+          - sensor.hp_energy_consumed_last_week
+          - sensor.hp_energy_consumed_last_month
+          - sensor.hc_energy_consumed_last_day
+          - sensor.hc_energy_consumed_last_week
+          - sensor.hc_energy_consumed_last_month
+          - sensor.elecbill_last_month_ttc
+          - sensor.elecbill_last_week_ttc
+          - sensor.elecbill_today_ttc
   - title: Automation
     cards:
       - type: entities
@@ -867,6 +877,9 @@ views:
         entities:
           - automation.cave_pump
           - automation.doorbell
+          - automation.electricity_daily_bill
+          - automation.electricity_monthly_report
+          - automation.electricity_weekly_bill
           - automation.heal_zwave_network
           - automation.light_enlight_floor1
           - automation.light_floor1_back_to_normal
@@ -877,7 +890,6 @@ views:
           - automation.script_sunset
           - automation.send_notification_when_alarm_triggered
           - automation.start_homekit
-          - automation.start_homekit_2
           - automation.telegram_bot_answer_to_command_alarm_disarm
           - automation.telegram_bot_answer_to_command_disarm_alarm
           - automation.telegram_bot_answer_to_command_presence_triggered_alarm

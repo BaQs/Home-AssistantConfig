@@ -1,0 +1,36 @@
+  power_hc_meter_value_at_midnight:
+    name: power_hc_meter_value_at_midnight
+    mode: box
+    min: 0
+    max: 1000000000
+    unit_of_measurement: Wh
+  power_hp_meter_value_at_midnight:
+    name: power_hp_meter_value_at_midnight
+    mode: box
+    min: 0
+    max: 1000000000
+    unit_of_measurement: Wh
+  heat_meter_value_at_midnight:
+    name: heat_meter_value_at_midnight
+    mode: box
+    min: 0
+    max: 1000000000
+    unit_of_measurement: Wh
+  24hour_power_hc_consumption:
+    name: 24hour_power_hc_consumption_low_tarrif
+    mode: box
+    min: 0
+    max: 1000000000
+    unit_of_measurement: Wh
+  24hour_power_hp_consumption:
+    name: 24hour_power_hp_consumption_low_tarrif
+    mode: box
+    min: 0
+    max: 1000000000
+    unit_of_measurement: Wh
+  24hour_heat_consumption:
+    name: 24hour_heat_consumption
+    mode: box
+    min: 0
+    max: 1000000000
+    unit_of_measurement: W

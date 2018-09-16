@@ -58,14 +58,14 @@
   - platform: bayesian
     name: In Bed
     prior: .33 # 33% chance that we are in bed (8 hrs out of 24hrs)
-    probability_threshold: 0.85
+    probability_threshold: 0.95
     observations:
       # We are in bed -> vey likely at least one household member is at home
       - entity_id: group.household
         platform: state
         to_state: home
         prob_given_true: 0.99 # 99% chance that if we are in bed we are at home
-        prob_given_false: 0.7 # 70% chance that if we are not in bed we are at home
+        prob_given_false: 0.5 # 50% chance that if we are not in bed we are at home
       # we are in bed -> likely alarm will be set
 #      - entity_id: alarm_control_panel.home_alarm
 #        platform: state
@@ -83,24 +83,39 @@
         platform: 'state'
         to_state: 'night'
         prob_given_true: 0.9 # 90% chance that if we are in bed it is night
-        prob_given_false: 0.5 # 50% chance that if we are not in bed it is night
+        prob_given_false: 0.1 # 10% chance that if we are not in bed it is night
+      - entity_id: 'sensor.period_of_day'
+        platform: 'state'
+        to_state: 'day'
+        prob_given_true: 0.1 # 10% chance that if we are in bed it is day
+        prob_given_false: 0.9 # 90% chance that if we are not in bed it is day
       # we are in bed -> likely that master bedroom light is off
       - entity_id: 'group.all_lights'
         platform: 'state'
         to_state: 'off'
         prob_given_true: 0.9 # 90% chance that if we are in bed, the light is off
-        prob_given_false: 0.7 # 70% chance that if we are not in bed the light is off
+        prob_given_false: 0.4 # 40% chance that if we are not in bed the light is off
       - entity_id: 'binary_sensor.motion_last30'
         platform: 'state'
         to_state: 'off'
-        prob_given_true: 0.6 # 60% chance that if we are in bed, no motion since 30min
-        prob_given_false: 0.4 # 90% chance that if we are not in bed, no motion since 30min
+        prob_given_true: 0.9 # 90% chance that if we are in bed, no motion since 30min
+        prob_given_false: 0.4 # 40% chance that if we are not in bed, no motion since 30min
       - entity_id: 'binary_sensor.motion_last10'
         platform: 'state'
         to_state: 'off'
-        prob_given_true: 0.5 
-        prob_given_false: 0.5 
-
+        prob_given_true: 0.9  # 90% chance that if we are in bed, no motion since 10min
+        prob_given_false: 0.5  # 50% chance that if we are not in bed, no motion since 10min
+      - entity_id: remote.harmony_hub
+        platform: state
+        to_state: 'off'
+        prob_given_true: 0.9 # 90% chance that if we are in bed, remote is off
+        prob_given_false: 0.4 # 40% chance that if we are not in bed, remote is off
+      - entity_id: 'sensor.ipierre_battery_state'
+        prob_given_true: 0.7 # 70% chance that if we are in bed, battery is charging
+        prob_given_false: 0.2 # 10% chance that if we are not in bed, battery is charging
+        platform: 'state'
+        to_state: 'Charging'
+#
  
 #  
 #
@@ -152,40 +167,40 @@
   - platform: bayesian
     name: Somebody home
     prior: 0.6  # 60% chance that somebody is at home at any given moment
-    probability_threshold: 0.85
+    probability_threshold: 0.90
     observations:
       # Somebody at home -> Very likely at least one household member is at home
       - entity_id: group.household
         platform: state
         to_state: home
-        prob_given_true: 0.99
-        prob_given_false: 0.2
+        prob_given_true: 0.99 # 99% chance that if we are home, household is home
+        prob_given_false: 0.2 # 0.2% chance that if we are not home, household is home
       # Somebody at home -> Likely alarm is disarmed
-      - entity_id: alarm_control_panel.home_alarm
-        platform: state
-        to_state: disarmed
-        prob_given_true: 0.7
+#      - entity_id: alarm_control_panel.home_alarm
+#        platform: state
+#        to_state: disarmed
+#        prob_given_true: 0.7 # 79% chance that if we are home, alarm is disarmed
       # Somebody at home -> likely that at least one indoor light is turned on
       - entity_id: group.all_lights
         platform: state
         to_state: 'on'
-        prob_given_true: 0.7
+        prob_given_true: 0.6 # 50% chance that if we are home, light is on
       # Somebody at home -> Very Likely motion will be detected
       - entity_id: binary_sensor.motion_detected
         platform: state
         to_state: 'on'
-        prob_given_true: 0.7
-        prob_given_false: 0.01
+        prob_given_true: 0.7 # 79% chance that if we are home, motion detected
+        prob_given_false: 0.01 # 0.01 chance that if we are not home, motion detected
       - entity_id: 'binary_sensor.welcam_3_someone_known'
-        prob_given_true: 0.7
-        prob_given_false: 0.5
+        prob_given_true: 0.7 # 79% chance that if we are home, somebody known
+        prob_given_false: 0.01 # 1% chance that if we are not home, somebody known
         platform: 'state'
         to_state: 'on'
       - entity_id: remote.harmony_hub
         platform: state
         to_state: 'on'
-        prob_given_true: 0.9
-        prob_given_false: 0.4
+        prob_given_true: 0.7 # 79% chance that if we are home, remote is on
+        prob_given_false: 0.01 # 0.1% chance that if we are not home, remote is on
       # Somebody at home -> Very likely occupancy will detected
 #      - entity_id: group.occupancy_sensors
 #        platform: state
