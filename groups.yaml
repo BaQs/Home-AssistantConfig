@@ -16,7 +16,6 @@
       - group.bedroom_2_road
       - group.bedroom_2_garden
       - group.bathroom
-      - group.shower
       - group.cave
       - group.washroom
       - group.motion_detectors
@@ -41,15 +40,15 @@
       - group.gaetane
       - group.all_lights
       - group.motion_detectors
-      - group.teleinfo
+#     - group.teleinfo
       - input_select.system_mode
       - sensor.current_state
       - group.household
       - binary_sensor.motion_last10
       - binary_sensor.motion_last30
       - binary_sensor.motion_detected
-      - group.elecbill
-      - switch.sonnette
+#     - group.elecbill
+      - display.chuwi
   Gaetane:
     name: Gaetane
     view: no
@@ -192,6 +191,7 @@
       - sensor.humidity_158d0001e421d9
       - sensor.pressure_158d0001e421d9
       - sensor.temperature_158d0001e421d9
+      - switch.qubino_zmnhadx_flush_1_relay_switch
   cave:
     name: Cave
     entities:
@@ -272,6 +272,7 @@
     name: Energy Consumption
     view: no
     entities:
+     - sensor.owl_180_energy_usage
      - sensor.elecbill_subscription
      - sensor.elecbill_cost_hp
      - sensor.elecbill_cost_hc
@@ -294,6 +295,11 @@
 #     - sensor.total_edf_energy_consumed_last_day
 #     - sensor.total_edf_energy_consumed_last_week
 #     - sensor.total_edf_energy_consumed_last_month
+     - sensor.elecbill_today_so_far_hc
+     - sensor.elecbill_today_so_far_hp
+     - sensor.elecbill_today_so_far_sub
+     - sensor.elecbill_today_so_far_taxes
+     - sensor.elecbill_today_so_far_ttc 
  
   ups:
     name: APC UPS
@@ -340,7 +346,6 @@
      - binary_sensor.qubino_zmnhadx_flush_1_relay_int2
      - binary_sensor.qubino_zmnhadx_flush_1_relay_int3
      - zwave.qubino_zmnhadx_flush_1_relay
-     - switch.qubino_zmnhadx_flush_1_relay_switch
      - zwave.qubino_zmnhjd1_flush_dimmer_pilot_wire
      - sensor.qubino_zmnhadx_flush_1_relay_energy
      - sensor.qubino_zmnhadx_flush_1_relay_power
@@ -452,3 +457,19 @@
      - sensor.neo_coolcam_power_plug_12a_previous_reading_4
      - sensor.neo_coolcam_power_plug_12a_interval_3
      - sensor.neo_coolcam_power_plug_12a_interval_4
+
+  chuwi:
+    name: Chuwi
+    view: no
+    entities:
+     - sensor.chuwi
+     - switch.chuwi_screen
+     - switch.chuwi_tts
+
+  time:
+    name: Time
+    view: no
+    entities:
+    - sensor.time
+    - sensor.time__date
+    - sensor.time_utc 

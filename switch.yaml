@@ -37,21 +37,39 @@
 #                    name: 'Sonnette 5'
 #                    fire_event: true
 ##
-
-  - platform: flux
-    lights:
-      - light.fibaro_system_fgd212_dimmer_2_level_4
-      - light.fibaro_system_fgd212_dimmer_2_level_7
-      - light.fibaro_system_fgd212_dimmer_2_level_5
-    name: Fluxer
-    start_time: '7:00'
-    stop_time: '23:00'
-    start_colortemp: 4000
-    sunset_colortemp: 3000
-    stop_colortemp: 1900
-    brightness: 200
-    disable_brightness_adjust: True
-    mode: xy
-    transition: 30
-    interval: 60
-
+#
+#  - platform: flux
+#    lights:
+#      - light.fibaro_system_fgd212_dimmer_2_level_4
+#      - light.fibaro_system_fgd212_dimmer_2_level_7
+#      - light.fibaro_system_fgd212_dimmer_2_level_5
+#    name: Fluxer
+#    start_time: '7:00'
+#    stop_time: '23:00'
+#    start_colortemp: 4000
+#    sunset_colortemp: 3000
+#    stop_colortemp: 1900
+#    brightness: 200
+#    disable_brightness_adjust: True
+#    mode: xy
+#    transition: 30
+#    interval: 60
+#
+#    HANDLED BY THE DISPLAY CUSTOM COMPONENT
+#
+#  - platform: command_line
+#    switches:
+#      chuwi_screen:
+#        command_on: !secret chuwi_screen_on
+#        command_off: !secret chuwi_screen_off
+#        command_state: !secret chuwi_screen_state
+#        value_template: '{{ value == "on" }}'
+#        friendly_name: Chuwi Screen
+#  
+#  - platform: command_line        
+#    switches:
+#      chuwi_tts:
+#        command_on: !secret chuwi_tts 
+#        friendly_name: Chuwi TTS
+#
+#    HANDLED BY THE DISPLAY CUSTOM COMPONENT

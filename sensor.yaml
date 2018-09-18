@@ -5,7 +5,7 @@
       - 'date_time'
       - 'time_date'
       - 'time_utc'
-      - 'beat'
+#     - 'beat'
 
 #  - platform: darksky
 #    api_key: !secret darksky_api_key 
@@ -66,7 +66,39 @@
 #                    data_type:
 #                      - Humidity
 #                      - Temperature
-
+#
+#    HANDLED BY THE DISPLAY CUSTOM COMPONENT
+#  - platform: rest
+#    name: chuwi
+#    json_attributes:
+#      - batteryLevel
+#      - kioskMode
+#      - screenBrightness
+#      - motionDetectorState
+#      - maintenanceMode
+#      - appFreeMemory
+#      - appUsedMemory
+#      - totalFreeMemory
+#      - totalUsedMemory
+#      - hostname4
+#      - ip4
+#      - mac
+#      - locationLatitude
+#      - locationLongitude
+#      - locationAltitude
+#      - startUrl
+#      - currentPage
+#    resource: !secret chuwi_rest
+#    value_template: '{{ value_json.isScreenOn }}'
+#
+#  - platform: template
+#    sensors:
+#      foo_battery_level:
+#        friendly_name: "foo_battery_level"
+#        unit_of_measurement: '%'
+#        value_template: "{{ states.sensor.foo.attributes.batteryLevel }}"
+#
+#    HANDLED BY THE DISPLAY CUSTOM COMPONENT
 
   - platform: template
     sensors:

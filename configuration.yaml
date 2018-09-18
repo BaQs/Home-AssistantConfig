@@ -229,7 +229,11 @@ panel_iframe:
   grafana:
     title: Grafana
     icon: mdi:chart-areaspline
-    url: !secret panel_iframe_grafana_url 
+    url: !secret panel_iframe_grafana_url
+  grafana_power:
+    title: Grafana - Power
+    icon: mdi:flash-circle
+    url: !secret panel_iframe_grafana_power_consumption
 #  pihole:
 #    title: Pi-hole
 #    icon: mdi:block-helper
@@ -370,3 +374,8 @@ arlo:
   password: !secret arlo_password
 
 
+display:
+  - platform: fully_kiosk
+    name: chuwi
+    host: 192.168.0.30
+    password: !secret chuwi_password

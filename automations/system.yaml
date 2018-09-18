@@ -50,20 +50,6 @@
   - service: homekit.start
   - data:
       message: Homekit est démarré
-      title: Home Assistant
-    service: notify.telegram
-  id: 3e566d3adc654ab884dcbe4a2322bc3d
-
-- alias: Start HomeKit
-  trigger:
-  - platform: homeassistant
-    event: start
-  action:
-  - delay: 00:05
-  - service: homekit.start
-  - data:
-      message: Homekit est démarré
-      title: Home Assistant
     service: notify.telegram
   id: 3e566d3adc654ab884dcbe4a2322bc3d
 
@@ -74,7 +60,6 @@
     event: start
   action:
   - data:
-      message: HA démarre
-      title: Home Assistant
+      message: HA est démarré
     service: notify.telegram
 
