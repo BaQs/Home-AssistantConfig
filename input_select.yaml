@@ -1,0 +1,34 @@
+  # Current automation mode
+  # Normal - normal day to day life, work etc.
+  # On Vacation - nobody is at home for a long period of time
+  # Have guests - we have guests staying over
+  system_mode:
+    name: House Mode
+    options:
+      - Normal
+      - On vacation
+      - Have guests
+    initial: Normal
+
+
+  qubino_bedroom_baby:
+    name: Qubino Baby Bedroom
+    options:
+     - Off
+     - Anti-Freeze
+     - Eco
+     - Comfort -2
+     - Comfort -1
+     - Comfort
+    initial: Comfort
+
+  qubino_bedroom_parents:
+    name: Qubino Parents Bedroom
+    options:
+     - Off
+     - Anti-Freeze
+     - Eco
+     - Comfort -2
+     - Comfort -1
+     - Comfort
+    initial: Comfort

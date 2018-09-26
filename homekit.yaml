@@ -1,0 +1,44 @@
+auto_start: False
+filter:
+#        include_domains:
+#                - alarm_control_panel
+#                - light
+#                - climate
+#                - switch
+#                - binary_sensor
+#                - device_tracker
+
+        include_entities:
+                - alarm_control_panel.home_alarm
+                - alarm_control_panel.arlo
+                - binary_sensor.in_bed
+                - binary_sensor.pierre_is_home
+                - device_tracker.gaetane_igaetaneowntracks
+                - device_tracker.pierre_ipierre
+                - input_select.system_mode
+                - display.chuwi
+                - light.fibaro_system_fgd212_dimmer_2_level_5
+                - switch.radiateur_cuisine
+                - vacuum.xiaomi_vacuum_cleaner
+                - remote.harmony_hub
+                - switch.prise_lampe_boule
+                - switch.radiateur_1_salon
+                - switch.radiateur_2_salon
+                - light.fibaro_system_fgd212_dimmer_2_level_4
+                - light.fibaro_system_fgd212_dimmer_2_level_7
+                - switch.prise_bambi
+                - sensor.temperature_158d0001720782
+                - switch.radiateur_bibliotheque
+                - switch.qubino_zmnhjd1_flush_dimmer_pilot_wire_switch
+                - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+                - light.unknown_node_5_level_2
+                - switch.prise_cave
+                - camera.welcam_3
+                - camera.foscam_camera 
+                - camera.etage_1
+                - camera.etage_2
+                - camera.jardin
+                - sensor.elecbill_today_so_far_ttc 
+                - sensor.owl_180_energy_usage
+                - sensor.teleinfo_papp
+                - switch.chuwi_screen
