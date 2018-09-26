@@ -73,3 +73,111 @@
 #        friendly_name: Chuwi TTS
 #
 #    HANDLED BY THE DISPLAY CUSTOM COMPONENT
+
+
+
+# Qubino thermostat, used as heater for generic thermostat
+  - platform: template
+    switches:
+      qubino_bedroom_parents:
+        value_template: "{{ is_state('input_select.qubino_bedroom_parents', 'Comfort') }}"
+        turn_on:
+          service: input_select.select_option
+          data:
+            entity_id: input_select.qubino_bedroom_parents
+            option: 'Comfort'
+        turn_off:
+          service: input_select.select_option
+          data:
+            entity_id: input_select.qubino_bedroom_parents
+            option: 'Off'
+
+
+
+# Qubino thermostat, used as heater for generic thermostat
+  - platform: template
+    switches:
+      qubino_bedroom_baby:
+        value_template: "{{ is_state('input_select.qubino_bedroom_baby', 'Comfort') }}"
+        turn_on:
+          service: input_select.select_option
+          data:
+            entity_id: input_select.qubino_bedroom_baby
+            option: 'Comfort'
+        turn_off:
+          service: input_select.select_option
+          data:
+            entity_id: input_select.qubino_bedroom_baby
+            option: 'Off'
+
+
+#
+## Qubino thermostat, used as heater for generic thermostat
+#  - platform: template
+#    switches:
+#      qubino_bedroom_baby:
+#        value_template: "{{ is_state('light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level', 'on') }}"
+#        turn_on:
+#          service: light.turn_on
+#          data:
+#            entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+#        turn_off:
+#          service: switch.turn_on
+#          data:
+#            entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+
+  - platform: template
+    switches:
+      radiateur_1_salon_inverted:
+        value_template: "{{ is_state('switch.radiateur_1_salon', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.radiateur_1_salon
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.radiateur_1_salon
+#       icon_template: "{% if is_state('switch.radiateur_1_salon', 'on') %}mdi:garage{% else %}mdi:garage-open{% endif %}"
+
+  - platform: template
+    switches:
+      radiateur_2_salon_inverted:
+        value_template: "{{ is_state('switch.radiateur_2_salon', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.radiateur_2_salon
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.radiateur_2_salon
+#       icon_template: "{% if is_state('switch.radiateur_2_salon', 'on') %}mdi:garage{% else %}mdi:garage-open{% endif %}"
+
+  - platform: template
+    switches:
+      radiateur_cuisine_inverted:
+        value_template: "{{ is_state('switch.radiateur_cuisine', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.radiateur_cuisine
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.radiateur_cuisine
+#       icon_template: "{% if is_state('switch.radiateur_cuisine', 'on') %}mdi:garage{% else %}mdi:garage-open{% endif %}"
+  - platform: template
+    switches:
+      radiateur_bibliotheque_inverted:
+        value_template: "{{ is_state('switch.radiateur_bibliotheque', 'off') }}"
+        turn_on:
+          service: switch.turn_off
+          data:
+            entity_id: switch.radiateur_bibliotheque
+        turn_off:
+          service: switch.turn_on
+          data:
+            entity_id: switch.radiateur_bibliotheque
+#       icon_template: "{% if is_state('switch.radiateur_bibliotheque', 'on') %}mdi:garage{% else %}mdi:garage-open{% endif %}"
+

@@ -33,6 +33,11 @@
         prob_given_false: 0.6
         platform: 'state'
         to_state: 'home'
+      - entity_id: 'device_tracker.pierre_ipierre'
+        prob_given_true: 0.99
+        prob_given_false: 0.2
+        platform: 'state'
+        to_state: 'home'
 #      - entity_id: 'binary_sensor.welcam_someone_known'
 #        prob_given_true: 0.7
 #        prob_given_false: 0.5
@@ -90,11 +95,11 @@
         prob_given_true: 0.1 # 10% chance that if we are in bed it is day
         prob_given_false: 0.9 # 90% chance that if we are not in bed it is day
       # we are in bed -> likely that master bedroom light is off
-      - entity_id: 'group.all_lights'
+      - entity_id: 'group.living_lights'
         platform: 'state'
-        to_state: 'off'
-        prob_given_true: 0.9 # 90% chance that if we are in bed, the light is off
-        prob_given_false: 0.4 # 40% chance that if we are not in bed the light is off
+        to_state: 'on'
+        prob_given_true: 0.01 # 1% chance that if we are in bed, the light is on
+        prob_given_false: 0.3 # 40% chance that if we are not in bed the light is on
       - entity_id: 'binary_sensor.motion_last30'
         platform: 'state'
         to_state: 'off'

@@ -20,7 +20,10 @@
 - id: trigger_alarm_while_armed_away
   alias: Trigger alarm when armed away
   trigger:
-  - entity_id: binary_sensor.motion_detected
+#  - entity_id: binary_sensor.motion_detected
+#    platform: state
+#    to: 'on'
+  - entity_id: group.perimeter
     platform: state
     to: 'on'
 #  - entity_id: binary_sensor.motion_sensor_158d0001ddb2d3

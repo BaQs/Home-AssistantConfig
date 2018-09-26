@@ -3,11 +3,10 @@
     sequence:
     - service: script.telegram_snapshots_all_cameras
     - delay: 
-        seconds: 2
+        seconds: 3
     - service: notify.telegram
       data:
         message: "L'alarme vient de se déclencher"
-        title: "Alarme!"
         data:
           inline_keyboard:
              - 'Pictures Again:/cameras, Disarm Alarm:/disarm_alarm'
@@ -30,4 +29,33 @@
                caption: "Etage 2"
              - url: "https://hassio.ourdouille.maison{{ states.camera.welcam_3.attributes.entity_picture }}"
                caption: "Cuisine"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.dafang3.attributes.entity_picture }}"
+               caption: "Salon"
+
+
+
+  vacuum_zoned_clean: 
+    alias: "Vacuum: Zoned cleaning"
+    sequence:
+    - service: vacuum.send_command
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        command: app_zoned_clean
+        params: [ [  21400, 25300 , 26500, 24000  ,1 ],[  21400, 22600 , 23700, 21600  ,1 ],[  24500, 23000 , 28700, 21600  ,1 ], [ 29500, 25500 , 37500, 23900 ,1 ]  ]
+        # zone 1: 21400, 25300 , 26500, 24000  # in front of tv in the living room
+        # 21400, 25300 : just the corner near the veranda door and the tv
+        # 26500, 24000 : the corner near the tablet
+        # zone 2: 21400, 22600 , 23700, 21600  # in front of tv in the living room
+        # 21400, 22600 : the corner of the sofa, near the car
+        # 21400, 21600 : the corner of the house, near the sofa
+        # 23700, 21600 : the right corner under the sofa
+        # zone 3: 24500, 23000 , 28700, 21600 # dining room
+        # 24500, 23000 : top-left of zone 3, just after the carpet
+        # 28700, 24100 : top-right of zone 3, corner near buanderie door
+        # 28700, 25500 : top-right of zone 3, WITHIN buanderie
+        # 28700, 21600 : bottom-right of zone 3, WITHIN buanderie
+        # zone 4: 29500, 25500 , 35500, 23900 # kitchen
+        # 29500, 25500 : top-left of zone 4, wc
+        # 29500, 23900 : top-left of zone 4, just in front of the glass furniture
+        # 37500, 23900 : bottom-right of zone 4, in the library
 

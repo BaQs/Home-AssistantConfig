@@ -33,13 +33,14 @@
   alias: "Update Available Notification"
   initial_state: 'on'
   trigger:
-    platform: template
-    value_template: "{{states('sensor.pypi_hass_version') == states('sensor.current_version') }}"
+    platform: state
+    entity_id: updater.updater
+#   platform: template
+#   value_template: "{{states('sensor.pypi_hass_version') == states('sensor.current_version') }}"
   action:
-    - data:
-       message: "HomeAssistant {{ states('sensor.pypi_hass_version') }} is now available"
-       title: "Update HASS"
-      service: notify.telegram
+    - service: notify.telegram
+      data:
+       message: "HomeAssistant {{ states('sensor.current_version') }} is now available"
 
 - alias: Start HomeKit
   trigger:

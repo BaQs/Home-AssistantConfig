@@ -50,6 +50,9 @@ zone:
 # Enables the frontend
 frontend:
   themes: !include_dir_merge_named themes/
+  # to force custom components to load properly on ios
+  # nb: can cause automation and script editor to crash
+  javascript_version: latest
 
 # Enables configuration UI
 config:
@@ -149,10 +152,20 @@ remote:
     activity: Regarder la TV
 
 weather:
+  - platform: yweather
   - platform: darksky
     api_key: !secret darksky_api_key 
+    mode: daily
     units: ca
     language: fr
+    forecast:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
     monitored_conditions:
       - temperature
       - apparent_temperature
@@ -202,6 +215,10 @@ camera:
     password: !secret foscam_password
   - platform: arlo
     ffmpeg_arguments: '-pred 1 -q:v 2'
+  - platform: ffmpeg
+    name: DaFang3
+    input: !secret dafang_rtsp 
+    # https://192.168.0.105/cgi-bin/action.cgi?cmd=motor_right
 
 xiaomi_aqara:
   discovery_retry: 5
@@ -329,8 +346,7 @@ google_assistant:
 ios:
 
 # Example using a delay after start of Home Assistant
-homekit:
-  auto_start: False
+homekit: !include homekit.yaml
 
 # Example configuration.yaml entry
 alarm_control_panel:
@@ -352,20 +368,10 @@ alarm_control_panel:
       pending_time: 60
       delay_time: 0
   - platform: arlo
+    home_mode_name: arm_home
 
 
-input_select:
-  # Current automation mode
-  # Normal - normal day to day life, work etc.
-  # On Vacation - nobody is at home for a long period of time
-  # Have guests - we have guests staying over
-  system_mode:
-    name: House Mode
-    options:
-      - Normal
-      - On vacation
-      - Have guests
-    initial: Normal
+input_select: !include input_select.yaml
 
 ffmpeg:
 
@@ -379,3 +385,5 @@ display:
     name: chuwi
     host: 192.168.0.30
     password: !secret chuwi_password
+
+climate: !include climate.yaml

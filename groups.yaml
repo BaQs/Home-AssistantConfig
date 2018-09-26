@@ -1,7 +1,6 @@
-  default_view:
-    name: Default
-    view: no
-    icon: mdi:home
+  home:
+    name: Home 2
+    view: yes
     entities:
       - group.home
       - group.salon
@@ -19,11 +18,12 @@
       - group.cave
       - group.washroom
       - group.motion_detectors
-  home:
-    name: Home
+  default_view:
+    name: Default
     view: yes
+    icon: mdi:home
     entities:
-      - sun.sun
+#     - sun.sun
       - alarm_control_panel.home_alarm
       - alarm_control_panel.arlo
       - weather.dark_sky 
@@ -32,46 +32,55 @@
       - binary_sensor.pierre_is_home
       - device_tracker.igaetane
       - binary_sensor.welcam_3_someone_known
-      - binary_sensor.welcam_someone_known
       - binary_sensor.welcam_3_someone_unknown
-      - binary_sensor.welcam_someone_unknown
       - binary_sensor.somebody_home
       - group.pierre
       - group.gaetane
-      - group.all_lights
-      - group.motion_detectors
+#     - group.all_lights
+#     - group.motion_detectors
+#     - group.household
 #     - group.teleinfo
       - input_select.system_mode
       - sensor.current_state
-      - group.household
       - binary_sensor.motion_last10
       - binary_sensor.motion_last30
       - binary_sensor.motion_detected
 #     - group.elecbill
       - display.chuwi
+      - group.salon
+      - group.shower
+      - group.kitchen
+      - group.bedroom_baby
   Gaetane:
     name: Gaetane
     view: no
     entities:
+# nmap
       - device_tracker.igaetane
+# owntracks
       - device_tracker.gaetane_igaetaneowntracks
   Pierre:
     name: Pierre
     view: no
     entities:
-      - sensor.ipierre_battery_state
-      - sensor.ipierre_battery_level
-      - device_tracker.iphonedepierre 
-      - device_tracker.ipierre
+      - sensor.ipierre_battery_state_2
+      - sensor.ipierre_battery_level_2
+# icloud
+#     - device_tracker.iphonedepierre 
+# ios app
+#     - device_tracker.ipierre
+# nmap
       - device_tracker.ipierre_2
+# owntracks
       - device_tracker.pierre_ipierre
-      - sensor.pierre_home
+      - binary_sensor.pierre_home
   washroom:
     name: Buanderie 
     entities:
       - zwave.neo_coolcam_power_plug_12a
       - sensor.neo_coolcam_power_plug_12a_power
       - sensor.neo_coolcam_power_plug_12a_voltage
+      - binary_sensor.water_leak_sensor_158d0001bb884f
   kitchen:
     name: Cuisine
     entities:
@@ -84,6 +93,7 @@
       - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
       - switch.radiateur_cuisine
       - light.fibaro_system_fgd212_dimmer_2_level_5
+      - binary_sensor.water_leak_sensor_158d0001bb87df
   salon:
     name: Salon
     view: no
@@ -99,8 +109,10 @@
       - sensor.illumination_158d0001ddb2d3
       - binary_sensor.motion_sensor_158d0001ddb2d3
       - switch.prise_lampe_boule
-      - switch.radiateur_1_salon
-      - switch.radiateur_2_salon
+#     - switch.radiateur_1_salon
+      - switch.radiateur_1_salon_inverted
+#     - switch.radiateur_2_salon
+      - switch.radiateur_2_salon_inverted
 #     - light.fibaro_system_fgd212_dimmer_2_level
       - light.fibaro_system_fgd212_dimmer_2_level_4
       - light.fibaro_system_fgd212_dimmer_2_level_7
@@ -110,6 +122,7 @@
 #       - media_player.google_home_salon
 #       - media_player.55ez950_series
 #       - camera.welcam
+      - climate.living_room_thermostat 
   bedroom_baby:
     name: Chambre Bébé
     entities:
@@ -120,6 +133,11 @@
       - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood
       - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2
       - switch.prise_bambi
+      - switch.qubino_zmnhjd1_flush_dimmer_pilot_wire_switch
+      - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+      - climate.baby_bedroom_thermostat
+      - switch.qubino_bedroom_baby
+      - input_select.qubino_bedroom_baby
   library:
     name: Bibliothèque
     entities:
@@ -130,6 +148,7 @@
       - binary_sensor.motion_sensor_158d0001ab34c1
       - sensor.illumination_158d0001ab34c1
       - switch.radiateur_bibliotheque
+      - climate.library_thermostat
   bedroom_2_garden:
     name: Chambre 2e Jardin
     entities:
@@ -151,6 +170,11 @@
       - sensor.pressure_158d0001ab75f3
       - binary_sensor.door_window_sensor_158d0001e44c14
       - binary_sensor.door_window_sensor_158d00017010c1
+#     - light.unknown_node_5_level_2
+#     - switch.unknown_node_5_level_2
+      - climate.parents_bedroom_thermostat
+      - switch.qubino_bedroom_parents
+      - input_select.qubino_bedroom_parents
   entrance:
     name: Entrée
     entities:
@@ -206,12 +230,12 @@
     name: Caméras
     view: yes
     entities:
-      - camera.welcam
       - camera.welcam_3
       - camera.foscam_camera 
       - camera.etage_1
       - camera.etage_2
       - camera.jardin
+      - camera.dafang3
 
   multimedia:
     name: Multimedia
@@ -221,6 +245,38 @@
       - media_player.salon
       - media_player.google_home__salon
 
+
+  door_sensors:
+    name: Doors/Windows Sensors
+    view: no
+    entities:
+      - binary_sensor.door_window_sensor_158d00017010c1
+      - binary_sensor.door_window_sensor_158d00019ff246
+      - binary_sensor.door_window_sensor_158d00019df284
+      - binary_sensor.door_window_sensor_158d00015af81e
+      - binary_sensor.door_window_sensor_158d000170428f
+      - binary_sensor.door_window_sensor_158d0001e44c14
+      - binary_sensor.door_window_sensor_158d00015b63fb
+      - binary_sensor.door_window_sensor_158d00015b5fc7
+
+  perimeter:
+    name: Perimeter Detectors
+    view: no
+    entities:
+# chambre parents
+#     - binary_sensor.door_window_sensor_158d0001e44c14
+#     - binary_sensor.door_window_sensor_158d00017010c1
+# / chambre parents
+      - binary_sensor.door_window_sensor_158d00019ff246
+      - binary_sensor.door_window_sensor_158d00019df284
+      - binary_sensor.door_window_sensor_158d00015af81e
+      - binary_sensor.door_window_sensor_158d000170428f
+# porte
+      - binary_sensor.door_window_sensor_158d00015b63fb
+# courrier
+#     - binary_sensor.door_window_sensor_158d00015b5fc7
+  
+  
 
   motion_detectors:
     name: Motion Detectors
@@ -247,6 +303,24 @@
 #        - light.fibaro_system_fgd212_dimmer_2_level_4
 #
 
+
+# used for in_bed detection
+  living_lights:
+    name: Living Lights 
+    view: no
+    entities: 
+      - light.fibaro_system_fgd212_dimmer_2_level_4
+      - light.fibaro_system_fgd212_dimmer_2_level_5
+      - light.fibaro_system_fgd212_dimmer_2_level_7
+ 
+# used for automation_detection
+  living_motions:
+    name: Living Motions
+    view: no
+    entities: 
+      - binary_sensor.motion_sensor_158d0001ddb2d3
+      - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+      - binary_sensor.motion_sensor_158d0001ab34c1
 
   household:
     name: Household
@@ -465,6 +539,15 @@
      - sensor.chuwi
      - switch.chuwi_screen
      - switch.chuwi_tts
+
+  climate:
+    name: Climate
+    view: no
+    entities:
+     - climate.baby_bedroom_thermostat
+     - climate.parents_bedroom_thermostat
+     - climate.living_room_thermostat
+     - climate.library_thermostat
 
   time:
     name: Time

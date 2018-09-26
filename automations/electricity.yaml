@@ -1,4 +1,19 @@
 
+- id: electricity_failure_notification
+  alias: 'Electricity: Failure notification'
+  trigger:
+  - entity_id: sensor.ups_status
+    platform: state
+    from: 'ONLINE'
+# condition:
+  action:
+  - service: notify.telegram
+    data:
+      title: Electricité
+      message: |
+        Coupure électrique! APC en statut: {{sensor.ups_status}}. Il reste {{  sensor.ups_time_left }}min. de batterie
+
+
 - id: electricity_bill_daily
   alias: 'Electricity: Daily Bill'
   trigger:

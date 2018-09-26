@@ -618,14 +618,14 @@
 #        unit_of_measurement: Wh
 #
       - name: HC Energy Consumed (today so far)
-        where: '"entity_id" = ''teleinfo_hchc'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}''   '
+        where: '"entity_id" = ''teleinfo_hchc'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}'' TZ(''Europe/Paris'')  '
         measurement: '"Wh"'
         group_function: spread
         value_template: '{{ value | round(2) }}'
         unit_of_measurement: Wh
 
       - name: HP Energy Consumed (today so far)
-        where: '"entity_id" = ''teleinfo_hchp'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}''   '
+        where: '"entity_id" = ''teleinfo_hchp'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}''  TZ(''Europe/Paris'') '
         measurement: '"Wh"'
         group_function: spread
         value_template: '{{ value | round(2) }}'
