@@ -14,7 +14,7 @@
   qubino_bedroom_baby:
     name: Qubino Baby Bedroom
     options:
-     - Off
+     - Stop
      - Anti-Freeze
      - Eco
      - Comfort -2
@@ -25,7 +25,7 @@
   qubino_bedroom_parents:
     name: Qubino Parents Bedroom
     options:
-     - Off
+     - Stop
      - Anti-Freeze
      - Eco
      - Comfort -2

@@ -90,7 +90,7 @@
           service: input_select.select_option
           data:
             entity_id: input_select.qubino_bedroom_parents
-            option: 'Off'
+            option: 'Stop'
 
 
 
@@ -108,7 +108,7 @@
           service: input_select.select_option
           data:
             entity_id: input_select.qubino_bedroom_baby
-            option: 'Off'
+            option: 'Stop'
 
 
 #

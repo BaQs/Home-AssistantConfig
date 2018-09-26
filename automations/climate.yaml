@@ -10,138 +10,220 @@
 #This is not a bug, but how this device is made.
 #
 
-
-
-# Baby Bedroom
-
-  - alias: 'Qubino: Baby - Comfort'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_baby
-      to: 'Comfort'
-    action:
-      service: light.turn_on
-      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
-      data:
-        brightness: 100
-
-  - alias: 'Qubino: Baby - Comfort -1'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_baby
-      to: 'Comfort -1'
-    action:
-      service: light.turn_on
-      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
-      data:
-        brightness: 45
-
-  - alias: 'Qubino: Baby - Comfort -2'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_baby
-      to: 'Comfort -2'
-    action:
-      service: light.turn_on
-      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
-      data:
-        brightness: 35
-
-  - alias: 'Qubino: Baby - Eco'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_baby
-      to: 'Eco'
-    action:
-      service: light.turn_on
-      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
-      data:
-        brightness: 25
-
-  - alias: 'Qubino: Baby - Anti-Freeze'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_baby
-      to: 'Anti-Freeze'
-    action:
-      service: light.turn_on
-      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
-      data:
-        brightness: 15
-
-  - alias: 'Qubino: Baby - Stop'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_baby
-      to: 'Off'
-    action:
-      service: light.turn_off
-      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
-
-# Parental Bedroom
-
-  - alias: 'Qubino: Parents - Comfort'
+ 
+  - alias: 'Qubino Radiateur - Parents'
     trigger:
       platform: state
       entity_id: input_select.qubino_bedroom_parents
-      to: 'Comfort'
     action:
-      service: light.turn_on
       entity_id: light.unknown_node_5_level_2
-      data:
-        brightness: 100
+      service_template: >
+        {% if is_state("input_select.qubino_bedroom_parents", "Confort") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_parents", "Confort -1") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_parents", "Confort -2") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_parents", "Eco") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_parents", "Anti-Freeze") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_parents", "Stop") %}
+          light.turn_off
+        {% else %}
+          light.turn_off
+        {% endif %}
+      data_template:
+        brightness: >
+          {% if is_state("input_select.qubino_bedroom_parents", "Confort") %}
+            100
+          {% elif is_state("input_select.qubino_bedroom_parents", "Confort -1") %}
+            45
+          {% elif is_state("input_select.qubino_bedroom_parents", "Confort -2") %}
+            35
+          {% elif is_state("input_select.qubino_bedroom_parents", "Eco") %}
+            25 
+          {% elif is_state("input_select.qubino_bedroom_parents", "Anti-Freeze") %}
+            15 
+          {% elif is_state("input_select.qubino_bedroom_parents", "Stop") %}
+             0
+          {% else %}
+             0
+          {% endif %}
 
-  - alias: 'Qubino: Parents - Comfort -1'
+
+
+  - alias: 'Qubino Radiateur - Baby'
     trigger:
       platform: state
-      entity_id: input_select.qubino_bedroom_parents
-      to: 'Comfort -1'
+      entity_id: input_select.qubino_bedroom_baby
     action:
-      service: light.turn_on
-      entity_id: light.unknown_node_5_level_2
-      data:
-        brightness: 45
+      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+      service_template: >
+        {% if is_state("input_select.qubino_bedroom_baby", "Confort") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_baby", "Confort -1") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_baby", "Confort -2") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_baby", "Eco") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_baby", "Anti-Freeze") %}
+          light.turn_on
+        {% elif is_state("input_select.qubino_bedroom_baby", "Stop") %}
+          light.turn_off
+        {% else %}
+          light.turn_off
+        {% endif %}
+      data_template:
+        brightness: >
+          {% if is_state("input_select.qubino_bedroom_baby", "Confort") %}
+            100
+          {% elif is_state("input_select.qubino_bedroom_baby", "Confort -1") %}
+            45
+          {% elif is_state("input_select.qubino_bedroom_baby", "Confort -2") %}
+            35
+          {% elif is_state("input_select.qubino_bedroom_baby", "Eco") %}
+            25 
+          {% elif is_state("input_select.qubino_bedroom_baby", "Anti-Freeze") %}
+            15 
+          {% elif is_state("input_select.qubino_bedroom_baby", "Stop") %}
+             0
+          {% else %}
+             0
+          {% endif %}
 
-  - alias: 'Qubino: Parents - Comfort -2'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_parents
-      to: 'Comfort -2'
-    action:
-      service: light.turn_on
-      entity_id: light.unknown_node_5_level_2
-      data:
-        brightness: 35
-
-  - alias: 'Qubino: Parents - Eco'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_parents
-      to: 'Eco'
-    action:
-      service: light.turn_on
-      entity_id: light.unknown_node_5_level_2
-      data:
-        brightness: 25
-
-  - alias: 'Qubino: Parents - Anti-Freeze'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_parents
-      to: 'Anti-Freeze'
-    action:
-      service: light.turn_on
-      entity_id: light.unknown_node_5_level_2
-      data:
-        brightness: 15
-
-  - alias: 'Qubino: Parents - Stop'
-    trigger:
-      platform: state
-      entity_id: input_select.qubino_bedroom_parents
-      to: 'Off'
-    action:
-      service: light.turn_off
-      entity_id: light.unknown_node_5_level_2
-
-
+#
+## Baby Bedroom
+#
+#  - alias: 'Qubino: Baby - Comfort'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_baby
+#      to: 'Comfort'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+#      data:
+#        brightness: 100
+#
+#  - alias: 'Qubino: Baby - Comfort -1'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_baby
+#      to: 'Comfort -1'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+#      data:
+#        brightness: 45
+#
+#  - alias: 'Qubino: Baby - Comfort -2'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_baby
+#      to: 'Comfort -2'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+#      data:
+#        brightness: 35
+#
+#  - alias: 'Qubino: Baby - Eco'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_baby
+#      to: 'Eco'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+#      data:
+#        brightness: 25
+#
+#  - alias: 'Qubino: Baby - Anti-Freeze'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_baby
+#      to: 'Anti-Freeze'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+#      data:
+#        brightness: 15
+#
+#  - alias: 'Qubino: Baby - Stop'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_baby
+#      to: 'Off'
+#    action:
+#      service: light.turn_off
+#      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+#
+## Parental Bedroom
+#
+#  - alias: 'Qubino: Parents - Comfort'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_parents
+#      to: 'Comfort'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.unknown_node_5_level_2
+#      data:
+#        brightness: 100
+#
+#  - alias: 'Qubino: Parents - Comfort -1'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_parents
+#      to: 'Comfort -1'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.unknown_node_5_level_2
+#      data:
+#        brightness: 45
+#
+#  - alias: 'Qubino: Parents - Comfort -2'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_parents
+#      to: 'Comfort -2'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.unknown_node_5_level_2
+#      data:
+#        brightness: 35
+#
+#  - alias: 'Qubino: Parents - Eco'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_parents
+#      to: 'Eco'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.unknown_node_5_level_2
+#      data:
+#        brightness: 25
+#
+#  - alias: 'Qubino: Parents - Anti-Freeze'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_parents
+#      to: 'Anti-Freeze'
+#    action:
+#      service: light.turn_on
+#      entity_id: light.unknown_node_5_level_2
+#      data:
+#        brightness: 15
+#
+#  - alias: 'Qubino: Parents - Stop'
+#    trigger:
+#      platform: state
+#      entity_id: input_select.qubino_bedroom_parents
+#      to: 'Off'
+#    action:
+#      service: light.turn_off
+#      entity_id: light.unknown_node_5_level_2
+#
+#
