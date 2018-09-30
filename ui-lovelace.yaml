@@ -444,62 +444,50 @@ views:
       cards:
     
       - type: horizontal-stack
+        style:
+          height: 200px;
         cards:
-       
-        - type: custom:thermostat-card
-          title: Baby Bedroom
-          entity: climate.baby_bedroom_thermostat
-          highlight_tap: true
-          no_card: true
-          hvac:
-              attribute: operation
-#                           chevron_size: 200
-#                           pending: 3
-          style:
-              top:    78%
-              left:   15%
-              width:  50px
-              height: 50px
-
-        - type: custom:thermostat-card
-          title: Parents Bedroom
-          entity: climate.parents_bedroom_thermostat
-          highlight_tap: true
-          no_card: true
-          style:
-              top:    78%
-              left:   15%
-              width:  50px
-              height: 50px
-  
+ 
         - type: custom:thermostat-card
           title: Living Room
           entity: climate.living_room_thermostat
           highlight_tap: true
           no_card: true
-          style:
-              top:    78%
-              left:   15%
-              width:  50px
-              height: 50px
 
         - type: custom:thermostat-card
           title: Library
           entity: climate.library_thermostat
           highlight_tap: true
           no_card: true
-          style:
-              top:    78%
-              left:   15%
-              width:  50px
-              height: 50px
 
-
+        - type: custom:thermostat-card
+          title: Parents Bedroom
+          entity: climate.parents_bedroom_thermostat
+          highlight_tap: true
+          no_card: true
+      
+        - type: custom:thermostat-card
+          title: Baby Bedroom
+          entity: climate.baby_bedroom_thermostat
+          highlight_tap: true
+          no_card: true
 
  
-                    
       - type: horizontal-stack
         cards:
+ 
+        - type: history-graph
+          entities:
+          - climate.living_room_thermostat
+          - climate.library_thermostat
+  
+
+        - type: history-graph
+          entities:
+          - climate.parents_bedroom_thermostat
+          - climate.baby_bedroom_thermostat
+  
+                   
         - type: custom:monster-card
           card:
             type: entities
@@ -507,36 +495,47 @@ views:
           filter:
             include: 
             - domain: climate
-        - type: history-graph
-          title: 'History RDC'
-          entities:
-          - sensor.temperature_158d0001715c53
-          - sensor.temperature_158d0001db60d9
-          - sensor.temperature_158d0001a4b91d
-          - sensor.temperature_158d0001d6dae3
-          - sensor.temperature_158d0001a1f903
-          - climate.living_room_thermostat
-          - climate.library_thermostat
-  
-      - type: horizontal-stack
-        cards:
-             
-        - type: history-graph
-          title: 'History Etage 1'
-          entities:
-          - sensor.temperature_158d0001720782
-          - sensor.temperature_158d0001ab75f3
-          - sensor.temperature_158d0001ab75da
-          - climate.parents_bedroom_thermostat
-          - climate.baby_bedroom_thermostat
- 
-        - type: history-graph
-          title: 'History Etage 2'
-          entities:
-          - sensor.temperature_158d0001e421d9
-          - sensor.temperature_158d0001ab1858
-          - sensor.temperature_158d0001713f49
-        
+
+#        - type: history-graph
+#          title: 'History'
+#          entities:
+#          - climate.living_room_thermostat
+#          - climate.library_thermostat
+#          - climate.parents_bedroom_thermostat
+#          - climate.baby_bedroom_thermostat
+#  
+#
+#
+#        - type: history-graph
+#          title: 'History RDC'
+#          entities:
+#          - sensor.temperature_158d0001715c53
+#          - sensor.temperature_158d0001db60d9
+#          - sensor.temperature_158d0001a4b91d
+#          - sensor.temperature_158d0001d6dae3
+#          - sensor.temperature_158d0001a1f903
+#          - climate.living_room_thermostat
+#          - climate.library_thermostat
+#  
+#      - type: horizontal-stack
+#        cards:
+#             
+#        - type: history-graph
+#          title: 'History Etage 1'
+#          entities:
+#          - sensor.temperature_158d0001720782
+#          - sensor.temperature_158d0001ab75f3
+#          - sensor.temperature_158d0001ab75da
+#          - climate.parents_bedroom_thermostat
+#          - climate.baby_bedroom_thermostat
+# 
+#        - type: history-graph
+#          title: 'History Etage 2'
+#          entities:
+#          - sensor.temperature_158d0001e421d9
+#          - sensor.temperature_158d0001ab1858
+#          - sensor.temperature_158d0001713f49
+#        
  
 
   - title: Security
