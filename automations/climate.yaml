@@ -16,7 +16,7 @@
       platform: state
       entity_id: input_select.qubino_bedroom_parents
     action:
-      entity_id: light.unknown_node_5_level_2
+      entity_id: light.unknown_node_5_level
       service_template: >
         {% if is_state("input_select.qubino_bedroom_parents", "Confort") %}
           light.turn_on

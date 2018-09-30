@@ -3,5 +3,8 @@
 !scenes
 !.gitignore
 !automations
+!custom_components
+!www
+!themes
 secrets.yaml
 known_devices.yaml

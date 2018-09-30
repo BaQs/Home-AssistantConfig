@@ -29,6 +29,8 @@ resources:
     type: js
   - url: /local/custom-lovelace/kiosk.js
     type: js
+  - url: /local/custom-lovelace/useful-markdown-card.js
+    type: js
 #  - url: /local/custom-lovelace/tracker-card.js?v=0
 #    type: js
 views:
@@ -89,50 +91,79 @@ views:
 #  #        content: >
 #  #            ## Lovelace {{ sensor.time }}
 #
-      - type: custom:column-card
+      #- type: custom:column-card
+      - type: vertical-stack
         cards:
  
-#       - type: horizontal-stack
-#         cards:
-        - type: weather-forecast
-          entity: weather.yweather
-
-      
-#        - type: picture-elements
-#          image: /local/transparent.gif
-#          elements:
-#            - type: state-label
-#              entity: sensor.time
-#              style:
-#                display: block
-#                font-size: 1000%
-#                text-align: center
-#                padding: 80px 0
-# 
-
-
-
-        - type: picture-entity
-          title: Foscam Camera
-          entity: camera.foscam_camera
-          camera_image: camera.foscam_camera
-          show_info: true
-          tap_action: dialog
+        - type: horizontal-stack
+          cards:
+  #       - type: horizontal-stack
+  #         cards:
+          - type: weather-forecast
+            entity: weather.yweather
   
-        - type: entities
-          title: Lights
-          show_header_toggle: yes
-          entities:
-            - entity: light.fibaro_system_fgd212_dimmer_2_level_7
-              type: custom:slider-entity-row
-            - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-              type: custom:slider-entity-row
-            - entity: light.fibaro_system_fgd212_dimmer_2_level_5
-              type: custom:slider-entity-row
-            - entity: switch.prise_bambi
-            - entity: light.gateway_light_34ce008c1873
-            - entity:  light.gateway_light_7811dcb7afd1
+        
+  #        - type: picture-elements
+  #          image: /local/transparent.gif
+  #          elements:
+  #            - type: state-label
+  #              entity: sensor.time
+  #              style:
+  #                display: block
+  #                font-size: 1000%
+  #                text-align: center
+  #                padding: 80px 0
+  # 
+  
+   
+ 
+          - type: picture-entity
+            title: Foscam Camera
+            entity: camera.foscam_camera
+            camera_image: camera.foscam_camera
+            show_info: true
+            tap_action: dialog
+  
+   
+        - type: horizontal-stack
+          cards:
 
+
+          - type: custom:useful-markdown-card
+            padding: 15%
+            fontSize: 200px
+            #title: Time
+            content: >
+
+              [[ sensor.time.state ]]
+
+            
+#          - type: picture-elements
+#            #image: https://images.pexels.com/photos/9352/glass-time-watch-business.jpg?cs=srgb&dl=clock-hours-minutes-9352.jpg&fm=jpg
+##           image: https://s0.wp.com/i/blank.jpg
+#            image: /local/transparent.gif
+#            elements:
+#              - type: state-label
+#                entity: sensor.time
+#                style:
+#                  top: 15%
+#                  left: 50%
+#                  font-size: 1200%
+  
+          - type: entities
+            title: Lights
+            show_header_toggle: yes
+            entities:
+              - entity: light.fibaro_system_fgd212_dimmer_2_level_7
+                type: custom:slider-entity-row
+              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+                type: custom:slider-entity-row
+              - entity: light.fibaro_system_fgd212_dimmer_2_level_5
+                type: custom:slider-entity-row
+              - entity: switch.prise_bambi
+              - entity: light.gateway_light_34ce008c1873
+              - entity:  light.gateway_light_7811dcb7afd1
+ 
 #        - type: entities
 #          title: Thermostats
 #          show_header_toggle: yes
@@ -409,66 +440,104 @@ views:
     icon: mdi:waves
     panel: true
     cards:
-    - type: horizontal-stack
+    - type: vertical-stack
       cards:
     
-             
-                          - type: custom:thermostat-card
-                            title: Baby Bedroom
-                            entity: climate.baby_bedroom_thermostat
-                            highlight_tap: true
-                            no_card: true
-                            hvac:
-                                attribute: operation
+      - type: horizontal-stack
+        cards:
+       
+        - type: custom:thermostat-card
+          title: Baby Bedroom
+          entity: climate.baby_bedroom_thermostat
+          highlight_tap: true
+          no_card: true
+          hvac:
+              attribute: operation
 #                           chevron_size: 200
 #                           pending: 3
-                            style:
-                                top:    78%
-                                left:   15%
-                                width:  50px
-                                height: 50px
+          style:
+              top:    78%
+              left:   15%
+              width:  50px
+              height: 50px
 
-                          - type: custom:thermostat-card
-                            title: Parents Bedroom
-                            entity: climate.parents_bedroom_thermostat
-                            highlight_tap: true
-                            no_card: true
-                            style:
-                                top:    78%
-                                left:   15%
-                                width:  50px
-                                height: 50px
+        - type: custom:thermostat-card
+          title: Parents Bedroom
+          entity: climate.parents_bedroom_thermostat
+          highlight_tap: true
+          no_card: true
+          style:
+              top:    78%
+              left:   15%
+              width:  50px
+              height: 50px
+  
+        - type: custom:thermostat-card
+          title: Living Room
+          entity: climate.living_room_thermostat
+          highlight_tap: true
+          no_card: true
+          style:
+              top:    78%
+              left:   15%
+              width:  50px
+              height: 50px
+
+        - type: custom:thermostat-card
+          title: Library
+          entity: climate.library_thermostat
+          highlight_tap: true
+          no_card: true
+          style:
+              top:    78%
+              left:   15%
+              width:  50px
+              height: 50px
+
+
+
+ 
                     
-                          - type: custom:thermostat-card
-                            title: Living Room
-                            entity: climate.living_room_thermostat
-                            highlight_tap: true
-                            no_card: true
-                            style:
-                                top:    78%
-                                left:   15%
-                                width:  50px
-                                height: 50px
-            
-                          - type: custom:thermostat-card
-                            title: Library
-                            entity: climate.library_thermostat
-                            highlight_tap: true
-                            no_card: true
-                            style:
-                                top:    78%
-                                left:   15%
-                                width:  50px
-                                height: 50px
-                    
-#            - type: custom:monster-card
-#              card:
-#                type: glance
-#                title: Climate
-#              filter:
-#                include: 
-#                  - domain: climate
+      - type: horizontal-stack
+        cards:
+        - type: custom:monster-card
+          card:
+            type: entities
+            title: Climate
+          filter:
+            include: 
+            - domain: climate
+        - type: history-graph
+          title: 'History RDC'
+          entities:
+          - sensor.temperature_158d0001715c53
+          - sensor.temperature_158d0001db60d9
+          - sensor.temperature_158d0001a4b91d
+          - sensor.temperature_158d0001d6dae3
+          - sensor.temperature_158d0001a1f903
+          - climate.living_room_thermostat
+          - climate.library_thermostat
+  
+      - type: horizontal-stack
+        cards:
              
+        - type: history-graph
+          title: 'History Etage 1'
+          entities:
+          - sensor.temperature_158d0001720782
+          - sensor.temperature_158d0001ab75f3
+          - sensor.temperature_158d0001ab75da
+          - climate.parents_bedroom_thermostat
+          - climate.baby_bedroom_thermostat
+ 
+        - type: history-graph
+          title: 'History Etage 2'
+          entities:
+          - sensor.temperature_158d0001e421d9
+          - sensor.temperature_158d0001ab1858
+          - sensor.temperature_158d0001713f49
+        
+ 
 
   - title: Security
     icon: mdi:security

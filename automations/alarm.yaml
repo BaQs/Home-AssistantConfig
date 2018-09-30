@@ -1,20 +1,3 @@
-# replaced by away/from_home.yaml
-#- id: arm_alarm_when_pierre_leaves
-#  alias: Arm alarm when Pierre leaves
-#  trigger:
-#  - entity_id: binary_sensor.pierre_is_home
-#    platform: state
-#    to: 'off'
-#  action:
-#  - data:
-#      message: Pierre est parti!
-#      title: Pierre leaves
-#    service: notify.telegram
-#  - data: {}
-#    service: alarm_control_panel.alarm_arm_away
-# / replaced by away/from_home.yaml
-
-
 # Trigger
 
 - id: trigger_alarm_while_armed_away
@@ -26,21 +9,6 @@
   - entity_id: group.perimeter
     platform: state
     to: 'on'
-#  - entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
-#    platform: state
-#    to: 'on'
-#  - entity_id: binary_sensor.motion_sensor_158d0001ab34c1
-#    platform: state
-#    to: 'on'
-#  - entity_id: binary_sensor.motion_sensor_158d0001e163a1
-#    platform: state
-#    to: 'on'
-#  - entity_id: binary_sensor.motion_sensor_158d0001b1cff9
-#    platform: state
-#    to: 'on'
-#  - entity_id: binary_sensor.motion_sensor_158d0001ab34e1
-#    platform: state
-#    to: 'on'
   condition:
   - condition: state
     entity_id: alarm_control_panel.home_alarm
@@ -64,18 +32,4 @@
       language: fr
       entity_id: media_player.google_home__salon
       message: Alarme déclenchée
-
-#- id: disarm_alarm_when_pierre_is_back
-#  alias: Disarm alarm when Pierre is back home
-#  trigger:
-#  - entity_id: binary_sensor.pierre_is_home
-#    platform: state
-#    to: 'on'
-#  action:
-#  - data:
-#      message: Pierre est de retour!
-#      title: Pierre is back home
-#    service: notify.telegram
-#  - data: {}
-#    service: alarm_control_panel.alarm_disarm
 
