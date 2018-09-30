@@ -57,7 +57,7 @@
     min_temp: 15
     max_temp: 25
     ac_mode: False
-    target_temp: 19
+    target_temp: 19.5
     cold_tolerance: 0.3
     hot_tolerance: 0
     min_cycle_duration:
@@ -67,3 +67,27 @@
     initial_operation_mode: "auto"
     away_temp: 17
 
+
+#  - platform: smart_thermostat
+#    name: Parents Bedroom Smart Thermostat
+#    heater: switch.qubino_bedroom_parents
+#    target_sensor: sensor.temperature_158d0001ab75f3
+#    min_temp: 15
+#    max_temp: 25
+#    ac_mode: False
+#    target_temp: 19.5
+##   cold_tolerance: 0.3
+##   hot_tolerance: 0
+##   min_cycle_duration:
+##     seconds: 5
+#    keep_alive:
+#      seconds: 15
+#    initial_operation_mode: "auto"
+#    away_temp: 17
+#    kp : 5
+#    ki : 3
+#    kd : 2
+#    pwm : 10
+#    autotune : ziegler-nichols
+#    difference : 100
+#    noiseband : 0.5

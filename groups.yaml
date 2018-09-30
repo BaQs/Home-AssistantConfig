@@ -175,6 +175,7 @@
       - climate.parents_bedroom_thermostat
       - switch.qubino_bedroom_parents
       - input_select.qubino_bedroom_parents
+      - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
   entrance:
     name: Entrée
     entities:
@@ -220,6 +221,7 @@
     name: Cave
     entities:
       - switch.prise_cave
+
   automation_view:
     name: Automation
     view: yes

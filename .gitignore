@@ -8,7 +8,8 @@
 !custom_components
 !themes
 !*/
-!www/*
+!www/*.js
+!www/*/*.js
 secrets.yaml
 known_devices.yaml
 deps

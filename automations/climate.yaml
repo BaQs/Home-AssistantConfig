@@ -1,5 +1,6 @@
 # https://github.com/home-assistant/home-assistant/issues/4525
 #Ok, The output is controlled via the light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_6_0
+# https://www.planete-domotique.com/notices/Q/QUBINO/Qubino_Flush%20Pilot%20Wire_PLUS_user%20manual_V1.1_fra.pdf
 #So:
 #0 is Stop
 #15 is Anti-Freeze
@@ -10,36 +11,20 @@
 #This is not a bug, but how this device is made.
 #
 
- 
   - alias: 'Qubino Radiateur - Parents'
     trigger:
       platform: state
       entity_id: input_select.qubino_bedroom_parents
     action:
-      entity_id: light.unknown_node_5_level
-      service_template: >
-        {% if is_state("input_select.qubino_bedroom_parents", "Confort") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_parents", "Confort -1") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_parents", "Confort -2") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_parents", "Eco") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_parents", "Anti-Freeze") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_parents", "Stop") %}
-          light.turn_off
-        {% else %}
-          light.turn_off
-        {% endif %}
+      entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
+      service: light.turn_on
       data_template:
         brightness: >
-          {% if is_state("input_select.qubino_bedroom_parents", "Confort") %}
+          {% if is_state("input_select.qubino_bedroom_parents", "Comfort") %}
             100
-          {% elif is_state("input_select.qubino_bedroom_parents", "Confort -1") %}
+          {% elif is_state("input_select.qubino_bedroom_parents", "Comfort -1") %}
             45
-          {% elif is_state("input_select.qubino_bedroom_parents", "Confort -2") %}
+          {% elif is_state("input_select.qubino_bedroom_parents", "Comfort -2") %}
             35
           {% elif is_state("input_select.qubino_bedroom_parents", "Eco") %}
             25 
@@ -59,29 +44,14 @@
       entity_id: input_select.qubino_bedroom_baby
     action:
       entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
-      service_template: >
-        {% if is_state("input_select.qubino_bedroom_baby", "Confort") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_baby", "Confort -1") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_baby", "Confort -2") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_baby", "Eco") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_baby", "Anti-Freeze") %}
-          light.turn_on
-        {% elif is_state("input_select.qubino_bedroom_baby", "Stop") %}
-          light.turn_off
-        {% else %}
-          light.turn_off
-        {% endif %}
+      service: light.turn_on
       data_template:
         brightness: >
-          {% if is_state("input_select.qubino_bedroom_baby", "Confort") %}
+          {% if is_state("input_select.qubino_bedroom_baby", "Comfort") %}
             100
-          {% elif is_state("input_select.qubino_bedroom_baby", "Confort -1") %}
+          {% elif is_state("input_select.qubino_bedroom_baby", "Comfort -1") %}
             45
-          {% elif is_state("input_select.qubino_bedroom_baby", "Confort -2") %}
+          {% elif is_state("input_select.qubino_bedroom_baby", "Comfort -2") %}
             35
           {% elif is_state("input_select.qubino_bedroom_baby", "Eco") %}
             25 
