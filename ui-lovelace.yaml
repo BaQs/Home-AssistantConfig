@@ -3,9 +3,9 @@
 
 title: Home
 resources:
-  - url: /local/surveillance-card.js?v=0
+  - url: /local/custom-lovelace/surveillance-card.js?v=0
     type: module
-  - url: /local/alarm_control_panel-card.js?v=1
+  - url: /local/custom-lovelace/alarm_control_panel-card.js?v=1
     type: module
   - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=1
     type: module

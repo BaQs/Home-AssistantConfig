@@ -1,0 +1,168 @@
+#################################################################
+## Home Related
+#################################################################
+- id: doorbell
+  alias: 'Doorbell'
+  trigger:
+   - platform: event
+     event_type: button_pressed
+     event_data: {"entity_id": "switch.sonnette","state": "group on"}
+  action:
+    - service: display.fullykiosk_load_url
+      entity_id: display.chuwi
+      url: "https://hassio.ourdouille.maison/lovelace/8?kiosk"
+    - service: notify.telegram
+      data:
+        message: "Cameras"
+        data:
+          photo:
+             - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+               caption: "On sonne!"
+
+- id: postmail
+  alias: 'You ve got mail'
+  trigger:
+   - platform: state
+     entity_id: binary_sensor.door_window_sensor_158d00015b5fc7
+     to: 'on'
+  action:
+    - service: notify.telegram
+      data:
+        message: "Cameras"
+        data:
+          photo:
+             - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+               caption: "Du courrier!"
+
+# TODO
+# Cave Pump
+# if the pump wasn't launch since 22h, we launch it.
+- id: cave_pump_daily
+  alias: 'Cave: Pump'
+  trigger:
+    platform: time
+    at: '14:00:00'
+  condition:
+  - condition: state
+    entity_id: switch.prise_cave
+    state: 'off'
+    for:
+      hours: 20
+#  condition:
+#  - condition: state
+#    entity_id: binary_sensor.pierre_is_home
+#    state: 'on'
+  action:
+    service: homeassistant.turn_on
+    entity_id: switch.prise_cave
+
+
+# TODO
+
+- id: '153461612241'
+  alias: 'Motion: Parking space!'
+  trigger:
+  - entity_id: binary_sensor.foscam_c1_motion_sensor
+    platform: state
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: binary_sensor.somebody_home
+        state: 'on'
+  #    - condition: state
+  #      entity_id: sensor.period_of_day
+  #      state: 'day'
+      - condition: state
+        entity_id: binary_sensor.in_bed
+        state: 'off'
+  action:
+  - data:
+      data:
+        photo:
+        - caption: Ca bouge sur le parking !
+          url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}
+      message: Ca bouge sur le parking !
+      title: Parking
+    service: notify.telegram
+#  - service: tts.google_say
+#    data:
+#      entity_id: media_player.google_home__salon
+#      message: "La place de parking vient de se libérer"
+
+
+
+- id: shower_heating_off_after_60min
+  alias: 'Heating: shower off after 60min'
+  trigger:
+    platform: state
+    entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+    to: 'on'
+    for:
+      minutes: 60
+  action:
+    - service: switch.turn_off
+      entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+    - service: notify.telegram
+      data:
+        message: "Shower heater has been on for 60min, shutting it off automatically"
+
+
+
+- id: shower_heating_on_morning_weekday
+  alias: 'Heating: shower ON on weekday mornings'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.in_bed
+    to: 'off'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sensor.current_state
+        state: 'home'
+      - condition: time
+        before: '10:00:00'
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+  action:
+    - service: switch.turn_on
+      entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+    - service: notify.telegram
+      data:
+        message: "Good morning, Shower heater on"
+
+
+
+- id: lights_living
+  alias: 'Lights: living'
+  trigger:
+    platform: state
+    entity_id: group.living_lights
+    to: 'on'
+    for:
+      minutes: 60
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: remote.harmony_hub
+        state: 'off'
+        for:
+          minutes: 15
+      - condition: state
+        entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
+        state: 'off'
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.living_lights
+    - service: notify.telegram
+      data:
+        message: "Living lights were on for 60 min, but TV is OFF since 15 min & no motion. So I shut them down"
+
+

@@ -1,10 +1,14 @@
 *
 !*.yaml
+!*.js
+!www
 !scenes
 !.gitignore
 !automations
 !custom_components
-!www
 !themes
+!*/
+!www/*
 secrets.yaml
 known_devices.yaml
+deps

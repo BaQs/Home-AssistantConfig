@@ -1,0 +1,62 @@
+- id: '1534607568202'
+  alias: 'Light: Enlight floor1'
+  trigger:
+  - entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    platform: state
+    to: 'on'
+  condition:
+#  - condition: numeric_state
+#    entity_id: sensor.illumination_158d0001ab34e1
+#    below: '200'
+  - condition: state
+    entity_id: sensor.period_of_day
+    state: 'night'
+  action:
+  - data:
+      brightness: '100'
+      color_name: blue
+      entity_id: light.gateway_light_7811dcb7afd1
+    service: light.turn_on
+  - data:
+      brightness: '100'
+      color_name: blue
+      entity_id: light.gateway_light_34ce008c1873
+    service: light.turn_on
+
+- id: light_floor1_back_normal
+  alias: 'Light: Floor1 back to normal'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    to: 'off'
+    for:
+      minutes: 3
+  condition:
+  - condition: state
+    entity_id: light.gateway_light_7811dcb7afd1
+    state: 'on'
+  - condition: state
+    entity_id: sensor.period_of_day
+    state: night
+#  condition: state
+#      entity_id: sensor.period_of_day
+#      state: night
+#    condition: and
+#    conditions:
+#  condition: sun
+#    before: surnise
+#    before_offset: "-00:25:00"
+  action:
+  - data:
+      brightness: '5'
+      color_name: blue
+      entity_id: light.gateway_light_7811dcb7afd1
+    service: light.turn_on
+  - data:
+      brightness: '5'
+      color_name: blue
+      entity_id: light.gateway_light_34ce008c1873
+    service: light.turn_on
+ 
+
+

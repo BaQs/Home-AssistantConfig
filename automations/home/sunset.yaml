@@ -1,0 +1,34 @@
+
+- id: Sunset
+  alias: 'Script: Sunset'
+  trigger:
+    - platform: template
+      value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.somebody_home
+    state: 'on'
+  action:
+  - service: notify.telegram
+    data:
+      message: "Sunset time. As somebody is home, I turn on the lights"
+  - data:
+      brightness: '10'
+      color_name: blue
+      entity_id: light.gateway_light_7811dcb7afd1
+    service: light.turn_on
+  - data:
+      brightness: '10'
+      color_name: blue
+      entity_id: light.gateway_light_34ce008c1873
+    service: light.turn_on
+  - service: light.turn_on
+    data:
+            entity_id: light.fibaro_system_fgd212_dimmer_2_level_5
+  - service: light.turn_on
+    data:
+            entity_id: light.fibaro_system_fgd212_dimmer_2_level_4
+  - service: light.turn_on
+    data:
+            entity_id: light.fibaro_system_fgd212_dimmer_2_level_7
+

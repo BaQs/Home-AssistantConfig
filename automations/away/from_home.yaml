@@ -1,0 +1,89 @@
+# Automatic away mode when nobody is at home during the day,
+# and not on vacation
+- id: away_from_home_away_mode
+  alias: Turn on away mode
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: sensor.current_state
+      from: 'home'
+      to: 'away'
+      for:
+        minutes: 10
+  # Set away mode
+  action:
+    - service: notify.telegram
+      data:
+        message: Nobody is at home. Turning off lights, arming alarm, turning off TV & switching on the cave pump.
+    # Turn off lights and hot water recirculation pump
+    - service: light.turn_off
+      data:
+        entity_id:
+          - group.all_lights
+    # Arm alarm
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.home_alarm
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.arlo
+    # Close main floor shades
+    # Start the vacuum
+    - service: vacuum.start
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    # Turn off TV
+    - service: remote.turn_off
+      entity_id: remote.harmony_hub
+    # Turn ON Cave pump
+    - service: homeassistant.turn_on
+      entity_id: switch.prise_cave
+    # Turn off media players
+#    - service: media_player.turn_off
+#      data:
+#        entity_id: group.monoprice
+    # Set away mode on thermostats
+#    - service: climate.set_away_mode
+#      data:
+#        entity_id: group.climate
+#        away_mode: true
+    # Close main floor shades
+#    - service: scene.turn_on
+#      data:
+#        entity_id:
+#          - scene.34003 # Dining Closed
+#          - scene.56015 # Living Closed
+    # Thermostats in away mode
+    - service: climate.set_away_mode
+      data:
+        entity_id: group.climate
+        away_mode: true
+#     - climate.baby_bedroom_thermostat
+#     - climate.parents_bedroom_thermostat
+#     - climate.living_room_thermostat
+#     - climate.library_thermostat
+
+- id: '1533471702628'
+  alias: Pierre leaves
+  trigger:
+  - entity_id: binary_sensor.pierre_is_home
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      message: Pierre est parti!
+      title: Pierre leaves
+    service: notify.telegram
+
+- id: pierre_home
+  alias: Pierre home
+  trigger:
+  - entity_id: binary_sensor.pierre_is_home
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      message: Pierre est à la maison!
+      title: Pierre is home
+    service: notify.telegram
+
+

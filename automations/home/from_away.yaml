@@ -1,0 +1,39 @@
+# Turn off automatic away mode
+- alias: 'Turn off automatic away mode'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: sensor.current_state
+      from: 'away'
+      to: 'home'
+  action:
+    # Verify that shades are in proper scenes
+#    - service: python_script.home_shades
+    # Send a notification
+    - service: notify.telegram
+      data:
+        message: Somebody is home. Cancelling Away mode, disarming alarm, and turning off cave pump.
+    # Vacuum back home
+    - service: vacuum.return_to_base
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    # Disarm alarm
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.home_alarm
+    - service: alarm_control_panel.alarm_disarm
+      entity_id: alarm_control_panel.arlo
+    # Turn on TV
+#    - service: remote.turn_on
+#      entity_id: remote.harmony_hub
+    # Turn Off Cave pump
+    - service: homeassistant.turn_off
+      entity_id: switch.prise_cave
+    - service: climate.set_away_mode
+      data:
+        entity_id: group.climate
+        away_mode: true
+
+    # Cancel away mode on all thermostats
+#    - service: climate.set_away_mode
+#      data:
+#        entity_id: group.climate
+#	away_mode: false

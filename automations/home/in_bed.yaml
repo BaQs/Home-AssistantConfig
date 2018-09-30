@@ -1,0 +1,34 @@
+- id: to_bed
+  alias: 'To bed'
+  trigger:
+  - entity_id: binary_sensor.in_bed
+    platform: state
+    to: 'on'
+  condition:
+#  - condition: numeric_state
+#    entity_id: sensor.illumination_158d0001ab34e1
+#    below: '200'
+  action:
+          - service: display.turn_off
+            entity_id: display.chuwi
+          - service: notify.telegram
+            data:
+                    message: In bed, turning chuwi off
+
+- id: from_bed
+  alias: 'From bed'
+  trigger:
+  - entity_id: binary_sensor.in_bed
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.somebody_home
+    state: 'on'
+  action:
+          - service: display.turn_on
+            entity_id: display.chuwi
+
+          - service: notify.telegram
+            data:
+                    message: Back up, turning chuwi on
