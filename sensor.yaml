@@ -380,7 +380,7 @@
 
 {{   
 (
-(states.sensor.hc_heating_consumed_today_so_far.state |float * 8  /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
+(states.sensor.hc_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
 )|round(2)
 }}
 
@@ -397,7 +397,7 @@
 
 {{   
 (
-(states.sensor.hp_heating_consumed_today_so_far.state |float * 16 /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
+(states.sensor.hp_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
 )|round(2)
 }}
 
@@ -676,20 +676,22 @@
         # {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
         
       - name: HC Heating Consumed (today so far)
-        where: '"entity_id" = ''owl_180_energy_usage'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 00:00:00''  AND time < ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00'' TZ(''Europe/Paris'') '
+        where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 00:00:00''  AND time < ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00'' TZ(''Europe/Paris'') '
         measurement: '"W"'
-        group_function: sum
+        group_function: spread
         value_template: '{{ value | round(2) }}'
-        unit_of_measurement: W
+        unit_of_measurement: Wh
+        field: "Total usage"
 
         # NB/ the space after %d is important! otherwise it generates automatically 00:00:00
 
       - name: HP Heating Consumed (today so far)
-        where: '"entity_id" = ''owl_180_energy_usage'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00''  TZ(''Europe/Paris'') '
+        where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00''  TZ(''Europe/Paris'') '
         measurement: '"W"'
-        group_function: sum
+        group_function: spread
         value_template: '{{ value | round(2) }}'
-        unit_of_measurement: W
+        unit_of_measurement: Wh
+        field: "Total usage"
 
 
       - name: HC Energy Consumed (last day)
