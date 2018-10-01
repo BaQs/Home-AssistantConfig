@@ -681,7 +681,7 @@
         group_function: spread
         value_template: '{{ value | round(2) }}'
         unit_of_measurement: Wh
-        field: "Total usage"
+        field:  '"Total usage"'
 
         # NB/ the space after %d is important! otherwise it generates automatically 00:00:00
 
@@ -691,7 +691,7 @@
         group_function: spread
         value_template: '{{ value | round(2) }}'
         unit_of_measurement: Wh
-        field: "Total usage"
+        field:  '"Total usage"'
 
 
       - name: HC Energy Consumed (last day)
