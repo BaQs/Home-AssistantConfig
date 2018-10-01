@@ -100,8 +100,8 @@ views:
   #       - type: horizontal-stack
   #         cards:
           - type: weather-forecast
-            entity: weather.yweather
-#           entity: weather.dark_sky
+#           entity: weather.yweather
+            entity: weather.dark_sky
   
         
   #        - type: picture-elements
@@ -775,17 +775,20 @@ views:
         icon: mdi:tablet
         action: more_info
         color: rgb(155, 255 ,233)
+        color_off: rgb(140, 140, 140)
       - type: "custom:button-card"
         entity: media_player.xiaomi_network_speaker_airplay
         icon: mdi:speaker-wireless
         action: more_info
         color: rgb(155, 255 ,233)
+        color_off: rgb(140, 140, 140)
 
       - type: "custom:button-card"
         entity: vacuum.xiaomi_vacuum_cleaner
         icon: mdi:robot-vacuum
         action: more_info
         color: rgb(155, 255 ,233)
+        color_off: rgb(140, 140, 140)
 
     - type: horizontal-stack
       cards:
@@ -793,12 +796,14 @@ views:
         entity: group.climate
         icon: mdi:radiator
         color: rgb(255, 233, 155)
-        default_color: rgb(255, 155,233)
+        color_off: rgb(140, 140, 140)
         action: more_info
+
       - type: "custom:button-card"
         entity: input_select.system_mode
         icon: mdi:home-heart
-        default_color: rgb(255, 155,233)
+        color: rgb(255, 233, 155)
+        color_off: rgb(140, 140, 140)
         action: more_info
 
     - type: horizontal-stack
@@ -808,6 +813,7 @@ views:
         action: more_info
         icon: mdi:baby
         color: rgb(255, 155, 155)
+        color_off: rgb(140, 140, 140)
 
       - type: "custom:button-card"
         entity: climate.parents_bedroom_thermostat
@@ -830,6 +836,8 @@ views:
         action: more_info
         icon: mdi:library
         color: rgb(255, 155, 155)
+        color_off: rgb(140, 140, 140)
+
       - type: "custom:button-card"
         entity: switch.qubino_zmnhadx_flush_1_relay_switch
         action: more_info

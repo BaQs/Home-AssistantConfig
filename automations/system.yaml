@@ -43,16 +43,16 @@
        message: "HomeAssistant {{ states('sensor.current_version') }} is now available"
 
 - alias: Start HomeKit
+  id: 3e566d3adc654ab884dcbe4a2322bc3d
   trigger:
   - platform: homeassistant
     event: start
   action:
   - delay: 00:05
   - service: homekit.start
-  - data:
+  - service: notify.telegram
+    data:
       message: Homekit est démarré
-    service: notify.telegram
-  id: 3e566d3adc654ab884dcbe4a2322bc3d
 
 - id: telegramStart
   alias: 'Telegram: HA started'
@@ -60,7 +60,10 @@
   - platform: homeassistant
     event: start
   action:
-  - data:
+  - service: notify.telegram
+    data:
       message: HA est démarré
-    service: notify.telegram
+  - service: frontend.set_theme
+    data:
+      name: midnight
 

@@ -160,14 +160,14 @@ weather:
     mode: daily
     units: ca
     language: fr
-    forecast:
-      - 1
-      - 2
-      - 3
-      - 4
-      - 5
-      - 6
-      - 7
+#    forecast:
+#      - 1
+#      - 2
+#      - 3
+#      - 4
+#      - 5
+#      - 6
+#      - 7
     monitored_conditions:
       - temperature
       - apparent_temperature

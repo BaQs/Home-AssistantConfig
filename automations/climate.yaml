@@ -1,6 +1,7 @@
 # https://github.com/home-assistant/home-assistant/issues/4525
 #Ok, The output is controlled via the light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_6_0
 # https://www.planete-domotique.com/notices/Q/QUBINO/Qubino_Flush%20Pilot%20Wire_PLUS_user%20manual_V1.1_fra.pdf
+# https://www.12h26.com/archives/gerer-qubino-flush-pilot-wire-home-asistant
 #So:
 #0 is Stop
 #15 is Anti-Freeze
@@ -21,15 +22,15 @@
       data_template:
         brightness: >
           {% if is_state("input_select.qubino_bedroom_parents", "Comfort") %}
-            100
+            130
           {% elif is_state("input_select.qubino_bedroom_parents", "Comfort -1") %}
-            45
+            105
           {% elif is_state("input_select.qubino_bedroom_parents", "Comfort -2") %}
-            35
+            79 
           {% elif is_state("input_select.qubino_bedroom_parents", "Eco") %}
-            25 
+            54 
           {% elif is_state("input_select.qubino_bedroom_parents", "Anti-Freeze") %}
-            15 
+            28
           {% elif is_state("input_select.qubino_bedroom_parents", "Stop") %}
              0
           {% else %}
@@ -48,15 +49,15 @@
       data_template:
         brightness: >
           {% if is_state("input_select.qubino_bedroom_baby", "Comfort") %}
-            100
+            130
           {% elif is_state("input_select.qubino_bedroom_baby", "Comfort -1") %}
-            45
+            105
           {% elif is_state("input_select.qubino_bedroom_baby", "Comfort -2") %}
-            35
+            79
           {% elif is_state("input_select.qubino_bedroom_baby", "Eco") %}
-            25 
+            54
           {% elif is_state("input_select.qubino_bedroom_baby", "Anti-Freeze") %}
-            15 
+            28 
           {% elif is_state("input_select.qubino_bedroom_baby", "Stop") %}
              0
           {% else %}

@@ -363,6 +363,46 @@
 
 '
 
+# number of hours since midnight
+# {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
+#
+# Finally: not used
+        
+# we transform W to kWh , bu multiplying the W by nb_hours and / 1000
+# nb_hour = 16 cause HP, 8 cause HC
+#
+  - platform: template
+    sensors:
+        elecbill_today_so_far_hc_heating:
+            friendly_name: 'Heating HC cost (Today so far)'
+            unit_of_measurement: '€'
+            value_template: '
+
+{{   
+(
+(states.sensor.hc_heating_consumed_today_so_far.state |float * 8  /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
+)|round(2)
+}}
+
+'
+ 
+# we transform W to kWh , bu multiplying the W by nb_hours and / 1000
+# nb_hour = 16 cause HP, 8 cause HC
+  - platform: template
+    sensors:
+        elecbill_today_so_far_hp_heating:
+            friendly_name: 'Heating HP cost (Today so far)'
+            unit_of_measurement: '€'
+            value_template: '
+
+{{   
+(
+(states.sensor.hp_heating_consumed_today_so_far.state |float * 16 /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
+)|round(2)
+}}
+
+'
+
   - platform: template
     sensors:
         elecbill_today_so_far_sub:
@@ -630,6 +670,26 @@
         group_function: spread
         value_template: '{{ value | round(2) }}'
         unit_of_measurement: Wh
+
+
+        # number of seconds since midnight
+        # {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
+        
+      - name: HC Heating Consumed (today so far)
+        where: '"entity_id" = ''owl_180_energy_usage'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 00:00:00''  AND time < ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00'' TZ(''Europe/Paris'') '
+        measurement: '"W"'
+        group_function: sum
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: W
+
+        # NB/ the space after %d is important! otherwise it generates automatically 00:00:00
+
+      - name: HP Heating Consumed (today so far)
+        where: '"entity_id" = ''owl_180_energy_usage'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00''  TZ(''Europe/Paris'') '
+        measurement: '"W"'
+        group_function: sum
+        value_template: '{{ value | round(2) }}'
+        unit_of_measurement: W
 
 
       - name: HC Energy Consumed (last day)
