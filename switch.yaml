@@ -1,5 +1,6 @@
   - platform: rfxtrx
     automatic_add: True
+    signal_repetitions: 5
     devices:
             "0B110000464D8E6909000090":
                     name: Prise Cave
@@ -74,6 +75,10 @@
 #
 #    HANDLED BY THE DISPLAY CUSTOM COMPONENT
 
+#  - platform: command_line
+#    switches:
+#      chuwi_screen:
+#        command_on: !secret chuwi_screen_on
 
 
 # Qubino thermostat, used as heater for generic thermostat

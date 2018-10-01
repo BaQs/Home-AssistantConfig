@@ -30,7 +30,7 @@
     - service: climate.set_away_mode
       data:
         entity_id: group.climate
-        away_mode: true
+        away_mode: false
 
     # Cancel away mode on all thermostats
 #    - service: climate.set_away_mode

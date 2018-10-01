@@ -278,6 +278,7 @@ rfxtrx:
 light:
   - platform: rfxtrx
     automatic_add: False
+    signal_repetitions: 5
 
 
 switch: !include switch.yaml

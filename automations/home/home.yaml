@@ -20,6 +20,8 @@
           photo:
              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
                caption: "On sonne!"
+    - delay: 0:01
+    - service: display.fullykiosk_load_start_url
 
 - id: postmail
   alias: 'You ve got mail'
@@ -125,6 +127,7 @@
         entity_id: sensor.current_state
         state: 'home'
       - condition: time
+        after: '06:00:00'
         before: '10:00:00'
         weekday:
           - mon

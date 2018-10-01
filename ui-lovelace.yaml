@@ -101,6 +101,7 @@ views:
   #         cards:
           - type: weather-forecast
             entity: weather.yweather
+#           entity: weather.dark_sky
   
         
   #        - type: picture-elements
@@ -161,8 +162,8 @@ views:
               - entity: light.fibaro_system_fgd212_dimmer_2_level_5
                 type: custom:slider-entity-row
               - entity: switch.prise_bambi
-              - entity: light.gateway_light_34ce008c1873
-              - entity:  light.gateway_light_7811dcb7afd1
+#             - entity: light.gateway_light_34ce008c1873
+#             - entity:  light.gateway_light_7811dcb7afd1
  
 #        - type: entities
 #          title: Thermostats
@@ -476,25 +477,61 @@ views:
       - type: horizontal-stack
         cards:
  
-        - type: history-graph
+#        - type: history-graph
+#          entities:
+#          - climate.living_room_thermostat
+#          - climate.library_thermostat
+  
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_living_room
+
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_library
+
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_baby_bedroom
+
+
+ 
+      - type: horizontal-stack
+        cards:
+ 
+        - type: entities
           entities:
           - climate.living_room_thermostat
-          - climate.library_thermostat
-  
-
-        - type: history-graph
-          entities:
+          - climate.library_thermostat 
           - climate.parents_bedroom_thermostat
-          - climate.baby_bedroom_thermostat
-  
-                   
-        - type: custom:monster-card
-          card:
-            type: entities
-            title: Climate
-          filter:
-            include: 
-            - domain: climate
+          - climate.baby_bedroom_thermostat 
+ 
+        - type: entities
+          title: Lights
+          show_header_toggle: yes
+          entities:
+            - entity: light.fibaro_system_fgd212_dimmer_2_level_7
+              type: custom:slider-entity-row
+            - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+              type: custom:slider-entity-row
+            - entity: light.fibaro_system_fgd212_dimmer_2_level_5
+              type: custom:slider-entity-row
+ 
+
+
+#        - type: history-graph
+#          entities:
+#          - climate.parents_bedroom_thermostat
+#          - climate.baby_bedroom_thermostat
+#  
+#                   
+#        - type: custom:monster-card
+#          card:
+#            type: entities
+#            title: Climate
+#          filter:
+#            include: 
+#            - domain: climate
 
 #        - type: history-graph
 #          title: 'History'
@@ -771,6 +808,7 @@ views:
         action: more_info
         icon: mdi:baby
         color: rgb(255, 155, 155)
+
       - type: "custom:button-card"
         entity: climate.parents_bedroom_thermostat
         action: more_info
@@ -783,7 +821,7 @@ views:
         action: more_info
         icon: mdi:silverware
 #       color_type: card
-       #default_color: rgb(255, 233, 155)
+        default_color: rgb(255, 155, 155)
         color: rgb(255, 155, 155)
         color_off: rgb(140, 140, 140)
 
