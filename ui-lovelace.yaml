@@ -438,7 +438,7 @@ views:
           - entity: camera.etage_2
 
   - title: Thermostats
-    icon: mdi:waves
+    icon: mdi:thermometer-lines
     panel: true
     cards:
     - type: vertical-stack

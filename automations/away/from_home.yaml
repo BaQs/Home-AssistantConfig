@@ -86,4 +86,27 @@
       title: Pierre is home
     service: notify.telegram
 
-
+- id: away_from_home_notif_open_door
+  alias: 'Notification: open door when leaving'
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: sensor.current_state
+      from: 'home'
+      to: 'away'
+  # Set away mode
+  condition: 
+    - condition: state
+      entity_id: group.perimeter_detectors
+      state: 'on'
+  action:
+    - service: notify.ios_ipierre
+      data_template:
+        message: >
+          Une porte est restée ouverte 
+          {%- for entity_id in states.group.perimeter_detectors.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {%- if states(entity_id) == 'on' %}
+          {%- if loop.first %} {% elif loop.last %} et la {% else %}, la {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
+          {%- endfor %}
+ 

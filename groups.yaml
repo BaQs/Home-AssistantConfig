@@ -261,7 +261,7 @@
       - binary_sensor.door_window_sensor_158d00015b63fb
       - binary_sensor.door_window_sensor_158d00015b5fc7
 
-  perimeter:
+  perimeter_detectors:
     name: Perimeter Detectors
     view: no
     entities:

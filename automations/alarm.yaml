@@ -6,7 +6,7 @@
 #  - entity_id: binary_sensor.motion_detected
 #    platform: state
 #    to: 'on'
-  - entity_id: group.perimeter
+  - entity_id: group.perimeter_detectors
     platform: state
     to: 'on'
   condition:

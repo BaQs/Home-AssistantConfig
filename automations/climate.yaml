@@ -22,7 +22,7 @@
       data_template:
         brightness: >
           {% if is_state("input_select.qubino_bedroom_parents", "Comfort") %}
-            130
+            230
           {% elif is_state("input_select.qubino_bedroom_parents", "Comfort -1") %}
             105
           {% elif is_state("input_select.qubino_bedroom_parents", "Comfort -2") %}
@@ -49,7 +49,7 @@
       data_template:
         brightness: >
           {% if is_state("input_select.qubino_bedroom_baby", "Comfort") %}
-            130
+            230
           {% elif is_state("input_select.qubino_bedroom_baby", "Comfort -1") %}
             105
           {% elif is_state("input_select.qubino_bedroom_baby", "Comfort -2") %}

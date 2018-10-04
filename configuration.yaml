@@ -346,7 +346,7 @@ google_assistant:
 
       
 
-ios:
+ios: !include ios.yaml
 
 # Example using a delay after start of Home Assistant
 homekit: !include homekit.yaml
