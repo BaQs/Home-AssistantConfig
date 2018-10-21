@@ -224,8 +224,6 @@
 #        prob_given_false: 0.01
 
 
-
-
  
   - platform: template
     sensors:

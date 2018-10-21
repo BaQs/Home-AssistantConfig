@@ -1,0 +1,11 @@
+# automation after receiving some payload
+#  - alias: Sound the alarm
+#    trigger:
+#      platform: event
+#      event_type: ios.notification_action_fired
+#      event_data:
+#        actionName: SOUND_ALARM
+#    action:
+#      ...
+#
+#

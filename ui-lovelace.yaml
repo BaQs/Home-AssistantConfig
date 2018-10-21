@@ -31,22 +31,38 @@ resources:
     type: js
   - url: /local/custom-lovelace/useful-markdown-card.js
     type: js
+  - url: /local/custom_ui/weather-card.js
+    type: js
 #  - url: /local/custom-lovelace/tracker-card.js?v=0
 #    type: js
 views:
+#
   - title: Home
+    id: home
     theme: midnight
     panel: true
     icon: mdi:home
+#    badges:
+#      - alarm_control_panel.home_alarm
+#      - alarm_control_panel.arlo
+#      - sensor.current_state
+#      - sensor.period_of_day
+#      - binary_sensor.somebody_home
+#      - binary_sensor.motion_detected
+#      - binary_sensor.in_bed
+#      - input_select.system_mode
+#      - device_tracker.gaetane_igaetaneowntracks
+#      - device_tracker.ipierre
+#      - device_tracker.pierre_ipierre
+#      - display.chuwi
     cards:
     - type: vertical-stack
       cards:
-#   badges:
       - type: glance
         show_state: false
         show_name: true
-        column_width: calc(100% / 11)
-#       title: Header of the view
+        theming: primary
+        column_width: calc(100%/11)
         entities:
           - alarm_control_panel.home_alarm
           - alarm_control_panel.arlo
@@ -57,100 +73,43 @@ views:
           - binary_sensor.in_bed
           - input_select.system_mode
           - device_tracker.gaetane_igaetaneowntracks
+#          - device_tracker.ipierre
           - device_tracker.pierre_ipierre
           - display.chuwi
-#   cards:
-#   - type: horizontal-stack
-#     cards:
-#     - type: weather-forecast
-#       entity: weather.dark_sky
-#        - type: iframe
-#          url: /local/darksky.html
-#        - type: iframe
-#          url: /local/time.html
-#         aspect_ratio: 100%
-#  #      - type: entities
-#  #        title: Heating
-#  #        show_header_toggle: yes
-#  #        entities:
-#  #          - switch.radiateur_1_salon
-#  #          - switch.radiateur_2_salon
-#  #          - switch.radiateur_cuisine
-#  
-#  #       url: http://free.timeanddate.com/clock/i6fg2t9w/n195/tlfr2/fn14/fs24/fcfff/ftb/ts1
-#  # url : <script type='text/javascript' src='https://darksky.net/widget/graph-bar/50.6272,3.1507/ca12/fr.js?width=100%&height=400&title=Full Forecast&textColor=333333&bgColor=transparent&transparency=true&skyColor=undefined&fontFamily=Default&customFont=&units=ca&timeColor=333333&tempColor=333333&currentDetailsOption=false'></script>
-#  
-#  
-#  #     - type: iframe
-#  #       url: http://free.timeanddate.com/clock/i6fg2t9w/n195/tlfr2/fn14/fs24/fcfff/ftb/ts1
-#  
-#  #      - type: "custom:button-card"
-#  #        entity: sensor.time
-#  #      - type: "custom:button-card"
-#  #      - type: markdown
-#  #        content: >
-#  #            ## Lovelace {{ sensor.time }}
-#
-      #- type: custom:column-card
+
       - type: vertical-stack
+#      - type: custom:column-card
         cards:
  
         - type: horizontal-stack
           cards:
-  #       - type: horizontal-stack
-  #         cards:
-          - type: weather-forecast
-#           entity: weather.yweather
-            entity: weather.dark_sky
-  
+#         - type: weather-forecast
+          - type: "custom:weather-card"
+            entity_weather: weather.yweather
+            entity_sun: sun.sun
+#           entity: weather.dark_sky
+           
         
-  #        - type: picture-elements
-  #          image: /local/transparent.gif
-  #          elements:
-  #            - type: state-label
-  #              entity: sensor.time
-  #              style:
-  #                display: block
-  #                font-size: 1000%
-  #                text-align: center
-  #                padding: 80px 0
-  # 
-  
-   
- 
           - type: picture-entity
             title: Foscam Camera
             entity: camera.foscam_camera
             camera_image: camera.foscam_camera
             show_info: true
             tap_action: dialog
-  
+
    
         - type: horizontal-stack
           cards:
-
-
+ 
           - type: custom:useful-markdown-card
             padding: 15%
             fontSize: 200px
-            #title: Time
             content: >
 
               [[ sensor.time.state ]]
 
-            
-#          - type: picture-elements
-#            #image: https://images.pexels.com/photos/9352/glass-time-watch-business.jpg?cs=srgb&dl=clock-hours-minutes-9352.jpg&fm=jpg
-##           image: https://s0.wp.com/i/blank.jpg
-#            image: /local/transparent.gif
-#            elements:
-#              - type: state-label
-#                entity: sensor.time
-#                style:
-#                  top: 15%
-#                  left: 50%
-#                  font-size: 1200%
-  
+ 
+ 
           - type: entities
             title: Lights
             show_header_toggle: yes
@@ -161,167 +120,35 @@ views:
                 type: custom:slider-entity-row
               - entity: light.fibaro_system_fgd212_dimmer_2_level_5
                 type: custom:slider-entity-row
-              - entity: switch.prise_bambi
+#             - entity: switch.prise_bambi
 #             - entity: light.gateway_light_34ce008c1873
 #             - entity:  light.gateway_light_7811dcb7afd1
- 
-#        - type: entities
-#          title: Thermostats
-#          show_header_toggle: yes
-#          entities:
-#          - climate.baby_bedroom_thermostat
-#          - climate.parents_bedroom_thermostat
-#          - climate.living_room_thermostat
-#          - climate.library_thermostat
-#          - switch.qubino_zmnhadx_flush_1_relay_switch
-
-#        - type: custom:monster-card
-#          card:
-#              type: glance
-#              title: Temperatures
-#              column_width: 30%
-#              show_name: true
-#          filter:
-#              include:
-#                  - entity_id: "sensor.temperature_*"
-#        - type: custom:monster-card
-#          card:
-#            type: glance
-#          filter:
-#            include:
-#              - domain: climate
-
-#       - type: horizontal-stack
-#         cards:
-#        - type: custom:gauge-card
-#          title: Temperature
-#          entity: sensor.temperature_158d0001715c53
-#          scale: 30px
-#         min: -20
-#         max: 35
-
-
-#        - type: horizontal-stack
-#          cards:
-#          - type: "custom:button-card"
-#            entity: sensor.temperature_158d0001db60d9
-#            icon: mdi:thermometer
-#            action: more_info
-#            color: rgb(28, 128, 199)
-#            name: Salon
-   
-#        - type: history-graph
-#          title: 'History RDC'
-#          entities:
-#          - sensor.temperature_158d0001715c53
-#          - sensor.temperature_158d0001db60d9
-#          - sensor.temperature_158d0001a4b91d
-#          - sensor.temperature_158d0001d6dae3
-#          - sensor.temperature_158d0001a1f903
-# 
-#        - type: history-graph
-#          title: 'History Etage 2'
-#          entities:
-#          - sensor.temperature_158d0001e421d9
-#          - sensor.temperature_158d0001ab1858
-#          - sensor.temperature_158d0001713f49
-#                   
-#        - type: history-graph
-#          title: 'History Etage 1'
-#          entities:
-#          - sensor.temperature_158d0001720782
-#          - sensor.temperature_158d0001ab75f3
-#          - sensor.temperature_158d0001ab75da
-
-          
-
-
-
-#
-#  #        group: group.motion_sensors
-#  #        card:
-#  #            type: entities
-#  #            title: Motion Sensors
-#  
-
 
   - title: Rooms
     icon: mdi:floor-plan
-#    badges:
-#          - alarm_control_panel.home_alarm
-#          - alarm_control_panel.arlo
-#          - sensor.current_state
-#          - sensor.period_of_day
-##         - binary_sensor.pierre_is_home
-#          - binary_sensor.welcam_3_someone_known
-#          - binary_sensor.welcam_3_someone_unknown
-#          - binary_sensor.somebody_home
-#          - binary_sensor.in_bed
-#          - input_select.system_mode
-#          - binary_sensor.motion_last10
-#          - binary_sensor.motion_last30
-#          - binary_sensor.motion_detected
-#          - device_tracker.gaetane_igaetaneowntracks
-#          - device_tracker.pierre_ipierre
-#          - display.chuwi
+    id: rooms
     cards:
 #      - type: entities
-#        title: Salon
-#        show_header_toggle: false
+#        title: Lights
+#        show_header_toggle: yes
 #        entities:
-#          - binary_sensor.door_window_sensor_158d00019ff246
-#          - binary_sensor.door_window_sensor_158d00019df284
-#          - binary_sensor.switch_158d0001a666f6
-#          - sensor.pressure_158d0001db60d9
-#          - sensor.temperature_158d0001db60d9
-#          - sensor.humidity_158d0001db60d9
-#          - remote.harmony_hub
-#          - vacuum.xiaomi_vacuum_cleaner
-#          - sensor.illumination_158d0001ddb2d3
-#          - binary_sensor.motion_sensor_158d0001ddb2d3
-#          - switch.prise_lampe_boule
-#          - switch.radiateur_1_salon
-#          - switch.radiateur_2_salon
-#          - light.fibaro_system_fgd212_dimmer_2_level_4
-#          - light.fibaro_system_fgd212_dimmer_2_level_7
-#      - type: entities
-#        title: Salle de Douche
-#        show_header_toggle: false
-#        entities:
-#          - sensor.humidity_158d0001e421d9
-#          - sensor.pressure_158d0001e421d9
-#          - sensor.temperature_158d0001e421d9
-#          - switch.qubino_zmnhadx_flush_1_relay_switch
-#      - type: entities
-#        title: Cuisine
-#        show_header_toggle: false
-#        entities:
-#          - binary_sensor.door_window_sensor_158d00017010c1
-#          - sensor.humidity_158d0001715c53
-#          - sensor.pressure_158d0001715c53
-#          - sensor.temperature_158d0001715c53
-#          - sensor.illumination_34ce008c1873
-#          - light.gateway_light_34ce008c1873
-#          - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
-#          - switch.radiateur_cuisine
-#          - light.fibaro_system_fgd212_dimmer_2_level_5
-#      - type: entities
-#        title: "Chambre B\xE9b\xE9"
-#        show_header_toggle: false
-#        entities:
-#          - sensor.temperature_158d0001720782
-#          - sensor.humidity_158d0001720782
-#          - sensor.pressure_158d0001720782
-#          - binary_sensor.door_window_sensor_158d00015af81e
-#          - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood
-#          - binary_sensor.fibaro_system_fgfs101_flood_sensor_flood_2
-#          - switch.prise_bambi
- 
+#        - binary_sensor.door_window_sensor_158d00017010c1
+#        - sensor.humidity_158d0001715c53
+#        - sensor.pressure_158d0001715c53
+#        - sensor.temperature_158d0001715c53
+#        - sensor.illumination_34ce008c1873
+#        - light.gateway_light_34ce008c1873
+#  #     - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+#        - switch.radiateur_cuisine
+#        - light.fibaro_system_fgd212_dimmer_2_level_5
+#        - binary_sensor.water_leak_sensor_158d0001bb87df
+# 
       - type: custom:group-card
         card:
             type: entities
             title: Salon
         group: group.salon
+        group: group.library
       - type: custom:group-card
         card:
             type: entities
@@ -380,49 +207,9 @@ views:
             title: Buanderie
         group: group.washroom
 
-#  - title: "Cam\xE9ras"
-#    id: cameras
-#    cards:
-#      - type: picture-entity
-#        title: Welcam 3
-#        entity: camera.welcam_3
-#        camera_image: camera.welcam_3
-#        show_info: true
-#        tap_action: dialog
-#      - type: picture-entity
-#        title: Dafang
-#        entity: camera.dafang3
-#        camera_image: camera.dafang3 
-#        show_info: true
-#        tap_action: dialog
-#      - type: picture-entity
-#        title: Foscam Camera
-#        entity: camera.foscam_camera
-#        camera_image: camera.foscam_camera
-#        show_info: true
-#        tap_action: dialog
-#      - type: picture-entity
-#        title: Etage 1
-#        entity: camera.etage_1
-#        camera_image: camera.etage_1
-#        show_info: true
-#        tap_action: dialog
-#      - type: picture-entity
-#        title: Etage 2
-#        entity: camera.etage_2
-#        camera_image: camera.etage_2
-#        show_info: true
-#        tap_action: dialog
-#      - type: picture-entity
-#        title: Jardin
-#        entity: camera.jardin
-#        camera_image: camera.jardin
-#        show_info: true
-#        tap_action: dialog
-
-
   - title: Surveillance
     icon: mdi:cctv
+    id: cctv
     panel: true
     cards:
       - type: custom:surveillance-card
@@ -437,8 +224,63 @@ views:
           - entity: camera.etage_1
           - entity: camera.etage_2
 
+
+
+  - title: Temperatures
+    panel: true
+    id: temperatures
+    icon: mdi:temperature-celsius
+    cards:
+    - type: vertical-stack
+      #- type: custom:column-card
+      cards:
+      - type: horizontal-stack
+        cards:
+         - type: sensor
+           name: Chambre 2 Jardin
+           entity: sensor.temperature_158d0001ab1858
+         - type: sensor
+           name: Douche
+           entity: sensor.temperature_158d0001e421d9
+         - type: sensor
+           name: Chambre 2 Rue
+           entity: sensor.temperature_158d0001713f49
+      - type: horizontal-stack
+        cards:
+         - type: sensor
+           name: Chambre Bébé
+           entity: sensor.temperature_158d0001720782
+         - type: sensor
+           name: Chambre Parents
+           entity: sensor.temperature_158d0001ab75f3
+         - type: sensor
+           name: SDB
+           entity: sensor.temperature_158d0001ab75da
+      - type: horizontal-stack
+        cards:
+         - type: sensor
+           name: Salon
+           entity: sensor.temperature_158d0001db60d9
+         - type: sensor
+           name: Cuisine
+           entity: sensor.temperature_158d0001715c53
+         - type: sensor
+           name: Bibliothèque
+           entity: sensor.temperature_158d0001a4b91d
+           #blue
+           #line_color: "#3498db"
+         - type: sensor
+           name: Couloir
+           entity: sensor.temperature_158d0001d6dae3
+         - type: sensor
+           name: Entrée
+           entity: sensor.temperature_158d0001a1f903
+
+
+
   - title: Thermostats
     icon: mdi:thermometer-lines
+    id: thermostats
     panel: true
     cards:
     - type: vertical-stack
@@ -476,11 +318,6 @@ views:
  
       - type: horizontal-stack
         cards:
- 
-#        - type: history-graph
-#          entities:
-#          - climate.living_room_thermostat
-#          - climate.library_thermostat
   
         - type: iframe
           url: !secret panel_iframe_grafana_card_climate_living_room
@@ -519,94 +356,47 @@ views:
  
 
 
-#        - type: history-graph
-#          entities:
-#          - climate.parents_bedroom_thermostat
-#          - climate.baby_bedroom_thermostat
-#  
-#                   
-#        - type: custom:monster-card
-#          card:
-#            type: entities
-#            title: Climate
-#          filter:
-#            include: 
-#            - domain: climate
-
-#        - type: history-graph
-#          title: 'History'
-#          entities:
-#          - climate.living_room_thermostat
-#          - climate.library_thermostat
-#          - climate.parents_bedroom_thermostat
-#          - climate.baby_bedroom_thermostat
-#  
-#
-#
-#        - type: history-graph
-#          title: 'History RDC'
-#          entities:
-#          - sensor.temperature_158d0001715c53
-#          - sensor.temperature_158d0001db60d9
-#          - sensor.temperature_158d0001a4b91d
-#          - sensor.temperature_158d0001d6dae3
-#          - sensor.temperature_158d0001a1f903
-#          - climate.living_room_thermostat
-#          - climate.library_thermostat
-#  
-#      - type: horizontal-stack
-#        cards:
-#             
-#        - type: history-graph
-#          title: 'History Etage 1'
-#          entities:
-#          - sensor.temperature_158d0001720782
-#          - sensor.temperature_158d0001ab75f3
-#          - sensor.temperature_158d0001ab75da
-#          - climate.parents_bedroom_thermostat
-#          - climate.baby_bedroom_thermostat
-# 
-#        - type: history-graph
-#          title: 'History Etage 2'
-#          entities:
-#          - sensor.temperature_158d0001e421d9
-#          - sensor.temperature_158d0001ab1858
-#          - sensor.temperature_158d0001713f49
-#        
- 
-
   - title: Security
     icon: mdi:security
+    id: security
+    panel: true
     cards:
-      - type: custom:alarm_control_panel-card
-        entity: alarm_control_panel.arlo
-        show_keypad: true
-        title: Arlo
-        states:
-          - arm_home
-          - arm_away
-      - type: custom:alarm_control_panel-card
-        entity: alarm_control_panel.home_alarm
-        show_keypad: true
-        title: Home Alarm
-        states:
-          - arm_home
-          - arm_away
-      - type: custom:group-card
-        card:
-            type: entities
-            title: Motion
-        group: group.motion_detectors
-      - type: custom:group-card
-        card:
-            type: entities
-            title: Door/Windows Sensors
-        group: group.door_sensors
+#    - type: vertical-stack
+#      cards:
+      - type: horizontal-stack
+        cards:
+        - type: custom:alarm_control_panel-card
+          entity: alarm_control_panel.arlo
+          show_keypad: true
+          title: Arlo
+          states:
+            - arm_home
+            - arm_away
+        - type: custom:alarm_control_panel-card
+          entity: alarm_control_panel.home_alarm
+          show_keypad: true
+          title: Home Alarm
+          states:
+            - arm_home
+            - arm_away
+      - type: horizontal-stack
+        cards:
+        - type: custom:group-card
+          card:
+              type: entities
+              title: Motion
+          group: group.motion_detectors
+        - type: custom:group-card
+          card:
+              type: entities
+              title: Door/Windows Sensors
+          group: group.door_sensors
 
 #      - type: custom:group-card
     
   - title: Multimedia
     icon: mdi:play-circle-outline
+    id: multimedia
     cards:
       - type: media-control
         entity: media_player.xiaomi_network_speaker_airplay
@@ -615,22 +405,28 @@ views:
       - type: glance
         entities: 
         - remote.harmony_hub
+
   - title: Energy
     panel: true
+    id: energy
     icon: mdi:flash
     cards:
       - type: iframe
-        url: !secret panel_iframe_grafana_power_consumption
+        url: !secret panel_iframe_grafana_power_consumption_dark
         aspect_ratio: 100%
-  - title: Energy
+
+  - title: Grafana
     panel: true
+    id: grafana
     icon: mdi:chart-areaspline
     cards:
       - type: iframe
         url: !secret panel_iframe_grafana_url
         aspect_ratio: 100%
+
   - title: Front Cam
     icon: mdi:camera-front-variant
+    id: frontcam
     panel: true
     cards:
       - type: picture-entity
@@ -638,22 +434,11 @@ views:
         entity: camera.foscam_camera
         camera_image: camera.foscam_camera
         show_info: false
+
   - title: Settings
     icon: mdi:settings
+    id: settings
     cards:
-#      - type: entities
-#        title: all automations
-#        show_header_toggle: false
-#        entities:
-#          - group.all_automations
-#          - group.all_scripts
-#      - type: entities
-#        title: all scripts
-#        show_header_toggle: false
-#        entities:
-#          - script.presence_notifications_when_alarm_triggered
-#          - script.telegram_snapshots_all_cameras
-#
       - type: custom:monster-card
         show_header_toggle: true
         card:
@@ -680,13 +465,6 @@ views:
                 - attributes:
                     battery_level: '< 40'
 
-
-#      - type: custom:tracker-card
-#        title:
-#        trackers:
-#          - sensor.custom_card_tracker
-#          - sensor.custom_component_tracker
-#      
       - type: entities
         title: Pierre
         show_header_toggle: false
@@ -859,67 +637,63 @@ views:
         icon: mdi:security-home
         color: rgb(28, 128, 199)
 
-#    - type: horizontal-stack
-#      cards:
-#      - type: custom:monster-card
-#        card:
-#            type: entities
-#            title: Temperatures
-#        filter:
-#            include:
-#                - entity_id: "sensor.temperature_*"
-    - type: vertical-stack
+    - type: horizontal-stack
       cards:
+       - type: sensor
+         name: Chambre 2 Jardin
+         entity: sensor.temperature_158d0001ab1858
+       - type: sensor
+         name: Douche
+         icon: mdi:shower
+         line_color: "#3498db"
+         entity: sensor.temperature_158d0001e421d9
+       - type: sensor
+         name: Chambre 2 Rue
+         entity: sensor.temperature_158d0001713f49
+    - type: horizontal-stack
+      cards:
+       - type: sensor
+         name: Chambre Bébé
+         icon: mdi:baby
+         entity: sensor.temperature_158d0001720782
+       - type: sensor
+         name: Chambre Parents
+         icon: mdi:bed-empty
+         entity: sensor.temperature_158d0001ab75f3
+       - type: sensor
+         name: SDB
+         line_color: "#3498db"
+         entity: sensor.temperature_158d0001ab75da
+    - type: horizontal-stack
+      cards:
+       - type: sensor
+         icon: mdi:fridge
+         name: Cuisine
+         entity: sensor.temperature_158d0001715c53
+       - type: sensor
+         name: Salon
+         icon: mdi:sofa
+         entity: sensor.temperature_158d0001db60d9
+       - type: sensor
+         name: Bibliothèque
+         icon: mdi:library 
+         entity: sensor.temperature_158d0001a4b91d
+         #blue
+       - type: sensor
+         name: Entrée
+         entity: sensor.temperature_158d0001a1f903
+       - type: sensor
+         name: Couloir
+         entity: sensor.temperature_158d0001d6dae3
 
+#    - type: vertical-stack
+#      cards:
 #
-#       - type: glance
-#         column_width: calc(100% / 6)
+#       - type: history-graph
+#         title: 'History RDC'
 #         entities:
-#         - entity: sensor.temperature_158d0001e421d9
-#           name: Douche
-#         - entity: sensor.temperature_158d0001ab1858
-#           name: C. 2e Jardin 
-#         - entity: sensor.temperature_158d0001713f49
-#           name: C. 2e Rue
-#         - entity: sensor.temperature_158d0001720782
-#           name: C. Bébé
-#         - entity: sensor.temperature_158d0001ab75f3
-#           name: C. Parents
-#         - entity: sensor.temperature_158d0001ab75da
-#           name: SDB
-#         - entity: sensor.temperature_158d0001d6dae3
-#           name: Couloir
-#         - entity: sensor.temperature_158d0001a1f903
-#           name: Entrée
-#         - entity: sensor.temperature_158d0001a4b91d
-#           name: Bibliothèque
-#         - entity: sensor.temperature_158d0001715c53
-#           name: Cuisine
-#         - entity: sensor.temperature_158d0001db60d9
-#           name: Salon
-#
-
-       - type: history-graph
-         title: 'History RDC'
-         entities:
-         - sensor.temperature_158d0001715c53
-         - sensor.temperature_158d0001db60d9
-         - sensor.temperature_158d0001a4b91d
-         - sensor.temperature_158d0001d6dae3
-         - sensor.temperature_158d0001a1f903
- 
-#        - type: history-graph
-#          title: 'History Etage 2'
-#          entities:
-#          - sensor.temperature_158d0001e421d9
-#          - sensor.temperature_158d0001ab1858
-#          - sensor.temperature_158d0001713f49
-#                   
-#        - type: history-graph
-#          title: 'History Etage 1'
-#          entities:
-#          - sensor.temperature_158d0001720782
-#          - sensor.temperature_158d0001ab75f3
-#          - sensor.temperature_158d0001ab75da
-
- 
+#         - sensor.temperature_158d0001715c53
+#         - sensor.temperature_158d0001db60d9
+#         - sensor.temperature_158d0001a4b91d
+#         - sensor.temperature_158d0001d6dae3
+#         - sensor.temperature_158d0001a1f903

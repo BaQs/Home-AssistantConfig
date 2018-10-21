@@ -17,8 +17,9 @@ homeassistant:
 
  
 logger:
- default: info
-#logs:
+  default: info
+  logs:
+    homeassistant.components.image_processing: debug
 #   homeassistant.components.display: debug
 #   homeassistant.components.rfxtrx: debug
 #   homeassistant.components.teleinfo: debug
@@ -45,7 +46,7 @@ zone:
   - name: Home
     latitude: 50.6605716
     longitude: 3.1379015999999638
-    radius: 30
+    radius: 60
     icon: mdi:accountmultiple
 
 # Enables the frontend
@@ -75,7 +76,7 @@ http:
 # the developers to assist with development of Home Assistant.
 # For more information, please see:
 # https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
+#updater:
   # Optional, allows Home Assistant developers to focus on popular components.
   # include_used_components: true
 
@@ -323,16 +324,19 @@ telegram_bot:
 
 google_assistant:
   project_id: !secret google_assistant_project_id
-  client_id: !secret google_assistant_client_id
-  access_token: !secret google_assistant_access_token
-  # agent_user_id: [a string to identify user]
+# client_id: !secret google_assistant_client_id
+# access_token: !secret google_assistant_access_token
+# agent_user_id: [a string to identify user]
 #  api_key: AIzaSyBVn9-a3C_V8jAiCWcipvBqZXII0ugRsQI
   api_key: !secret google_assistant_api_key
 #  expose_by_default: false
   exposed_domains:
-    - switch
+#   - switch
     - light
-    - group
+#   - group
+    - alarm
+    - climate
+    - media_player
 #  entity_config:
 #    switch.kitchen:
 #      name: Custom Name for Google Assistant
@@ -390,3 +394,4 @@ display:
     password: !secret chuwi_password
 
 climate: !include climate.yaml
+image_processing: !include image_processing.yaml

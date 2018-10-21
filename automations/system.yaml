@@ -29,19 +29,6 @@
   action:
     service: zwave.heal_network
 
-- id: update_available_notification
-  alias: "Update Available Notification"
-  initial_state: 'on'
-  trigger:
-    platform: state
-    entity_id: updater.updater
-#   platform: template
-#   value_template: "{{states('sensor.pypi_hass_version') == states('sensor.current_version') }}"
-  action:
-    - service: notify.telegram
-      data:
-       message: "HomeAssistant {{ states('sensor.current_version') }} is now available"
-
 - alias: Start HomeKit
   id: 3e566d3adc654ab884dcbe4a2322bc3d
   trigger:
@@ -67,3 +54,17 @@
     data:
       name: midnight
 
+- id: update_notification
+  alias: Update Notification
+  action:
+  - service: notify.telegram
+    data:
+      message: "New Home Assistant version {{ states.sensor.ha_latest_version.state}}\
+        \ is available for download.\r\n\r\nYou are currently running {{ states.sensor.ha_installed_version.state}}.\r\
+        \n\r\nhttps://home-assistant.io/blog/categories/release-notes/"
+  condition: []
+  trigger:
+  - entity_id: sensor.ha_update_available
+    from: 'No'
+    platform: state
+    to: 'Yes'

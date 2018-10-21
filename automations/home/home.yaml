@@ -20,7 +20,7 @@
           photo:
              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
                caption: "On sonne!"
-    - delay: 0:01
+    - delay: 0:03
     - service: display.fullykiosk_load_start_url
 
 - id: postmail
@@ -171,3 +171,49 @@
         message: "Living lights were on for 60 min, but TV is OFF since 15 min & no motion. So I shut them down"
 
 
+
+# Switching tv
+- id: tv_beauty_life
+  alias: 'TV: Beauty Life'
+  trigger:
+    platform: time
+    at: '20:19:00'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: binary_sensor.somebody_home
+      state: 'on'
+    - condition: state
+      entity_id: remote.harmony_hub
+      state: 'on'
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+  action:
+  - service: tts.google_say
+    data:
+      entity_id: media_player.google_home__salon
+      message: "Il est l'heure de plus belle la vie!"
+  - service: remote.send_command
+    data:
+      entity_id: remote.harmony_hub
+      command:
+        - 3
+      device: 46023197 
+
+
+
+# turn off screensaver of chuwi when somebody moves 
+- id: chuwi_stop_screensaver
+  alias: 'Chuwi: Screensaver stop'
+  trigger:
+   - platform: state
+     entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
+     to: 'on'
+  action:
+    - service: display.fullykiosk_screensaver_stop

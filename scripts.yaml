@@ -47,7 +47,13 @@
 
   vacuum_zoned_clean: 
     alias: "Vacuum: Zoned cleaning"
+
     sequence:
+    - condition: template
+      value_template: '{{ (as_timestamp(now()) - as_timestamp(states.script.vacuum_zoned_clean.last_triggered | default(0)) | int > 3600* 24 )}}'
+    - condition: state
+      entity_id: sensor.period_of_day
+      state: 'day'
     - service: vacuum.send_command
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner

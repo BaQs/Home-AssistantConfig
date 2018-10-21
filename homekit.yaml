@@ -4,6 +4,7 @@ filter:
 #                - alarm_control_panel
 #                - light
                  - climate
+                 - camera
 #                - switch
 #                - binary_sensor
 #                - device_tracker
@@ -11,12 +12,6 @@ filter:
         include_entities:
                 - alarm_control_panel.home_alarm
                 - alarm_control_panel.arlo
-                - camera.welcam_3
-                - camera.foscam_camera 
-                - camera.etage_1
-                - camera.etage_2
-                - camera.jardin
-                - camera.dafang3
                 - display.chuwi
                 - input_select.system_mode
                 - light.fibaro_system_fgd212_dimmer_2_level_4
@@ -25,10 +20,7 @@ filter:
                 - sensor.elecbill_today_so_far_ttc 
                 - sensor.owl_180_energy_usage
                 - sensor.teleinfo_papp
-                - sensor.temperature_158d0001720782
                 - switch.prise_bambi
                 - switch.prise_cave
-                - switch.prise_lampe_boule
-                - switch.radiateur_cuisine
                 - remote.harmony_hub
                 - vacuum.xiaomi_vacuum_cleaner

@@ -67,6 +67,39 @@
 #                      - Humidity
 #                      - Temperature
 #
+#
+
+
+# to get hassio latest version
+
+  
+  - platform: rest
+    resource: https://raw.githubusercontent.com/home-assistant/hassio/dev/version.json
+    name: HA Latest Version
+    value_template: '{{ value_json.homeassistant }}'
+  
+  - platform: version
+    name: HA Installed Version
+  
+  - platform: template
+    sensors:
+      ha_update_available:
+        friendly_name: 'HA Update Available'
+        value_template: >-
+          {%- if states.sensor.ha_latest_version.state != states.sensor.ha_installed_version.state -%}
+             Yes
+          {%- else -%}
+             No
+          {%- endif -%}
+        icon_template: >-
+          {%- if states.sensor.ha_latest_version.state != states.sensor.ha_installed_version.state -%}
+            mdi:alert-box
+          {% else %}
+            mdi:approval
+          {% endif %}
+  
+
+
 #    HANDLED BY THE DISPLAY CUSTOM COMPONENT
 #  - platform: rest
 #    name: chuwi
@@ -735,3 +768,21 @@
         group_function: spread
         value_template: '{{ value | round(2) }}'
         unit_of_measurement: Wh
+
+      - name: Spread Teleinfo PAPP
+        where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 180s TZ(''Europe/Paris'') '
+        group_function: spread
+        measurement: '"vA"'
+        unit_of_measurement: vA
+      # value_template: '{{ value | round(2) }}'
+
+
+      - name: Derivative Teleinfo PAPP
+        where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 120s TZ(''Europe/Paris'') '
+        group_function: derivative
+        field:  '"value",2m'
+        measurement: '"vA"'
+        unit_of_measurement: vA
+      # value_template: '{{ value | round(2) }}'
+
+

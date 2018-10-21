@@ -70,10 +70,10 @@
 # ios app
 #     - device_tracker.ipierre
 # nmap
-      - device_tracker.ipierre_2
+      - device_tracker.ipierre
 # owntracks
       - device_tracker.pierre_ipierre
-      - binary_sensor.pierre_home
+#     - binary_sensor.pierre_home
   washroom:
     name: Buanderie 
     entities:
@@ -84,13 +84,11 @@
   kitchen:
     name: Cuisine
     entities:
-      - binary_sensor.door_window_sensor_158d00017010c1
       - sensor.humidity_158d0001715c53
       - sensor.pressure_158d0001715c53
       - sensor.temperature_158d0001715c53
       - sensor.illumination_34ce008c1873
       - light.gateway_light_34ce008c1873
-      - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
       - switch.radiateur_cuisine
       - light.fibaro_system_fgd212_dimmer_2_level_5
       - binary_sensor.water_leak_sensor_158d0001bb87df
@@ -137,7 +135,7 @@
       - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
       - climate.baby_bedroom_thermostat
       - switch.qubino_bedroom_baby
-      - input_select.qubino_bedroom_baby
+#     - input_select.qubino_bedroom_baby
   library:
     name: Bibliothèque
     entities:
@@ -174,7 +172,7 @@
 #     - switch.unknown_node_5_level_2
       - climate.parents_bedroom_thermostat
       - switch.qubino_bedroom_parents
-      - input_select.qubino_bedroom_parents
+#     - input_select.qubino_bedroom_parents
       - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
   entrance:
     name: Entrée
@@ -289,7 +287,7 @@
       - binary_sensor.motion_sensor_158d0001ab34c1
       - binary_sensor.motion_sensor_158d0001ab34e1
       - binary_sensor.motion_sensor_158d0001b1cff9
-      - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
+#     - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
       - binary_sensor.welcam_3_motion
   
   

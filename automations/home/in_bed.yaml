@@ -9,11 +9,15 @@
 #    entity_id: sensor.illumination_158d0001ab34e1
 #    below: '200'
   action:
-          - service: display.turn_off
-            entity_id: display.chuwi
-          - service: notify.telegram
-            data:
-                    message: In bed, turning chuwi off
+    - service: display.turn_off
+      entity_id: display.chuwi
+    - service: notify.telegram
+      data:
+        message: In bed, turning chuwi off
+    - service: climate.set_away_mode
+      data:
+        entity_id:  climate.parents_bedroom_thermostat
+        away_mode: false
 
 - id: from_bed
   alias: 'From bed'
@@ -26,9 +30,26 @@
     entity_id: binary_sensor.somebody_home
     state: 'on'
   action:
-          - service: display.turn_on
-            entity_id: display.chuwi
+    - service: display.turn_on
+      entity_id: display.chuwi
+    - service: notify.telegram
+      data:
+        message: Back up, turning chuwi on
+    - service: climate.set_away_mode
+      data:
+        entity_id:  climate.parents_bedroom_thermostat
+        away_mode: true
 
-          - service: notify.telegram
-            data:
-                    message: Back up, turning chuwi on
+
+
+- id: baby_bed
+  alias: 'Baby: Bed'
+  trigger:
+    platform: time
+    at: '19:00:00'
+# condition:
+  action:
+    - service: climate.set_away_mode
+      data:
+        entity_id: climate.baby_bedroom_thermostat
+        away_mode: false

@@ -1,0 +1,29 @@
+  - platform: opencv_darknet
+    name: Front Door Object Detection
+    source:
+      - entity_id: camera.foscam_camera 
+    options:
+      detect_model: /config/yolo/yolov3-tiny.cfg
+      weights: /config/yolo/yolov3-tiny.weights
+      labels: /config/yolo/coco.names
+      confidence: 0.55
+      # Optional parameter if you want to crop the input image
+#      crop:
+#        # Left X coordinate
+#        x1: 900
+#        # Top left Y coordinate
+#        y1: 0
+#        # Right X coordinate
+#        x2: 1280
+#        # Bottom Y coordinate
+#        y2: 500
+  - platform: opencv_darknet
+    name: Living Room Object Detection
+    source:
+      - entity_id: camera.dafang3
+    options:
+      detect_model: /config/yolo/yolov3-tiny.cfg
+      weights: /config/yolo/yolov3-tiny.weights
+      labels: /config/yolo/coco.names
+      confidence: 0.55
+      # Optional parameter if you want to crop the input image

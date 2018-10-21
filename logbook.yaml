@@ -30,5 +30,7 @@
       - weather
       - zone
       - image_processing
+    entities:
+      - automation.electricity_guess_what_
 
 

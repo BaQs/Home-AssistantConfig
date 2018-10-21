@@ -125,3 +125,34 @@
         entity_id: input_number.heat_meter_value_at_midnight
         value: "{{  state_attr('sensor.owl_180_energy_usage', 'Total usage') }}"
 
+
+
+
+
+################################################################################################
+## Tentative to guess which device is switched on
+################################################################################################
+
+- alias: 'Electricity: guess what ?'
+  trigger:
+    platform: state
+    entity_id: sensor.derivative_teleinfo_papp
+  action:
+    service: notify.telegram
+    data_template:
+      message: >
+        {% if states("sensor.derivative_teleinfo_papp")|float > 2700 and states("sensor.derivative_teleinfo_papp")|float< 2800 %}
+        "{{ states.sensor.derivative_teleinfo_papp.state }} | Démarrage: ballon d'eau chaude ?"
+        {% elif states("sensor.derivative_teleinfo_papp")|float > 2400 and states("sensor.derivative_teleinfo_papp")|float< 2500 %}
+        "{{ states.sensor.derivative_teleinfo_papp.state }} | Démarrage: lave vaisselle ?"
+        {% elif states("sensor.derivative_teleinfo_papp")|float > 630 and states("sensor.derivative_teleinfo_papp")|float< 650 %}
+        "{{ states.sensor.derivative_teleinfo_papp.state }} | Démarrage: chauffage salle de douche ?"
+        {% elif states("sensor.derivative_teleinfo_papp")|float > 1910 and states("sensor.derivative_teleinfo_papp")|float< 2050 %}
+        "{{ states.sensor.derivative_teleinfo_papp.state }} | Démarrage: chauffage salon ?"
+        {% elif states("sensor.derivative_teleinfo_papp")|float > 1240 and states("sensor.derivative_teleinfo_papp")|float< 1340 %}
+        "{{ states.sensor.derivative_teleinfo_papp.state }} | Démarrage: chauffage chambre ?"
+        {%endif%}
+
+#{%else%}
+#{{ states.sensor.derivative_teleinfo_papp.state |float round(2) }} | Quel appareil ?"
+          
