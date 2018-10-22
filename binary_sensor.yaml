@@ -38,28 +38,7 @@
         prob_given_false: 0.2
         platform: 'state'
         to_state: 'home'
-#      - entity_id: 'binary_sensor.welcam_someone_known'
-#        prob_given_true: 0.7
-#        prob_given_false: 0.5
-#        platform: 'state'
-#        to_state: 'home'
-#      - entity_id: 'binary_sensor.welcam_3_someone_known'
-#        prob_given_true: 0.7
-#        prob_given_false: 0.5
-#        platform: 'state'
-#        to_state: 'home'
-#      - entity_id: binary_sensor.motion_detected
-#        platform: state
-#        to_state: 'on'
-#        prob_given_true: 0.6
-#        prob_given_false: 0.01
-#      # Somebody at home -> likely that at least one indoor light is turned on
-#      - entity_id: group.all_lights
-#        platform: state
-#        to_state: 'on'
-#        prob_given_true: 0.7
-#
-          
+         
   - platform: bayesian
     name: In Bed
     prior: .33 # 33% chance that we are in bed (8 hrs out of 24hrs)
@@ -71,12 +50,6 @@
         to_state: home
         prob_given_true: 0.99 # 99% chance that if we are in bed we are at home
         prob_given_false: 0.5 # 50% chance that if we are not in bed we are at home
-      # we are in bed -> likely alarm will be set
-#      - entity_id: alarm_control_panel.home_alarm
-#        platform: state
-#        to_state: armed_home
-#        prob_given_true: 0.9 # 90% chance that if we are in bed alarm is armed
-#        prob_given_false: 0.5 # 50% chance that if we are not in bed alarm is armed
       # we are in bed -> vey likely no motion is detected
       - entity_id: binary_sensor.motion_detected
         platform: state
@@ -126,54 +99,6 @@
         platform: 'state'
         to_state: 'Charging'
 #
- 
-#  
-#
-#  - platform: bayesian
-#    name: 'In Bed'
-#    prior: 0.4
-#    probability_threshold: 0.95
-#    observations:
-## lights are off
-#      - entity_id: 'group.all_lights'
-#        prob_given_true: 0.3
-#        prob_given_false: 0.01
-#        platform: 'state'
-#        to_state: 'off'
-## TV off
-#      - entity_id: 'remote.harmony_hub'
-#        prob_given_true: 0.4
-#        prob_given_false: 0.01
-#        platform: 'state'
-#        to_state: 'Off'
-## Somebody is home :)
-#      - entity_id: 'binary_sensor.somebody_home'
-#        prob_given_true: 0.6
-#        prob_given_false: 0.01
-#        platform: 'state'
-#        to_state: 'on'
-## iPhone plugged in
-#      - entity_id: 'sensor.ipierre_battery_state'
-#        prob_given_true: 0.7
-#        prob_given_false: 0.5
-#        platform: 'state'
-#        to_state: 'Charging'
-#      - entity_id: 'sensor.period_of_day'
-#        prob_given_true: 0.8
-#        platform: 'state'
-#        to_state: 'night'
-#      - entity_id: 'binary_sensor.motion_last30'
-#        prob_given_true: 0.8
-#        prob_given_false: 0.2
-#        platform: 'state'
-#        to_state: 'off'
-#      - entity_id: 'binary_sensor.motion_last10'
-#        prob_given_true: 0.7
-#        prob_given_false: 0.5
-#        platform: 'state'
-#        to_state: 'off'
-  
-
   - platform: bayesian
     name: Somebody home
     prior: 0.6  # 60% chance that somebody is at home at any given moment
@@ -190,11 +115,6 @@
         to_state: home
         prob_given_true: 0.5 # 99% chance that if we are home, household is home
         prob_given_false: 0.1 # 0.2% chance that if we are not home, household is home
-      # Somebody at home -> Likely alarm is disarmed
-#      - entity_id: alarm_control_panel.home_alarm
-#        platform: state
-#        to_state: disarmed
-#        prob_given_true: 0.7 # 79% chance that if we are home, alarm is disarmed
       # Somebody at home -> likely that at least one indoor light is turned on
       - entity_id: group.all_lights
         platform: state
@@ -216,15 +136,7 @@
         to_state: 'on'
         prob_given_true: 0.7 # 79% chance that if we are home, remote is on
         prob_given_false: 0.01 # 0.1% chance that if we are not home, remote is on
-      # Somebody at home -> Very likely occupancy will detected
-#      - entity_id: group.occupancy_sensors
-#        platform: state
-#        to_state: 'on'
-#        prob_given_true: 0.8
-#        prob_given_false: 0.01
 
-
- 
   - platform: template
     sensors:
       # Is on for 5 minutes after motion detectors trigger

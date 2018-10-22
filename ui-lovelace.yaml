@@ -5,8 +5,9 @@ title: Home
 resources:
   - url: /local/custom-lovelace/surveillance-card.js?v=0
     type: module
-  - url: /local/custom-lovelace/alarm_control_panel-card.js?v=1
-    type: module
+# - url: /local/custom-lovelace/alarm_control_panel_card/alarm_control_panel-card.js?v=1
+  - url: /local/custom-lovelace/alarm_control_panel-card/alarm_control_panel-card.js?v=1
+    type: js
   - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=1
     type: module
   - url: /local/custom-lovelace/monster-card/monster-card.js?v=0
@@ -62,7 +63,7 @@ views:
         show_state: false
         show_name: true
         theming: primary
-        column_width: calc(100%/11)
+        column_width: calc(100% / 11)
         entities:
           - alarm_control_panel.home_alarm
           - alarm_control_panel.arlo
@@ -148,7 +149,6 @@ views:
             type: entities
             title: Salon
         group: group.salon
-        group: group.library
       - type: custom:group-card
         card:
             type: entities
@@ -361,24 +361,23 @@ views:
     id: security
     panel: true
     cards:
-#    - type: vertical-stack
-#      cards:
+    - type: vertical-stack
+      cards:
       - type: horizontal-stack
         cards:
-        - type: custom:alarm_control_panel-card
-          entity: alarm_control_panel.arlo
-          show_keypad: true
-          title: Arlo
-          states:
-            - arm_home
-            - arm_away
-        - type: custom:alarm_control_panel-card
-          entity: alarm_control_panel.home_alarm
-          show_keypad: true
-          title: Home Alarm
-          states:
-            - arm_home
-            - arm_away
+#       - type: custom:alarm_control_panel-card
+        - type: glance
+          column_width: calc(100% / 2)
+          entities: 
+          - alarm_control_panel.arlo
+          - alarm_control_panel.home_alarm
+        - type: custom:group-card
+          card:
+              type: glance
+              show_title: false
+              show_state: false
+              column_width: calc(100% / 6)
+          group: group.perimeter_detectors
       - type: horizontal-stack
         cards:
         - type: custom:group-card
@@ -391,7 +390,22 @@ views:
               type: entities
               title: Door/Windows Sensors
           group: group.door_sensors
-
+#          show_keypad: true
+#          show_keypad: true
+#          title: Arlo
+#          states:
+#            - arm_home
+#            - arm_away
+#       - type: custom:alarm_control_panel-card
+#        - type: entities
+#          entities: 
+#          - alarm_control_panel.home_alarm
+#          show_keypad: true
+#          title: Home Alarm
+#          states:
+#            - arm_home
+#            - arm_away
+ 
 #      - type: custom:group-card
     
   - title: Multimedia
@@ -402,9 +416,12 @@ views:
         entity: media_player.xiaomi_network_speaker_airplay
       - type: media-control
         entity: media_player.google_home__salon
-      - type: glance
-        entities: 
-        - remote.harmony_hub
+#      - type: glance
+#        entities: 
+#        - remote.harmony_hub
+
+
+
 
   - title: Energy
     panel: true
@@ -464,23 +481,6 @@ views:
             include:
                 - attributes:
                     battery_level: '< 40'
-
-      - type: entities
-        title: Pierre
-        show_header_toggle: false
-        entities:
-          - sensor.ipierre_battery_state
-          - sensor.ipierre_battery_level
-          - device_tracker.iphonedepierre
-          - device_tracker.ipierre
-          - device_tracker.ipierre_2
-          - device_tracker.pierre_ipierre
-      - type: entities
-        title: Gaetane
-        show_header_toggle: false
-        entities:
-          - device_tracker.igaetane
-          - device_tracker.gaetane_igaetaneowntracks
 
       - type: custom:home-setter
         title: Home page 

@@ -55,9 +55,9 @@
     name: Gaetane
     view: no
     entities:
-# nmap
+        # nmap
       - device_tracker.igaetane
-# owntracks
+        # owntracks
       - device_tracker.gaetane_igaetaneowntracks
   Pierre:
     name: Pierre
@@ -65,13 +65,11 @@
     entities:
       - sensor.ipierre_battery_state_2
       - sensor.ipierre_battery_level_2
-# icloud
-#     - device_tracker.iphonedepierre 
-# ios app
-#     - device_tracker.ipierre
-# nmap
+        # ios HA app
       - device_tracker.ipierre
-# owntracks
+        # nmap
+      - device_tracker.ipierre_nmap
+        # owntracks
       - device_tracker.pierre_ipierre
 #     - binary_sensor.pierre_home
   washroom:
@@ -264,8 +262,10 @@
     view: no
     entities:
 # chambre parents
+# porte
 #     - binary_sensor.door_window_sensor_158d0001e44c14
-#     - binary_sensor.door_window_sensor_158d00017010c1
+# fenetre
+      - binary_sensor.door_window_sensor_158d00017010c1
 # / chambre parents
       - binary_sensor.door_window_sensor_158d00019ff246
       - binary_sensor.door_window_sensor_158d00019df284

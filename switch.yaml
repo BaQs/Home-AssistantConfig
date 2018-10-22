@@ -186,3 +186,71 @@
             entity_id: switch.radiateur_bibliotheque
 #       icon_template: "{% if is_state('switch.radiateur_bibliotheque', 'on') %}mdi:garage{% else %}mdi:garage-open{% endif %}"
 
+
+
+
+  - platform: template
+    switches:
+      harmony_tv:
+        friendly_name: Regarder la TV
+        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Regarder la TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'Regarder la TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'PowerOff'
+
+  - platform: template
+    switches:
+      harmony_music:
+        friendly_name: Écouter la musique
+        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Écouter la musique') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'Écouter la musique'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'PowerOff'
+
+
+  - platform: template
+    switches:
+      harmony_ps4:
+        friendly_name: PS4 
+        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'PS4') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'PS4'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'PowerOff'
+
+  - platform: template
+    switches:
+      harmony_netflix:
+        friendly_name: Regarder Netflix
+        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Regarder Netflix') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'Regarder Netflix'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.harmony_hub
+            activity: 'PowerOff'
+

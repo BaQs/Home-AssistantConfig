@@ -117,7 +117,35 @@
 - id: shower_heating_on_morning_weekday
   alias: 'Heating: shower ON on weekday mornings'
   trigger:
-    platform: state
+  - platform: time
+    at: "07:00:00"
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: sensor.current_state
+        state: 'home'
+      - condition: time
+        after: '06:00:00'
+        before: '10:00:00'
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+  action:
+    - service: switch.turn_on
+      entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+    - service: notify.telegram
+      data:
+        message: "Good morning, Shower heater on"
+
+
+- id: shower_heating_on_morning_weekends
+  alias: 'Heating: shower ON on weekends mornings'
+  trigger:
+  - platform: state
     entity_id: binary_sensor.in_bed
     to: 'off'
   condition:
@@ -128,7 +156,7 @@
         state: 'home'
       - condition: time
         after: '06:00:00'
-        before: '10:00:00'
+        before: '11:00:00'
         weekday:
           - mon
           - tue

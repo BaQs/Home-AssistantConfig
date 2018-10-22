@@ -18,6 +18,10 @@
       data:
         entity_id:  climate.parents_bedroom_thermostat
         away_mode: false
+    - service: climate.set_away_mode
+      data:
+        entity_id: climate.living_room_thermostat 
+        away_mode: true
 
 - id: from_bed
   alias: 'From bed'
