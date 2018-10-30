@@ -254,7 +254,6 @@ switch:
             entity_id: switch.radiateur_bibliotheque
 #       icon_template: "{% if is_state('switch.radiateur_bibliotheque', 'on') %}mdi:garage{% else %}mdi:garage-open{% endif %}"
 
-
 ################################################
 ## Sensor
 ################################################
