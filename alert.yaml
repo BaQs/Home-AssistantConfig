@@ -1,0 +1,21 @@
+  xiaomi1:
+    name: Xiaomi Kitchen unavailable
+    done_message: Xiaomi Kitchen is back
+    entity_id: light.gateway_light_34ce008c1873
+    state: 'unavailable'
+    repeat: 30
+    can_acknowledge: True
+    skip_first: False
+    notifiers:
+      - notify.ios_ipierre
+
+  xiaomi2:
+    name: Xiaomi Floor1 unavailable
+    done_message: Xiaomi Floor1 is back
+    entity_id: light.gateway_light_7811dcb7afd1
+    state: 'unavailable'
+    repeat: 30
+    can_acknowledge: True
+    skip_first: False
+    notifiers:
+      - notify.ios_ipierre

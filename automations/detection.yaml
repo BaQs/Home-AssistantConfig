@@ -1,0 +1,18 @@
+# Trigger
+
+- id: detection_opencv
+  alias: "Detection Image opencv"
+  trigger:
+  - entity_id: image_processing.opencv_dafang3
+    platform: numeric_state
+    above: 0
+  - entity_id: image_processing.opencv_foscam_camera
+    platform: numeric_state
+    above: 0
+  action:
+    service: notify.telegram
+    data_template:
+      message: >
+        Dafang3: {{ states.image_processing.opencv_dafang3.attributes.matches  }},{{ states.image_processing.opencv_dafang3.attributes.total_matches  }}
+        Foscam: {{ states.image_processing.opencv_foscam_camera.attributes.matches  }},{{ states.image_processing.opencv_foscam_camera.attributes.total_matches  }}
+
