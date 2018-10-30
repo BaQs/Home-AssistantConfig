@@ -298,75 +298,75 @@ views:
       - id: ed91a68029154279bcac30c20cac8f45  # Automatically created id
         type: vertical-stack
         cards:
-          - type: horizontal-stack
-            # style:
-              # height: 200px;
-            cards:
-              - type: entities
-                entities:
-                  - climate.living_room_thermostat
+        - type: horizontal-stack
+          style:
+            height: 200px;
+          cards:
 
-              - type: custom:thermostat-card
-                title: Living Room
-                entity: climate.living_room_thermostat
-                highlight_tap: true
-                no_card: true
+            - type: custom:thermostat-card
+              title: Living Room
+              entity: climate.living_room_thermostat
+              highlight_tap: true
+              no_card: true
 
-          #     - type: custom:thermostat-card
-          #       title: Library
-          #       entity: climate.library_thermostat
-          #       highlight_tap: true
-          #       no_card: true
+            - type: custom:thermostat-card
+              title: Library
+              entity: climate.library_thermostat
+              highlight_tap: true
+              no_card: true
 
-          #     - type: custom:thermostat-card
-          #       title: Parents Bedroom
-          #       entity: climate.parents_bedroom_thermostat
-          #       highlight_tap: true
-          #       no_card: true
+            - type: custom:thermostat-card
+              title: Parents Bedroom
+              entity: climate.parents_bedroom_thermostat
+              highlight_tap: true
+              no_card: true
 
-          #     - type: custom:thermostat-card
-          #       title: Baby Bedroom
-          #       entity: climate.baby_bedroom_thermostat
-          #       highlight_tap: true
-          #       no_card: true
+            - type: custom:thermostat-card
+              title: Baby Bedroom
+              entity: climate.baby_bedroom_thermostat
+              highlight_tap: true
+              no_card: true
 
-          # - type: thermostat
-          #   entity: climate.baby_bedroom_thermostat
+        # - type: thermostat
+        #   entity: climate.baby_bedroom_thermostat
 
-      # - type: horizontal-stack
-      #   cards:
-      #   - type: iframe
-      #     url: !secret panel_iframe_grafana_card_climate_living_room
+        # - type: horizontal-stack
+        #   cards:
+        #   - type: iframe
+        #     url: !secret panel_iframe_grafana_card_climate_living_room
 
-      #   - type: iframe
-      #     url: !secret panel_iframe_grafana_card_climate_library
+        #   - type: iframe
+        #     url: !secret panel_iframe_grafana_card_climate_library
 
-      #   - type: iframe
-      #     url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+        #   - type: iframe
+        #     url: !secret panel_iframe_grafana_card_climate_parents_bedroom
 
-      #   - type: iframe
-      #     url: !secret panel_iframe_grafana_card_climate_baby_bedroom
+        #   - type: iframe
+        #     url: !secret panel_iframe_grafana_card_climate_baby_bedroom
 
 
-          - type: horizontal-stack
-            cards:
-              - type: entities
-                entities:
-                  - climate.living_room_thermostat
-                  - climate.library_thermostat
-                  - climate.parents_bedroom_thermostat
-                  - climate.baby_bedroom_thermostat
+        - type: horizontal-stack
+          cards:
+            - type: entities
+              entities:
+                - climate.living_room_thermostat
+                - climate.library_thermostat
+                - climate.parents_bedroom_thermostat
+                - climate.baby_bedroom_thermostat
 
-              - type: entities
-                title: Lights
-                show_header_toggle: yes
-                entities:
-                  - entity: light.fibaro_system_fgd212_dimmer_2_level_7
-                    type: custom:slider-entity-row
-                  - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-                    type: custom:slider-entity-row
-                  - entity: light.fibaro_system_fgd212_dimmer_2_level_5
-                    type: custom:slider-entity-row
+            # - type: thermostat
+            #   entity: climate.living_room_thermostat
+
+            - type: entities
+              title: Lights
+              show_header_toggle: yes
+              entities:
+                - entity: light.fibaro_system_fgd212_dimmer_2_level_7
+                  type: custom:slider-entity-row
+                - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+                  type: custom:slider-entity-row
+                - entity: light.fibaro_system_fgd212_dimmer_2_level_5
+                  type: custom:slider-entity-row
 
 
 
