@@ -289,6 +289,24 @@ views:
                 entity: sensor.temperature_158d0001a1f903
 
 
+  - title: Thermostats 1
+    id: thermostats1
+    panel: true
+    cards: 
+      - type: vertical-stack
+        cards:
+
+        - type: horizontal-stack
+          cards:
+
+            - type: thermostat
+              entity: climate.living_room_thermostat
+            - type: thermostat
+              entity: climate.library_thermostat
+            - type: thermostat
+              entity: climate.parents_bedroom_thermostat
+            - type: thermostat
+              entity: climate.baby_bedroom_thermostat
 
   - title: Thermostats
     icon: mdi:thermometer-lines
@@ -299,10 +317,10 @@ views:
         type: vertical-stack
         cards:
         - type: horizontal-stack
-          style:
-            height: 200px;
+          # style:
+          #   height: 200px;
           cards:
-
+           
             - type: custom:thermostat-card
               title: Living Room
               entity: climate.living_room_thermostat
