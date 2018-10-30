@@ -37,34 +37,34 @@
   action:
   - delay: 00:05
   - service: homekit.start
-  - service: notify.telegram
+  - service: notify.ios_ipierre
     data:
       message: Homekit est démarré
 
-- id: telegramStart
-  alias: 'Telegram: HA started'
+- id: notify_ios_ha_started
+  alias: 'Notify: HA started'
   trigger:
   - platform: homeassistant
     event: start
   action:
-  - service: notify.telegram
+  - service: notify.ios_ipierre
     data:
       message: HA est démarré
   - service: frontend.set_theme
     data:
       name: midnight
 
-- id: update_notification
-  alias: Update Notification
-  action:
-  - service: notify.telegram
-    data:
-      message: "New Home Assistant version {{ states.sensor.ha_latest_version.state}}\
-        \ is available for download.\r\n\r\nYou are currently running {{ states.sensor.ha_installed_version.state}}.\r\
-        \n\r\nhttps://home-assistant.io/blog/categories/release-notes/"
-  condition: []
-  trigger:
-  - entity_id: sensor.ha_update_available
-    from: 'No'
-    platform: state
-    to: 'Yes'
+#- id: update_notification
+#  alias: Update Notification
+#  action:
+#  - service: notify.telegram
+#    data:
+#      message: "New Home Assistant version {{ states.sensor.ha_latest_version.state}}\
+#        \ is available for download.\r\n\r\nYou are currently running {{ states.sensor.ha_installed_version.state}}.\r\
+#        \n\r\nhttps://home-assistant.io/blog/categories/release-notes/"
+#  condition: []
+#  trigger:
+#  - entity_id: sensor.ha_update_available
+#    from: 'No'
+#    platform: state
+#    to: 'Yes'

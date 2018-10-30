@@ -9,8 +9,8 @@
             activationMode: 'background'
             authenticationRequired: yes
             destructive: yes
-            behavior: 'default'
-          - identifier: 'DISARM_ABODE'
+#           behavior: 'default'
+          - identifier: 'DISARM_ALARM'
             title: 'Disarm ?'
             activationMode: 'background'
             authenticationRequired: yes

@@ -11,17 +11,9 @@
   action:
     - service: display.turn_off
       entity_id: display.chuwi
-    - service: notify.telegram
+    - service: notify.ios_ipierre
       data:
         message: In bed, turning chuwi off
-    - service: climate.set_away_mode
-      data:
-        entity_id:  climate.parents_bedroom_thermostat
-        away_mode: false
-    - service: climate.set_away_mode
-      data:
-        entity_id: climate.living_room_thermostat 
-        away_mode: true
 
 - id: from_bed
   alias: 'From bed'
@@ -36,24 +28,6 @@
   action:
     - service: display.turn_on
       entity_id: display.chuwi
-    - service: notify.telegram
+    - service: notify.ios_ipierre
       data:
         message: Back up, turning chuwi on
-    - service: climate.set_away_mode
-      data:
-        entity_id:  climate.parents_bedroom_thermostat
-        away_mode: true
-
-
-
-- id: baby_bed
-  alias: 'Baby: Bed'
-  trigger:
-    platform: time
-    at: '19:00:00'
-# condition:
-  action:
-    - service: climate.set_away_mode
-      data:
-        entity_id: climate.baby_bedroom_thermostat
-        away_mode: false

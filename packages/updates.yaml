@@ -136,7 +136,7 @@ automation:
              states.sensor.hass_current_stable_version.state > states.sensor.hass_installed_version.state
              }}
     action:
-      - service: notify.ios_pierre
+      - service: notify.ios_ipierre
         data:
           message: 'Home Assistant version {{ states.sensor.hass_current_stable_version.state }} is now available for Hass.io'
           title: Home Assistant Update

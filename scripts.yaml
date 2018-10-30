@@ -10,17 +10,28 @@
         data:
           inline_keyboard:
              - 'Pictures Again:/cameras, Disarm Alarm:/disarm_alarm'
-    - service: notify.ios_ipierre
+
+    - service: notify.ios_pierre
       data:
-        message: "Alarme déclenchée!"
+        message: Alarm triggered!
         data:
+          attachment:
+          content-type: jpeg
           push:
-            badge: 5
-  #         sound: <SOUND FILE HERE>
-            category: "alarm" # Needs to match the top level identifier you used in the ios configuration
-  #       action_data: # Anything passed in action_data will get echoed back to Home Assistant.
-  #         entity_id: light.test
-  #         my_custom_data: foo_bar
+            category: alarm
+          entity_id: camera.dafang3
+
+#    - service: notify.ios_ipierre
+#      data:
+#        message: "Alarme déclenchée!"
+#        data:
+#          push:
+#            badge: 1
+#  #         sound: <SOUND FILE HERE>
+#            category: "alarm" # Needs to match the top level identifier you used in the ios configuration
+#  #       action_data: # Anything passed in action_data will get echoed back to Home Assistant.
+#  #         entity_id: light.test
+#  #         my_custom_data: foo_bar
 
   telegram_snapshots_all_cameras: 
     alias: "Telegram: send a snapshot from all cameras"

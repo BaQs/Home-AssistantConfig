@@ -37,17 +37,3 @@
       data: /cameras
   action:
   - service: script.telegram_snapshots_all_cameras
-
-- alias: Telegram bot that reply pong to ping
-  trigger:
-    platform: event
-    event_type: telegram_command
-    event_data:
-      command: /ping
-  action:
-  - service: notify.telegram
-    data:
-      message: pong
-  id: c9409bc577fc4f749688d33b1f7dfd9e
-
-

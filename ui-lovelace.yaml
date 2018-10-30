@@ -5,7 +5,6 @@ title: Home
 resources:
   - url: /local/custom-lovelace/surveillance-card.js?v=0
     type: module
-# - url: /local/custom-lovelace/alarm_control_panel_card/alarm_control_panel-card.js?v=1
   - url: /local/custom-lovelace/alarm_control_panel-card/alarm_control_panel-card.js?v=1
     type: js
   - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=1
@@ -57,70 +56,69 @@ views:
 #      - device_tracker.pierre_ipierre
 #      - display.chuwi
     cards:
-    - type: vertical-stack
-      cards:
-      - type: glance
-        show_state: false
-        show_name: true
-        theming: primary
-        column_width: calc(100% / 11)
-        entities:
-          - alarm_control_panel.home_alarm
-          - alarm_control_panel.arlo
-          - sensor.current_state
-          - sensor.period_of_day
-          - binary_sensor.somebody_home
-          - binary_sensor.motion_detected
-          - binary_sensor.in_bed
-          - input_select.system_mode
-          - device_tracker.gaetane_igaetaneowntracks
-#          - device_tracker.ipierre
-          - device_tracker.pierre_ipierre
-          - display.chuwi
-
-      - type: vertical-stack
-#      - type: custom:column-card
+      - id: 3e9b665e5e5a4e4c97bc24b0f60a6ee2  # Automatically created id
+        type: vertical-stack
         cards:
- 
-        - type: horizontal-stack
-          cards:
-#         - type: weather-forecast
-          - type: "custom:weather-card"
-            entity_weather: weather.yweather
-            entity_sun: sun.sun
-#           entity: weather.dark_sky
-           
-        
-          - type: picture-entity
-            title: Foscam Camera
-            entity: camera.foscam_camera
-            camera_image: camera.foscam_camera
-            show_info: true
-            tap_action: dialog
-
-   
-        - type: horizontal-stack
-          cards:
- 
-          - type: custom:useful-markdown-card
-            padding: 15%
-            fontSize: 200px
-            content: >
-
-              [[ sensor.time.state ]]
-
- 
- 
-          - type: entities
-            title: Lights
-            show_header_toggle: yes
+          - type: glance
+            show_state: false
+            show_name: true
+            theming: primary
+            column_width: calc(100% / 11)
+            columns: 11
             entities:
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_7
-                type: custom:slider-entity-row
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-                type: custom:slider-entity-row
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_5
-                type: custom:slider-entity-row
+              - alarm_control_panel.home_alarm
+              - alarm_control_panel.arlo
+              - sensor.current_state
+              - sensor.period_of_day
+              - binary_sensor.somebody_home
+              - binary_sensor.motion_detected
+              - binary_sensor.in_bed
+              - input_select.system_mode
+#         - device_tracker.gaetane_igaetaneowntracks
+#          - device_tracker.ipierre
+              - device_tracker.igaetane
+              - device_tracker.pierre_ipierre
+              - display.chuwi
+
+          - type: vertical-stack
+#      - type: custom:column-card
+            cards:
+              - type: horizontal-stack
+                cards:
+#         - type: weather-forecast
+                  - type: custom:weather-card
+                    entity_weather: weather.yweather
+                    entity_sun: sun.sun
+#           entity: weather.dark_sky
+                  - type: picture-entity
+                    title: Foscam Camera
+                    entity: camera.foscam_camera
+                    camera_image: camera.foscam_camera
+                    show_info: true
+                    tap_action: dialog
+
+
+              - type: horizontal-stack
+                cards:
+                  - type: custom:useful-markdown-card
+                    padding: 15%
+                    fontSize: 200px
+                    content: >
+
+                      [[ sensor.time.state ]]
+
+
+
+                  - type: entities
+                    title: Lights
+                    show_header_toggle: yes
+                    entities:
+                      - entity: light.fibaro_system_fgd212_dimmer_2_level_7
+                        type: custom:slider-entity-row
+                      - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+                        type: custom:slider-entity-row
+                      - entity: light.fibaro_system_fgd212_dimmer_2_level_5
+                        type: custom:slider-entity-row
 #             - entity: switch.prise_bambi
 #             - entity: light.gateway_light_34ce008c1873
 #             - entity:  light.gateway_light_7811dcb7afd1
@@ -144,67 +142,79 @@ views:
 #        - light.fibaro_system_fgd212_dimmer_2_level_5
 #        - binary_sensor.water_leak_sensor_158d0001bb87df
 # 
-      - type: custom:group-card
+      - id: ed7ed8164ec648998fafa7d8ee77e56f  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Salon
+          type: entities
+          title: Salon
         group: group.salon
-      - type: custom:group-card
+      - id: a9c55bb9ed794ca788c0c1b50d16e788  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Cuisine
+          type: entities
+          title: Cuisine
         group: group.kitchen
-      - type: custom:group-card
+      - id: 112fb9f03e574fcf836dd7f05c4b9fec  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Bibliothèque
+          type: entities
+          title: Bibliothèque
         group: group.library
 
-      - type: custom:group-card
+      - id: b70317947ac0427e9cbd0f6a78d4c2d3  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Chambre Parentale
+          type: entities
+          title: Chambre Parentale
         group: group.bedroom_parents
-      - type: custom:group-card
+      - id: 0cd8c010aa714eb69fd309289a6780d0  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Chambre Bébé
+          type: entities
+          title: Chambre Bébé
         group: group.bedroom_baby
-      - type: custom:group-card
+      - id: 660c83aa0c2c4350a6780f8aff481a74  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Chambre 2e Rue
+          type: entities
+          title: Chambre 2e Rue
         group: group.bedroom_2_road
-    
-      - type: custom:group-card
+
+      - id: 7570d4958bfe48f2bac293265ba1c9aa  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Chambre 2e Jardin
+          type: entities
+          title: Chambre 2e Jardin
         group: group.bedroom_2_garden
-      - type: custom:group-card
+      - id: df30b91f4c72486c9870f5d434daf2cf  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Salle de Douche
+          type: entities
+          title: Salle de Douche
         group: group.shower
-      - type: custom:group-card
+      - id: b6a849e32a0b42d3b56a9124632d3385  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Salle de Bain
+          type: entities
+          title: Salle de Bain
         group: group.bathroom
-      - type: custom:group-card
+      - id: b2f612465cf14e76a0d75e016d2b8b8c  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Entrée
+          type: entities
+          title: Entrée
         group: group.entrance
-      - type: custom:group-card
+      - id: 5d0b864ba9254a979d3a3f8d4b5bcfb9  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Cave
+          type: entities
+          title: Cave
         group: group.cave
-      - type: custom:group-card
+      - id: 4eb0bbed563a40e49c71b53e86b3e016  # Automatically created id
+        type: custom:group-card
         card:
-            type: entities
-            title: Buanderie
+          type: entities
+          title: Buanderie
         group: group.washroom
 
   - title: Surveillance
@@ -212,7 +222,8 @@ views:
     id: cctv
     panel: true
     cards:
-      - type: custom:surveillance-card
+      - id: 000766da96de4b85b153ecfb3ccdace3  # Automatically created id
+        type: custom:surveillance-card
         thumb_interval: 15
         update_interval: 2
         cameras:
@@ -231,50 +242,51 @@ views:
     id: temperatures
     icon: mdi:temperature-celsius
     cards:
-    - type: vertical-stack
+      - id: 9661f9b192d0408cb3985b1f5e2015db  # Automatically created id
+        type: vertical-stack
       #- type: custom:column-card
-      cards:
-      - type: horizontal-stack
         cards:
-         - type: sensor
-           name: Chambre 2 Jardin
-           entity: sensor.temperature_158d0001ab1858
-         - type: sensor
-           name: Douche
-           entity: sensor.temperature_158d0001e421d9
-         - type: sensor
-           name: Chambre 2 Rue
-           entity: sensor.temperature_158d0001713f49
-      - type: horizontal-stack
-        cards:
-         - type: sensor
-           name: Chambre Bébé
-           entity: sensor.temperature_158d0001720782
-         - type: sensor
-           name: Chambre Parents
-           entity: sensor.temperature_158d0001ab75f3
-         - type: sensor
-           name: SDB
-           entity: sensor.temperature_158d0001ab75da
-      - type: horizontal-stack
-        cards:
-         - type: sensor
-           name: Salon
-           entity: sensor.temperature_158d0001db60d9
-         - type: sensor
-           name: Cuisine
-           entity: sensor.temperature_158d0001715c53
-         - type: sensor
-           name: Bibliothèque
-           entity: sensor.temperature_158d0001a4b91d
+          - type: horizontal-stack
+            cards:
+              - type: sensor
+                name: Chambre 2 Jardin
+                entity: sensor.temperature_158d0001ab1858
+              - type: sensor
+                name: Douche
+                entity: sensor.temperature_158d0001e421d9
+              - type: sensor
+                name: Chambre 2 Rue
+                entity: sensor.temperature_158d0001713f49
+          - type: horizontal-stack
+            cards:
+              - type: sensor
+                name: Chambre Bébé
+                entity: sensor.temperature_158d0001720782
+              - type: sensor
+                name: Chambre Parents
+                entity: sensor.temperature_158d0001ab75f3
+              - type: sensor
+                name: SDB
+                entity: sensor.temperature_158d0001ab75da
+          - type: horizontal-stack
+            cards:
+              - type: sensor
+                name: Salon
+                entity: sensor.temperature_158d0001db60d9
+              - type: sensor
+                name: Cuisine
+                entity: sensor.temperature_158d0001715c53
+              - type: sensor
+                name: Bibliothèque
+                entity: sensor.temperature_158d0001a4b91d
            #blue
            #line_color: "#3498db"
-         - type: sensor
-           name: Couloir
-           entity: sensor.temperature_158d0001d6dae3
-         - type: sensor
-           name: Entrée
-           entity: sensor.temperature_158d0001a1f903
+              - type: sensor
+                name: Couloir
+                entity: sensor.temperature_158d0001d6dae3
+              - type: sensor
+                name: Entrée
+                entity: sensor.temperature_158d0001a1f903
 
 
 
@@ -283,77 +295,79 @@ views:
     id: thermostats
     panel: true
     cards:
-    - type: vertical-stack
-      cards:
-    
-      - type: horizontal-stack
-        style:
-          height: 200px;
+      - id: ed91a68029154279bcac30c20cac8f45  # Automatically created id
+        type: vertical-stack
         cards:
- 
-        - type: custom:thermostat-card
-          title: Living Room
-          entity: climate.living_room_thermostat
-          highlight_tap: true
-          no_card: true
+          - type: horizontal-stack
+            # style:
+              # height: 200px;
+            cards:
+              - type: entities
+                entities:
+                  - climate.living_room_thermostat
 
-        - type: custom:thermostat-card
-          title: Library
-          entity: climate.library_thermostat
-          highlight_tap: true
-          no_card: true
+              - type: custom:thermostat-card
+                title: Living Room
+                entity: climate.living_room_thermostat
+                highlight_tap: true
+                no_card: true
 
-        - type: custom:thermostat-card
-          title: Parents Bedroom
-          entity: climate.parents_bedroom_thermostat
-          highlight_tap: true
-          no_card: true
-      
-        - type: custom:thermostat-card
-          title: Baby Bedroom
-          entity: climate.baby_bedroom_thermostat
-          highlight_tap: true
-          no_card: true
+          #     - type: custom:thermostat-card
+          #       title: Library
+          #       entity: climate.library_thermostat
+          #       highlight_tap: true
+          #       no_card: true
 
- 
-      - type: horizontal-stack
-        cards:
-  
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_living_room
+          #     - type: custom:thermostat-card
+          #       title: Parents Bedroom
+          #       entity: climate.parents_bedroom_thermostat
+          #       highlight_tap: true
+          #       no_card: true
 
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_library
+          #     - type: custom:thermostat-card
+          #       title: Baby Bedroom
+          #       entity: climate.baby_bedroom_thermostat
+          #       highlight_tap: true
+          #       no_card: true
 
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+          # - type: thermostat
+          #   entity: climate.baby_bedroom_thermostat
 
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_baby_bedroom
+      # - type: horizontal-stack
+      #   cards:
+      #   - type: iframe
+      #     url: !secret panel_iframe_grafana_card_climate_living_room
+
+      #   - type: iframe
+      #     url: !secret panel_iframe_grafana_card_climate_library
+
+      #   - type: iframe
+      #     url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+
+      #   - type: iframe
+      #     url: !secret panel_iframe_grafana_card_climate_baby_bedroom
 
 
- 
-      - type: horizontal-stack
-        cards:
- 
-        - type: entities
-          entities:
-          - climate.living_room_thermostat
-          - climate.library_thermostat 
-          - climate.parents_bedroom_thermostat
-          - climate.baby_bedroom_thermostat 
- 
-        - type: entities
-          title: Lights
-          show_header_toggle: yes
-          entities:
-            - entity: light.fibaro_system_fgd212_dimmer_2_level_7
-              type: custom:slider-entity-row
-            - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-              type: custom:slider-entity-row
-            - entity: light.fibaro_system_fgd212_dimmer_2_level_5
-              type: custom:slider-entity-row
- 
+          - type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                  - climate.living_room_thermostat
+                  - climate.library_thermostat
+                  - climate.parents_bedroom_thermostat
+                  - climate.baby_bedroom_thermostat
+
+              - type: entities
+                title: Lights
+                show_header_toggle: yes
+                entities:
+                  - entity: light.fibaro_system_fgd212_dimmer_2_level_7
+                    type: custom:slider-entity-row
+                  - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+                    type: custom:slider-entity-row
+                  - entity: light.fibaro_system_fgd212_dimmer_2_level_5
+                    type: custom:slider-entity-row
+
 
 
   - title: Security
@@ -361,35 +375,38 @@ views:
     id: security
     panel: true
     cards:
-    - type: vertical-stack
-      cards:
-      - type: horizontal-stack
+      - id: 5f101caa458d4c2e8da132940194e7ef  # Automatically created id
+        type: vertical-stack
         cards:
+          - type: horizontal-stack
+            cards:
 #       - type: custom:alarm_control_panel-card
-        - type: glance
-          column_width: calc(100% / 2)
-          entities: 
-          - alarm_control_panel.arlo
-          - alarm_control_panel.home_alarm
-        - type: custom:group-card
-          card:
-              type: glance
-              show_title: false
-              show_state: false
-              column_width: calc(100% / 6)
-          group: group.perimeter_detectors
-      - type: horizontal-stack
-        cards:
-        - type: custom:group-card
-          card:
-              type: entities
-              title: Motion
-          group: group.motion_detectors
-        - type: custom:group-card
-          card:
-              type: entities
-              title: Door/Windows Sensors
-          group: group.door_sensors
+              - type: glance
+                column_width: calc(100% / 2)
+                columns: 2
+                entities:
+                  - alarm_control_panel.arlo
+                  - alarm_control_panel.home_alarm
+              - type: custom:group-card
+                card:
+                  type: glance
+                  show_title: false
+                  show_state: false
+                  column_width: calc(100% / 6)
+                  columns: 6
+                group: group.perimeter_detectors
+          - type: horizontal-stack
+            cards:
+              - type: custom:group-card
+                card:
+                  type: entities
+                  title: Motion
+                group: group.motion_detectors
+              - type: custom:group-card
+                card:
+                  type: entities
+                  title: Door/Windows Sensors
+                group: group.door_sensors
 #          show_keypad: true
 #          show_keypad: true
 #          title: Arlo
@@ -405,16 +422,16 @@ views:
 #          states:
 #            - arm_home
 #            - arm_away
- 
 #      - type: custom:group-card
-    
   - title: Multimedia
     icon: mdi:play-circle-outline
     id: multimedia
     cards:
-      - type: media-control
+      - id: 1082e6c0305d418eaba04d6a6f98f9a7  # Automatically created id
+        type: media-control
         entity: media_player.xiaomi_network_speaker_airplay
-      - type: media-control
+      - id: bc7651db35534256ba2fc025e5ff12fd  # Automatically created id
+        type: media-control
         entity: media_player.google_home__salon
 #      - type: glance
 #        entities: 
@@ -423,30 +440,31 @@ views:
 
 
 
-  - title: Energy
-    panel: true
-    id: energy
-    icon: mdi:flash
-    cards:
-      - type: iframe
-        url: !secret panel_iframe_grafana_power_consumption_dark
-        aspect_ratio: 100%
+  # - title: Energy
+  #   panel: true
+  #   id: energy
+  #   icon: mdi:flash
+  #   cards:
+  #     - type: iframe
+  #       url: !secret panel_iframe_grafana_power_consumption_dark
+  #       aspect_ratio: 100%
 
-  - title: Grafana
-    panel: true
-    id: grafana
-    icon: mdi:chart-areaspline
-    cards:
-      - type: iframe
-        url: !secret panel_iframe_grafana_url
-        aspect_ratio: 100%
+  # - title: Grafana
+  #   panel: true
+  #   id: grafana
+  #   icon: mdi:chart-areaspline
+  #   cards:
+  #     - type: iframe
+  #       url: !secret panel_iframe_grafana_url
+  #       aspect_ratio: 100%
 
   - title: Front Cam
     icon: mdi:camera-front-variant
     id: frontcam
     panel: true
     cards:
-      - type: picture-entity
+      - id: 869eeba961e64b43b7414a9df0364c7f  # Automatically created id
+        type: picture-entity
         title: Foscam Camera
         entity: camera.foscam_camera
         camera_image: camera.foscam_camera
@@ -456,235 +474,256 @@ views:
     icon: mdi:settings
     id: settings
     cards:
-      - type: custom:monster-card
+      - id: c31f3f618f3f41febdd94ca674249f8b  # Automatically created id
+        type: custom:monster-card
         show_header_toggle: true
         card:
           type: entities
           title: Automation
         filter:
-          include: 
+          include:
             - domain: automation
-      - type: custom:monster-card
+      - id: 248fd566c7234206b4b21d06ec835253  # Automatically created id
+        type: custom:monster-card
         show_header_toggle: true
         card:
           type: entities
           title: Scripts
         filter:
-          include: 
+          include:
             - domain: script
 
-      - type: custom:monster-card
+      - id: 755190fc9d3b4ecaaf96756876a61361  # Automatically created id
+        type: custom:monster-card
         card:
-            type: glance 
-            title: Low Battery
+          type: glance
+          title: Low Battery
         filter:
-            include:
-                - attributes:
-                    battery_level: '< 40'
+          include:
+            - attributes:
+                battery_level: < 40
 
-      - type: custom:home-setter
-        title: Home page 
+      - id: bda24971e0324a6ab74d9de128e9661b  # Automatically created id
+        type: custom:home-setter
+        title: Home page
         pages:
-        - name: Main
-          path: lovelace/0
-        - name: Mobile
-          path: lovelace/mobile
-
+          - name: Main
+            path: lovelace/0
+          - name: Mobile
+            path: lovelace/mobile
 
   - title: Mobile
     id: mobile
     icon: mdi:cellphone-iphone
     badges:
-         - sensor.temperature_158d0001db60d9
-         - sensor.temperature_158d0001a4b91d
-         - sensor.temperature_158d0001a1f903
-         - sensor.temperature_158d0001720782
-         - sensor.temperature_158d0001ab75f3
-         - sensor.temperature_158d0001e421d9
-#        - sensor.temperature_158d0001ab1858
-#        - sensor.temperature_158d0001713f49
+        #  - sensor.temperature_158d0001db60d9
+        #  - sensor.temperature_158d0001a4b91d
+        #  - sensor.temperature_158d0001a1f903
+        #  - sensor.temperature_158d0001720782
+        #  - sensor.temperature_158d0001ab75f3
+        #  - sensor.temperature_158d0001e421d9
+      - sensor.teleinfo_papp
+        #  - sensor.temperature_158d0001ab1858
+        #  - sensor.temperature_158d0001713f49
+      - sensor.current_state
+      - sensor.period_of_day
+      - binary_sensor.somebody_home
+      - binary_sensor.motion_detected
+      - binary_sensor.in_bed
+      - binary_sensor.detected_outside_car
+      - sensor.elecbill_today_so_far_ttc
+
     cards:
-    - type: horizontal-stack
-      cards:
-      - type: horizontal-stack
+      - id: f1f2d46e2fd74773994da70ddb5a80b1  # Automatically created id
+        type: horizontal-stack
         cards:
-        - type: "custom:button-card"
-          entity:  group.living_lights
-          icon: mdi:lightbulb
+          - type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                entity: group.living_lights
+                icon: mdi:lightbulb
   #       show_state: true
   #       name: Lumières
-          color: auto
-          action: more_info
-          color_type: card
-          default_color: rgb(255, 233, 155)
+                color: auto
+                action: more_info
+                color_type: card
+                default_color: rgb(255, 233, 155)
 #      - type: horizontal-stack
 #        cards:
-        - type: "custom:button-card"
-          entity: light.fibaro_system_fgd212_dimmer_2_level_7
-          icon: mdi:sofa
-          color: auto
-          default_color: rgb(255, 233, 155)
-          action: more_info
-        - type: "custom:button-card"
-          entity: light.fibaro_system_fgd212_dimmer_2_level_4
-          icon: mdi:silverware
-          color: auto
-          default_color: rgb(255, 233, 155)
-          action: more_info
+              - type: custom:button-card
+                entity: light.fibaro_system_fgd212_dimmer_2_level_7
+                icon: mdi:sofa
+                color: auto
+                default_color: rgb(255, 233, 155)
+                action: more_info
+              - type: custom:button-card
+                entity: light.fibaro_system_fgd212_dimmer_2_level_4
+                icon: mdi:silverware
+                color: auto
+                default_color: rgb(255, 233, 155)
+                action: more_info
 #      - type: horizontal-stack
 #        cards:
-        - type: "custom:button-card"
-          entity: light.fibaro_system_fgd212_dimmer_2_level_5
-          icon: mdi:fridge
-          color: auto
-          default_color: rgb(255, 233, 155)
-          action: more_info
-        - type: "custom:button-card"
-          entity: switch.prise_bambi
-          icon: mdi:baby-buggy
-          color: auto
-          default_color: rgb(255, 233, 155)
-          action: more_info
+              - type: custom:button-card
+                entity: light.fibaro_system_fgd212_dimmer_2_level_5
+                icon: mdi:fridge
+                color: auto
+                default_color: rgb(255, 233, 155)
+                action: more_info
+              - type: custom:button-card
+                entity: switch.prise_bambi
+                icon: mdi:baby-buggy
+                color: auto
+                default_color: rgb(255, 233, 155)
+                action: more_info
 
-    - type: horizontal-stack
-      cards:
-      - type: "custom:button-card"
-        entity: display.chuwi
-        icon: mdi:tablet
-        action: more_info
-        color: rgb(155, 255 ,233)
-        color_off: rgb(140, 140, 140)
-      - type: "custom:button-card"
-        entity: media_player.xiaomi_network_speaker_airplay
-        icon: mdi:speaker-wireless
-        action: more_info
-        color: rgb(155, 255 ,233)
-        color_off: rgb(140, 140, 140)
+      - id: d6f93dad8457425a98e81a409e807c3d  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: display.chuwi
+            icon: mdi:tablet
+            action: more_info
+            color: rgb(155, 255 ,233)
+            color_off: rgb(140, 140, 140)
 
-      - type: "custom:button-card"
-        entity: vacuum.xiaomi_vacuum_cleaner
-        icon: mdi:robot-vacuum
-        action: more_info
-        color: rgb(155, 255 ,233)
-        color_off: rgb(140, 140, 140)
+          - type: custom:button-card
+            entity: media_player.xiaomi_network_speaker_airplay
+            icon: mdi:speaker-wireless
+            action: more_info
+            color: rgb(155, 255 ,233)
+            color_off: rgb(140, 140, 140)
 
-    - type: horizontal-stack
-      cards:
-      - type: "custom:button-card"
-        entity: group.climate
-        icon: mdi:radiator
-        color: rgb(255, 233, 155)
-        color_off: rgb(140, 140, 140)
-        action: more_info
+          - type: custom:button-card
+            entity: vacuum.xiaomi_vacuum_cleaner
+            icon: mdi:robot-vacuum
+            action: more_info
+            color: rgb(155, 255 ,233)
+            color_off: rgb(140, 140, 140)
 
-      - type: "custom:button-card"
-        entity: input_select.system_mode
-        icon: mdi:home-heart
-        color: rgb(255, 233, 155)
-        color_off: rgb(140, 140, 140)
-        action: more_info
+      - id: 2fae947c082543a9afac149b32dccf48  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: group.climate
+            icon: mdi:radiator
+            color: rgb(255, 233, 155)
+            color_off: rgb(140, 140, 140)
+            action: more_info
 
-    - type: horizontal-stack
-      cards:
-      - type: "custom:button-card"
-        entity: climate.baby_bedroom_thermostat
-        action: more_info
-        icon: mdi:baby
-        color: rgb(255, 155, 155)
-        color_off: rgb(140, 140, 140)
+          - type: custom:button-card
+            entity: input_select.system_mode
+            icon: mdi:home-heart
+            color: rgb(255, 233, 155)
+            color_off: rgb(140, 140, 140)
+            action: more_info
 
-      - type: "custom:button-card"
-        entity: climate.parents_bedroom_thermostat
-        action: more_info
-        icon: mdi:bed-empty
-        color: rgb(255, 155, 155)
-        color_off: rgb(140, 140, 140)
+      - id: 8c04cb9561ab4e68b1b9092757b2e126  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: climate.baby_bedroom_thermostat
+            action: more_info
+            icon: mdi:baby
+            color: rgb(255, 155, 155)
+            color_off: rgb(140, 140, 140)
 
-      - type: "custom:button-card"
-        entity: climate.living_room_thermostat
-        action: more_info
-        icon: mdi:silverware
+          - type: custom:button-card
+            entity: climate.parents_bedroom_thermostat
+            action: more_info
+            icon: mdi:bed-empty
+            color: rgb(255, 155, 155)
+            color_off: rgb(140, 140, 140)
+
+          - type: custom:button-card
+            entity: climate.living_room_thermostat
+            action: more_info
+            icon: mdi:silverware
 #       color_type: card
-        default_color: rgb(255, 155, 155)
-        color: rgb(255, 155, 155)
-        color_off: rgb(140, 140, 140)
+            default_color: rgb(255, 155, 155)
+            color: rgb(255, 155, 155)
+            color_off: rgb(140, 140, 140)
 
-      - type: "custom:button-card"
-        entity: climate.library_thermostat
-        action: more_info
-        icon: mdi:library
-        color: rgb(255, 155, 155)
-        color_off: rgb(140, 140, 140)
+          - type: custom:button-card
+            entity: climate.library_thermostat
+            action: more_info
+            icon: mdi:library
+            color: rgb(255, 155, 155)
+            color_off: rgb(140, 140, 140)
 
-      - type: "custom:button-card"
-        entity: switch.qubino_zmnhadx_flush_1_relay_switch
-        action: more_info
-        icon: mdi:shower
-        color: rgb(255, 155, 155)
+          - type: custom:button-card
+            entity: switch.qubino_zmnhadx_flush_1_relay_switch
+            action: more_info
+            icon: mdi:shower
+            color: rgb(255, 155, 155)
   #          - switch.radiateur_1_salon
   #          - switch.radiateur_2_salon
   #          - switch.radiateur_cuisine
-    - type: horizontal-stack
-      cards:
-      - type: "custom:button-card"
-        entity: alarm_control_panel.arlo
-        action: more_info
-        icon: mdi:security
-        color: rgb(28, 128, 199)
-      - type: "custom:button-card"
-        entity: alarm_control_panel.home_alarm
-        action: more_info
-        icon: mdi:security-home
-        color: rgb(28, 128, 199)
+      - id: 3c26a599aee24b97a8f7b481dbbdb77c  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: alarm_control_panel.arlo
+            action: more_info
+            icon: mdi:security
+            color: rgb(28, 128, 199)
+          - type: custom:button-card
+            entity: alarm_control_panel.home_alarm
+            action: more_info
+            icon: mdi:security-home
+            color: rgb(28, 128, 199)
 
-    - type: horizontal-stack
-      cards:
-       - type: sensor
-         name: Chambre 2 Jardin
-         entity: sensor.temperature_158d0001ab1858
-       - type: sensor
-         name: Douche
-         icon: mdi:shower
-         line_color: "#3498db"
-         entity: sensor.temperature_158d0001e421d9
-       - type: sensor
-         name: Chambre 2 Rue
-         entity: sensor.temperature_158d0001713f49
-    - type: horizontal-stack
-      cards:
-       - type: sensor
-         name: Chambre Bébé
-         icon: mdi:baby
-         entity: sensor.temperature_158d0001720782
-       - type: sensor
-         name: Chambre Parents
-         icon: mdi:bed-empty
-         entity: sensor.temperature_158d0001ab75f3
-       - type: sensor
-         name: SDB
-         line_color: "#3498db"
-         entity: sensor.temperature_158d0001ab75da
-    - type: horizontal-stack
-      cards:
-       - type: sensor
-         icon: mdi:fridge
-         name: Cuisine
-         entity: sensor.temperature_158d0001715c53
-       - type: sensor
-         name: Salon
-         icon: mdi:sofa
-         entity: sensor.temperature_158d0001db60d9
-       - type: sensor
-         name: Bibliothèque
-         icon: mdi:library 
-         entity: sensor.temperature_158d0001a4b91d
+      - id: f90597fa94ea491ebe56359aa042c13f  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: sensor
+            name: Chambre 2 Jardin
+            entity: sensor.temperature_158d0001ab1858
+          - type: sensor
+            name: Douche
+            icon: mdi:shower
+            line_color: '#3498db'
+            entity: sensor.temperature_158d0001e421d9
+          - type: sensor
+            name: Chambre 2 Rue
+            entity: sensor.temperature_158d0001713f49
+      - id: 3451d3f90a8548e69ac4dd44f93656fc  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: sensor
+            name: Chambre Bébé
+            icon: mdi:baby
+            entity: sensor.temperature_158d0001720782
+          - type: sensor
+            name: Chambre Parents
+            icon: mdi:bed-empty
+            entity: sensor.temperature_158d0001ab75f3
+          - type: sensor
+            name: SDB
+            line_color: '#3498db'
+            entity: sensor.temperature_158d0001ab75da
+      - id: d09dba9e6aa04ee5b1031907d0f49e0c  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: sensor
+            icon: mdi:fridge
+            name: Cuisine
+            entity: sensor.temperature_158d0001715c53
+          - type: sensor
+            name: Salon
+            icon: mdi:sofa
+            entity: sensor.temperature_158d0001db60d9
+          - type: sensor
+            name: Bibliothèque
+            icon: mdi:library
+            entity: sensor.temperature_158d0001a4b91d
          #blue
-       - type: sensor
-         name: Entrée
-         entity: sensor.temperature_158d0001a1f903
-       - type: sensor
-         name: Couloir
-         entity: sensor.temperature_158d0001d6dae3
+          - type: sensor
+            name: Entrée
+            entity: sensor.temperature_158d0001a1f903
+          - type: sensor
+            name: Couloir
+            entity: sensor.temperature_158d0001d6dae3
 
 #    - type: vertical-stack
 #      cards:
@@ -697,3 +736,66 @@ views:
 #         - sensor.temperature_158d0001a4b91d
 #         - sensor.temperature_158d0001d6dae3
 #         - sensor.temperature_158d0001a1f903
+
+  - title: Debug
+    id: debug
+    panel: false
+    cards:
+
+      - id: 634c51d9c2ba458f853f65aea48168e5  # Automatically created id
+        type: entities
+        entities:
+          - input_select.qubino_bedroom_parents 
+          - switch.qubino_bedroom_parents
+          - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
+          - climate.parents_bedroom_thermostat 
+          - automation.qubino_radiateur__parents
+
+      - id: 634c51d9c2ba458f853f65aea48168e6  # Automatically created id
+        type: entities
+        entities:
+
+          - input_select.qubino_bedroom_baby 
+          - switch.qubino_bedroom_baby 
+          - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+          - climate.baby_bedroom_thermostat 
+          - automation.qubino_radiateur__baby 
+
+      - id: 634c51d9c2ba458f853f65aea48168e4  # Automatically created id
+        type: history-graph
+        entities:
+          - device_tracker.gaetane_igaetaneowntracks
+          - device_tracker.igaetane
+          - device_tracker.2c61f6c08b90
+          - device_tracker.ipierre
+      #- device_tracker.ipierre_nmap
+          - device_tracker.pierre_ipierre
+          - device_tracker.6c8dc126c257
+          - group.pierre
+          - group.gaetane
+          - group.household
+          - binary_sensor.somebody_home
+
+
+
+
+      - id: 634c51d9c2ba458f853f65aea48168e7  # Automatically created id
+        type: history-graph
+        entities:
+          - climate.parents_bedroom_thermostat 
+
+      - id: 634c51d9c2ba458f853f65aea48168e8  # Automatically created id
+        type: history-graph
+        entities:
+          - climate.baby_bedroom_thermostat 
+
+      - id: 634c51d9c2ba458f853f65aea4816831  # Automatically created id
+        type: history-graph
+        entities:
+          - climate.living_room_thermostat
+
+      - id: 634c51d9c2ba458f853f65aea4816832  # Automatically created id
+        type: history-graph
+        entities:
+          - climate.library_thermostat
+          

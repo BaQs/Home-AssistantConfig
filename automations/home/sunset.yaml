@@ -1,8 +1,8 @@
 - id: Sunset
   alias: 'Script: Sunset'
   trigger:
-    - platform: template
-      value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
+  - platform: template
+    value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
   condition:
   - condition: state
     entity_id: binary_sensor.somebody_home

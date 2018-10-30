@@ -1,7 +1,6 @@
 # Trigger
-
 - id: trigger_alarm_while_armed_away
-  alias: Trigger alarm when armed away
+  alias: "Alarm: Trigger when armed away"
   trigger:
 #  - entity_id: binary_sensor.motion_detected
 #    platform: state
@@ -20,7 +19,7 @@
 # notification
 
 - id: send_notification_when_alarm_triggered
-  alias: Send notification when alarm triggered
+  alias: "Alarm: Send notification when triggered"
   trigger:
   - entity_id: alarm_control_panel.home_alarm
     platform: state

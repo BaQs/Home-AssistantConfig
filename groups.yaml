@@ -20,7 +20,7 @@
       - group.motion_detectors
   default_view:
     name: Default
-    view: yes
+    view: no
     icon: mdi:home
     entities:
 #     - sun.sun
@@ -56,19 +56,20 @@
     view: no
     entities:
         # nmap
-      - device_tracker.igaetane
+      #- device_tracker.igaetane
+      - device_tracker.2c61f6c08b90
         # owntracks
       - device_tracker.gaetane_igaetaneowntracks
   Pierre:
     name: Pierre
     view: no
     entities:
-      - sensor.ipierre_battery_state_2
-      - sensor.ipierre_battery_level_2
+      #- sensor.ipierre_battery_state_2
+      #- sensor.ipierre_battery_level_2
         # ios HA app
       - device_tracker.ipierre
         # nmap
-      - device_tracker.ipierre_nmap
+      - device_tracker.6c8dc126c257
         # owntracks
       - device_tracker.pierre_ipierre
 #     - binary_sensor.pierre_home
@@ -105,9 +106,9 @@
       - sensor.illumination_158d0001ddb2d3
       - binary_sensor.motion_sensor_158d0001ddb2d3
       - switch.prise_lampe_boule
-#     - switch.radiateur_1_salon
+      - switch.radiateur_1_salon
       - switch.radiateur_1_salon_inverted
-#     - switch.radiateur_2_salon
+      - switch.radiateur_2_salon
       - switch.radiateur_2_salon_inverted
 #     - light.fibaro_system_fgd212_dimmer_2_level
       - light.fibaro_system_fgd212_dimmer_2_level_4
@@ -119,6 +120,14 @@
 #       - media_player.55ez950_series
 #       - camera.welcam
       - climate.living_room_thermostat 
+      - switch.radiateurs_salon
+  radiateurs_salon:
+    name: Radiateurs Salon
+    view: no
+    entities:
+      - switch.radiateur_1_salon
+      - switch.radiateur_2_salon
+
   bedroom_baby:
     name: Chambre Bébé
     entities:

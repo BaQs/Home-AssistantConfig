@@ -8,4 +8,26 @@
 #    action:
 #      ...
 #
-#
+- alias: Disarm the alarm
+  trigger:
+    platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: DISARM_ALARM
+  action:
+  - service: alarm_control_panel.alarm_disarm
+
+
+- alias: Sound the alarm
+  trigger:
+    platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: SOUND_ALARM
+  action:
+  - service: tts.google_say
+    data:
+      language: fr
+      entity_id: media_player.google_home__salon
+      message: Alarme déclenchée
+

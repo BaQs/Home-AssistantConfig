@@ -22,5 +22,7 @@ filter:
                 - sensor.teleinfo_papp
                 - switch.prise_bambi
                 - switch.prise_cave
+                - switch.qubino_zmnhadx_flush_1_relay_switch
                 - remote.harmony_hub
                 - vacuum.xiaomi_vacuum_cleaner
+                

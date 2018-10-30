@@ -97,20 +97,20 @@
 
 
 
-- id: shower_heating_off_after_60min
+- id: shower_heating_off_after_30min
   alias: 'Heating: shower off after 60min'
   trigger:
     platform: state
     entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
     to: 'on'
     for:
-      minutes: 60
+      minutes: 30
   action:
     - service: switch.turn_off
       entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
     - service: notify.telegram
       data:
-        message: "Shower heater has been on for 60min, shutting it off automatically"
+        message: "Shower heater has been on for 30min, shutting it off automatically"
 
 
 

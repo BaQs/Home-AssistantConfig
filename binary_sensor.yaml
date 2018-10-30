@@ -42,7 +42,7 @@
   - platform: bayesian
     name: In Bed
     prior: .33 # 33% chance that we are in bed (8 hrs out of 24hrs)
-    probability_threshold: 0.85
+    probability_threshold: 0.90
     observations:
       # We are in bed -> vey likely at least one household member is at home
       - entity_id: group.household
@@ -50,6 +50,12 @@
         to_state: home
         prob_given_true: 0.99 # 99% chance that if we are in bed we are at home
         prob_given_false: 0.5 # 50% chance that if we are not in bed we are at home
+      - entity_id: binary_sensor.somebody_home
+        platform: state
+        to_state: False
+        prob_given_true: 0.01 # 1% chance that if we are in bed nobody's home
+        prob_given_false: 0.5 # 50% chance that if we are not in bed nobody's home
+        
       # we are in bed -> vey likely no motion is detected
       - entity_id: binary_sensor.motion_detected
         platform: state
@@ -102,7 +108,7 @@
   - platform: bayesian
     name: Somebody home
     prior: 0.6  # 60% chance that somebody is at home at any given moment
-    probability_threshold: 0.85
+    probability_threshold: 0.80
     observations:
       # Somebody at home -> Very likely at least one household member is at home
       - entity_id: group.pierre
@@ -166,3 +172,10 @@
         #value_template: '{{(as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
         value_template: '{{(  as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))   - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
   
+  - platform: template
+    sensors:
+      detected_outside_car:
+        friendly_name: "Car detected outside"
+        value_template: >-
+          {% if states.image_processing.opencv_foscam_camera.attributes.matches["car"] is defined -%}True{%- endif %}
+
