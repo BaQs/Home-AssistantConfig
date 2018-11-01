@@ -137,38 +137,68 @@ climate:
 
 switch:
 # Qubino thermostat, used as heater for generic thermostat
+  # - platform: template
+  #   switches:
+  #     qubino_bedroom_parents:
+  #       value_template: "{{ is_state('input_select.qubino_bedroom_parents', 'Comfort') }}"
+  #       turn_on:
+  #         service: input_select.select_option
+  #         data:
+  #           entity_id: input_select.qubino_bedroom_parents
+  #           option: 'Comfort'
+  #       turn_off:
+  #         service: input_select.select_option
+  #         data:
+  #           entity_id: input_select.qubino_bedroom_parents
+  #           option: 'Stop'
+  # We shall not rely on automation, but change directly the "light" component
   - platform: template
     switches:
       qubino_bedroom_parents:
-        value_template: "{{ is_state('input_select.qubino_bedroom_parents', 'Comfort') }}"
+        # TODO
+        value_template: "{{ states.light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2.state   }}"
         turn_on:
-          service: input_select.select_option
+          entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
+          service: light.turn_on
           data:
-            entity_id: input_select.qubino_bedroom_parents
-            option: 'Comfort'
+            brightness: 230
         turn_off:
-          service: input_select.select_option
+          entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
+          service: light.turn_on
           data:
-            entity_id: input_select.qubino_bedroom_parents
-            option: 'Stop'
+            brightness: O
 
 
-
-# Qubino thermostat, used as heater for generic thermostat
-  - platform: template
+# # Qubino thermostat, used as heater for generic thermostat
+#   - platform: template
+#     switches:
+#       qubino_bedroom_baby:
+#         value_template: "{{ is_state('input_select.qubino_bedroom_baby', 'Comfort') }}"
+#         turn_on:
+#           service: input_select.select_option
+#           data:
+#             entity_id: input_select.qubino_bedroom_baby
+#             option: 'Comfort'
+#         turn_off:
+#           service: input_select.select_option
+#           data:
+#             entity_id: input_select.qubino_bedroom_baby
+#             option: 'Stop'
+- platform: template
     switches:
-      qubino_bedroom_baby:
-        value_template: "{{ is_state('input_select.qubino_bedroom_baby', 'Comfort') }}"
+      qubino_bedroom_parents:
+        # TODO
+        value_template: "{{ states.light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level.state   }}"
         turn_on:
-          service: input_select.select_option
+          entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+          service: light.turn_on
           data:
-            entity_id: input_select.qubino_bedroom_baby
-            option: 'Comfort'
+            brightness: 230
         turn_off:
-          service: input_select.select_option
+          entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
+          service: light.turn_on
           data:
-            entity_id: input_select.qubino_bedroom_baby
-            option: 'Stop'
+            brightness: O
 
 
 #
@@ -961,6 +991,7 @@ automation:
   #     - climate.parents_bedroom_thermostat
   #     - climate.living_room_thermostat
   #     - climate.library_thermostat
+
   - id: climate_to_bed
     alias: 'Climate: To bed'
     trigger:
@@ -985,12 +1016,15 @@ automation:
           entity_id: climate.library_thermostat 
           away_mode: true
 
+
   - id: climate_from_bed
     alias: 'Climate: From bed'
     trigger:
     - entity_id: binary_sensor.in_bed
       platform: state
       to: 'off'
+      for:
+        minutes: 60
     condition:
     - condition: state
       entity_id: binary_sensor.somebody_home
@@ -1000,7 +1034,10 @@ automation:
         data:
           entity_id:  climate.parents_bedroom_thermostat
           away_mode: true
-
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.baby_bedroom_thermostat
+          away_mode: true
 
 
   - id: baby_bed
