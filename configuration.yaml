@@ -20,17 +20,17 @@ homeassistant:
 logger:
   default: info
   logs:
-    homeassistant.components.image_processing: debug
-    homeassistant.components.climate: debug
-#   homeassistant.components.arlo: debug
-#   homeassistant.components.display: debug
-#   homeassistant.components.rfxtrx: debug
-#   homeassistant.components.teleinfo: debug
-#    homeassistant.components.xiaomi_aqara: debug
-#    homeassistant.components.binary_sensor.xiaomi_aqara: debug
-#    homeassistant.components.sensor.xiaomi_aqara: debug
-#    homeassistant.components.light.xiaomi_aqara: debug
-#    homeassistant.components.switch.xiaomi_aqara: debug
+    # homeassistant.components.image_processing: debug
+    # homeassistant.components.climate: debug
+  # homeassistant.components.arlo: debug
+  # homeassistant.components.display: debug
+  # homeassistant.components.rfxtrx: debug
+  # homeassistant.components.teleinfo: debug
+  #  homeassistant.components.xiaomi_aqara: debug
+  #  homeassistant.components.binary_sensor.xiaomi_aqara: debug
+  #  homeassistant.components.sensor.xiaomi_aqara: debug
+  #  homeassistant.components.light.xiaomi_aqara: debug
+  #  homeassistant.components.switch.xiaomi_aqara: debug
 
 #  whitelist_external_dirs: 
 #    - '/home/homeassistant/.homeassistant/downloads'
@@ -70,7 +70,7 @@ http:
    base_url: !secret base_url 
    trusted_proxies: 192.168.0.27
    use_x_forwarded_for: true
-   ip_ban_enabled: false
+   ip_ban_enabled: true
    login_attempts_threshold: 5
 #  cors_allowed_origins:
 
@@ -358,7 +358,6 @@ ios: !include ios.yaml
 # Example using a delay after start of Home Assistant
 homekit: !include homekit.yaml
 
-# Example configuration.yaml entry
 alarm_control_panel:
   - platform: manual
     name: Home Alarm
