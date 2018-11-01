@@ -5,11 +5,12 @@
 !scenes
 !.gitignore
 !automations
-!custom_components
+!custom_components/
 !themes
 !*/
 !www/*.js
 !www/*/*.js
+!www/custom-lovelace
 secrets.yaml
 known_devices.yaml
 deps
