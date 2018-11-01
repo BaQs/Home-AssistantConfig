@@ -289,24 +289,24 @@ views:
                 entity: sensor.temperature_158d0001a1f903
 
 
-  - title: Thermostats 1
-    id: thermostats1
-    panel: true
-    cards: 
-      - type: vertical-stack
-        cards:
+  # - title: Thermostats 1
+  #   id: thermostats1
+  #   panel: true
+  #   cards: 
+  #     - type: vertical-stack
+  #       cards:
 
-        - type: horizontal-stack
-          cards:
+  #       - type: horizontal-stack
+  #         cards:
 
-            - type: thermostat
-              entity: climate.living_room_thermostat
-            - type: thermostat
-              entity: climate.library_thermostat
-            - type: thermostat
-              entity: climate.parents_bedroom_thermostat
-            - type: thermostat
-              entity: climate.baby_bedroom_thermostat
+  #           - type: thermostat
+  #             entity: climate.living_room_thermostat
+  #           - type: thermostat
+  #             entity: climate.library_thermostat
+  #           - type: thermostat
+  #             entity: climate.parents_bedroom_thermostat
+  #           - type: thermostat
+  #             entity: climate.baby_bedroom_thermostat
 
   - title: Thermostats
     icon: mdi:thermometer-lines
@@ -447,7 +447,8 @@ views:
     cards:
       - id: 1082e6c0305d418eaba04d6a6f98f9a7  # Automatically created id
         type: media-control
-        entity: media_player.xiaomi_network_speaker_airplay
+        # entity: media_player.xiaomi_network_speaker_airplay
+        entity: media_player.xiaomi_network_speaker_upnp
       - id: bc7651db35534256ba2fc025e5ff12fd  # Automatically created id
         type: media-control
         entity: media_player.google_home__salon
@@ -557,139 +558,191 @@ views:
         cards:
           - type: horizontal-stack
             cards:
-              - type: custom:button-card
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
                 entity: group.living_lights
                 icon: mdi:lightbulb
+                # tap_action: more_info
+
   #       show_state: true
   #       name: Lumières
-                color: auto
-                action: more_info
-                color_type: card
-                default_color: rgb(255, 233, 155)
-#      - type: horizontal-stack
+                # color: auto
+                # action: more_info
+                # color_type: card
+                # default_color: rgb(255, 233, 155)
+    #  - type: horizontal-stack
 #        cards:
-              - type: custom:button-card
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
                 entity: light.fibaro_system_fgd212_dimmer_2_level_7
                 icon: mdi:sofa
-                color: auto
-                default_color: rgb(255, 233, 155)
-                action: more_info
-              - type: custom:button-card
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
                 entity: light.fibaro_system_fgd212_dimmer_2_level_4
                 icon: mdi:silverware
-                color: auto
-                default_color: rgb(255, 233, 155)
-                action: more_info
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
 #      - type: horizontal-stack
 #        cards:
-              - type: custom:button-card
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
                 entity: light.fibaro_system_fgd212_dimmer_2_level_5
                 icon: mdi:fridge
-                color: auto
-                default_color: rgb(255, 233, 155)
-                action: more_info
-              - type: custom:button-card
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
+              - type: entity-button
+                name: " "
+                hold_action: toggle
                 entity: switch.prise_bambi
                 icon: mdi:baby-buggy
-                color: auto
-                default_color: rgb(255, 233, 155)
-                action: more_info
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
 
       - id: d6f93dad8457425a98e81a409e807c3d  # Automatically created id
         type: horizontal-stack
         cards:
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: display.chuwi
             icon: mdi:tablet
-            action: more_info
-            color: rgb(155, 255 ,233)
-            color_off: rgb(140, 140, 140)
+            # action: more_info
+            # color: rgb(155, 255 ,233)
+            # color_off: rgb(140, 140, 140)
 
-          - type: custom:button-card
-            entity: media_player.xiaomi_network_speaker_airplay
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
+            entity: media_player.xiaomi_network_speaker_upnp
             icon: mdi:speaker-wireless
-            action: more_info
-            color: rgb(155, 255 ,233)
-            color_off: rgb(140, 140, 140)
+            # action: more_info
+            # color: rgb(155, 255 ,233)
+            # color_off: rgb(140, 140, 140)
 
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: vacuum.xiaomi_vacuum_cleaner
             icon: mdi:robot-vacuum
-            action: more_info
-            color: rgb(155, 255 ,233)
-            color_off: rgb(140, 140, 140)
+            # action: more_info
+            # color: rgb(155, 255 ,233)
+            # color_off: rgb(140, 140, 140)
 
       - id: 2fae947c082543a9afac149b32dccf48  # Automatically created id
         type: horizontal-stack
         cards:
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: group.climate
             icon: mdi:radiator
-            color: rgb(255, 233, 155)
-            color_off: rgb(140, 140, 140)
-            action: more_info
+            # color: rgb(255, 233, 155)
+            # color_off: rgb(140, 140, 140)
+            # action: more_info
 
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: input_select.system_mode
             icon: mdi:home-heart
-            color: rgb(255, 233, 155)
-            color_off: rgb(140, 140, 140)
-            action: more_info
+            # color: rgb(255, 233, 155)
+            # color_off: rgb(140, 140, 140)
+            # action: more_info
 
       - id: 8c04cb9561ab4e68b1b9092757b2e126  # Automatically created id
         type: horizontal-stack
         cards:
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: climate.baby_bedroom_thermostat
             action: more_info
-            icon: mdi:baby
-            color: rgb(255, 155, 155)
-            color_off: rgb(140, 140, 140)
+            # icon: mdi:baby
+            # color: rgb(255, 155, 155)
+            # color_off: rgb(140, 140, 140)
 
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: climate.parents_bedroom_thermostat
-            action: more_info
+            # action: more_info
             icon: mdi:bed-empty
-            color: rgb(255, 155, 155)
-            color_off: rgb(140, 140, 140)
+            # color: rgb(255, 155, 155)
+            # color_off: rgb(140, 140, 140)
 
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: climate.living_room_thermostat
-            action: more_info
+            # action: more_info
             icon: mdi:silverware
 #       color_type: card
-            default_color: rgb(255, 155, 155)
-            color: rgb(255, 155, 155)
-            color_off: rgb(140, 140, 140)
+            # default_color: rgb(255, 155, 155)
+            # color: rgb(255, 155, 155)
+            # color_off: rgb(140, 140, 140)
 
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: climate.library_thermostat
-            action: more_info
+            # action: more_info
             icon: mdi:library
-            color: rgb(255, 155, 155)
-            color_off: rgb(140, 140, 140)
+            # color: rgb(255, 155, 155)
+            # color_off: rgb(140, 140, 140)
 
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: switch.qubino_zmnhadx_flush_1_relay_switch
-            action: more_info
-            icon: mdi:shower
-            color: rgb(255, 155, 155)
+            # action: more_info
+            # icon: mdi:shower
+            # color: rgb(255, 155, 155)
   #          - switch.radiateur_1_salon
   #          - switch.radiateur_2_salon
   #          - switch.radiateur_cuisine
       - id: 3c26a599aee24b97a8f7b481dbbdb77c  # Automatically created id
         type: horizontal-stack
         cards:
-          - type: custom:button-card
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: alarm_control_panel.arlo
-            action: more_info
+            # action: more_info
             icon: mdi:security
-            color: rgb(28, 128, 199)
-          - type: custom:button-card
+            # color: rgb(28, 128, 199)
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
             entity: alarm_control_panel.home_alarm
-            action: more_info
+            # action: more_info
             icon: mdi:security-home
-            color: rgb(28, 128, 199)
+            # color: rgb(28, 128, 199)
 
       - id: f90597fa94ea491ebe56359aa042c13f  # Automatically created id
         type: horizontal-stack
