@@ -184,7 +184,7 @@ switch:
 #           data:
 #             entity_id: input_select.qubino_bedroom_baby
 #             option: 'Stop'
-- platform: template
+  - platform: template
     switches:
       qubino_bedroom_parents:
         # TODO

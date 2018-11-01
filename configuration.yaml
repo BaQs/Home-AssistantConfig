@@ -19,9 +19,9 @@ homeassistant:
  
 logger:
   default: info
-  logs:
-    # homeassistant.components.image_processing: debug
-    # homeassistant.components.climate: debug
+  # logs:
+  # homeassistant.components.image_processing: debug
+  # homeassistant.components.climate: debug
   # homeassistant.components.arlo: debug
   # homeassistant.components.display: debug
   # homeassistant.components.rfxtrx: debug
