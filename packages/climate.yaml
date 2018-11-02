@@ -155,7 +155,6 @@ switch:
   - platform: template
     switches:
       qubino_bedroom_parents:
-        # TODO
         value_template: "{{ states.light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2.state   }}"
         turn_on:
           entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
@@ -166,7 +165,7 @@ switch:
           entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level_2
           service: light.turn_on
           data:
-            brightness: O
+            brightness: 0
 
 
 # # Qubino thermostat, used as heater for generic thermostat
@@ -186,7 +185,7 @@ switch:
 #             option: 'Stop'
   - platform: template
     switches:
-      qubino_bedroom_parents:
+      qubino_bedroom_baby:
         # TODO
         value_template: "{{ states.light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level.state   }}"
         turn_on:
@@ -198,7 +197,7 @@ switch:
           entity_id: light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
           service: light.turn_on
           data:
-            brightness: O
+            brightness: 0
 
 
 #
@@ -900,7 +899,7 @@ input_select:
 
 automation:
   - alias: 'Qubino Radiateur - Parents'
-    initial_state: True
+    # initial_state: True
     trigger:
       platform: state
       entity_id: input_select.qubino_bedroom_parents
@@ -927,7 +926,7 @@ automation:
 
 
   - alias: 'Qubino Radiateur - Baby'
-    initial_state: True
+    # initial_state: True
     trigger:
       platform: state
       entity_id: input_select.qubino_bedroom_baby
@@ -952,7 +951,7 @@ automation:
              0
           {% endif %}
 
-
+# when back home from away: all thermostats are NOT in away mode
   - alias: "Climate: Back Home from Away"
     hide_entity: false
     trigger:
@@ -966,12 +965,8 @@ automation:
         data:
           entity_id: group.climate
           away_mode: false
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.living_room_thermostat 
-          away_mode: false
 
-
+# when quitting home, all is away
   - alias: "Climate: Away from Home"
     hide_entity: false
     trigger:
@@ -987,11 +982,8 @@ automation:
         data:
           entity_id: group.climate
           away_mode: true
-  #     - climate.baby_bedroom_thermostat
-  #     - climate.parents_bedroom_thermostat
-  #     - climate.living_room_thermostat
-  #     - climate.library_thermostat
 
+# when going to bed, away mode for living room + library thermostat
   - id: climate_to_bed
     alias: 'Climate: To bed'
     trigger:
@@ -1016,7 +1008,29 @@ automation:
           entity_id: climate.library_thermostat 
           away_mode: true
 
+# good morning, heating in living room
+  - id: climate_from_bed
+    alias: 'Climate: From bed'
+    trigger:
+    - entity_id: binary_sensor.in_bed
+      platform: state
+      to: 'off'
+    condition:
+    - condition: state
+      entity_id: binary_sensor.somebody_home
+      state: 'on'
+    action:
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.living_room_thermostat 
+          away_mode: false
+      - service: climate.set_away_mode
+        data:
+          entity_id: climate.library_thermostat 
+          away_mode: false
 
+
+# good morning + 60min, bedrooms in away mode
   - id: climate_from_bed
     alias: 'Climate: From bed'
     trigger:
