@@ -26,9 +26,9 @@
     to: triggered
   action:
   - service: script.presence_notifications_when_alarm_triggered
-  - service: tts.google_say
-    data:
-      language: fr
-      entity_id: media_player.google_home__salon
-      message: Alarme déclenchée
+  # - service: tts.google_say
+  #   data:
+  #     language: fr
+  #     entity_id: media_player.google_home__salon
+  #     message: Alarme déclenchée
 
