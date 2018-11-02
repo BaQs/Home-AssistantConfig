@@ -72,7 +72,7 @@
   - data:
       message: Pierre est parti!
       title: Pierre leaves
-    service: notify.telegram
+    service: notify.ios_ipierre
 
 - id: pierre_home
   alias: Pierre home
@@ -85,7 +85,7 @@
   - data:
       message: Pierre est à la maison!
       title: Pierre is home
-    service: notify.telegram
+    service: notify.ios_ipierre
 
 - id: away_from_home_notif_open_door
   alias: 'Notification: open door when leaving'
