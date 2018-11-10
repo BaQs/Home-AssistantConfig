@@ -5,8 +5,9 @@
     value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
   condition:
   - condition: state
-    entity_id: binary_sensor.somebody_home
-    state: 'on'
+    entity_id: sensor.current_state
+    state: 'home'
+    
   action:
   - service: notify.telegram
     data:

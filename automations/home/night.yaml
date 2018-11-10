@@ -11,6 +11,10 @@
   - condition: state
     entity_id: sensor.period_of_day
     state: 'night'
+  - condition: state
+    entity_id: sensor.current_state
+    state: 'home'
+
   action:
   - data:
       brightness: '100'
@@ -38,6 +42,10 @@
   - condition: state
     entity_id: sensor.period_of_day
     state: night
+  - condition: state
+    entity_id: sensor.current_state
+    state: 'home'
+    
 #  condition: state
 #      entity_id: sensor.period_of_day
 #      state: night
