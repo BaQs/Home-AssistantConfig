@@ -8,4 +8,5 @@
       - Normal
       - On vacation
       - Have guests
-    initial: Normal
+    # We prefer to let the system restore the last value from "recorder" component
+    # initial: Normal
