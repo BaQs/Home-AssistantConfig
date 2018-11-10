@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/BaQs/Home-AssistantConfig.svg?branch=master)](https://travis-ci.org/BaQs/Home-AssistantConfig)
+
 
 # Home-AssistantConfig
 ## My Setup
