@@ -12,9 +12,9 @@
         minutes: 10
   # Set away mode
   action:
-    - service: notify.telegram
+    - service: notify.ios_ipierre
       data:
-        message: Nobody is at home. Turning off lights, arming alarm, turning off TV & switching on the cave pump.
+        message: Nobody is at home. Turning off lights, arming alarm, turning off TV, launching vacuum, switching on the cave pump & putting the thermostats in away mode.
     # Turn off lights and hot water recirculation pump
     - service: light.turn_off
       data:
@@ -25,7 +25,6 @@
       entity_id: alarm_control_panel.home_alarm
     - service: alarm_control_panel.alarm_arm_away
       entity_id: alarm_control_panel.arlo
-    # Close main floor shades
     # Start the vacuum
 #    - service: vacuum.start
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -36,21 +35,6 @@
     # Turn ON Cave pump
     - service: homeassistant.turn_on
       entity_id: switch.prise_cave
-    # Turn off media players
-#    - service: media_player.turn_off
-#      data:
-#        entity_id: group.monoprice
-    # Set away mode on thermostats
-#    - service: climate.set_away_mode
-#      data:
-#        entity_id: group.climate
-#        away_mode: true
-    # Close main floor shades
-#    - service: scene.turn_on
-#      data:
-#        entity_id:
-#          - scene.34003 # Dining Closed
-#          - scene.56015 # Living Closed
     # Thermostats in away mode
     - service: climate.set_away_mode
       data:
@@ -61,31 +45,31 @@
 #     - climate.living_room_thermostat
 #     - climate.library_thermostat
 
-- id: '1533471702628'
-  alias: Pierre leaves
-  trigger:
-  - entity_id: binary_sensor.pierre_is_home
-    platform: state
-    to: 'off'
-  condition: []
-  action:
-  - data:
-      message: Pierre est parti!
-      title: Pierre leaves
-    service: notify.ios_ipierre
+# - id: '1533471702628'
+#   alias: Pierre leaves
+#   trigger:
+#   - entity_id: binary_sensor.pierre_is_home
+#     platform: state
+#     to: 'off'
+#   condition: []
+#   action:
+#   - data:
+#       message: Pierre est parti!
+#       title: Pierre leaves
+#     service: notify.ios_ipierre
 
-- id: pierre_home
-  alias: Pierre home
-  trigger:
-  - entity_id: binary_sensor.pierre_is_home
-    platform: state
-    to: 'on'
-  condition: []
-  action:
-  - data:
-      message: Pierre est à la maison!
-      title: Pierre is home
-    service: notify.ios_ipierre
+# - id: pierre_home
+#   alias: Pierre home
+#   trigger:
+#   - entity_id: binary_sensor.pierre_is_home
+#     platform: state
+#     to: 'on'
+#   condition: []
+#   action:
+#   - data:
+#       message: Pierre est à la maison!
+#       title: Pierre is home
+#     service: notify.ios_ipierre
 
 - id: away_from_home_notif_open_door
   alias: 'Notification: open door when leaving'
@@ -95,7 +79,6 @@
       entity_id: sensor.current_state
       from: 'home'
       to: 'away'
-  # Set away mode
   condition: 
     - condition: state
       entity_id: group.perimeter_detectors
