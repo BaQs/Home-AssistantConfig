@@ -348,19 +348,19 @@ views:
         # - type: thermostat
         #   entity: climate.baby_bedroom_thermostat
 
-        # - type: horizontal-stack
-        #   cards:
-        #   - type: iframe
-        #     url: !secret panel_iframe_grafana_card_climate_living_room
+        - type: horizontal-stack
+          cards:
+          - type: iframe
+            url: !secret panel_iframe_grafana_card_climate_living_room
 
-        #   - type: iframe
-        #     url: !secret panel_iframe_grafana_card_climate_library
+          - type: iframe
+            url: !secret panel_iframe_grafana_card_climate_library
 
-        #   - type: iframe
-        #     url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+          - type: iframe
+            url: !secret panel_iframe_grafana_card_climate_parents_bedroom
 
-        #   - type: iframe
-        #     url: !secret panel_iframe_grafana_card_climate_baby_bedroom
+          - type: iframe
+            url: !secret panel_iframe_grafana_card_climate_baby_bedroom
 
 
         - type: horizontal-stack
@@ -459,23 +459,23 @@ views:
 
 
 
-  # - title: Energy
-  #   panel: true
-  #   id: energy
-  #   icon: mdi:flash
-  #   cards:
-  #     - type: iframe
-  #       url: !secret panel_iframe_grafana_power_consumption_dark
-  #       aspect_ratio: 100%
+  - title: Energy
+    panel: true
+    id: energy
+    icon: mdi:flash
+    cards:
+      - type: iframe
+        url: !secret panel_iframe_grafana_power_consumption_dark
+        aspect_ratio: 100%
 
-  # - title: Grafana
-  #   panel: true
-  #   id: grafana
-  #   icon: mdi:chart-areaspline
-  #   cards:
-  #     - type: iframe
-  #       url: !secret panel_iframe_grafana_url
-  #       aspect_ratio: 100%
+  - title: Grafana
+    panel: true
+    id: grafana
+    icon: mdi:chart-areaspline
+    cards:
+      - type: iframe
+        url: !secret panel_iframe_grafana_url
+        aspect_ratio: 100%
 
   - title: Front Cam
     icon: mdi:camera-front-variant
@@ -630,7 +630,7 @@ views:
             hold_action: toggle
           # - type: custom:button-card
             entity: media_player.xiaomi_network_speaker_upnp
-            icon: mdi:speaker-wireless
+            # icon: mdi:speaker-wireless
             # action: more_info
             # color: rgb(155, 255 ,233)
             # color_off: rgb(140, 140, 140)
@@ -656,7 +656,7 @@ views:
             icon: mdi:radiator
             color: rgb(255, 233, 155)
             # color_off: rgb(140, 140, 140)
-            # action: more_info
+            action: more_info
             # color: rgb(255, 0, 0)
             color_off: rgb(155,233,255)
 
@@ -683,6 +683,7 @@ views:
             # color: rgb(255, 155, 155)
             # color_off: rgb(140, 140, 140)
             color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
             color_off: rgb(155,233,255)
 
           # - type: entity-button
@@ -690,9 +691,10 @@ views:
           #   hold_action: toggle
           - type: custom:button-card
             entity: climate.parents_bedroom_thermostat
-            # action: more_info
+            action: more_info
             icon: mdi:bed-empty
             color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
             color_off: rgb(155,233,255)
             # color: rgb(255, 155, 155)
             # color_off: rgb(140, 140, 140)
@@ -705,6 +707,7 @@ views:
             action: more_info
             icon: mdi:silverware
             color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
             color_off: rgb(155,233,255)
             # name: "living"
             # color_type: card
@@ -715,9 +718,10 @@ views:
           #   hold_action: toggle
           - type: custom:button-card
             entity: climate.library_thermostat
-            # action: more_info
+            action: more_info
             icon: mdi:library
             # color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
             color_off: rgb(155,233,255)
             color: rgb(255, 155, 155)
             # color_off: rgb(140, 140, 140)
@@ -727,8 +731,9 @@ views:
           #   hold_action: toggle
           - type: custom:button-card
             entity: switch.qubino_zmnhadx_flush_1_relay_switch
-            # action: more_info
+            action: more_info
             icon: mdi:shower
+            default_color: rgb(255, 0, 0)
             color: rgb(255, 0, 0)
             color_off: rgb(155,233,255)
            # color: rgb(255, 155, 155)
