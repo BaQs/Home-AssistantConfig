@@ -29,16 +29,15 @@ __pycache__
 tts
 secrets.yaml
 known_devices.yaml
+ip_bans.yaml
 phue.conf
 ios.conf
 pyozw.sqlite
 nest.conf
 ipchange.yaml
-ip_bans.yaml
 export_*
 JEEDOM
 .homekit.state
 .HA_VERSION
-ip_bans.yaml
 secrets*
 home-panel*
