@@ -220,7 +220,7 @@ camera:
     username: !secret foscam_username
     password: !secret foscam_password
   - platform: arlo
-#   ffmpeg_arguments: '-pred 1 -q:v 2'
+    ffmpeg_arguments: '-pred 1 -q:v 2'
   - platform: ffmpeg
     name: DaFang3
     input: !secret dafang_rtsp 
@@ -399,3 +399,4 @@ display:
 # climate: !include climate.yaml
 alert: !include alert.yaml
 image_processing: !include image_processing.yaml
+proximity: !include proximity.yaml
