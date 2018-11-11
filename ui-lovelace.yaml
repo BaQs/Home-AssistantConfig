@@ -648,15 +648,17 @@ views:
       - id: 2fae947c082543a9afac149b32dccf48  # Automatically created id
         type: horizontal-stack
         cards:
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
             entity: group.climate
             icon: mdi:radiator
-            # color: rgb(255, 233, 155)
+            color: rgb(255, 233, 155)
             # color_off: rgb(140, 140, 140)
             # action: more_info
+            # color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
 
           - type: entity-button
             name: " "
@@ -671,56 +673,65 @@ views:
       - id: 8c04cb9561ab4e68b1b9092757b2e126  # Automatically created id
         type: horizontal-stack
         cards:
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
             entity: climate.baby_bedroom_thermostat
             action: more_info
-            # icon: mdi:baby
+            icon: mdi:baby
             # color: rgb(255, 155, 155)
             # color_off: rgb(140, 140, 140)
+            color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
 
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
             entity: climate.parents_bedroom_thermostat
             # action: more_info
             icon: mdi:bed-empty
+            color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
             # color: rgb(255, 155, 155)
             # color_off: rgb(140, 140, 140)
 
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
+          # - type: entity-button
+            # name: " "
+            # hold_action: toggle
+          - type: custom:button-card
             entity: climate.living_room_thermostat
-            # action: more_info
+            action: more_info
             icon: mdi:silverware
-#       color_type: card
-            # default_color: rgb(255, 155, 155)
-            # color: rgb(255, 155, 155)
+            color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+            # name: "living"
+            # color_type: card
             # color_off: rgb(140, 140, 140)
 
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
             entity: climate.library_thermostat
             # action: more_info
             icon: mdi:library
-            # color: rgb(255, 155, 155)
+            # color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+            color: rgb(255, 155, 155)
             # color_off: rgb(140, 140, 140)
 
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
             entity: switch.qubino_zmnhadx_flush_1_relay_switch
             # action: more_info
-            # icon: mdi:shower
-            # color: rgb(255, 155, 155)
+            icon: mdi:shower
+            color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+           # color: rgb(255, 155, 155)
   #          - switch.radiateur_1_salon
   #          - switch.radiateur_2_salon
   #          - switch.radiateur_cuisine
