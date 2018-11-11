@@ -83,8 +83,8 @@ climate:
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    keep_alive:
-      minutes: 3
+    # keep_alive:
+    #   minutes: 3
     initial_operation_mode: "auto"
     away_temp: 17
 
@@ -100,8 +100,8 @@ climate:
     hot_tolerance: 0
     min_cycle_duration:
       seconds: 30
-    keep_alive:
-      minutes: 3
+    # keep_alive:
+    #   minutes: 3
     initial_operation_mode: "auto"
     away_temp: 17
 
