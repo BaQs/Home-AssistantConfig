@@ -383,7 +383,7 @@ alarm_control_panel:
 input_select: !include input_select.yaml
 
 ffmpeg:
-  run_test: false
+  # run_test: false
 
 arlo:
   username: !secret arlo_username
