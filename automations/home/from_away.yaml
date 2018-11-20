@@ -1,5 +1,5 @@
 # Turn off automatic away mode
-- alias: 'Turn off automatic away mode'
+- alias: 'Home: From Away'
   hide_entity: false
   trigger:
     - platform: state
@@ -25,7 +25,8 @@
     # Turn Off Cave pump
     - service: homeassistant.turn_off
       entity_id: switch.prise_cave
-
+    - service: display.turn_on
+      entity_id: display.chuwi
 
 # Turn off automatic away mode
 #- alias: 'Turn off automatic away mode'

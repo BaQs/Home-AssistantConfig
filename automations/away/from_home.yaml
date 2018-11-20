@@ -1,7 +1,7 @@
 # Automatic away mode when nobody is at home during the day,
 # and not on vacation
 - id: away_from_home_away_mode
-  alias: Turn on away mode
+  alias: "Away: From Home"
   hide_entity: True
   trigger:
     - platform: state
@@ -40,6 +40,8 @@
       data:
         entity_id: group.climate
         away_mode: true
+    - service: display.turn_off
+      entity_id: display.chuwi
 #     - climate.baby_bedroom_thermostat
 #     - climate.parents_bedroom_thermostat
 #     - climate.living_room_thermostat
