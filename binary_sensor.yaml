@@ -106,11 +106,16 @@
         to_state: 'off'
         prob_given_true: 0.9 # 90% chance that if we are in bed, remote is off
         prob_given_false: 0.4 # 40% chance that if we are not in bed, remote is off
-      # - entity_id: 'sensor.ipierre_battery_state'
-      #   prob_given_true: 0.7 # 70% chance that if we are in bed, battery is charging
-      #   prob_given_false: 0.2 # 10% chance that if we are not in bed, battery is charging
-      #   platform: 'state'
-      #   to_state: 'Charging'
+      - entity_id: binary_sensor.ipierre_pluggedin
+        prob_given_true: 0.7 # 70% chance that if we are in bed, battery is charging
+        prob_given_false: 0.1 # 10% chance that if we are not in bed, battery is charging
+        platform: 'state'
+        to_state: 'on'
+      - entity_id: binary_sensor.igaetane_pluggedin
+        prob_given_true: 0.5 # 50% chance that if we are in bed, battery is charging
+        prob_given_false: 0.2 # 20% chance that if we are not in bed, battery is charging
+        platform: 'state'
+        to_state: 'on'
 
 
   # 
@@ -193,3 +198,15 @@
         value_template: >-
           {% if states.image_processing.opencv_foscam_camera.attributes.matches["car"] is defined -%}True{%- endif %}
 
+  - platform: template
+    sensors:
+      ipierre_pluggedin:
+        friendly_name: "iPierre Plugged In ?"
+        value_template: "{% if is_state('sensor.ipierre_battery_state', 'Unplugged') %} false {%- else -%} true  {%- endif %}"
+
+        
+  - platform: template
+    sensors:
+      igaetane_pluggedin:
+        friendly_name: "iGaetane Plugged In ?"
+        value_template: "{% if is_state('sensor.igaetane_battery_state', 'Unplugged') %} false {%- else -%} true  {%- endif %}"
