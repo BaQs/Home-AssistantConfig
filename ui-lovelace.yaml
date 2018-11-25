@@ -855,14 +855,29 @@ views:
           - device_tracker.igaetane
           - device_tracker.2c61f6c08b90
           - device_tracker.ipierre
-      #- device_tracker.ipierre_nmap
+          # - device_tracker.ipierre_nmap
           - device_tracker.pierre_ipierre
           - device_tracker.6c8dc126c257
           - group.pierre
           - group.gaetane
           - group.household
           - binary_sensor.somebody_home
+          - binary_sensor.presence_home_known 
 
+
+      - type: history-graph
+        entities:
+          - binary_sensor.in_bed
+          - binary_sensor.in_bed_2
+          - binary_sensor.somebody_home
+          - sensor.period_of_day
+          - group.living_lights
+          - binary_sensor.motion_last30
+          - binary_sensor.motion_last10
+          - remote.harmony_hub
+          - binary_sensor.ipierre_pluggedin
+          - binary_sensor.igaetane_pluggedin
+          - binary_sensor.last_motion_is_floor_1
 
 
 
