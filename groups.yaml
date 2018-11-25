@@ -56,10 +56,10 @@
     view: no
     entities:
         # nmap
-      #- device_tracker.igaetane
+      - device_tracker.igaetane
       - device_tracker.2c61f6c08b90
         # owntracks
-      - device_tracker.gaetane_igaetaneowntracks
+      # - device_tracker.gaetane_igaetaneowntracks
   Pierre:
     name: Pierre
     view: no
