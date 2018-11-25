@@ -1,16 +1,16 @@
   home:
-    ignored_zones:
-      - work
-      - school
+    # ignored_zones:
+    #   - work
+    #   - school
     devices:
-      - device_tracker.gaetane_igaetaneowntracks
-      - device_tracker.pierre_ipierre
-    tolerance: 100
-    unit_of_measurement: m
+      # - device_tracker.gaetane_igaetaneowntracks
+      - device_tracker.ipierre
+    # tolerance: 100
+    # unit_of_measurement: m
 
   work:
     devices:
-      - device_tracker.gaetane_igaetaneowntracks
-      - device_tracker.pierre_ipierre
-    tolerance: 100
-    unit_of_measurement: m
+      # - device_tracker.gaetane_igaetaneowntracks
+      - device_tracker.ipierre
+    # tolerance: 100
+    # unit_of_measurement: m
