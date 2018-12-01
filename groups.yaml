@@ -71,7 +71,8 @@
         # nmap
       - device_tracker.6c8dc126c257
         # owntracks
-      - device_tracker.pierre_ipierre
+      # - device_tracker.pierre_ipierre
+      - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
 #     - binary_sensor.pierre_home
   washroom:
     name: Buanderie 
