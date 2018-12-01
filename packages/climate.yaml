@@ -1144,3 +1144,52 @@ automation:
         data:
           message: "Good morning, Shower heater on"
 
+
+# heating according to proximity
+# TODO: add condition if current_state = away
+
+  - alias: 'Climate: Turn heat up as I get closer to home'
+    trigger:
+      platform: numeric_state
+      entity_id: proximity.home
+      # Trigger when becoming 1-5 miles away
+      below: 5
+      above: 1
+    condition:
+      condition: and
+      conditions:
+
+          # Heading home
+        - condition: template
+          value_template: '{{ states.proximity.home.attributes.dir_of_travel == "towards" }}'
+
+          # Not already set
+        # - condition: template
+        #   # TODO figure out how to use a variable instead of hardcoding 62
+        #   # I'm using secrets (like below) where heat_target_mid is 62, but I
+        #   # don't see how to use it here
+        #   value_template: '{{ states.thermostat.stelpro_stzw402_electronic_thermostat_heating_1_11.attributes.temperature != 62 }}'
+
+          # Nobody home
+        - condition: state
+          entity_id: sensor.current_state
+          state: 'away'
+
+          # Temp below target
+  #      - condition: numeric_state
+  #        entity_id: sensor.stelpro_stzw402_electronic_thermostat_temperature_11
+  #        below: !secret heat_target_mid
+
+          # Automation enabled
+        # - condition: state
+        #   entity_id: input_boolean.automation_override
+        #   state: 'off'
+    action:
+      # service: thermostat.set_temperature
+      # entity_id: thermostat.stelpro_stzw402_electronic_thermostat_heating_1_11
+      # data:
+      #   temperature: !secret heat_target_mid
+      - service: notify.ios_ipierre
+        data:
+          message: 'I should turn the heating up now'
+          title: Climate
