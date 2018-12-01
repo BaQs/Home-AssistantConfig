@@ -70,9 +70,14 @@ http:
    base_url: !secret base_url 
    trusted_proxies: 192.168.0.27
    use_x_forwarded_for: true
-   ip_ban_enabled: true
-   login_attempts_threshold: 5
-#  cors_allowed_origins:
+  #  ip_ban_enabled: true
+   login_attempts_threshold: 10
+   trusted_networks:
+     - 127.0.0.1
+     - ::1
+     - 192.168.0.0/24
+   # - fd00::/8#  
+   # cors_allowed_origins:
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -287,15 +292,23 @@ light:
 
 switch: !include switch.yaml
 
-device_tracker:
-  - platform: owntracks_http
+owntracks:
     max_gps_accuracy: 100
-    # - platform: bluetooth_tracker
-# - platform: bluetooth_le_tracker
-#   track_new_devices: true
-# - platform: icloud
-#   username: !secret icloud_username
-#   password: !secret icloud_password
+    waypoints: true
+    waypoint_whitelist:
+    - pierre
+    - gaetane
+
+
+device_tracker:
+#   - platform: owntracks_http
+#     max_gps_accuracy: 100
+#     # - platform: bluetooth_tracker
+# # - platform: bluetooth_le_tracker
+# #   track_new_devices: true
+# # - platform: icloud
+# #   username: !secret icloud_username
+# #   password: !secret icloud_password
   - platform: nmap_tracker
     hosts:
             - 192.168.0.19
@@ -357,27 +370,6 @@ ios: !include ios.yaml
 
 # Example using a delay after start of Home Assistant
 homekit: !include homekit.yaml
-
-alarm_control_panel:
-  - platform: manual
-    name: Home Alarm
-    #code: 1234
-    disarm_after_trigger: false
-    # time to leave
-    pending_time: 30
-    # time to disarm
-    delay_time: 20
-    trigger_time: 120
-    disarmed:
-      trigger_time: 0
-    armed_home:
-      pending_time: 0
-      delay_time: 0
-    armed_away:
-      pending_time: 60
-      delay_time: 0
-  - platform: arlo
-    home_mode_name: arm_home
 
 
 input_select: !include input_select.yaml
