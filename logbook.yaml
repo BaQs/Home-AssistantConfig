@@ -30,6 +30,9 @@
       - weather
       - zone
       - image_processing
+      # it changes too often..
+      - arlo
+      # it changes too often..
     entities:
       - automation.electricity_guess_what_
 
