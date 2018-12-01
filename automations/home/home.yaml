@@ -171,3 +171,60 @@
      to: 'on'
   action:
     - service: display.fullykiosk_screensaver_stop
+
+
+# house keeping on thursday morning
+- id: house_keeping_on
+  alias: 'HouseKeeping: on'
+  trigger:
+    platform: time
+    at: '09:00:00'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.current_state
+      state: 'home'
+    - condition: time
+      weekday:
+        - thu
+  action:
+  # - service: tts.google_say
+  #   data:
+  #     entity_id: media_player.google_home__salon
+  #     message: "Il est l'heure de plus belle la vie!"
+
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.system_mode
+        option: "Have guests"
+        # option: "{{ states.remote.family_room_tv.attributes.current_activity | default('Power Off') }}"
+    - service: notify.ios_ipierre
+      data:
+        message: 'I put the house in "Guest Mode" for 3 hours'
+        title: HouseKeeping
+
+# house keeping on thursday morning
+- id: house_keeping_off
+  alias: 'HouseKeeping: off'
+  trigger:
+    platform: time
+    at: '12:15:00'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.current_state
+      state: 'home'
+    - condition: time
+      weekday:
+        - thu
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.system_mode
+        option: "Normal"
+    - service: notify.ios_ipierre
+      data:
+        message: 'Guest mode: off'
+        title: HouseKeeping
