@@ -603,8 +603,7 @@ automation:
       data:
         title: Electricité
         message: |
-          "Coupure électrique! APC en statut: <b>{{sensor.ups_status}}</b>. Il reste {{  sensor.ups_time_left }}min. de batterie"
-  
+          Coupure électrique! APC en statut <b>{{states.sensor.ups_status.state}}</b>. Il reste {{  states.sensor.ups_time_left.state }}min. de batterie
  
   
   
