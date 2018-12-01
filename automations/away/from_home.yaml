@@ -21,10 +21,10 @@
         entity_id:
           - group.all_lights
     # Arm alarm
-    - service: alarm_control_panel.alarm_arm_away
-      entity_id: alarm_control_panel.home_alarm
-    - service: alarm_control_panel.alarm_arm_away
-      entity_id: alarm_control_panel.arlo
+    # - service: alarm_control_panel.alarm_arm_away
+    #   entity_id: alarm_control_panel.home_alarm
+    # - service: alarm_control_panel.alarm_arm_away
+    #   entity_id: alarm_control_panel.arlo
     # Start the vacuum
 #    - service: vacuum.start
 #      entity_id: vacuum.xiaomi_vacuum_cleaner

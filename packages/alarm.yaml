@@ -1,0 +1,328 @@
+################################################
+## Packages / Host / Updates
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: ''
+
+    ################################################
+    ## Binary Sensor
+    ################################################
+
+    # binary_sensor.hass_update_available:
+    #   <<: *customize
+    #   friendly_name: 'Update Available Hass'
+    #   device_class: problem
+
+    ################################################
+    ## Sensor
+    ################################################
+
+    # sensor.hass_installed_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Installed Version'
+    #   icon: mdi:check-decagram
+
+    # sensor.hass_current_stable_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Current Stable Version'
+    #   icon: mdi:check-decagram
+
+    # sensor.hass_current_beta_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Beta Release'
+    #   icon: mdi:beta
+
+    # sensor.hass_current_dev_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Dev Release'
+    #   icon: mdi:alpha
+
+    # sensor.hass_current_supervisor_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Current Supervisor Version'
+    #   icon: mdi:check-decagram
+
+    # sensor.hass_current_hassos_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Current HassOS Version'
+    #   icon: mdi:check-decagram
+
+################################################
+## Updater
+## https://www.home-assistant.io/components/updater/
+## https://www.home-assistant.io/docs/backend/updater/
+################################################
+
+# updater:
+#   reporting: true # collect basic information about this instance and its environment
+#   include_used_components: true # report components to developers
+
+
+
+
+alarm_control_panel:
+  - platform: manual
+    name: Home Alarm
+    #code: 1234
+    disarm_after_trigger: false
+    # time to leave
+    pending_time: 30
+    # time to disarm
+    delay_time: 20
+    trigger_time: 120
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+    armed_away:
+      pending_time: 60
+      delay_time: 0
+  - platform: arlo
+    home_mode_name: arm_home
+
+
+################################################
+## Sensor
+################################################
+
+# sensor:
+#   - platform: version
+#     name: Hass Installed Version
+
+################################################
+## Binary Sensor
+################################################
+
+# binary_sensor:
+#   - platform: template
+#     sensors:
+#       hass_update_available:
+#         value_template: >-
+#           {{ states.sensor.hass_current_stable_version.state != 'unavailable' and 
+#              states.sensor.hass_current_stable_version.state > states.sensor.hass_installed_version.state
+#               }}
+# group:
+#   host_updates:
+#     name: 'Updates'
+#     entities:
+#       - updater.updater
+#       - sensor.hass_installed_version
+#       - sensor.hass_current_stable_version
+#       - sensor.hass_current_beta_version
+#       - sensor.hass_current_dev_version
+#       - sensor.hass_current_supervisor_version
+#       - binary_sensor.hass_update_available
+
+################################################
+## Automation
+################################################
+
+automation:
+#   - alias: 'Update Available'
+#     initial_state: 'on'
+#     trigger:
+#       - platform: template
+#         value_template: >-
+#           {{ states.sensor.hass_current_stable_version.state != 'unavailable' and 
+#              states.sensor.hass_current_stable_version.state > states.sensor.hass_installed_version.state
+#              }}
+#     action:
+#       - service: notify.ios_ipierre
+#         data:
+#           message: 'Home Assistant version {{ states.sensor.hass_current_stable_version.state }} is now available for Hass.io'
+#           title: Home Assistant Update
+
+
+
+
+#
+## Alarm Trigger
+###
+
+
+  # Trigger
+  - id: trigger_alarm_while_armed_away
+    alias: "Alarm: Trigger when armed away"
+    trigger:
+  #  - entity_id: binary_sensor.motion_detected
+  #    platform: state
+  #    to: 'on'
+    - entity_id: group.perimeter_detectors
+      platform: state
+      to: 'on'
+    condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_away
+    action:
+    - entity_id: alarm_control_panel.home_alarm
+      service: alarm_control_panel.alarm_trigger
+
+  # notification
+  - id: send_notification_when_alarm_triggered
+    alias: "Alarm: Send notification when triggered"
+    trigger:
+    - entity_id: alarm_control_panel.home_alarm
+      platform: state
+      to: triggered
+    action:
+    - service: script.presence_notifications_when_alarm_triggered
+    # - service: tts.google_say
+    #   data:
+    #     language: fr
+    #     entity_id: media_player.google_home__salon
+    #     message: e déclenchée
+
+
+  - id: telegramCommandDisarm
+    alias: 'Telegram bot answer to command: /alarm_disarm'
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: telegram_command
+      event_data:
+        data: /alarm_disarm
+    action:
+    - service: alarm_control_panel.alarm_disarm
+    - service: notify.telegram
+      data:
+        message: Alarme désarmée
+
+  - id: telegramCallbackDisarm
+    alias: 'Telegram bot answer to command: /alarm_disarm'
+    hide_entity: true
+    trigger:
+      platform: event
+      event_type: telegram_callback
+      event_data:
+        data: /alarm_disarm
+    action:
+    - service: alarm_control_panel.alarm_disarm
+    - service: notify.telegram
+      data:
+        message: Alarme désarmée
+
+
+#
+## Alarm Arming
+###
+
+
+  # Automatic away mode when nobody is at home during the day,
+  # and not on vacation
+  - id: away_from_home_away_mode
+    alias: "Alarm: Away"
+    hide_entity: True
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.household_home
+        from: 'on'
+        to: 'off'
+        # entity_id: sensor.current_state
+        # from: 'home'
+        # to: 'away'
+        for:
+          minutes: 10
+    # Set away mode
+    action:
+      - service: notify.ios_ipierre
+        data_template:
+          message: >
+            Alarm ON
+      # Arm 
+      - service: alarm_control_panel.alarm_arm_away
+        entity_id: alarm_control_panel.home_alarm
+      - service: alarm_control_panel.alarm_arm_away
+        entity_id: alarm_control_panel.arlo
+
+
+  # Turn off automatic away mode
+  - alias: 'Alarm: Disarm'
+    hide_entity: false
+    trigger:
+      - platform: state
+        # entity_id: sensor.current_state
+        entity_id: binary_sensor.household_home
+        from: 'off'
+        to: 'on'
+    action:
+      - service: notify.ios_ipierre
+        data_template:
+          message: >
+            Alarm OFF (disarmed)
+      # Disarm alarm
+      - service: alarm_control_panel.alarm_disarm
+        entity_id: alarm_control_panel.home_alarm
+      - service: alarm_control_panel.alarm_disarm
+        entity_id: alarm_control_panel.arlo
+
+
+  # Night Alarm
+  - alias: 'Alarm: Night'
+    hide_entity: false
+    trigger:
+      - platform: state
+        # entity_id: sensor.current_state
+        entity_id: binary_sensor.in_bed
+        from: 'off'
+        to: 'on'
+    action:
+      - service: notify.ios_ipierre
+        data_template:
+          message: >
+            Alarm: Night Mode
+      # Arm 
+      - service: alarm_control_panel.alarm_arm_home
+        entity_id: alarm_control_panel.home_alarm
+      - service: alarm_control_panel.alarm_arm_away
+        entity_id: alarm_control_panel.arlo
+
+  # Turn off automatic away mode
+  - alias: 'Alarm: Disarm From Night Mode'
+    hide_entity: false
+    trigger:
+      - platform: state
+        # entity_id: sensor.current_state
+        entity_id: binary_sensor.in_bed
+        from: 'on'
+        to: 'off'
+    action:
+      - service: notify.ios_ipierre
+        data_template:
+          message: >
+            Alarm OFF (from night mode)
+      # Disarm alarm
+      - service: alarm_control_panel.alarm_disarm
+        entity_id: alarm_control_panel.home_alarm
+      - service: alarm_control_panel.alarm_disarm
+        entity_id: alarm_control_panel.arlo
+
+
+
+
+#
+## Alerts
+###
+
+alert:
+
+  alarm:
+    name: Alarm Triggered
+    message: "Alarm Triggered!"
+    done_message: "Alarm Disarmed"
+    entity_id: alarm_control_panel.home_alarm
+    state: 'triggered'
+    repeat: 3
+    can_acknowledge: True
+    skip_first: False
+    notifiers:
+      - notify.ios_ipierre

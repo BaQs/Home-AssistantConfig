@@ -15,10 +15,10 @@
     - service: vacuum.return_to_base
       entity_id: vacuum.xiaomi_vacuum_cleaner
     # Disarm alarm
-    - service: alarm_control_panel.alarm_disarm
-      entity_id: alarm_control_panel.home_alarm
-    - service: alarm_control_panel.alarm_disarm
-      entity_id: alarm_control_panel.arlo
+    # - service: alarm_control_panel.alarm_disarm
+    #   entity_id: alarm_control_panel.home_alarm
+    # - service: alarm_control_panel.alarm_disarm
+    #   entity_id: alarm_control_panel.arlo
     # Turn on TV
    # - service: remote.turn_on
    #   entity_id: remote.harmony_hub
