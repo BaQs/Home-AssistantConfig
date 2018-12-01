@@ -12,5 +12,7 @@
     devices:
       # - device_tracker.gaetane_igaetaneowntracks
       - device_tracker.ipierre
+      - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
+
     # tolerance: 100
     # unit_of_measurement: m
