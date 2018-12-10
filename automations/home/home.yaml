@@ -9,10 +9,8 @@
      event_data: {"entity_id": "switch.sonnette","state": "group on"}
   action:
     - service: display.fullykiosk_load_url
-      #entity_id: display.chuwi
-      #url: "https://hassio.ourdouille.maison/lovelace/8?kiosk"
       data:
-        url: "https://hassio.ourdouille.maison/lovelace/8?kiosk"
+        url: !secret chuwi_tab_frontcam
     - service: notify.telegram
       data:
         message: "Cameras"
@@ -215,7 +213,7 @@
     conditions:
     - condition: state
       entity_id: sensor.current_state
-      state: 'home'
+      state: 'have_guests'
     - condition: time
       weekday:
         - thu
