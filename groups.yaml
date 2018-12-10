@@ -55,10 +55,12 @@
     name: Gaetane
     view: no
     entities:
-        # nmap
+      # iOS app
       - device_tracker.igaetane
-      - device_tracker.2c61f6c08b90
-        # owntracks
+      # nmap
+      # - device_tracker.6c8dc126c257
+      # owntracks
+      - device_tracker.gaetane_f30c159e4c374930a3d7fe1b3137f3ef
       # - device_tracker.gaetane_igaetaneowntracks
   Pierre:
     name: Pierre
@@ -69,7 +71,7 @@
         # ios HA app
       - device_tracker.ipierre
         # nmap
-      - device_tracker.6c8dc126c257
+      # - device_tracker.2c61f6c08b90
         # owntracks
       # - device_tracker.pierre_ipierre
       - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
