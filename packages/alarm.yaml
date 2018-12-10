@@ -283,7 +283,7 @@ automation:
       # Arm 
       - service: alarm_control_panel.alarm_arm_home
         entity_id: alarm_control_panel.home_alarm
-      - service: alarm_control_panel.alarm_arm_away
+      - service: alarm_control_panel.alarm_arm_home
         entity_id: alarm_control_panel.arlo
 
   # Turn off automatic away mode
