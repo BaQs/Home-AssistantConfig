@@ -1,0 +1,138 @@
+################################################
+## Packages / Host / Updates
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'harmony'
+
+
+    ################################################
+    ## Binary Sensor
+    ################################################
+
+    binary_sensor.hass_update_available:
+      <<: *customize
+      friendly_name: 'Update Available Hass'
+      device_class: problem
+
+    ################################################
+    ## Sensor
+    ################################################
+
+    # sensor.hass_installed_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Installed Version'
+    #   icon: mdi:check-decagram
+
+
+################################################
+## Remote
+################################################
+
+
+remote:
+  - platform: harmony
+    name: harmony hub
+    host: 192.168.0.29
+    activity: Regarder la TV
+
+
+################################################
+## Sensor
+################################################
+
+sensor:
+
+
+################################################
+## Input Select
+################################################
+
+input_select:
+  living_room_tv:
+    name: Living Room TV
+    options:
+      - PowerOff
+      - Android TV
+      - PS4
+      - Écouter de la musique
+      - Regarder la TV
+      - Regarder Fire TV
+      - Regader Netflix
+    initial: PowerOff
+    icon: mdi:monitor
+
+################################################
+## Binary Sensor
+################################################
+
+binary_sensor:
+
+
+################################################
+## Automation
+################################################
+
+automation:
+# The following automation will update the input select when the activity is changed using the harmony remote or other device
+  - alias: 'Remote: external update (living room)'
+    trigger:
+      platform: state
+      entity_id: remote.living_room_tv
+    action:
+      service: input_select.select_option
+      data_template:
+        entity_id: input_select.living_room_tv
+        option: >
+          {{ states.remote.living_room_tv.attributes.current_activity }} 
+
+  # The last automation will start an activity once it’s selected from the input select in the frontend
+
+  - alias: 'Remote: start activity from input select (living room tv)'
+    trigger:
+      platform: state
+      entity_id: input_select.living_room_tv
+    action:
+      service: script.turn_on
+      entity_id: script.input_select_harmony
+
+
+
+################################################
+## Script
+################################################
+
+
+# the following script can replace the section of scripts to activate each activity
+
+script:
+  input_select_harmony:
+    alias: "Start activity from input select"
+    sequence:
+      - service: remote.turn_on
+        data_template:
+          entity_id: remote.living_room_tv
+          activity: >
+            {% if is_state("input_select.living_room_tv", "PowerOff") %}
+                -1
+            {% elif is_state("input_select.living_room_tv", "Android TV") %}
+                28312619
+            {% elif is_state("input_select.living_room_tv", "PS4") %}
+                27416411
+            {% elif is_state("input_select.living_room_tv", "Écouter de la musique") %}
+                27823405
+            {% elif is_state("input_select.living_room_tv", "Regarder la TV") %}
+                27280319           
+            {% elif is_state("input_select.living_room_tv", "Regarder Fire TV") %}
+                1234
+            {% elif is_state("input_select.living_room_tv", "Regarder Netflix") %}
+                5678                
+            {% endif %} 
+
