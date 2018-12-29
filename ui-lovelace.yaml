@@ -36,9 +36,10 @@ resources:
 #  - url: /local/custom-lovelace/tracker-card.js?v=0
 #    type: js
 views:
-#
+
   - title: Home
     id: home
+    path: home
     theme: midnight
     panel: true
     icon: mdi:home
@@ -70,15 +71,18 @@ views:
               - alarm_control_panel.arlo
               - sensor.current_state
               - sensor.period_of_day
-              - binary_sensor.somebody_home
+              # - binary_sensor.somebody_home
+              - binary_sensor.household_home
               - binary_sensor.motion_detected
               - binary_sensor.in_bed
               - input_select.system_mode
 #         - device_tracker.gaetane_igaetaneowntracks
 #          - device_tracker.ipierre
-              - device_tracker.igaetane
+              # - device_tracker.igaetane
+              - group.gaetane
+              - group.pierre
               # - device_tracker.pierre_ipierre
-              - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
+              # - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
               - display.chuwi
 
           - type: vertical-stack
@@ -126,6 +130,7 @@ views:
 
   - title: Rooms
     icon: mdi:floor-plan
+    path: rooms
     id: rooms
     cards:
 #      - type: entities
@@ -220,6 +225,7 @@ views:
 
   - title: Surveillance
     icon: mdi:cctv
+    path: cctv
     id: cctv
     panel: true
     cards:
@@ -240,6 +246,7 @@ views:
 
   - title: Temperatures
     panel: true
+    path: temperatures
     id: temperatures
     icon: mdi:temperature-celsius
     cards:
@@ -312,6 +319,7 @@ views:
   - title: Thermostats
     icon: mdi:thermometer-lines
     id: thermostats
+    path: thermostats
     panel: true
     cards:
       - id: ed91a68029154279bcac30c20cac8f45  # Automatically created id
@@ -392,6 +400,7 @@ views:
   - title: Security
     icon: mdi:security
     id: security
+    path: security
     panel: true
     cards:
       - id: 5f101caa458d4c2e8da132940194e7ef  # Automatically created id
@@ -423,6 +432,7 @@ views:
                 group: group.motion_detectors
               - type: custom:group-card
                 card:
+                
                   type: entities
                   title: Door/Windows Sensors
                 group: group.door_sensors
@@ -463,6 +473,7 @@ views:
   - title: Energy
     panel: true
     id: energy
+    path: energy
     icon: mdi:flash
     cards:
       - type: iframe
@@ -471,6 +482,7 @@ views:
 
   - title: Grafana
     panel: true
+    path: grafana
     id: grafana
     icon: mdi:chart-areaspline
     cards:
@@ -481,6 +493,7 @@ views:
   - title: Front Cam
     icon: mdi:camera-front-variant
     id: frontcam
+    path: frontcam
     panel: true
     cards:
       - id: 869eeba961e64b43b7414a9df0364c7f  # Automatically created id
@@ -492,6 +505,7 @@ views:
 
   - title: Settings
     icon: mdi:settings
+    path: settings
     id: settings
     cards:
       - id: c31f3f618f3f41febdd94ca674249f8b  # Automatically created id
@@ -534,6 +548,7 @@ views:
 
   - title: Mobile
     id: mobile
+    path: mobile
     icon: mdi:cellphone-iphone
     badges:
         #  - sensor.temperature_158d0001db60d9
@@ -555,6 +570,7 @@ views:
       - binary_sensor.detected_outside_car
       - sensor.elecbill_today_so_far_ttc
       - proximity.home 
+      - switch.prise_sapin
     cards:
       - id: f1f2d46e2fd74773994da70ddb5a80b1  # Automatically created id
         type: horizontal-stack
@@ -609,8 +625,15 @@ views:
               - type: entity-button
                 name: " "
                 hold_action: toggle
-                entity: switch.prise_bambi
-                icon: mdi:baby-buggy
+                
+                # entity: switch.prise_bambi
+                # icon: mdi:baby-buggy
+
+                entity: switch.prise_sapin
+                icon: mdi:pine-tree-box
+
+
+
                 # color: auto
                 # default_color: rgb(255, 233, 155)
                 # action: more_info
@@ -829,6 +852,7 @@ views:
 
   - title: Debug
     id: debug
+    path: debug
     panel: false
     cards:
 
@@ -854,26 +878,31 @@ views:
       - id: 634c51d9c2ba458f853f65aea48168e4  # Automatically created id
         type: history-graph
         entities:
-          - device_tracker.gaetane_igaetaneowntracks
+          # - device_tracker.gaetane_igaetaneowntracks
+          # - device_tracker.2c61f6c08b90
+          # - device_tracker.6c8dc126c257
           - device_tracker.igaetane
-          - device_tracker.2c61f6c08b90
+          - entity: device_tracker.gaetane_f30c159e4c374930a3d7fe1b3137f3ef
+            name: Gae OT
           - device_tracker.ipierre
-          # - device_tracker.ipierre_nmap
-          # - device_tracker.pierre_ipierre
-          - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
-          - device_tracker.6c8dc126c257
-          - group.pierre
-          - group.gaetane
+          - entity: device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
+            name: Pierre OT
+          - entity: group.pierre
+            name: Group Pierre
+          - entity: group.gaetane
+            name: Group Gae
           - group.household
           - binary_sensor.somebody_home
           - binary_sensor.presence_home_known 
           - binary_sensor.household_home
+
 
       - type: history-graph
         entities:
           - binary_sensor.in_bed
           - binary_sensor.in_bed_2
           - binary_sensor.somebody_home
+          - binary_sensor.household_home
           - sensor.period_of_day
           - group.living_lights
           - binary_sensor.motion_last30
