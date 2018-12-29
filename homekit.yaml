@@ -25,4 +25,5 @@ filter:
                 - switch.qubino_zmnhadx_flush_1_relay_switch
                 - remote.harmony_hub
                 - vacuum.xiaomi_vacuum_cleaner
+                - switch.prise_sapin
                 
