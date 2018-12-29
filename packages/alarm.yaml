@@ -167,6 +167,28 @@ automation:
     - entity_id: alarm_control_panel.home_alarm
       service: alarm_control_panel.alarm_trigger
 
+
+  # Trigger
+  - id: trigger_alarm_while_armed_home
+    alias: "Alarm: Trigger when armed home"
+    trigger:
+  #  - entity_id: binary_sensor.motion_detected
+  #    platform: state
+  #    to: 'on'
+    - entity_id: group.perimeter_detectors
+      platform: state
+      to: 'on'
+    condition:
+    - condition: state
+      entity_id: alarm_control_panel.home_alarm
+      state: armed_home
+    action:
+    - entity_id: alarm_control_panel.home_alarm
+      service: alarm_control_panel.alarm_trigger
+
+
+
+
   # notification
   - id: send_notification_when_alarm_triggered
     alias: "Alarm: Send notification when triggered"
@@ -183,33 +205,33 @@ automation:
     #     message: e déclenchée
 
 
-  - id: telegramCommandDisarm
-    alias: 'Telegram bot answer to command: /alarm_disarm'
-    hide_entity: true
-    trigger:
-      platform: event
-      event_type: telegram_command
-      event_data:
-        data: /alarm_disarm
-    action:
-    - service: alarm_control_panel.alarm_disarm
-    - service: notify.telegram
-      data:
-        message: Alarme désarmée
+  # - id: telegramCommandDisarm
+  #   alias: 'Telegram bot answer to command: /alarm_disarm'
+  #   hide_entity: true
+  #   trigger:
+  #     platform: event
+  #     event_type: telegram_command
+  #     event_data:
+  #       data: /alarm_disarm
+  #   action:
+  #   - service: alarm_control_panel.alarm_disarm
+  #   - service: notify.telegram
+  #     data:
+  #       message: Alarme désarmée
 
-  - id: telegramCallbackDisarm
-    alias: 'Telegram bot answer to command: /alarm_disarm'
-    hide_entity: true
-    trigger:
-      platform: event
-      event_type: telegram_callback
-      event_data:
-        data: /alarm_disarm
-    action:
-    - service: alarm_control_panel.alarm_disarm
-    - service: notify.telegram
-      data:
-        message: Alarme désarmée
+  # - id: telegramCallbackDisarm
+  #   alias: 'Telegram bot answer to command: /alarm_disarm'
+  #   hide_entity: true
+  #   trigger:
+  #     platform: event
+  #     event_type: telegram_callback
+  #     event_data:
+  #       data: /alarm_disarm
+  #   action:
+  #   - service: alarm_control_panel.alarm_disarm
+  #   - service: notify.telegram
+  #     data:
+  #       message: Alarme désarmée
 
 
 #
@@ -275,11 +297,17 @@ automation:
         entity_id: binary_sensor.in_bed
         from: 'off'
         to: 'on'
+        for:
+          minutes: 5
+    # condition:
+    #   - condition: state
+    #     entity_id: alarm_control_panel.home_alarm
+    #     state: armed_home
     action:
       - service: notify.ios_ipierre
         data_template:
           message: >
-            Alarm: Night Mode
+            Alarm: Night Mode (in bed since 5min)
       # Arm 
       - service: alarm_control_panel.alarm_arm_home
         entity_id: alarm_control_panel.home_alarm
