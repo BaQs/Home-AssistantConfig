@@ -105,13 +105,15 @@
         friendly_name: Current State
         entity_id:
           - input_select.system_mode
-          - binary_sensor.somebody_home
+          # - binary_sensor.somebody_home
+          - binary_sensor.household_home
+
         value_template: >-
           {% if is_state('input_select.system_mode', 'On vacation') %}
           on_vacation
           {% elif is_state('input_select.system_mode', 'Have guests') %}
           have_guests
-          {% elif is_state('binary_sensor.somebody_home', 'on') %}
+          {% elif is_state('binary_sensor.household_home', 'on') %}
           home
           {% else %}
           away
