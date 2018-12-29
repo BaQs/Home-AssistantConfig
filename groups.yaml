@@ -33,7 +33,8 @@
       - device_tracker.igaetane
       - binary_sensor.welcam_3_someone_known
       - binary_sensor.welcam_3_someone_unknown
-      - binary_sensor.somebody_home
+      # - binary_sensor.somebody_home
+      - binary_sensor.household_home
       - group.pierre
       - group.gaetane
 #     - group.all_lights
