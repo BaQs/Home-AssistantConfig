@@ -19,7 +19,8 @@ homeassistant:
  
 logger:
   default: info
-  # logs:
+  logs:
+    # homeassistant.components.influxdb: debug 
   # homeassistant.components.image_processing: debug
   # homeassistant.components.climate: debug
   # homeassistant.components.arlo: debug
@@ -133,7 +134,7 @@ logbook: !include logbook.yaml
 input_number: !include input_number.yaml
 
 influxdb:
-  host: 192.168.0.28
+  host: !secret influx_host
 #  include:
 #    entities:
 #      - sensor.teleinfo_hchc
@@ -148,7 +149,8 @@ influxdb:
 
 # APC Battery
 apcupsd:
-
+  host: 192.168.0.27
+  port: 3551
 
 # Enables a map showing the location of tracked devices
 map:
@@ -156,11 +158,12 @@ map:
 # Track the sun
 sun:
 
-remote:
-  - platform: harmony
-    name: harmony hub
-    host: 192.168.0.29
-    activity: Regarder la TV
+# now in "harmony" package
+# remote:
+#   - platform: harmony
+#     name: harmony hub
+#     host: 192.168.0.29
+#     activity: Regarder la TV
 
 weather:
   - platform: yweather
@@ -277,12 +280,14 @@ panel_iframe:
 
 zwave:
    usb_path: /dev/ttyACM0
+  #  device: /dev/serial/by-id/usb-0658_0200-if00
    network_key: !secret zwave_network_key 
 
 
 rfxtrx:
    device: /dev/ttyUSB1
-#  debug: true
+  #  device: /dev/serial/hoby-id/usb-RFXCOM_RFXtrx433_A1K5NSX-if00-port0
+  #  debug: true
  
 light:
   - platform: rfxtrx
@@ -392,3 +397,10 @@ display:
 alert: !include alert.yaml
 image_processing: !include image_processing.yaml
 proximity: !include proximity.yaml
+
+lovelace:
+  mode: yaml
+
+volvooncall:
+  username: !secret volvooncall_username
+  password: !secret volvooncall_password
