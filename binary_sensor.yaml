@@ -141,16 +141,16 @@
   - platform: bayesian
     name: In Bed
     prior: .33 # 33% chance that we are in bed (8 hrs out of 24hrs)
-    probability_threshold: 0.30
+    probability_threshold: 0.50
     observations:
       # If nobody home, no way that we are in bed...
-      - entity_id: binary_sensor.somebody_home
-        platform: state
-        to_state: False
-        prob_given_true: 0.01 # 1% chance that if we are in bed nobody's home
-        prob_given_false: 0.5 # 50% chance that if we are not in bed nobody's home
+      # - entity_id: binary_sensor.somebody_home
+      #   platform: state
+      #   to_state: False
+      #   prob_given_true: 0.01 # 1% chance that if we are in bed nobody's home
+      #   prob_given_false: 0.5 # 50% chance that if we are not in bed nobody's home
 
-      - entity_id: binary_sensor.somebody_home
+      - entity_id: binary_sensor.household_home 
         platform: state
         to_state: True
         prob_given_true: 0.9 # 90% chance that if we are in bed somebody's home
@@ -162,12 +162,18 @@
         prob_given_true: 0.1 # 10% chance that if we are in bed it is day
         prob_given_false: 0.8 # 80% chance that if we are not in bed it is day
 
+      - entity_id: 'sensor.period_of_day'
+        platform: 'state'
+        to_state: 'night'
+        prob_given_true: 0.8 # 80% chance that if we are in bed it is night
+        prob_given_false: 0.4 # 40% chance that if we are not in bed it is night
+
       # we are in bed -> likely that master bedroom light is off
       - entity_id: 'group.living_lights'
         platform: 'state'
         to_state: 'on'
         prob_given_true: 0.01 # 1% chance that if we are in bed, the light is on
-        prob_given_false: 0.3 # 40% chance that if we are not in bed the light is on
+        prob_given_false: 0.4 # 40% chance that if we are not in bed the light is on
 
       - entity_id: remote.harmony_hub
         platform: state
@@ -181,11 +187,11 @@
         platform: 'state'
         to_state: 'on'
 
-      # - entity_id: binary_sensor.igaetane_pluggedin
-      #   prob_given_true: 0.5 # 50% chance that if we are in bed, battery is charging
-      #   prob_given_false: 0.2 # 20% chance that if we are not in bed, battery is charging
-      #   platform: 'state'
-      #   to_state: 'on'
+      - entity_id: binary_sensor.igaetane_pluggedin
+        prob_given_true: 0.5 # 50% chance that if we are in bed, battery is charging
+        prob_given_false: 0.2 # 20% chance that if we are not in bed, battery is charging
+        platform: 'state'
+        to_state: 'on'
 
       # TODO: add the fact the last motion_sensor was floor1
       # last_motion_is_floor_1
@@ -193,7 +199,7 @@
         platform: 'state'
         to_state: 'on'
         prob_given_true: 0.9 # 90% chance that if we are in bed, last_motion is floor1
-        prob_given_false: 0.4 # 40% chance that if we are not in bed, last_motion is floor1
+        prob_given_false: 0.2 # 20% chance that if we are not in bed, last_motion is floor1
 
 
   # 
