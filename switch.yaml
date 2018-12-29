@@ -6,7 +6,7 @@
                     name: Prise Cave
   #         "0B1100002025EA1909010F90":
             "0B1100002025EA1909000090":
-                    name: Prise Bambi
+                    name: Prise Bambi - HS
   #          0B11002F67134A5A03010F70
             "0B11002F67134A5A03010F70":
                     name: Radiateur Bibliothèque
@@ -18,7 +18,7 @@
                     name: Radiateur 2 Salon
   #         "0B110000445BBC9B09010F90"
             "0B110000445BBC9B09000090":
-                    name: Prise Lampe Boule
+                    name: Prise Sapin
             "0B1100000144449201040F60":
                     name: Sonnette
                     fire_event: true
