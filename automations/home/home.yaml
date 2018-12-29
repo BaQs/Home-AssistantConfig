@@ -71,7 +71,8 @@
     condition: and
     conditions:
       - condition: state
-        entity_id: binary_sensor.somebody_home
+        # entity_id: binary_sensor.somebody_home
+        entity_id: binary_sensor.household_home
         state: 'on'
   #    - condition: state
   #      entity_id: sensor.period_of_day
@@ -134,7 +135,9 @@
     condition: and
     conditions:
     - condition: state
-      entity_id: binary_sensor.somebody_home
+      # entity_id: binary_sensor.somebody_home
+      entity_id: binary_sensor.household_home
+
       state: 'on'
     - condition: state
       entity_id: remote.harmony_hub
