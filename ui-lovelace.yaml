@@ -571,6 +571,7 @@ views:
       - sensor.elecbill_today_so_far_ttc
       - proximity.home 
       - switch.prise_sapin
+      - device_tracker.volvo_et732hn
     cards:
       - id: f1f2d46e2fd74773994da70ddb5a80b1  # Automatically created id
         type: horizontal-stack
