@@ -71,6 +71,9 @@
     condition: and
     conditions:
       - condition: state
+        entity_id: binary_sensor.detected_outside_car
+        state: 'off'
+      - condition: state
         # entity_id: binary_sensor.somebody_home
         entity_id: binary_sensor.household_home
         state: 'on'
@@ -82,13 +85,16 @@
         state: 'off'
   action:
   - data:
+    service: notify.telegram
       data:
         photo:
         - caption: Ca bouge sur le parking !
           url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}
-      message: Ca bouge sur le parking !
+      message: La place est libre
       title: Parking
-    service: notify.telegram
+  - service: display.fullykiosk_load_url
+    data:
+      url: !secret chuwi_tab_frontcam
 #  - service: tts.google_say
 #    data:
 #      entity_id: media_player.google_home__salon
