@@ -144,11 +144,11 @@
     probability_threshold: 0.50
     observations:
       # If nobody home, no way that we are in bed...
-      # - entity_id: binary_sensor.somebody_home
-      #   platform: state
-      #   to_state: False
-      #   prob_given_true: 0.01 # 1% chance that if we are in bed nobody's home
-      #   prob_given_false: 0.5 # 50% chance that if we are not in bed nobody's home
+      - entity_id: binary_sensor.household_home 
+        platform: state
+        to_state: False
+        prob_given_true: 0.01 # 1% chance that if we are in bed nobody's home
+        prob_given_false: 0.5 # 50% chance that if we are not in bed nobody's home
 
       - entity_id: binary_sensor.household_home 
         platform: state
