@@ -20,6 +20,8 @@ homeassistant:
 logger:
   default: info
   logs:
+    requests.packages.urllib3.connectionpool: error # critical #for this item anything below error will not be logged
+    py.warnings: critical
     # homeassistant.components.influxdb: debug 
   # homeassistant.components.image_processing: debug
   # homeassistant.components.climate: debug
@@ -318,6 +320,8 @@ device_tracker:
     hosts:
             - 192.168.0.19
             - 192.168.0.32
+    home_interval: 30
+    0
 #  - platform: icloud2
 #    username: !secret icloud_username
 #    password: !secret icloud_password
