@@ -490,6 +490,21 @@ views:
         url: !secret panel_iframe_grafana_url
         aspect_ratio: 100%
 
+
+  - title: Volvo
+    panel: true
+    path: volvo
+    id: volvo
+    icon: mdi:car-connected
+    cards:
+      - type: custom:group-card
+        card:
+          type: glance
+          title: Volvo
+          show_name: true
+        group: group.volvo
+
+
   - title: Front Cam
     icon: mdi:camera-front-variant
     id: frontcam
