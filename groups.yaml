@@ -545,6 +545,42 @@
      - sensor.neo_coolcam_power_plug_12a_interval_3
      - sensor.neo_coolcam_power_plug_12a_interval_4
 
+  volvo:
+    name: Volvo
+    view: no
+    entities:
+      - device_tracker.volvo_et732hn 
+      - binary_sensor.et732hn_brake_fluid
+      - binary_sensor.et732hn_bulbs
+      - binary_sensor.et732hn_doors
+      - binary_sensor.et732hn_engine
+      - binary_sensor.et732hn_front_left_door
+      - binary_sensor.et732hn_front_left_tyre
+      - binary_sensor.et732hn_front_left_window
+      - binary_sensor.et732hn_front_right_door
+      - binary_sensor.et732hn_front_right_tyre
+      - binary_sensor.et732hn_front_right_window
+      - binary_sensor.et732hn_hood
+      - binary_sensor.et732hn_rear_left_door
+      - binary_sensor.et732hn_rear_left_tyre
+      - binary_sensor.et732hn_rear_left_window
+      - binary_sensor.et732hn_rear_right_door
+      - binary_sensor.et732hn_rear_right_tyre
+      - binary_sensor.et732hn_rear_right_window
+      - binary_sensor.et732hn_service
+      - binary_sensor.et732hn_washer_fluid
+      - binary_sensor.et732hn_windows
+      - lock.et732hn_door_lock 
+      - sensor.et732hn_fuel_amount
+      - sensor.et732hn_fuel_consumption
+      - sensor.et732hn_fuel_level
+      - sensor.et732hn_last_trip
+      - sensor.et732hn_odometer
+      - sensor.et732hn_range
+      - sensor.et732hn_trip_meter_1
+      - sensor.et732hn_trip_meter_2
+      - switch.et732hn_heater 
+
   chuwi:
     name: Chuwi
     view: no
