@@ -39,5 +39,4 @@ export_*
 JEEDOM
 .homekit.state
 .HA_VERSION
-secrets*
 home-panel*
