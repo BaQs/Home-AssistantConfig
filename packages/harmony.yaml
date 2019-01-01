@@ -109,7 +109,6 @@ automation:
 ## Script
 ################################################
 
-
 # the following script can replace the section of scripts to activate each activity
 
 script:
@@ -131,8 +130,8 @@ script:
             {% elif is_state("input_select.living_room_tv", "Regarder la TV") %}
                 27280319           
             {% elif is_state("input_select.living_room_tv", "Regarder Fire TV") %}
-                1234
+                36560571
             {% elif is_state("input_select.living_room_tv", "Regarder Netflix") %}
-                5678                
+                34843663                
             {% endif %} 
 
