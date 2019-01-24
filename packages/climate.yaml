@@ -53,6 +53,23 @@ climate:
       minutes: 3
     initial_operation_mode: "auto"
     away_temp: 17
+    
+  - platform: generic_thermostat
+    name: Shower Thermostat
+    heater: switch.qubino_zmnhadx_flush_1_relay_switch
+    target_sensor: sensor.temperature_158d0001e421d9
+    min_temp: 15
+    max_temp: 25
+    ac_mode: False
+    target_temp: 19
+    cold_tolerance: 0.3
+    hot_tolerance: 0
+    min_cycle_duration:
+      seconds: 30
+    keep_alive:
+      minutes: 1
+    initial_operation_mode: "auto"
+    away_temp: 15
 
   - platform: generic_thermostat
     name: Library Thermostat
@@ -136,7 +153,7 @@ climate:
 
 
 switch:
-# Qubino thermostat, used as heater for generic thermostat
+  # Qubino thermostat, used as heater for generic thermostat
   # - platform: template
   #   switches:
   #     qubino_bedroom_parents:
@@ -152,6 +169,7 @@ switch:
   #           entity_id: input_select.qubino_bedroom_parents
   #           option: 'Stop'
   # We shall not rely on automation, but change directly the "light" component
+ 
   - platform: template
     switches:
       qubino_bedroom_parents:
@@ -288,554 +306,6 @@ switch:
 ################################################
 
 
-# sensor:
-#   # - platform: teleinfo
-#   #   name: "edf"
-#   #   device: "/dev/ttyUSB0"
-#   - platform: teleinfo
-#     name: "edf"
-#     device: "/dev/ttyUSB0"
-  
-#   - platform: template
-#     sensors:
-#       teleinfo_hchc:
-#         value_template: '{{ states.sensor.edf.attributes["HCHC"] }}'
-#         unit_of_measurement: 'Wh'
-#         icon_template: mdi:flash
-#         entity_id: sensor.edf
-
-#   - platform: template
-#     sensors:
-#       teleinfo_hchp:
-#         value_template: '{{ states.sensor.edf.attributes["HCHP"] }}'
-#         unit_of_measurement: 'Wh'
-#         icon_template: mdi:flash
-#         entity_id: sensor.edf
-  
-#   - platform: template
-#     sensors:
-#       teleinfo_hhphc:
-#         value_template: '{{ states.sensor.edf.attributes["HHPHC"] }}'
-#         unit_of_measurement: ''
-#         icon_template: mdi:information-outline
-#         entity_id: sensor.edf
-  
-#   - platform: template
-#     sensors:
-#       teleinfo_iinst:
-#         value_template: '{{ states.sensor.edf.attributes["IINST"] }}'
-#         unit_of_measurement: 'A'
-#         icon_template: mdi:flash
-#         entity_id: sensor.edf
-  
-#   - platform: template
-#     sensors:
-#       teleinfo_imax:
-#         value_template: '{{ states.sensor.edf.attributes["IMAX"] }}'
-#         unit_of_measurement: 'A'
-#         icon_template: mdi:flash
-#         entity_id: sensor.edf
-  
-#   - platform: template
-#     sensors:
-#       teleinfo_papp:
-#         value_template: '{{ states.sensor.edf.attributes["PAPP"] }}'
-#         unit_of_measurement: 'vA'
-#         icon_template: mdi:flash
-#         entity_id: sensor.edf
-  
-#   - platform: template
-#     sensors:
-#       teleinfo_ptec:
-#         value_template: '{{ states.sensor.edf.attributes["PTEC"] }}'
-#         unit_of_measurement: ''
-#         icon_template: mdi:information-outline
-#         entity_id: sensor.edf
-  
-#   - platform: template
-#     sensors:
-#       teleinfo_isousc:
-#         value_template: '{{ states.sensor.edf.attributes["ISOUSC"] }}'
-#         unit_of_measurement: 'A'
-#         icon_template: mdi:flash
-#         entity_id: sensor.edf
-  
-#   - platform: template
-#     sensors:
-#         elecbill_cta:
-#             value_template: 20.52
-#             friendly_name: 'CTA (/an)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_options:
-#             value_template: 4.99
-#             friendly_name: 'Options (/m.)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_subscription:
-#             value_template: 9.78
-#             friendly_name: 'Subscription (/m.)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_cost_hp:
-#             value_template: 0.0895
-#             friendly_name: 'HP Cost (/kWh)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_cost_hc:
-#             value_template: 0.0632
-#             friendly_name: 'HC Cost (/kWh)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_cspe:
-#             value_template: 0.0225
-#             friendly_name: 'Public Electricity Service Contribution (/kWh)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_tcfe_municipal:
-#             value_template: 0.00638
-#             friendly_name: 'Municipal Tax on final electricity consumption (/kWh)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_tcfe_departmental:
-#             value_template: 0.00319
-#             friendly_name: 'Departmental Tax on final electricity consumption (/kWh)'
-#             unit_of_measurement: '€'
-
-#   - platform: template
-#     sensors:
-#         elecbill_today_so_far_hc:
-#             friendly_name: 'Electricity HC cost (Today so far)'
-#             unit_of_measurement: '€'
-#             value_template: '
-
-#             {{   
-#             (
-#             (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
-#             )|round(2)
-#             }}
-
-#             '
-            
-#   - platform: template
-#     sensors:
-#         elecbill_today_so_far_hp:
-#             friendly_name: 'Electricity HP cost (Today so far)'
-#             unit_of_measurement: '€'
-#             value_template: '
-
-#             {{   
-#             (
-#             (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
-#             )|round(2)
-#             }}
-
-#             '
-
-#   # number of hours since midnight
-#   # {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
-#   #
-#   # Finally: not used
-          
-#   # we transform W to kWh , bu multiplying the W by nb_hours and / 1000
-#   # nb_hour = 16 cause HP, 8 cause HC
-#   #
-#   - platform: template
-#     sensors:
-#         elecbill_today_so_far_hc_heating:
-#             friendly_name: 'Heating HC cost (Today so far)'
-#             unit_of_measurement: '€'
-#             value_template: '
-
-#             {{   
-#             (
-#             (states.sensor.hc_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
-#             )|round(2)
-#             }}
-
-#             '
-  
-#   # we transform W to kWh , bu multiplying the W by nb_hours and / 1000
-#   # nb_hour = 16 cause HP, 8 cause HC
-#   - platform: template
-#     sensors:
-#         elecbill_today_so_far_hp_heating:
-#             friendly_name: 'Heating HP cost (Today so far)'
-#             unit_of_measurement: '€'
-#             value_template: '
-
-#             {{   
-#             (
-#             (states.sensor.hp_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
-#             )|round(2)
-#             }}
-
-#             '
-
-#   - platform: template
-#     sensors:
-#         elecbill_today_so_far_sub:
-#             friendly_name: 'Electricity Subscription cost (Today so far)'
-#             unit_of_measurement: '€'
-#             value_template: '
-
-#             {{   
-
-#             (
-
-#             (states.sensor.elecbill_subscription.state |float / 30) + 
-#             (states.sensor.elecbill_cta.state |float / 365)  
-
-#             + (states.sensor.elecbill_options.state |float /30)
-
-#             )|round(2)
-
-#             }}
-
-#             '
-#   - platform: template
-#     sensors:
-#         elecbill_today_so_far_taxes:
-#             friendly_name: 'Electricity Taxes cost (Today so far)'
-#             unit_of_measurement: '€'
-#             value_template: '
-
-#             {{   
-
-#             (
-
-#             (
-#             (states.sensor.elecbill_subscription.state |float / 30) + 
-#             (states.sensor.elecbill_cta.state |float / 365)  
-#             ) * 0.055
-
-#             +
-
-#             (
-#             (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
-#             (states.sensor.elecbill_cost_hp.state|float)
-
-#             + (states.sensor.elecbill_options.state |float /30)
-
-#             ) * 0.20
-
-
-#             + 
-#             (
-#             ( 
-#             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-#             )
-#             +
-#             ( 
-#             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-#             )
-
-#             ) * 1.20
-
-#             )|round(2)
-
-#             }}
-
-#             '
-  
-#   - platform: template
-#     sensors:
-#         elecbill_today_so_far_ttc:
-#             friendly_name: 'Electricity TTC cost (Today so far)'
-#             unit_of_measurement: '€'
-#             value_template: '
-
-#             {{   
-
-#             (
-
-#             (
-#             (states.sensor.elecbill_subscription.state |float / 30) + 
-#             (states.sensor.elecbill_cta.state |float / 365)  
-#             ) * 1.055
-
-#             +
-
-#             (
-#             (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
-#             (states.sensor.elecbill_cost_hp.state|float)
-
-#             + (states.sensor.elecbill_options.state |float /30)
-
-#             + 
-#             ( 
-#             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-#             )
-#             +
-#             ( 
-#             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-#             )
-
-#             ) * 1.20
-
-#             )|round(2)
-
-#             }}
-
-#             '
- 
-#   - platform: template
-#     sensors:
-#         elecbill_today_ttc:
-#             value_template: '
-
-#             {{   
-
-#             (
-
-#             (
-#             (states.sensor.elecbill_subscription.state |float / 30) + 
-#             (states.sensor.elecbill_cta.state |float / 365)  
-#             ) * 1.055
-
-#             +
-
-#             (
-#             (states.sensor.hc_energy_consumed_last_day.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_day.state |float /1000 ) *
-#             (states.sensor.elecbill_cost_hp.state|float)
-
-#             + (states.sensor.elecbill_options.state |float /30)
-
-#             + 
-#             ( 
-#             (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-#             )
-#             +
-#             ( 
-#             (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-#             )
-
-#             ) * 1.20
-
-#             )|round(2)
-
-#             }}
-
-#             '
-#             friendly_name: 'Energy cost today (TTC)'
-#             unit_of_measurement: '€'
-
-
-#   - platform: template
-#     sensors:
-#         elecbill_last_week_ttc:
-#             value_template: '
-#             {{   
-
-#             (
-
-#             (
-#             (states.sensor.elecbill_subscription.state |float / 7) + 
-#             (states.sensor.elecbill_cta.state |float / 52)  
-#             ) * 1.055
-
-#             +
-
-#             (
-#             (states.sensor.hc_energy_consumed_last_week.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_week.state |float /1000 ) *
-#             (states.sensor.elecbill_cost_hp.state|float)
-
-#             + (states.sensor.elecbill_options.state |float /7)
-
-#             + 
-#             ( 
-#             (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-#             )
-#             +
-#             ( 
-#             (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-#             )
-
-#             ) * 1.20
-
-#             )|round(2)
-
-#             }} 
-
-#             '
-#             friendly_name: 'Energy cost last week (TTC)'
-#             unit_of_measurement: '€'
-
-
-
-#   - platform: template
-#     sensors:
-#         elecbill_last_month_ttc:
-#             value_template: '
-#             {{   
-#             (
-
-#             (
-#             (states.sensor.elecbill_subscription.state |float) + 
-#             (states.sensor.elecbill_cta.state |float / 12)  
-#             ) * 1.055
-
-#             +
-
-#             (
-#             (states.sensor.hc_energy_consumed_last_month.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_month.state |float /1000 ) *
-#             (states.sensor.elecbill_cost_hp.state|float)
-
-#             + (states.sensor.elecbill_options.state |float )
-
-#             + 
-#             ( 
-#             (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-#             )
-#             +
-#             ( 
-#             (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-#             )
-
-#             ) * 1.20
-
-#             )|round(2)
-
-#             }} 
-
-#             '
-#             friendly_name: 'Energy cost last month (TTC)'
-#             unit_of_measurement: '€'
-
-
-
-
-
-
-#   - platform: influxdb
-#     host: 192.168.0.28
-
-#     queries:
-# #
-# #      - name: HC Energy Consumed (last hour)
-# #        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1h'
-# #        measurement: '"Wh"'
-# #        group_function: spread
-# #        value_template: '{{ value | round(2) }}'
-# #        unit_of_measurement: Wh
-# #
-# #      - name: HP Energy Consumed (last hour)
-# #        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1h'
-# #        measurement: '"Wh"'
-# #        group_function: spread
-# #        value_template: '{{ value | round(2) }}'
-# #        unit_of_measurement: Wh
-# #
-#       - name: HC Energy Consumed (today so far)
-#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}'' TZ(''Europe/Paris'')  '
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-#       - name: HP Energy Consumed (today so far)
-#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}''  TZ(''Europe/Paris'') '
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-
-#         # number of seconds since midnight
-#         # {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
-        
-#       - name: HC Heating Consumed (today so far)
-#         where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 00:00:00''  AND time < ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00'' TZ(''Europe/Paris'') '
-#         measurement: '"W"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-#         field:  '"Total usage"'
-
-#         # NB/ the space after %d is important! otherwise it generates automatically 00:00:00
-
-#       - name: HP Heating Consumed (today so far)
-#         where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00''  TZ(''Europe/Paris'') '
-#         measurement: '"W"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-#         field:  '"Total usage"'
-
-
-#       - name: HC Energy Consumed (last day)
-#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1d'
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-#       - name: HP Energy Consumed (last day)
-#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1d'
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-#       - name: HC Energy Consumed (last week)
-#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1w'
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-#       - name: HP Energy Consumed (last week)
-#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1w'
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-#       - name: HC Energy Consumed (last month)
-#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1m'
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-#       - name: HP Energy Consumed (last month)
-#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1m'
-#         measurement: '"Wh"'
-#         group_function: spread
-#         value_template: '{{ value | round(2) }}'
-#         unit_of_measurement: Wh
-
-#       - name: Spread Teleinfo PAPP
-#         where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 180s TZ(''Europe/Paris'') '
-#         group_function: spread
-#         measurement: '"vA"'
-#         unit_of_measurement: vA
-#       # value_template: '{{ value | round(2) }}'
-
-
-#       - name: Derivative Teleinfo PAPP
-#         where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 120s TZ(''Europe/Paris'') '
-#         group_function: derivative
-#         field:  '"value",2m'
-#         measurement: '"vA"'
-#         unit_of_measurement: vA
-#       # value_template: '{{ value | round(2) }}'
-
- 
 
 
 ################################################
@@ -983,90 +453,89 @@ automation:
           entity_id: group.climate
           away_mode: true
 
-# when going to bed, away mode for living room + library thermostat
-  - id: climate_to_bed
-    alias: 'Climate: To bed'
-    trigger:
-    - entity_id: binary_sensor.in_bed
-      platform: state
-      to: 'on'
-    condition:
-    - condition: state
-      entity_id: sensor.current_state
-      state: 'home'
-    action:
-      - service: climate.set_away_mode
-        data:
-          entity_id:  climate.parents_bedroom_thermostat
-          away_mode: false
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.living_room_thermostat 
-          away_mode: true
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.library_thermostat 
-          away_mode: true
+# # when going to bed, away mode for living room + library thermostat
+#   - id: climate_to_bed
+#     alias: 'Climate: To bed'
+#     trigger:
+#     - entity_id: binary_sensor.in_bed
+#       platform: state
+#       to: 'on'
+#     condition:
+#     - condition: state
+#       entity_id: sensor.current_state
+#       state: 'home'
+#     action:
+#       # - service: climate.set_away_mode
+#       #   data:
+#       #     entity_id:  climate.parents_bedroom_thermostat
+#       #     away_mode: false
+#       - service: climate.set_away_mode
+#         data:
+#           entity_id: climate.living_room_thermostat 
+#           away_mode: true
+#       - service: climate.set_away_mode
+#         data:
+#           entity_id: climate.library_thermostat 
+#           away_mode: true
 
-# good morning, heating in living room
-  - id: climate_from_bed
-    alias: 'Climate: From bed'
-    trigger:
-    - entity_id: binary_sensor.in_bed
-      platform: state
-      to: 'off'
-    condition:
-    - condition: state
-      entity_id: sensor.current_state
-      state: 'home'
-    action:
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.living_room_thermostat 
-          away_mode: false
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.library_thermostat 
-          away_mode: false
-
-
-# good morning + 60min, bedrooms in away mode
-  - id: climate_from_bed
-    alias: 'Climate: From bed'
-    trigger:
-    - entity_id: binary_sensor.in_bed
-      platform: state
-      to: 'off'
-      for:
-        minutes: 60
-    condition:
-    - condition: state
-      entity_id: sensor.current_state
-      state: 'home'
-    action:
-      - service: climate.set_away_mode
-        data:
-          entity_id:  climate.parents_bedroom_thermostat
-          away_mode: true
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.baby_bedroom_thermostat
-          away_mode: true
+# # good morning, heating in living room
+#   - id: climate_from_bed
+#     alias: 'Climate: From bed'
+#     trigger:
+#     - entity_id: binary_sensor.in_bed
+#       platform: state
+#       to: 'off'
+#     condition:
+#     - condition: state
+#       entity_id: sensor.current_state
+#       state: 'home'
+#     action:
+#       - service: climate.set_away_mode
+#         data:
+#           entity_id: climate.living_room_thermostat 
+#           away_mode: false
+#       - service: climate.set_away_mode
+#         data:
+#           entity_id: climate.library_thermostat 
+#           away_mode: false
 
 
-  - id: baby_bed
-    alias: 'Baby: Bed'
-    trigger:
-      platform: time
-      at: '19:00:00'
-  # condition:
-    action:
-      - service: climate.set_away_mode
-        data:
-          entity_id: climate.baby_bedroom_thermostat
-          away_mode: false
+  # good morning + 60min, bedrooms in away mode
+  # - id: climate_from_bed
+  #   alias: 'Climate: From bed'
+  #   trigger:
+  #   - entity_id: binary_sensor.in_bed
+  #     platform: state
+  #     to: 'off'
+  #     for:
+  #       minutes: 60
+  #   condition:
+  #   - condition: state
+  #     entity_id: sensor.current_state
+  #     state: 'home'
+  #   action:
+  #     - service: climate.set_away_mode
+  #       data:
+  #         entity_id:  climate.parents_bedroom_thermostat
+  #         away_mode: true
+  #     - service: climate.set_away_mode
+  #       data:
+  #         entity_id: climate.baby_bedroom_thermostat
+  #         away_mode: true
 
-
+  # Replaced by schedy
+  # 
+  # - id: baby_bed
+  #   alias: 'Baby: Bed'
+  #   trigger:
+  #     platform: time
+  #     at: '19:00:00'
+  # # condition:
+  #   action:
+  #     - service: climate.set_away_mode
+  #       data:
+  #         entity_id: climate.baby_bedroom_thermostat
+  #         away_mode: false
 
 
 
@@ -1078,71 +547,71 @@ automation:
       entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
       to: 'on'
       for:
-        minutes: 30
+        minutes: 60
     action:
       - service: switch.turn_off
         entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
-      - service: notify.telegram
+      - service: notify.ios_ipierre
         data:
           message: "Shower heater has been on for 30min, shutting it off automatically"
+          title: "Heating"
 
 
+  
+  #  Replaced by schedy
+  # 
+  # - id: shower_heating_on_morning_weekday
+  #   alias: 'Heating: shower ON on weekday mornings'
+  #   trigger:
+  #   - platform: time
+  #     at: "07:00:00"
+  #   condition:
+  #     condition: and
+  #     conditions:
+  #       - condition: state
+  #         entity_id: sensor.current_state
+  #         state: 'home'
+  #       - condition: time
+  #         after: '06:00:00'
+  #         before: '10:00:00'
+  #         weekday:
+  #           - mon
+  #           - tue
+  #           - wed
+  #           - thu
+  #           - fri
+  #   action:
+  #     - service: switch.turn_on
+  #       entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+  #     - service: notify.telegram
+  #       data:
+  #         message: "Good morning, Shower heater on"
 
-  - id: shower_heating_on_morning_weekday
-    alias: 'Heating: shower ON on weekday mornings'
-    trigger:
-    - platform: time
-      at: "07:00:00"
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: sensor.current_state
-          state: 'home'
-        - condition: time
-          after: '06:00:00'
-          before: '10:00:00'
-          weekday:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
-    action:
-      - service: switch.turn_on
-        entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
-      - service: notify.telegram
-        data:
-          message: "Good morning, Shower heater on"
 
-
-  - id: shower_heating_on_morning_weekends
-    alias: 'Heating: shower ON on weekends mornings'
-    trigger:
-    - platform: state
-      entity_id: binary_sensor.in_bed
-      to: 'off'
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: sensor.current_state
-          state: 'home'
-        - condition: time
-          after: '06:00:00'
-          before: '11:00:00'
-          weekday:
-            - mon
-            - tue
-            - wed
-            - thu
-            - fri
-    action:
-      - service: switch.turn_on
-        entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
-      - service: notify.telegram
-        data:
-          message: "Good morning, Shower heater on"
+  # - id: shower_heating_on_morning_weekends
+  #   alias: 'Heating: shower ON on weekends mornings'
+  #   trigger:
+  #   - platform: state
+  #     entity_id: binary_sensor.in_bed
+  #     to: 'off'
+  #   condition:
+  #     condition: and
+  #     conditions:
+  #       - condition: state
+  #         entity_id: sensor.current_state
+  #         state: 'home'
+  #       - condition: time
+  #         after: '06:00:00'
+  #         before: '11:00:00'
+  #         weekday:
+  #           - sat
+  #           - sun
+  #   action:
+  #     - service: switch.turn_on
+  #       entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+  #     - service: notify.telegram
+  #       data:
+  #         message: "Good morning, Shower heater on"
 
 
 # heating according to proximity
@@ -1182,11 +651,17 @@ automation:
 
       - service: notify.telegram
         data:
-          message: "I'm turning on the heating in the leaving room"
-      - service: climate.set_away_mode
+          message: "I'm turning on the heating in the leaving room (on the way home)"
+      # - service: climate.set_away_mode
+      #   data:
+      #     entity_id: climate.living_room_thermostat 
+      #     away_mode: false
+
+      - service: climate.set_temperature
         data:
-          entity_id: climate.living_room_thermostat 
-          away_mode: false
+          entity_id: climate.living_room_thermostat
+          temperature: 21
+          operation_mode: Heat
 
   - alias: 'Climate: Turn heat down as I get farther to home'
     trigger:
@@ -1213,8 +688,11 @@ automation:
 
       - service: notify.telegram
         data:
-          message: "I'm turning off the heating in the leaving room"
+          message: "I'm turning off the heating in the leaving room (going away from home)"
       - service: climate.set_away_mode
         data:
           entity_id: climate.living_room_thermostat 
           away_mode: true
+
+
+

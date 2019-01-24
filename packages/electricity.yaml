@@ -469,7 +469,10 @@ sensor:
 
 
   - platform: influxdb
-    host: 192.168.0.28
+    host: !secret influx_host
+    port: 8086
+    max_retries: 10
+
 
     queries:
 #
