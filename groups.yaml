@@ -57,12 +57,15 @@
     view: no
     entities:
       # iOS app
-      - device_tracker.igaetane
+      # - device_tracker.igaetane
       # nmap
       # - device_tracker.6c8dc126c257
       # owntracks
-      - device_tracker.gaetane_f30c159e4c374930a3d7fe1b3137f3ef
+      # - device_tracker.gaetane_f30c159e4c374930a3d7fe1b3137f3ef
       # - device_tracker.gaetane_igaetaneowntracks
+      # - device_tracker.gaetane_a6556411426e460184ad90ae5cee0999
+      - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
+      - device_tracker.iphoneg
   Pierre:
     name: Pierre
     view: no
@@ -75,7 +78,8 @@
       # - device_tracker.2c61f6c08b90
         # owntracks
       # - device_tracker.pierre_ipierre
-      - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
+      # - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
+      - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
 #     - binary_sensor.pierre_home
   washroom:
     name: Buanderie 
@@ -129,7 +133,9 @@
     name: Radiateurs Salon
     view: no
     entities:
+      # the one under the tablet
       - switch.radiateur_1_salon
+      # the one on the big wall
       - switch.radiateur_2_salon
 
   bedroom_baby:
@@ -254,7 +260,7 @@
     entities:
       - media_player.xiaomi_network_speaker_airplay
       - media_player.salon
-      - media_player.google_home__salon
+      - media_player.google_home_salon
 
 
   door_sensors:
@@ -549,37 +555,37 @@
     name: Volvo
     view: no
     entities:
-      - device_tracker.volvo_et732hn 
-      - binary_sensor.et732hn_brake_fluid
-      - binary_sensor.et732hn_bulbs
-      - binary_sensor.et732hn_doors
-      - binary_sensor.et732hn_engine
-      - binary_sensor.et732hn_front_left_door
-      - binary_sensor.et732hn_front_left_tyre
-      - binary_sensor.et732hn_front_left_window
-      - binary_sensor.et732hn_front_right_door
-      - binary_sensor.et732hn_front_right_tyre
-      - binary_sensor.et732hn_front_right_window
-      - binary_sensor.et732hn_hood
-      - binary_sensor.et732hn_rear_left_door
-      - binary_sensor.et732hn_rear_left_tyre
-      - binary_sensor.et732hn_rear_left_window
-      - binary_sensor.et732hn_rear_right_door
-      - binary_sensor.et732hn_rear_right_tyre
-      - binary_sensor.et732hn_rear_right_window
-      - binary_sensor.et732hn_service
-      - binary_sensor.et732hn_washer_fluid
-      - binary_sensor.et732hn_windows
-      - lock.et732hn_door_lock 
-      - sensor.et732hn_fuel_amount
-      - sensor.et732hn_fuel_consumption
-      - sensor.et732hn_fuel_level
-      - sensor.et732hn_last_trip
-      - sensor.et732hn_odometer
-      - sensor.et732hn_range
-      - sensor.et732hn_trip_meter_1
-      - sensor.et732hn_trip_meter_2
-      - switch.et732hn_heater 
+      - device_tracker.volvo_et_732_hn 
+      - binary_sensor.et_732_hn_brake_fluid
+      - binary_sensor.et_732_hn_bulbs
+      - binary_sensor.et_732_hn_doors
+      - binary_sensor.et_732_hn_engine
+      - binary_sensor.et_732_hn_front_left_door
+      - binary_sensor.et_732_hn_front_left_tyre
+      - binary_sensor.et_732_hn_front_left_window
+      - binary_sensor.et_732_hn_front_right_door
+      - binary_sensor.et_732_hn_front_right_tyre
+      - binary_sensor.et_732_hn_front_right_window
+      - binary_sensor.et_732_hn_hood
+      - binary_sensor.et_732_hn_rear_left_door
+      - binary_sensor.et_732_hn_rear_left_tyre
+      - binary_sensor.et_732_hn_rear_left_window
+      - binary_sensor.et_732_hn_rear_right_door
+      - binary_sensor.et_732_hn_rear_right_tyre
+      - binary_sensor.et_732_hn_rear_right_window
+      - binary_sensor.et_732_hn_service
+      - binary_sensor.et_732_hn_washer_fluid
+      - binary_sensor.et_732_hn_windows
+      - lock.et_732_hn_door_lock 
+      - sensor.et_732_hn_fuel_amount
+      - sensor.et_732_hn_fuel_consumption
+      - sensor.et_732_hn_fuel_level
+      - sensor.et_732_hn_last_trip
+      - sensor.et_732_hn_odometer
+      - sensor.et_732_hn_range
+      - sensor.et_732_hn_trip_meter_1
+      - sensor.et_732_hn_trip_meter_2
+      - switch.et_732_hn_heater 
 
   chuwi:
     name: Chuwi
@@ -603,5 +609,5 @@
     view: no
     entities:
     - sensor.time
-    - sensor.time__date
+    - sensor.time_date
     - sensor.time_utc 
