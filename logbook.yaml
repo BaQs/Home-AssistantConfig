@@ -34,6 +34,6 @@
       - arlo
       # it changes too often..
     entities:
-      - automation.electricity_guess_what_
+      - automation.electricity_guess_what
 
 
