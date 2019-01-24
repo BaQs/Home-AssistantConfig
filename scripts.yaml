@@ -68,7 +68,9 @@
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         command: app_zoned_clean
-        params: [ [  21400, 25300 , 26500, 24000  ,1 ],[  21400, 22600 , 23700, 21600  ,1 ],[  24500, 23000 , 28700, 21600  ,1 ], [ 29500, 25500 , 37500, 23900 ,1 ]  ]
+        params: [ [  21400, 24000 , 26500,  25300 ,1 ],[  21400, 21600 , 23700, 22600  ,1 ],[  24500, 21600 , 28700,  23000 ,1 ], [ 29500, 23900 , 37500,  25500,1 ]  ]
+        # params: [ [  21400, 25300 , 26500, 24000  ,1 ],[  21400, 22600 , 23700, 21600  ,1 ],[  24500, 23000 , 28700, 21600  ,1 ], [ 29500, 25500 , 37500, 23900 ,1 ]  ]
+
         # zone 1: 21400, 25300 , 26500, 24000  # in front of tv in the living room
         # 21400, 25300 : just the corner near the veranda door and the tv
         # 26500, 24000 : the corner near the tablet
@@ -86,3 +88,29 @@
         # 29500, 23900 : top-left of zone 4, just in front of the glass furniture
         # 37500, 23900 : bottom-right of zone 4, in the library
 
+
+  front_door_camera_on_tv:
+    alias: "Show who's at the door"
+    sequence:
+      - service: media_player.turn_on
+        data:
+          entity_id:  media_player.panasonic_viera_tv 
+      - service: media_player.play_media
+        data:
+          entity_id:  media_player.panasonic_viera_tv 
+          media_content_type: "url"
+          # media_content_id: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+          # media_content_id: "http://www.google.com"
+          media_content_id: !secret foscam_snapshot_url
+      - delay: 
+          seconds: 4
+      - service: media_player.play_media
+        data:
+          entity_id:  media_player.panasonic_viera_tv 
+          media_content_type: "url"
+          media_content_id: !secret foscam_snapshot_url
+      - delay: 
+          seconds: 10
+      - service: media_player.media_stop
+        data:
+          entity_id:  media_player.panasonic_viera_tv 
