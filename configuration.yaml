@@ -20,11 +20,14 @@ homeassistant:
 logger:
   default: info
   logs:
-    requests.packages.urllib3.connectionpool: error # critical #for this item anything below error will not be logged
-    py.warnings: critical
+    # requests.packages.urllib3.connectionpool: error # critical #for this item anything below error will not be logged
+    # py.warnings: critical
+    # volvooncall: debug
+    # homeassistant.components.volvooncall: debug
     # homeassistant.components.influxdb: debug 
   # homeassistant.components.image_processing: debug
-  # homeassistant.components.climate: debug
+    # homeassistant.components.sensor.influxdb: debug
+    # homeassistant.components.device_tracker.bluetooth_le_tracker: debug
   # homeassistant.components.arlo: debug
   # homeassistant.components.display: debug
   # homeassistant.components.rfxtrx: debug
@@ -119,6 +122,7 @@ history:
        - sensor.dark_sky_hourly_summary
        - sensor.dark_sky_icon
        - sensor.dark_sky_summary
+       - alarm_control_panel.arlo 
 #   domains:
 #     - switch
 #     - updater
@@ -134,6 +138,9 @@ history:
 # View all events in a logbook
 logbook: !include logbook.yaml
 input_number: !include input_number.yaml
+input_select: !include input_select.yaml
+input_boolean: !include input_boolean.yaml
+
 
 influxdb:
   host: !secret influx_host
@@ -213,10 +220,16 @@ binary_sensor: !include binary_sensor.yaml
 media_player:
   - platform: squeezebox
     host: !secret squeezebox_host
-#  - platform: cast
+  # - platform: cast
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+  - platform: panasonic_viera
+    host: !secret panasonic_tv_host
 
 cast:
-        #  media_player:
+  media_player:
+    - host: !secret google_home_host
 
 netatmo:
   api_key: !secret netatmo_api_key
@@ -311,8 +324,12 @@ device_tracker:
 #   - platform: owntracks_http
 #     max_gps_accuracy: 100
 #     # - platform: bluetooth_tracker
-# # - platform: bluetooth_le_tracker
-# #   track_new_devices: true
+  # - platform: bluetooth_le_tracker
+    # track_new_devices: true
+  - platform: bluetooth_tracker
+  - platform: ble_tracker
+
+  # #   track_new_devices: true
 # # - platform: icloud
 # #   username: !secret icloud_username
 # #   password: !secret icloud_password
@@ -321,7 +338,6 @@ device_tracker:
             - 192.168.0.19
             - 192.168.0.32
     home_interval: 30
-    0
 #  - platform: icloud2
 #    username: !secret icloud_username
 #    password: !secret icloud_password
@@ -381,7 +397,6 @@ ios: !include ios.yaml
 homekit: !include homekit.yaml
 
 
-input_select: !include input_select.yaml
 
 ffmpeg:
   # run_test: false
@@ -408,3 +423,4 @@ lovelace:
 volvooncall:
   username: !secret volvooncall_username
   password: !secret volvooncall_password
+  
