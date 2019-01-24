@@ -3,6 +3,7 @@
 #################################################################
 - id: doorbell
   alias: 'Doorbell'
+  initial_state: true
   trigger:
    - platform: event
      event_type: button_pressed
@@ -20,6 +21,8 @@
                caption: "On sonne!"
     - delay: 0:03
     - service: display.fullykiosk_load_start_url
+    - service: script.front_door_camera_on_tv
+
 
 - id: postmail
   alias: 'You ve got mail'
@@ -41,6 +44,7 @@
 # if the pump wasn't launch since 22h, we launch it.
 - id: cave_pump_daily
   alias: 'Cave: Pump'
+  initial_state: true
   trigger:
     platform: time
     at: '14:00:00'
@@ -63,6 +67,7 @@
 
 - id: '153461612241'
   alias: 'Motion: Parking space!'
+  initial_state: true
   trigger:
   - entity_id: binary_sensor.foscam_c1_motion_sensor
     platform: state
@@ -70,9 +75,9 @@
   condition:
     condition: and
     conditions:
-      - condition: state
-        entity_id: binary_sensor.detected_outside_car
-        state: 'off'
+      # - condition: state
+      #   entity_id: binary_sensor.detected_outside_car
+      #   state: 'off'
       - condition: state
         # entity_id: binary_sensor.somebody_home
         entity_id: binary_sensor.household_home
@@ -83,14 +88,14 @@
       - condition: state
         entity_id: binary_sensor.in_bed
         state: 'off'
+
   action:
-  - data:
-    service: notify.telegram
-      data:
-        photo:
-        - caption: Ca bouge sur le parking !
-          url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}
-      message: La place est libre
+  - service: notify.telegram
+    data_template:
+      photo:
+      - caption: Ca bouge sur le parking !
+        url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}
+      message: "La place est libre. (voiture: {{states.binary_sensor.detected_outside_car.state}})"
       title: Parking
   - service: display.fullykiosk_load_url
     data:
@@ -105,6 +110,7 @@
 
 - id: lights_living
   alias: 'Lights: living'
+  initial_state: true
   trigger:
     platform: state
     entity_id: group.living_lights
@@ -134,6 +140,7 @@
 # Switching tv
 - id: tv_beauty_life
   alias: 'TV: Beauty Life'
+  initial_state: true
   trigger:
     platform: time
     at: '20:19:00'
@@ -143,7 +150,6 @@
     - condition: state
       # entity_id: binary_sensor.somebody_home
       entity_id: binary_sensor.household_home
-
       state: 'on'
     - condition: state
       entity_id: remote.harmony_hub
@@ -158,7 +164,7 @@
   action:
   - service: tts.google_say
     data:
-      entity_id: media_player.google_home__salon
+      entity_id: media_player.google_home_salon
       message: "Il est l'heure de plus belle la vie!"
   - service: remote.send_command
     data:
@@ -172,6 +178,7 @@
 # turn off screensaver of chuwi when somebody moves 
 - id: chuwi_stop_screensaver
   alias: 'Chuwi: Screensaver stop'
+  initial_state: true
   trigger:
    - platform: state
      entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
@@ -183,6 +190,7 @@
 # house keeping on thursday morning
 - id: house_keeping_on
   alias: 'HouseKeeping: on'
+  initial_state: true
   trigger:
     platform: time
     at: '09:00:00'
@@ -214,6 +222,7 @@
 # house keeping on thursday morning
 - id: house_keeping_off
   alias: 'HouseKeeping: off'
+  initial_state: true
   trigger:
     platform: time
     at: '12:15:00'

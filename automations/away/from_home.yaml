@@ -2,6 +2,7 @@
 # and not on vacation
 - id: away_from_home_away_mode
   alias: "Away: From Home"
+  initial_state: true
   hide_entity: True
   trigger:
     - platform: state
@@ -75,6 +76,7 @@
 
 - id: away_from_home_notif_open_door
   alias: 'Notification: open door when leaving'
+  initial_state: true
   hide_entity: True
   trigger:
     - platform: state

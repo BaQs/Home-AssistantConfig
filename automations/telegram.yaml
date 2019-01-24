@@ -2,6 +2,7 @@
 
 - id: telegramPresenceTriggered
   alias: 'Telegram bot answer to command: /presence_triggered_alarm'
+  initial_state: true
   hide_entity: true
   trigger:
     platform: event

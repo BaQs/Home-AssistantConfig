@@ -1,5 +1,6 @@
 - id: '1534607568202'
   alias: 'Light: Enlight floor1'
+  initial_state: true
   trigger:
   - entity_id: binary_sensor.motion_sensor_158d0001ab34e1
     platform: state
@@ -29,6 +30,7 @@
 
 - id: light_floor1_back_normal
   alias: 'Light: Floor1 back to normal'
+  initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.motion_sensor_158d0001ab34e1

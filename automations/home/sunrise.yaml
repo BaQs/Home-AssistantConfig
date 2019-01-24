@@ -1,5 +1,6 @@
 - id: Sunrise
   alias: 'Script: Sunrise'
+  initial_state: true
   trigger:
 #  - event: sunrise
 #    offset: +00:30:00

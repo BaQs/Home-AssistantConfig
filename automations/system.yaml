@@ -31,6 +31,7 @@
 
 - alias: Start HomeKit
   id: 3e566d3adc654ab884dcbe4a2322bc3d
+  initial_state: true
   trigger:
   - platform: homeassistant
     event: start
@@ -43,6 +44,7 @@
 
 - id: notify_ios_ha_started
   alias: 'Notify: HA started'
+  initial_state: true
   trigger:
   - platform: homeassistant
     event: start

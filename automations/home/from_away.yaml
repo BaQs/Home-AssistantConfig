@@ -1,5 +1,6 @@
 # Turn off automatic away mode
 - alias: 'Home: From Away'
+  initial_state: true
   hide_entity: false
   trigger:
     - platform: state

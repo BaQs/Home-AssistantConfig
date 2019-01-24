@@ -1,5 +1,6 @@
 - id: Sunset
   alias: 'Script: Sunset'
+  initial_state: true
   trigger:
   - platform: template
     value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"

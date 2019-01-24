@@ -9,6 +9,7 @@
 #      ...
 #
 - alias: Disarm the alarm
+  initial_state: true
   trigger:
     platform: event
     event_type: ios.notification_action_fired
@@ -19,6 +20,7 @@
 
 
 - alias: Sound the alarm
+  initial_state: true
   trigger:
     platform: event
     event_type: ios.notification_action_fired
@@ -28,6 +30,6 @@
   - service: tts.google_say
     data:
       language: fr
-      entity_id: media_player.google_home__salon
+      entity_id: media_player.google_home_salon
       message: Alarme déclenchée
 
