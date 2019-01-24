@@ -7,6 +7,39 @@
       - 'time_utc'
 #     - 'beat'
 
+  - platform: airvisual
+    api_key: !secret airvisual_api_key
+    monitored_conditions:
+      # - cn
+      - us
+    show_on_map: false
+    # scan_interval: 30 # 10k calls per month, 10min by default
+    latitude: 50.6605716
+    longitude: 3.1379015999999638
+
+# Prefer airvisual than waqi
+#
+#   - platform: waqi
+#     token: !secret waqi_token
+#     locations:
+#       - WAQI Lille Fives, Nord-Pas-de-Calais, France
+
+
+  # To monitor DSM synology NAS
+      
+  - platform: synologydsm
+    host: !secret synology_host
+    username: !secret synology_username
+    password: !secret synology_password
+    monitored_conditions:
+      - cpu_total_load
+      - memory_real_usage
+      - network_up
+      - volume_status
+      - disk_status
+      - disk_smart_status
+
+
 #  - platform: darksky
 #    api_key: !secret darksky_api_key 
 #    units: ca
