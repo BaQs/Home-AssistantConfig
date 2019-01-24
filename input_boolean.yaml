@@ -1,0 +1,4 @@
+  ifttt_withings_sleep:
+    name: IFTTT Withings Sleep
+    icon: mdi:sleep
+    

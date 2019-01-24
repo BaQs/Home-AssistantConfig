@@ -1,0 +1,54 @@
+# - id: ifttt_withings_sleep_out_of_bed
+#   alias: "Withings Sleep: Out of Bed"
+#   initial_state: true
+#   trigger:
+#     platform: event
+#     event_type: ifttt_webhook_received
+#     event_data:
+#       details: out_of_bed
+#       # details: into_bed
+#   action:
+#   - service: input_boolean.turn_off
+#     data:
+#       entity_id: input_boolean.ifttt_withings_sleep
+#   - service: notify.ios_ipierre
+#     data_template:
+#       message: "Withings (via IFTTT): Out of bed ({{ trigger.event.data.details }}')"
+#       title: Bed
+
+# - id: ifttt_withings_sleep_into_bed
+#   alias: "Withings Sleep: Into Bed"
+#   trigger:
+#     platform: event
+#     event_type: ifttt_webhook_received
+#     event_data:
+#       # details: out_of_bed
+#       details: into_bed
+#   action:
+#   - service: input_boolean.turn_on
+#     data:
+#       entity_id: input_boolean.ifttt_withings_sleep
+#   - service: notify.ios_ipierre
+#     data_template:
+#       message: "Withings (via IFTTT): Into bed ({{ trigger.event.data.details }}')"
+#       title: Bed
+  
+
+- id: ifttt_withings_sleep
+  alias: "Withings Sleep: Triggered by IFTTT"
+  trigger:
+    platform: event
+    event_type: ifttt_webhook_received
+    event_data:
+      action: call_service
+  action:
+  - service_template: '{{ trigger.event.data.service }}'
+    data_template:
+      entity_id: '{{ trigger.event.data.entity_id }}'
+  - service: notify.ios_ipierre
+    data_template:
+      message: "Withings (via IFTTT): {{ trigger.event.data.service }} {{ trigger.event.data.entity_id }} )"
+      title: Bed
+
+  # { "detail": "into_bed"}
+    # Body: { "action": "call_service", "service": "input_boolean.turn_on", "entity_id": "input_boolean.ifttt_withings_sleep" }
