@@ -1,5 +1,5 @@
   - platform: opencv_darknet
-    name: Front Door Object Detection
+    # name: Front Door Object Detection
     source:
       - entity_id: camera.foscam_camera 
     options:

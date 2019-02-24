@@ -3,87 +3,524 @@
 
 title: Home
 resources:
-  - url: /local/custom-lovelace/surveillance-card.js?v=0
+  # - url: /local/custom-lovelace/surveillance-card.js?v=0.0.1
+  #   type: module
+  # - url: /local/custom-lovelace/alarm_control_panel-card/alarm_control_panel-card.js?v=0.4.0
+  #   type: js
+  - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=0.1.1
     type: module
-  - url: /local/custom-lovelace/alarm_control_panel-card/alarm_control_panel-card.js?v=1
+  - url: /local/custom-lovelace/monster-card/monster-card.js?v=0.2.3
     type: js
-  - url: /local/custom-lovelace/thermostat-card/thermostat-card.js?v=1
+  # - url: /local/custom-lovelace/dark-sky-weather-card.js?v=1
+  #   type: js
+  - url: /local/custom-lovelace/button-card.js?v=0.0.6
     type: module
-  - url: /local/custom-lovelace/monster-card/monster-card.js?v=0
+  - url: /local/custom-lovelace/group-card/group-card.js?v=0.0.2
     type: js
-  - url: /local/custom-lovelace/dark-sky-weather-card.js?v=1
+  # - url: /local/custom-lovelace/gauge-card/gauge-card.js
+  #   type: js
+  - url: /local/custom-lovelace/home-setter/home-setter.js?v=0.0.1
     type: js
-  - url: /local/custom-lovelace/button-card.js
-    type: module
-  - url: /local/custom-lovelace/group-card/group-card.js
+  # - url: /local/custom-lovelace/clock-element.js
+    # type: js
+  - url: /local/custom-lovelace/slider-entity-row.js?v=be80ff
     type: js
-  - url: /local/custom-lovelace/gauge-card/gauge-card.js
+  # - url: /local/custom-lovelace/column-card.js
+  #   type: js
+  - url: /local/custom-lovelace/kiosk.js?v=0
     type: js
-  - url: /local/custom-lovelace/home-setter/home-setter.js
+  - url: /local/custom-lovelace/useful-markdown-card.js?v=9377d8
     type: js
-  - url: /local/custom-lovelace/clock-element.js
+  - url: /local/custom-lovelace/lovelace-useful-markdown-card/useful-markdown-card.js?v=0
     type: js
-  - url: /local/custom-lovelace/slider-entity-row.js
+  - url: /local/custom_ui/weather-card.js?v=0
     type: js
-  - url: /local/custom-lovelace/column-card.js
-    type: js
-  - url: /local/custom-lovelace/kiosk.js
-    type: js
-  - url: /local/custom-lovelace/useful-markdown-card.js
-    type: js
-  - url: /local/custom_ui/weather-card.js
-    type: js
-#  - url: /local/custom-lovelace/tracker-card.js?v=0
+#  - url: /local/custom-lovelace/tracker-card.js?v=1.2.5
 #    type: js
+    
+  - url: /local/custom-lovelace/compact-custom-header/compact-custom-header.js?v=1.0.1b2
+    type: module
+
+  - url: /local/custom-lovelace/lovelace-weather-card-chart/custom-weather-card-chart.js?v=0
+    type: js
+  - url: /local/custom-lovelace/tracker-card/tracker-card.js?v=1.2.5
+    type: js
+    
+  - url: /local/custom-lovelace/card-tools.js?v=deb8e3
+    type: js
+
+
 views:
+
+
+
+  - title: Mobile
+    id: mobile
+    path: mobile
+    icon: mdi:cellphone-iphone
+    badges:
+        #  - sensor.temperature_158d0001db60d9
+        #  - sensor.temperature_158d0001a4b91d
+        #  - sensor.temperature_158d0001a1f903
+        #  - sensor.temperature_158d0001720782
+        #  - sensor.temperature_158d0001ab75f3
+        #  - sensor.temperature_158d0001e421d9
+      - sensor.teleinfo_papp
+        #  - sensor.temperature_158d0001ab1858
+        #  - sensor.temperature_158d0001713f49
+      - sensor.current_state
+      - sensor.period_of_day
+      - sensor.elecbill_today_so_far_ttc
+      # - proximity.home 
+      # - switch.prise_sapin
+      - device_tracker.volvo_et_732_hn
+      - sensor.status_volume_1
+      # - sensor.waqi_lille_fives_nordpasdecalais_france
+      - sensor.us_air_pollution_level
+      - binary_sensor.somebody_home
+      - binary_sensor.household_home
+      - binary_sensor.motion_detected
+      - binary_sensor.in_bed
+      # - binary_sensor.in_bed_2
+      - binary_sensor.detected_outside_car
+      # - device_tracker.qilive_tfk
+
+
+    cards:
+
+      - id: f1f2d46e2fd74773994da70ddb5a80b1  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: custom:compact-custom-header
+            main_config: true
+            # show_tabs: 1,2,3,4,5,6,7,9,10,11,12,13
+            hide_tabs: 0,14
+            notifications: clock
+            clock_format: 24
+            exceptions:
+            - conditions:
+                user_agent: Mobile
+              config:
+                # hide_tabs: 2,4,5,6,7,9,10,11
+                hide_tabs: 13
+                show_tabs: 1,3,8
+
+
+          - type: horizontal-stack
+            cards:
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
+                entity: group.living_lights
+                icon: mdi:lightbulb
+                # tap_action: more_info
+
+
+
+
+  #       show_state: tru
+  #       name: Lumières
+                # color: auto
+                # action: more_info
+                # color_type: card
+                # default_color: rgb(255, 233, 155)
+    #  - type: horizontal-stack
+#        cards:
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
+                entity: light.fibaro_system_fgd212_dimmer_2_level_7
+                icon: mdi:sofa
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
+                entity: light.fibaro_system_fgd212_dimmer_2_level_4
+                icon: mdi:silverware
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
+#      - type: horizontal-stack
+#        cards:
+              # - type: custom:button-card
+              - type: entity-button
+                name: " "
+                hold_action: toggle
+                entity: light.fibaro_system_fgd212_dimmer_2_level_5
+                icon: mdi:fridge
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
+              - type: entity-button
+                name: " "
+                hold_action: toggle
+                
+                entity: switch.prise_bambi
+                icon: mdi:baby-buggy
+
+                # entity: switch.prise_sapin
+                # icon: mdi:pine-tree-box
+
+
+
+                # color: auto
+                # default_color: rgb(255, 233, 155)
+                # action: more_info
+
+      - id: d6f93dad8457425a98e81a409e807c3d  # Automatically created id
+        type: horizontal-stack
+        cards:
+        
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
+            entity: display.chuwi
+            icon: mdi:tablet
+            action: more_info
+            color: rgb(155, 255 ,233)
+            color_off: rgb(140, 140, 140)
+
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          # # - type: custom:button-card
+          #   entity: media_player.xiaomi_network_speaker_upnp
+          #   # icon: mdi:speaker-wireless
+          #   # action: more_info
+          #   # color: rgb(155, 255 ,233)
+          #   # color_off: rgb(140, 140, 140)
+
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
+            entity: vacuum.xiaomi_vacuum_cleaner
+            icon: mdi:robot-vacuum
+            # action: more_info
+            # color: rgb(155, 255 ,233)
+            # color_off: rgb(140, 140, 140)
+          - type: custom:button-card
+            name: " "
+            action: more_info
+            entity: switch.et_732_hn_heater
+            color: rgb(255, 233, 155)
+            color_off: rgb(155,233,255)
+            icon: mdi:car-connected
+
+              
+
+      - id: 2fae947c082543a9afac149b32dccf48  # Automatically created id
+        type: horizontal-stack
+        cards:
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
+            entity: group.climate
+            icon: mdi:radiator
+            color: rgb(255, 233, 155)
+            # color_off: rgb(140, 140, 140)
+            action: more_info
+            # color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
+            entity: input_select.system_mode
+            icon: mdi:home-heart
+            # color: rgb(255, 233, 155)
+            # color_off: rgb(140, 140, 140)
+            # action: more_info
+
+      - id: 8c04cb9561ab4e68b1b9092757b2e126  # Automatically created id
+        type: horizontal-stack
+        cards:
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
+            entity: climate.baby_bedroom_thermostat
+            action: more_info
+            icon: mdi:baby
+            # state:
+            #   - value: 'sleeping'
+            #     color: var(--disabled-text-color)
+            #     icon: mdi:cube-outline
+            #   - value: 'media'
+            #     color: rgb(5, 147, 255)
+            #   - value: 'light'
+            #     color: rgb(189, 255, 5)            # color: rgb(255, 155, 155)
+            state:
+              - value: 'heat'
+                color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
+            entity: climate.parents_bedroom_thermostat
+            action: more_info
+            icon: mdi:bed-empty
+            color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+            state:
+              - value: 'heat'
+                color: rgb(255, 0, 0)
+            
+            # color: rgb(255, 155, 155)
+            # color_off: rgb(140, 140, 140)
+
+          # - type: entity-button
+            # name: " "
+            # hold_action: toggle
+          - type: custom:button-card
+            entity: climate.living_room_thermostat
+            action: more_info
+            icon: mdi:silverware
+            color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+            state:
+              - value: 'heat'
+                color: rgb(255, 0, 0)
+            # name: "living"
+            # color_type: card
+            # color_off: rgb(140, 140, 140)
+
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
+            entity: climate.library_thermostat
+            action: more_info
+            icon: mdi:library
+            # color: rgb(255, 0, 0)
+            default_color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+            color: rgb(255, 155, 155)
+            state:
+              - value: 'heat'
+                color: rgb(255, 0, 0)
+            # color_off: rgb(140, 140, 140)
+
+          # - type: entity-button
+          #   name: " "
+          #   hold_action: toggle
+          - type: custom:button-card
+            # entity: switch.qubino_zmnhadx_flush_1_relay_switch
+            entity: climate.shower_thermostat
+            action: more_info
+            icon: mdi:shower
+            default_color: rgb(255, 0, 0)
+            color: rgb(255, 0, 0)
+            color_off: rgb(155,233,255)
+            state:
+              - value: 'heat'
+                color: rgb(255, 0, 0)
+           # color: rgb(255, 155, 155)
+  #          - switch.radiateur_1_salon
+  #          - switch.radiateur_2_salon
+  #          - switch.radiateur_cuisine
+      - id: 3c26a599aee24b97a8f7b481dbbdb77c  # Automatically created id
+        type: horizontal-stack
+        cards:
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
+            entity: alarm_control_panel.arlo
+            # action: more_info
+            icon: mdi:shield-account-outline
+            # color: rgb(28, 128, 199)
+            state:
+              - value: 'armed'
+                color: rgb(255, 0, 0)            # color: rgb(28, 128, 199)
+          - type: entity-button
+            name: " "
+            hold_action: toggle
+          # - type: custom:button-card
+            entity: alarm_control_panel.home_alarm
+            # action: more_info
+            icon: mdi:shield-home
+            state:
+              - value: 'armed'
+                color: rgb(255, 0, 0)            # color: rgb(28, 128, 199)
+
+      # - id: f90597fa94ea491ebe56359aa042c13f  # Automatically created id
+      #   type: horizontal-stack
+      #   cards:
+      #     - type: sensor
+      #       name: Chambre 2 Jardin
+      #       entity: sensor.temperature_158d0001ab1858
+      #       graph: line
+      #     - type: sensor
+      #       name: Douche
+      #       icon: mdi:shower
+      #       # line_color: '#3498db'
+      #       graph: line
+      #       entity: sensor.temperature_158d0001e421d9
+      #     - type: sensor
+      #       name: Chambre 2 Rue
+      #       entity: sensor.temperature_158d0001713f49
+      #       graph: line
+      # - id: 3451d3f90a8548e69ac4dd44f93656fc  # Automatically created id
+      #   type: horizontal-stack
+      #   cards:
+      #     - type: sensor
+      #       name: Chambre Bébé
+      #       icon: mdi:baby
+      #       entity: sensor.temperature_158d0001720782
+      #       graph: line
+      #     - type: sensor
+      #       name: Chambre Parents
+      #       icon: mdi:bed-empty
+      #       entity: sensor.temperature_158d0001ab75f3
+      #       graph: line
+      #     - type: sensor
+      #       name: SDB
+      #       line_color: '#3498db'
+      #       entity: sensor.temperature_158d0001ab75da
+      #       graph: line
+      # - id: d09dba9e6aa04ee5b1031907d0f49e0c  # Automatically created id
+      #   type: horizontal-stack
+      #   cards:
+      #     - type: sensor
+      #       icon: mdi:fridge
+      #       name: Cuisine
+      #       entity: sensor.temperature_158d0001715c53
+      #       graph: line
+      #     - type: sensor
+      #       name: Salon
+      #       icon: mdi:sofa
+      #       entity: sensor.temperature_158d0001db60d9
+      #       graph: line
+      #     - type: sensor
+      #       name: Bibliothèque
+      #       icon: mdi:library
+      #       entity: sensor.temperature_158d0001a4b91d
+      #       graph: line
+      #    #blue
+      #     - type: sensor
+      #       name: Entrée
+      #       entity: sensor.temperature_158d0001a1f903
+      #       graph: line
+      #     - type: sensor
+      #       name: Couloir
+      #       entity: sensor.temperature_158d0001d6dae3
+      #       graph: line
+
+            # - type: sensor
+            #   name: Air
+            #   entity: sensor.waqi_lille_fives_nordpasdecalais_france
+            #   graph: line
+            #   hours_to_show: 72
+
+
+#    - type: vertical-stack
+#      cards:
+#
+#       - type: history-graph
+#         title: 'History RDC'
+#         entities:
+#         - sensor.temperature_158d0001715c53
+#         - sensor.temperature_158d0001db60d9
+#         - sensor.temperature_158d0001a4b91d
+#         - sensor.temperature_158d0001d6dae3
+#         - sensor.temperature_158d0001a1f903
+
+
+
+
+
+
+
+
+
 
   - title: Home
     id: home
     path: home
-    theme: midnight
+    theme: night
     panel: true
     icon: mdi:home
-#    badges:
-#      - alarm_control_panel.home_alarm
-#      - alarm_control_panel.arlo
-#      - sensor.current_state
-#      - sensor.period_of_day
-#      - binary_sensor.somebody_home
-#      - binary_sensor.motion_detected
-#      - binary_sensor.in_bed
-#      - input_select.system_mode
-#      - device_tracker.gaetane_igaetaneowntracks
-#      - device_tracker.ipierre
-#      - device_tracker.pierre_ipierre
-#      - display.chuwi
+  
+    # badges:
+    #  - alarm_control_panel.home_alarm
+    #  - alarm_control_panel.arlo
+    #  - sensor.current_state
+    #  - sensor.period_of_day
+    #  - binary_sensor.somebody_home
+    #  - binary_sensor.motion_detected
+    #  - binary_sensor.in_bed
+    #  - input_select.system_mode
+    #  - device_tracker.gaetane_igaetaneowntracks
+    #  - device_tracker.ipierre
+    #  - device_tracker.pierre_ipierre
+    #  - display.chuwi
     cards:
+
+    
       - id: 3e9b665e5e5a4e4c97bc24b0f60a6ee2  # Automatically created id
         type: vertical-stack
         cards:
-          - type: glance
-            show_state: false
-            show_name: true
-            theming: primary
-            column_width: calc(100% / 12)
-            columns: 12
-            entities:
-              - alarm_control_panel.home_alarm
-              - alarm_control_panel.arlo
-              - sensor.current_state
-              - sensor.period_of_day
-              # - binary_sensor.somebody_home
-              - binary_sensor.household_home
-              - binary_sensor.motion_detected
-              - binary_sensor.in_bed
-              - input_select.system_mode
-#         - device_tracker.gaetane_igaetaneowntracks
-#          - device_tracker.ipierre
-              # - device_tracker.igaetane
-              - group.gaetane
-              - group.pierre
-              # - device_tracker.pierre_ipierre
-              # - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
-              # - display.chuwi
+          - type: custom:compact-custom-header
+            main_config: false
+            hide_tabs: 0,13
+            exceptions:
+            - conditions:
+                user_agent: Mobile
+              config:
+                notifications: clock
+                clock_format: 24
+                # hide_tabs: 2,4,5,6,7,9,10,11
+                hide_tabs: 14
+                show_tabs: 1,3,8
+
+
+
+          # - type: custom:compact-custom-header
+          #   clock: notification
+          #   clock_format: 24
+          #   user_agent: mobile
+          #   user_agent_views:
+          #     - 1,2,3,4,5,6,7,8,9,10,11,12,13
+          #     - 0,3,8,12,13
+            # disable: true, false # Disables Compact Header completely for anything other than mobile
+#           - type: glance
+#             show_state: false
+#             show_name: true
+#             theming: primary
+#             column_width: calc(100% / 12)
+#             columns: 12
+#             entities:
+#               - alarm_control_panel.home_alarm
+#               - alarm_control_panel.arlo
+#               - sensor.current_state
+#               - sensor.period_of_day
+#               # - binary_sensor.somebody_home
+#               - binary_sensor.household_home
+#               - binary_sensor.motion_detected
+#               - binary_sensor.in_bed
+#               - input_select.system_mode
+# #         - device_tracker.gaetane_igaetaneowntracks
+# #          - device_tracker.ipierre
+#               # - device_tracker.igaetane
+#               - group.gaetane
+#               - group.pierre
+#               # - device_tracker.pierre_ipierre
+#               # - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
+#               # - display.chuwi
 
 
           - type: vertical-stack
@@ -91,85 +528,338 @@ views:
             cards:
               - type: horizontal-stack
                 cards:
-#         - type: weather-forecast
+                  - type: vertical-stack
+                    cards:
+                    - type: picture-entity
+                      title: Foscam Camera
+                      entity: camera.foscam_camera
+                      camera_image: camera.foscam_camera
+                      show_info: true
+                      tap_action: dialog
 
-                  - type: picture-entity
-                    title: Foscam Camera
-                    entity: camera.foscam_camera
-                    camera_image: camera.foscam_camera
-                    show_info: true
-                    tap_action: dialog
+
+
+
+
+
+
+                    # - type: horizontal-stack
+                      cards:
+                      - type: entity-button  
+                        entity: climate.living_room_thermostat
+                        icon: mdi:silverware
+                        name: " "
+                        # name: "Salon"
+                      - type: entity-button  
+                        entity: climate.baby_bedroom_thermostat
+                        icon: mdi:baby
+                        name: " "
+                        # name: "Baby"
+                      - type: entity-button  
+                        entity: climate.parents_bedroom_thermostat
+                        icon: mdi:bed-empty
+                        name: " "
+                        # name: "Parents"
+                      - type: entity-button  
+                        entity: climate.library_thermostat
+                        icon: mdi:library
+                        name: " "
+                        # name: "Library"
+                      # - type: thermostat  
+                      #   entity: climate.shower_thermostat
+                      #   icon: mdi:shower
+                      #   name: " "
 
                   - type: vertical-stack
                     cards:
                     
                     # - type: custom:weather-card
-                    #   entity_weather: weather.yweather
+                    #   entity_weather: weather.dark_sky
                     #   entity_sun: sun.sun
 
-                    - type: weather-forecast
-                      entity: weather.dark_sky
+                      # Example Lovelace UI config entry
+                    - type: custom:weather-card-chart
+                      title: " "
+                      weather: weather.dark_sky
+
+                    # - type: weather-forecast
+                    #   entity: weather.dark_sky
 
   #           entity: weather.dark_sky
 
 
-                    - type: glance
-                      show_state: false
-                      entities: 
-                      - entity: switch.harmony_music
-                        name: Musique
-                        icon: mdi:music
-                      - entity: switch.harmony_ps4
-                        name: PS4
-                        icon: mdi:playstation
-                      - entity: switch.harmony_tv
-                        name: TV
-                        icon: mdi:television
-                      - entity: switch.harmony_netflix
-                        name: Netflix
-                        icon: mdi:netflix
-                      - entity: switch.harmony_fire_tv
-                        name: Fire TV
-                        icon: mdi:amazon
+                    # - type: glance
+                    #   show_state: false
+                    #   entities: 
+                    #   - entity: switch.harmony_music
+                    #     name: Musique
+                    #     icon: mdi:music
+                    #   - entity: switch.harmony_ps4
+                    #     name: PS4
+                    #     icon: mdi:playstation
+                    #   - entity: switch.harmony_tv
+                    #     name: TV
+                    #     icon: mdi:television
+                    #   - entity: switch.harmony_netflix
+                    #     name: Netflix
+                    #     icon: mdi:netflix
+                    #   - entity: switch.harmony_fire_tv
+                    #     name: Fire TV
+                    #     icon: mdi:amazon
                       
 
 
               - type: horizontal-stack
                 cards:
-                  - type: custom:useful-markdown-card
+                  - type: custom:polymer-markdown-card
+                  # - type: markdown
                     padding: 15%
-                    fontSize: 200px
+                    fontSize: 180px
                     content: >
 
                       [[ sensor.time.state ]]
 
 
+#                   - type: glance
+#                     # title: Lights
+#                     # show_header_toggle: yes
+#                     entities:
+#                       # - entity: light.fibaro_system_fgd212_dimmer_2_level_7
+#                       #   type: custom:slider-entity-row
+#                       # - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+#                       #   type: custom:slider-entity-row
+#                       # - entity: light.fibaro_system_fgd212_dimmer_2_level_5
+#                       #   type: custom:slider-entity-row
+# #             - entity: switch.prise_bambi
+# #             - entity: light.gateway_light_34ce008c1873
+# #             - entity:  light.gateway_light_7811dcb7afd1
 
-                  - type: entities
-                    # title: Lights
-                    # show_header_toggle: yes
-                    entities:
-                      - entity: light.fibaro_system_fgd212_dimmer_2_level_7
-                        type: custom:slider-entity-row
-                      - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-                        type: custom:slider-entity-row
-                      - entity: light.fibaro_system_fgd212_dimmer_2_level_5
-                        type: custom:slider-entity-row
-#             - entity: switch.prise_bambi
-#             - entity: light.gateway_light_34ce008c1873
-#             - entity:  light.gateway_light_7811dcb7afd1
-                  # - type: light
-                  #   entity: light.fibaro_system_fgd212_dimmer_2_level_7
-                  # - type: light
-                  #   entity: light.fibaro_system_fgd212_dimmer_2_level_4
-                  # - type: light
-                  #   entity: light.fibaro_system_fgd212_dimmer_2_level_5
+#                     # - name: entity: light.fibaro_system_fgd212_dimmer_2_level_7
+#                     # - light.fibaro_system_fgd212_dimmer_2_level_4
+#                     # - light.fibaro_system_fgd212_dimmer_2_level_5
+#                     # - script.play_spotify_on_tv
+                  
+#                   # - type: light
+#                   #   entity: light.fibaro_system_fgd212_dimmer_2_level_7
+#                   # - type: light
+#                   #   entity: light.fibaro_system_fgd212_dimmer_2_level_4
+#                   # - type: light
+#                   #   entity: light.fibaro_system_fgd212_dimmer_2_level_5
+
+                  - type: vertical-stack
+                    cards:
+                      
+                    # - type: horizontal-stack
+                    #   cards:
+                    #     - type: thermostat
+                    #       entity: climate.living_room_thermostat
+                    #     - type: thermostat
+                    #       entity: climate.shower_thermostat
+                    #     - type: thermostat
+                    #       entity: climate.shower_thermostat
+                    #     - type: thermostat
+                    #       entity: climate.shower_thermostat
+
+                    # - type: glance
+                    #   entities:
+                    #   - climate.shower_thermostat
+                    #   - climate.living_room_thermostat
+                    #   - climate.shower_thermostat
+                    #   - climate.living_room_thermostat
+
+
+                    - type: glance
+                      show_state: false
+                      show_name: false
+                      # columns: 5
+                      entities: 
+                      - entity: switch.harmony_music
+                        name: Musique
+                        icon: mdi:music
+                        tap_action:
+                          action: toggle
+                      - entity: switch.harmony_tv
+                        name: TV
+                        icon: mdi:television
+                        tap_action:
+                          action: toggle
+                      - entity: switch.harmony_netflix
+                        name: Netflix
+                        icon: mdi:netflix
+                        tap_action:
+                          action: toggle
+                      - entity: script.play_spotify_on_tv
+                        name: Spotify
+                        icon: mdi:spotify
+                        tap_action:
+                          action: call-service
+                          service: script.turn_on
+                      - entity: group.living_lights
+                        icon: mdi:lightbulb
+
+
+
+
+                    - type: horizontal-stack
+
+                      cards:
+                        # - type: entity-button
+                        #   name: " "
+                        #   hold_action: toggle
+                        - type: custom:button-card
+                          entity: climate.baby_bedroom_thermostat
+                          action: more_info
+                          icon: mdi:baby
+                          # color: rgb(255, 155, 155)
+                          # color_off: rgb(140, 140, 140)
+                          color: rgb(255, 0, 0)
+                          default_color: rgb(255, 0, 0)
+                          color_off: rgb(155,233,255)
+                          state:
+                            - value: 'heat'
+                              color: rgb(255, 0, 0)
+
+                        # - type: entity-button
+                        #   name: " "
+                        #   hold_action: toggle
+                        - type: custom:button-card
+                          entity: climate.parents_bedroom_thermostat
+                          action: more_info
+                          icon: mdi:bed-empty
+                          color: rgb(255, 0, 0)
+                          default_color: rgb(255, 0, 0)
+                          color_off: rgb(155,233,255)
+                          state:
+                            - value: 'heat'
+                              color: rgb(255, 0, 0)
+                          # color: rgb(255, 155, 155)
+                          # color_off: rgb(140, 140, 140)
+
+                        # - type: entity-button
+                          # name: " "
+                          # hold_action: toggle
+                        - type: custom:button-card
+                          entity: climate.living_room_thermostat
+                          action: more_info
+                          icon: mdi:silverware
+                          color: rgb(255, 0, 0)
+                          default_color: rgb(255, 0, 0)
+                          color_off: rgb(155,233,255)
+                          state:
+                            - value: 'heat'
+                              color: rgb(255, 0, 0)
+                          # name: "living"
+                          # color_type: card
+                          # color_off: rgb(140, 140, 140)
+
+                        # - type: entity-button
+                        #   name: " "
+                        #   hold_action: toggle
+                        - type: custom:button-card
+                          entity: climate.library_thermostat
+                          action: more_info
+                          icon: mdi:library
+                          # color: rgb(255, 0, 0)
+                          default_color: rgb(255, 0, 0)
+                          color_off: rgb(155,233,255)
+                          color: rgb(255, 155, 155)
+                          state:
+                            - value: 'heat'
+                              color: rgb(255, 0, 0)
+                          # color_off: rgb(140, 140, 140)
+
+                        # - type: entity-button
+                        #   name: " "
+                        #   hold_action: toggle
+                        - type: custom:button-card
+                          # entity: switch.qubino_zmnhadx_flush_1_relay_switch
+                          entity: climate.shower_thermostat
+                          action: more_info
+                          icon: mdi:shower
+                          default_color: rgb(255, 0, 0)
+                          color: rgb(255, 0, 0)
+                          color_off: rgb(155,233,255)
+                          state:
+                            - value: 'heat'
+                              color: rgb(255, 0, 0)
+
+
+
+                      # - type: entities
+                      #   # title: Developer Tools
+                      #   show_header_toggle: false    
+                      #   entities:
+                      #     - type: weblink
+                      #       name: Spotify
+                      #       url: intent://spotify/#Intent;launchFlags=0x10000000;component=com.spotify.music/.MainActivity;end
+                      #       icon: mdi:spotify
+
+                      #     - type: weblink
+                      #       name: Harmony
+                      #       url: intent://harmonyhub/#Intent;launchFlags=0x10000000;component=com.logitech.harmonyhub/.ui.SplashActivity;end
+                      #       icon: mdi:remote
+
+
+                      #     - type: weblink
+                      #       name: Withings Home
+                      #       url: intent://home/#Intent;launchFlags=0x10000000;component=com.withings.home/.MainActivity;end
+                      #       icon: mdi:webcam
+
+                      # - type: glance
+                      #   show_state: false
+                      #   entities:
+                      #     - entity: weblink.spotify
+                      #     - entity: weblink.harmony
+                      #     - entity: weblink.withings_home
+                            # tap_action:
+                            #   action: navigate
+                            #   navigation_path: http://www.google.fr
+
+                    
+
+                      # - type: markdown
+                      #   # padding: 15%
+                      #   # fontSize: 180px
+                      #   content: >
+                      #     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"  rel="stylesheet">
+                      #     <i class="material-icons">face</i>
+                      #     [motioneye](http://192.168.0.85:8765)
+                          
+                  
+
+                      # - type: entity-button  
+                      #   entity: weblink.spotify
+                      #   name: " "
+                      #   tap_action: 
+                      #     action: toggle
+                      # - type: entity-button  
+                      #   entity: weblink.harmony
+                      #   name: " "
+                      #   tap_action: 
+                      #     action: navigate
+                      # - type: entity-button  
+                      #   entity: weblink.withings_home
+                      #   name: " "
+                      #   # tap_action: 
+                      #   #   action: call-service
+                      #   #   service: homeassistant.turn_on
+
 
   - title: Rooms
     icon: mdi:floor-plan
     path: rooms
     id: rooms
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #   - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #   - 12,13
+
+
 #      - type: entities
 #        title: Lights
 #        show_header_toggle: yes
@@ -264,21 +954,65 @@ views:
     icon: mdi:cctv
     path: cctv
     id: cctv
-    panel: true
+    # panel: true
     cards:
-      - id: 000766da96de4b85b153ecfb3ccdace3  # Automatically created id
-        type: custom:surveillance-card
-        thumb_interval: 15
-        update_interval: 2
-        cameras:
-          - entity: camera.foscam_camera
-            motion_entity: binary_sensor.foscam_c1_motion_sensor
-          - entity: camera.welcam_3
-          - entity: camera.dafang3
-          - entity: camera.jardin
-          - entity: camera.etage_1
-          - entity: camera.etage_2
 
+
+    # - type: custom:compact-custom-header
+    #   clock_format: 24
+    #   user_agent: mobile
+    #   user_agent_views:
+    #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+    #     - 12,13
+
+
+      # - id: 000766da96de4b85b153ecfb3ccdace3  # Automatically created id
+      #   type: custom:surveillance-card
+      #   thumb_interval: 15
+      #   update_interval: 2
+      #   cameras:
+      #     - entity: camera.foscam_camera
+      #       motion_entity: binary_sensor.foscam_c1_motion_sensor
+      #     - entity: camera.welcam_3
+      #     - entity: camera.dafang3
+      #     - entity: camera.jardin
+      #     - entity: camera.etage_1
+      #     - entity: camera.etage_2
+
+    - type: picture-glance
+      title: Foscam
+      entities:
+      - binary_sensor.foscam_c1_motion_sensor
+      camera_image: camera.foscam_camera
+
+    - type: picture-glance
+      title: Kitchen
+      entities: []
+      camera_image: camera.welcam_3
+
+    - type: picture-glance
+      title: Salon
+      camera_image: camera.dafang3
+      entities:
+      - switch.dafang_left
+      - switch.dafang_up
+      - switch.dafang_down
+      - switch.dafang_right
+ 
+    - type: picture-glance
+      title: Jardin
+      entities: []
+      camera_image: camera.jardin
+
+    - type: picture-glance
+      title: 2è
+      entities: []
+      camera_image: camera.etage_2
+    
+    - type: picture-glance
+      title: 1er
+      entities: []
+      camera_image: camera.etage_1
 
 
   - title: Temperatures
@@ -287,6 +1021,16 @@ views:
     id: temperatures
     icon: mdi:temperature-celsius
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - id: 9661f9b192d0408cb3985b1f5e2015db  # Automatically created id
         type: vertical-stack
       #- type: custom:column-card
@@ -296,42 +1040,53 @@ views:
               - type: sensor
                 name: Chambre 2 Jardin
                 entity: sensor.temperature_158d0001ab1858
+                graph: line
               - type: sensor
                 name: Douche
                 entity: sensor.temperature_158d0001e421d9
+                graph: line
               - type: sensor
                 name: Chambre 2 Rue
                 entity: sensor.temperature_158d0001713f49
+                graph: line
           - type: horizontal-stack
             cards:
               - type: sensor
                 name: Chambre Bébé
                 entity: sensor.temperature_158d0001720782
+                graph: line
               - type: sensor
                 name: Chambre Parents
                 entity: sensor.temperature_158d0001ab75f3
+                graph: line
               - type: sensor
                 name: SDB
                 entity: sensor.temperature_158d0001ab75da
+                graph: line
           - type: horizontal-stack
             cards:
               - type: sensor
                 name: Salon
                 entity: sensor.temperature_158d0001db60d9
+                graph: line
               - type: sensor
                 name: Cuisine
                 entity: sensor.temperature_158d0001715c53
+                graph: line
               - type: sensor
                 name: Bibliothèque
                 entity: sensor.temperature_158d0001a4b91d
+                graph: line
            #blue
            #line_color: "#3498db"
               - type: sensor
                 name: Couloir
                 entity: sensor.temperature_158d0001d6dae3
+                graph: line
               - type: sensor
                 name: Entrée
                 entity: sensor.temperature_158d0001a1f903
+                graph: line
 
 
   # - title: Thermostats 1
@@ -359,6 +1114,16 @@ views:
     path: thermostats
     panel: true
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - id: ed91a68029154279bcac30c20cac8f45  # Automatically created id
         type: vertical-stack
         cards:
@@ -409,38 +1174,38 @@ views:
             url: !secret panel_iframe_grafana_card_climate_baby_bedroom
 
 
-        - type: horizontal-stack
-          cards:
-            - type: glance
-              entities:
-              - climate.living_room_thermostat
-              - climate.library_thermostat
-              - climate.parents_bedroom_thermostat
-              - climate.baby_bedroom_thermostat
+        # - type: horizontal-stack
+        #   cards:
+        #     - type: glance
+        #       entities:
+        #       - climate.living_room_thermostat
+        #       - climate.library_thermostat
+        #       - climate.parents_bedroom_thermostat
+        #       - climate.baby_bedroom_thermostat
 
 
-            - type: glance
-              entities:
-              - schedy_room.schedy_heating_living_room
-              - schedy_room.schedy_heating_library
-              - schedy_room.schedy_heating_bedroom_parents
-              - schedy_room.schedy_heating_bedroom_baby
-              # - schedy_room.schedy_heating_shower
-              # - schedy_room.schedy_heating_statistics
+        #     - type: glance
+        #       entities:
+        #       - schedy_room.schedy_heating_living_room
+        #       - schedy_room.schedy_heating_library
+        #       - schedy_room.schedy_heating_bedroom_parents
+        #       - schedy_room.schedy_heating_bedroom_baby
+        #       # - schedy_room.schedy_heating_shower
+        #       # - schedy_room.schedy_heating_statistics
 
-            # - type: thermostat
-            #   entity: climate.living_room_thermostat
+        #     # - type: thermostat
+        #     #   entity: climate.living_room_thermostat
 
-            - type: entities
-              title: Lights
-              show_header_toggle: yes
-              entities:
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_7
-                type: custom:slider-entity-row
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_4
-                type: custom:slider-entity-row
-              - entity: light.fibaro_system_fgd212_dimmer_2_level_5
-                type: custom:slider-entity-row
+        #     - type: entities
+        #       title: Lights
+        #       show_header_toggle: yes
+        #       entities:
+        #       - entity: light.fibaro_system_fgd212_dimmer_2_level_7
+        #         type: custom:slider-entity-row
+        #       - entity: light.fibaro_system_fgd212_dimmer_2_level_4
+        #         type: custom:slider-entity-row
+        #       - entity: light.fibaro_system_fgd212_dimmer_2_level_5
+        #         type: custom:slider-entity-row
 
 
 
@@ -450,6 +1215,16 @@ views:
     path: security
     panel: true
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - id: 5f101caa458d4c2e8da132940194e7ef  # Automatically created id
         type: vertical-stack
         cards:
@@ -504,6 +1279,16 @@ views:
     path: multimedia
     id: multimedia
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - id: 1082e6c0305d418eaba04d6a6f98f9a7  # Automatically created id
         type: media-control
         # entity: media_player.xiaomi_network_speaker_airplay
@@ -524,22 +1309,26 @@ views:
         - entity: switch.harmony_music
           name: Musique
           icon: mdi:music
-          tap_action: toggle
+          # tap_action: toggle
         - entity: switch.harmony_ps4
           name: PS4
           icon: mdi:playstation
-          tap_action: toggle
+          # tap_action: toggle
         - entity: switch.harmony_tv
           name: TV
           icon: mdi:television
-          tap_action: toggle
+          # tap_action: toggle
         - entity: switch.harmony_netflix
           name: Netflix
           icon: mdi:netflix
+          # tap_action: toggle
+        - entity: script.play_spotify_on_tv
+          name: Spotify
+          icon: mdi:spotify
           tap_action: toggle
         - entity: remote.harmony_hub
           name: Harmony
-          tap_action: toggle
+          # tap_action: toggle
 
 
 # entity_id: media_player.xiaomi_network_speaker_airplay,media_player.salon,media_player.google_home__salon
@@ -551,6 +1340,16 @@ views:
     path: energy
     icon: mdi:flash
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - type: iframe
         url: !secret panel_iframe_grafana_power_consumption_dark
         aspect_ratio: 100%
@@ -561,6 +1360,15 @@ views:
     id: grafana
     icon: mdi:chart-areaspline
     cards:
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - type: iframe
         url: !secret panel_iframe_grafana_url
         aspect_ratio: 100%
@@ -572,6 +1380,16 @@ views:
     id: volvo
     icon: mdi:car-connected
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - type: custom:group-card
         card:
           type: glance
@@ -586,6 +1404,16 @@ views:
     path: frontcam
     panel: true
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
       - id: 869eeba961e64b43b7414a9df0364c7f  # Automatically created id
         type: picture-entity
         title: Foscam Camera
@@ -598,6 +1426,17 @@ views:
     path: settings
     id: settings
     cards:
+
+
+      # - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
+
+
       - id: c31f3f618f3f41febdd94ca674249f8b  # Automatically created id
         type: custom:monster-card
         show_header_toggle: true
@@ -638,350 +1477,27 @@ views:
           - name: Mobile
             path: lovelace/mobile
 
-  - title: Mobile
-    id: mobile
-    path: mobile
-    icon: mdi:cellphone-iphone
-    badges:
-        #  - sensor.temperature_158d0001db60d9
-        #  - sensor.temperature_158d0001a4b91d
-        #  - sensor.temperature_158d0001a1f903
-        #  - sensor.temperature_158d0001720782
-        #  - sensor.temperature_158d0001ab75f3
-        #  - sensor.temperature_158d0001e421d9
-      - sensor.teleinfo_papp
-        #  - sensor.temperature_158d0001ab1858
-        #  - sensor.temperature_158d0001713f49
-      - sensor.current_state
-      - sensor.period_of_day
-      - sensor.elecbill_today_so_far_ttc
-      # - proximity.home 
-      # - switch.prise_sapin
-      - device_tracker.volvo_et_732_hn
-      - sensor.status_volume_1
-      # - sensor.waqi_lille_fives_nordpasdecalais_france
-      - sensor.us_air_pollution_level
-      - binary_sensor.somebody_home
-      - binary_sensor.household_home
-      - binary_sensor.motion_detected
-      - binary_sensor.in_bed
-      # - binary_sensor.in_bed_2
-      - binary_sensor.detected_outside_car
-      - device_tracker.qilive_tfk
 
+      - type: custom:tracker-card
+        title:
+        trackers:
+          - sensor.custom_card_tracker
+          - sensor.custom_component_tracker
 
-    cards:
-      - id: f1f2d46e2fd74773994da70ddb5a80b1  # Automatically created id
-        type: horizontal-stack
-        cards:
-          - type: horizontal-stack
-            cards:
-              # - type: custom:button-card
-              - type: entity-button
-                name: " "
-                hold_action: toggle
-                entity: group.living_lights
-                icon: mdi:lightbulb
-                # tap_action: more_info
-
-  #       show_state: true
-  #       name: Lumières
-                # color: auto
-                # action: more_info
-                # color_type: card
-                # default_color: rgb(255, 233, 155)
-    #  - type: horizontal-stack
-#        cards:
-              # - type: custom:button-card
-              - type: entity-button
-                name: " "
-                hold_action: toggle
-                entity: light.fibaro_system_fgd212_dimmer_2_level_7
-                icon: mdi:sofa
-                # color: auto
-                # default_color: rgb(255, 233, 155)
-                # action: more_info
-              # - type: custom:button-card
-              - type: entity-button
-                name: " "
-                hold_action: toggle
-                entity: light.fibaro_system_fgd212_dimmer_2_level_4
-                icon: mdi:silverware
-                # color: auto
-                # default_color: rgb(255, 233, 155)
-                # action: more_info
-#      - type: horizontal-stack
-#        cards:
-              # - type: custom:button-card
-              - type: entity-button
-                name: " "
-                hold_action: toggle
-                entity: light.fibaro_system_fgd212_dimmer_2_level_5
-                icon: mdi:fridge
-                # color: auto
-                # default_color: rgb(255, 233, 155)
-                # action: more_info
-              - type: entity-button
-                name: " "
-                hold_action: toggle
-                
-                # entity: switch.prise_bambi
-                # icon: mdi:baby-buggy
-
-                entity: switch.prise_sapin
-                icon: mdi:pine-tree-box
-
-
-
-                # color: auto
-                # default_color: rgb(255, 233, 155)
-                # action: more_info
-
-      - id: d6f93dad8457425a98e81a409e807c3d  # Automatically created id
-        type: horizontal-stack
-        cards:
-          # - type: entity-button
-          #   name: " "
-          #   hold_action: toggle
-          # # - type: custom:button-card
-          #   entity: display.chuwi
-          #   icon: mdi:tablet
-          #   # action: more_info
-          #   # color: rgb(155, 255 ,233)
-          #   # color_off: rgb(140, 140, 140)
-
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
-            entity: media_player.xiaomi_network_speaker_upnp
-            # icon: mdi:speaker-wireless
-            # action: more_info
-            # color: rgb(155, 255 ,233)
-            # color_off: rgb(140, 140, 140)
-
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
-            entity: vacuum.xiaomi_vacuum_cleaner
-            icon: mdi:robot-vacuum
-            # action: more_info
-            # color: rgb(155, 255 ,233)
-            # color_off: rgb(140, 140, 140)
-          - type: custom:button-card
-            name: " "
-            action: more_info
-            entity: switch.et_732_hn_heater
-            color: rgb(255, 233, 155)
-            color_off: rgb(155,233,255)
-            icon: mdi:car-connected
-
-              
-
-      - id: 2fae947c082543a9afac149b32dccf48  # Automatically created id
-        type: horizontal-stack
-        cards:
-          # - type: entity-button
-          #   name: " "
-          #   hold_action: toggle
-          - type: custom:button-card
-            entity: group.climate
-            icon: mdi:radiator
-            color: rgb(255, 233, 155)
-            # color_off: rgb(140, 140, 140)
-            action: more_info
-            # color: rgb(255, 0, 0)
-            color_off: rgb(155,233,255)
-
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
-            entity: input_select.system_mode
-            icon: mdi:home-heart
-            # color: rgb(255, 233, 155)
-            # color_off: rgb(140, 140, 140)
-            # action: more_info
-
-      - id: 8c04cb9561ab4e68b1b9092757b2e126  # Automatically created id
-        type: horizontal-stack
-        cards:
-          # - type: entity-button
-          #   name: " "
-          #   hold_action: toggle
-          - type: custom:button-card
-            entity: climate.baby_bedroom_thermostat
-            action: more_info
-            icon: mdi:baby
-            # color: rgb(255, 155, 155)
-            # color_off: rgb(140, 140, 140)
-            color: rgb(255, 0, 0)
-            default_color: rgb(255, 0, 0)
-            color_off: rgb(155,233,255)
-
-          # - type: entity-button
-          #   name: " "
-          #   hold_action: toggle
-          - type: custom:button-card
-            entity: climate.parents_bedroom_thermostat
-            action: more_info
-            icon: mdi:bed-empty
-            color: rgb(255, 0, 0)
-            default_color: rgb(255, 0, 0)
-            color_off: rgb(155,233,255)
-            # color: rgb(255, 155, 155)
-            # color_off: rgb(140, 140, 140)
-
-          # - type: entity-button
-            # name: " "
-            # hold_action: toggle
-          - type: custom:button-card
-            entity: climate.living_room_thermostat
-            action: more_info
-            icon: mdi:silverware
-            color: rgb(255, 0, 0)
-            default_color: rgb(255, 0, 0)
-            color_off: rgb(155,233,255)
-            # name: "living"
-            # color_type: card
-            # color_off: rgb(140, 140, 140)
-
-          # - type: entity-button
-          #   name: " "
-          #   hold_action: toggle
-          - type: custom:button-card
-            entity: climate.library_thermostat
-            action: more_info
-            icon: mdi:library
-            # color: rgb(255, 0, 0)
-            default_color: rgb(255, 0, 0)
-            color_off: rgb(155,233,255)
-            color: rgb(255, 155, 155)
-            # color_off: rgb(140, 140, 140)
-
-          # - type: entity-button
-          #   name: " "
-          #   hold_action: toggle
-          - type: custom:button-card
-            # entity: switch.qubino_zmnhadx_flush_1_relay_switch
-            entity: climate.shower_thermostat
-            action: more_info
-            icon: mdi:shower
-            default_color: rgb(255, 0, 0)
-            color: rgb(255, 0, 0)
-            color_off: rgb(155,233,255)
-           # color: rgb(255, 155, 155)
-  #          - switch.radiateur_1_salon
-  #          - switch.radiateur_2_salon
-  #          - switch.radiateur_cuisine
-      - id: 3c26a599aee24b97a8f7b481dbbdb77c  # Automatically created id
-        type: horizontal-stack
-        cards:
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
-            entity: alarm_control_panel.arlo
-            # action: more_info
-            icon: mdi:security
-            # color: rgb(28, 128, 199)
-          - type: entity-button
-            name: " "
-            hold_action: toggle
-          # - type: custom:button-card
-            entity: alarm_control_panel.home_alarm
-            # action: more_info
-            icon: mdi:security-home
-            # color: rgb(28, 128, 199)
-
-      # - id: f90597fa94ea491ebe56359aa042c13f  # Automatically created id
-      #   type: horizontal-stack
-      #   cards:
-      #     - type: sensor
-      #       name: Chambre 2 Jardin
-      #       entity: sensor.temperature_158d0001ab1858
-      #       graph: line
-      #     - type: sensor
-      #       name: Douche
-      #       icon: mdi:shower
-      #       # line_color: '#3498db'
-      #       graph: line
-      #       entity: sensor.temperature_158d0001e421d9
-      #     - type: sensor
-      #       name: Chambre 2 Rue
-      #       entity: sensor.temperature_158d0001713f49
-      #       graph: line
-      # - id: 3451d3f90a8548e69ac4dd44f93656fc  # Automatically created id
-      #   type: horizontal-stack
-      #   cards:
-      #     - type: sensor
-      #       name: Chambre Bébé
-      #       icon: mdi:baby
-      #       entity: sensor.temperature_158d0001720782
-      #       graph: line
-      #     - type: sensor
-      #       name: Chambre Parents
-      #       icon: mdi:bed-empty
-      #       entity: sensor.temperature_158d0001ab75f3
-      #       graph: line
-      #     - type: sensor
-      #       name: SDB
-      #       line_color: '#3498db'
-      #       entity: sensor.temperature_158d0001ab75da
-      #       graph: line
-      # - id: d09dba9e6aa04ee5b1031907d0f49e0c  # Automatically created id
-      #   type: horizontal-stack
-      #   cards:
-      #     - type: sensor
-      #       icon: mdi:fridge
-      #       name: Cuisine
-      #       entity: sensor.temperature_158d0001715c53
-      #       graph: line
-      #     - type: sensor
-      #       name: Salon
-      #       icon: mdi:sofa
-      #       entity: sensor.temperature_158d0001db60d9
-      #       graph: line
-      #     - type: sensor
-      #       name: Bibliothèque
-      #       icon: mdi:library
-      #       entity: sensor.temperature_158d0001a4b91d
-      #       graph: line
-      #    #blue
-      #     - type: sensor
-      #       name: Entrée
-      #       entity: sensor.temperature_158d0001a1f903
-      #       graph: line
-      #     - type: sensor
-      #       name: Couloir
-      #       entity: sensor.temperature_158d0001d6dae3
-      #       graph: line
-
-            # - type: sensor
-            #   name: Air
-            #   entity: sensor.waqi_lille_fives_nordpasdecalais_france
-            #   graph: line
-            #   hours_to_show: 72
-
-
-#    - type: vertical-stack
-#      cards:
-#
-#       - type: history-graph
-#         title: 'History RDC'
-#         entities:
-#         - sensor.temperature_158d0001715c53
-#         - sensor.temperature_158d0001db60d9
-#         - sensor.temperature_158d0001a4b91d
-#         - sensor.temperature_158d0001d6dae3
-#         - sensor.temperature_158d0001a1f903
 
   - title: Debug
     id: debug
     path: debug
     panel: false
     cards:
+
+      - type: custom:compact-custom-header
+      #   clock_format: 24
+      #   user_agent: mobile
+      #   user_agent_views:
+      #     - 0,1,2,3,4,5,6,7,8,9,10,11,12,13
+      #     - 12,13
+
 
       # - id: 634c51d9c2ba458f853f65aea48168e5  # Automatically created id
       #   type: entities
@@ -1001,6 +1517,7 @@ views:
       #     - light.qubino_zmnhjd1_flush_dimmer_pilot_wire_level
       #     - climate.baby_bedroom_thermostat 
       #     - automation.qubino_radiateur__baby 
+
 
       - id: 634c51d9c2ba458f853f65aea48168e4  # Automatically created id
         type: history-graph

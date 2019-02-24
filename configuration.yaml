@@ -19,7 +19,7 @@ homeassistant:
  
 logger:
   default: info
-  logs:
+  # logs:
     # requests.packages.urllib3.connectionpool: error # critical #for this item anything below error will not be logged
     # py.warnings: critical
     # volvooncall: debug
@@ -141,6 +141,7 @@ input_number: !include input_number.yaml
 input_select: !include input_select.yaml
 input_boolean: !include input_boolean.yaml
 
+rest_command: !include rest_command.yaml
 
 influxdb:
   host: !secret influx_host
@@ -180,7 +181,7 @@ weather:
     api_key: !secret darksky_api_key 
     mode: daily
     units: ca
-    language: fr
+    # language: fr
 #    forecast:
 #      - 1
 #      - 2
@@ -189,12 +190,12 @@ weather:
 #      - 5
 #      - 6
 #      - 7
-    monitored_conditions:
-      - temperature
-      - apparent_temperature
-      - summary
-      - icon
-      - precip_probability
+    # monitored_conditions:
+    #   - temperature
+    #   - apparent_temperature
+    #   - summary
+    #   - icon
+    #   - precip_probability
 
 
 # Weather prediction
@@ -359,8 +360,8 @@ telegram_bot:
        - !secret telegram_chat_id 
 # for webhooks mode only
     parse_mode: html
-    trusted_networks:
-      - 192.168.0.0/16
+    # trusted_networks:
+    #   - 192.168.0.0/16
 
 
 google_assistant:
@@ -409,7 +410,7 @@ arlo:
 display:
   - platform: fully_kiosk
     name: chuwi
-    host: 192.168.0.30
+    host: !secret chuwi_host
     password: !secret chuwi_password
 
 # climate: !include climate.yaml
@@ -424,3 +425,19 @@ volvooncall:
   username: !secret volvooncall_username
   password: !secret volvooncall_password
   
+
+
+custom_updater:
+  # mode: yaml
+  show_installable: False # hide not-used custom stuff  
+  track:
+    - components
+    - cards
+    - python_scripts
+  # card_urls:
+  #   - https://raw.githubusercontent.com/sgttrs/lovelace-weather-card-chart/master/custom-updater.json
+  #   - https://raw.githubusercontent.com/ljmerza/light-entity-card/master/custom_updater.json
+
+
+weblink: !include weblink.yaml
+system_health:
