@@ -1,0 +1,21 @@
+  dafang_right:
+    url: !secret dafang_url_right 
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+  dafang_left:
+    url: !secret dafang_url_left
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+  dafang_up:
+    url: !secret dafang_url_up 
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+  dafang_down:
+    url: !secret dafang_url_down 
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+    
