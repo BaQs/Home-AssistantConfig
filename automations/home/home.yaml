@@ -108,32 +108,32 @@
 
 
 
-- id: lights_living
-  alias: 'Lights: living'
-  initial_state: true
-  trigger:
-    platform: state
-    entity_id: group.living_lights
-    to: 'on'
-    for:
-      minutes: 60
-  condition:
-    condition: and
-    conditions:
-      - condition: state
-        entity_id: remote.harmony_hub
-        state: 'off'
-        for:
-          minutes: 15
-      - condition: state
-        entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
-        state: 'off'
-  action:
-    - service: homeassistant.turn_off
-      entity_id: group.living_lights
-    - service: notify.telegram
-      data:
-        message: "Living lights were on for 60 min, but TV is OFF since 15 min & no motion. So I shut them down"
+# - id: lights_living
+#   alias: 'Lights: living'
+#   initial_state: true
+#   trigger:
+#     platform: state
+#     entity_id: group.living_lights
+#     to: 'on'
+#     for:
+#       minutes: 60
+#   condition:
+#     condition: and
+#     conditions:
+#       - condition: state
+#         entity_id: remote.harmony_hub
+#         state: 'off'
+#         for:
+#           minutes: 15
+#       - condition: state
+#         entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
+#         state: 'off'
+#   action:
+#     - service: homeassistant.turn_off
+#       entity_id: group.living_lights
+#     - service: notify.telegram
+#       data:
+#         message: "Living lights were on for 60 min, but TV is OFF since 15 min & no motion. So I shut them down"
 
 
 
@@ -185,6 +185,8 @@
      to: 'on'
   action:
     - service: display.fullykiosk_screensaver_stop
+    - service: display.turn_on
+      entity_id: display.chuwi
 
 
 # house keeping on thursday morning
