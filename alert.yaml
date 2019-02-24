@@ -25,7 +25,7 @@
     message: "Coupure électrique! APC en statut <b>{{states.sensor.ups_status.state}}</b>. Il reste {{  states.sensor.ups_time_left.state }}min. de batterie"
     done_message: UPS is back online
     entity_id: sensor.ups_status
-    state: 'ONBATTERY'
+    state: 'ONBATT'
     repeat: 3
     can_acknowledge: True
     skip_first: False
