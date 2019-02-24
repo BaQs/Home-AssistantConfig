@@ -27,9 +27,9 @@
     # - service: alarm_control_panel.alarm_arm_away
     #   entity_id: alarm_control_panel.arlo
     # Start the vacuum
-#    - service: vacuum.start
-#      entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: script.vacuum_zoned_clean
+    - service: vacuum.start
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    # - service: script.vacuum_zoned_clean
     # Turn off TV
     - service: remote.turn_off
       entity_id: remote.harmony_hub
