@@ -7,7 +7,7 @@ schedy_heating:
   class: SchedyApp
 
   # Enable debugging output
-  debug: false
+  debug: true
 
 
   # By default, Schedy tries to restore its previous state at startup
@@ -83,6 +83,8 @@ schedy_heating:
   # entities only used in the schedules of particular rooms, use the
   # per-room watched_entities list.
   watched_entities:
+  - binary_sensor.in_bed
+  - sensor.current_state
 
     # Each entry has to be a string consisting of up to three
     # colon-separated parts:
@@ -132,11 +134,15 @@ schedy_heating:
       # 21 degrees on weekdays, from 9pm to 9am
       - v: 21
         rules:
+
+        # if on holidays, just break
+        - x: "Break() if state('sensor.current_state') == 'on_vacation' else Skip()"
+
         # on normal working days, turn on from 06:30 to 07:00
         - weekdays: 1-5
           rules:
-          - { start: "07:00", end: "09:00"}
-          - { start: "18:30", end: "23:00"}
+          - { start: "06:30", end: "09:00"}
+          - { start: "17:30", end: "23:59"}
           - x: "Add(-3) if is_on('binary_sensor.in_bed') else Skip()"
 
         - weekdays: 6-7
@@ -147,7 +153,7 @@ schedy_heating:
 
       # 
       # for the rest, 17 degrees
-      - v: 17
+      - v: 17.5
       - x: "Add(+4) if ( is_on('binary_sensor.household_home')  and is_off('binary_sensor.in_bed')    ) else Skip()"
 
       watched_entities:
@@ -168,22 +174,24 @@ schedy_heating:
 
       schedule:
       # 21 degrees on weekdays, from 9pm to 9am
-      # - v: 21
+      - v: 19
       #   weekdays: 1-5
       #   start: "8:00"
       #   end: "9:00"
+        rules:
+        # if on holidays, just break
+        - x: "Break() if state('sensor.current_state') == 'on_vacation' else Skip()"
 
-      - v: 18
-        weekdays: 1-5
-        start: "19:00"
-        end: "21:00"
+        - v: 18
+          weekdays: 1-5
+          start: "19:00"
+          end: "21:00"
 
-      # 20 degrees on weekends, from x to y
-      - v: 19
-        weekdays: 6,7
-        start: "10:00"
-        end: "21:00"
-
+        # 20 degrees on weekends, from x to y
+        - v: 19
+          weekdays: 6,7
+          start: "10:00"
+          end: "21:00"
         # for the rest, v degrees
       - v: 17
 
@@ -201,17 +209,22 @@ schedy_heating:
           off_temp: 14
 
       schedule:
-      # 20 degrees on weekdays, from 9pm to 9am
       - v: 20
-        weekdays: 1-5
-        start: "20:40"
-        end: "9:00"
+        rules:
+        # if on holidays, just break
+        - x: "Break() if state('sensor.current_state') == 'on_vacation' else Skip()"
 
-      # 20 degrees on weekends, from x to y
-      - v: 20
-        weekdays: 6,7
-        start: "21:00"
-        end: "10:00"
+        # 20 degrees on weekdays, from 9pm to 9am
+        - v: 20
+          weekdays: 1-5
+          start: "20:40"
+          end: "9:00"
+
+        # 20 degrees on weekends, from x to y
+        - v: 20
+          weekdays: 6,7
+          start: "21:00"
+          end: "10:00"
 
         # for the rest, v degrees
       - x: "20 if is_on('binary_sensor.in_bed') else Skip()"
@@ -219,6 +232,7 @@ schedy_heating:
 
       watched_entities:
       - climate.parents_bedroom_thermostat
+      - binary_sensor.in_bed
 
     # Create such a block for every room you want to control.
     bedroom_baby:
@@ -231,17 +245,22 @@ schedy_heating:
           off_temp: 15
 
       schedule:
-      # 20 degrees on weekdays, from 9pm to 9am
-      - v: 20.5
-        weekdays: 1-5
-        start: "19:30"
-        end: "8:00"
+      - v: 20
+        rules:
+        # if on holidays, just break
+        - x: "Break() if state('sensor.current_state') == 'on_vacation' else Skip()"
 
-      # 20 degrees on weekends, from x to y
-      - v: 20.5
-        weekdays: 6,7
-        start: "19:30"
-        end: "9:00"
+        # 20 degrees on weekdays, from 9pm to 9am
+        - v: 20.5
+          weekdays: 1-5
+          start: "19:30"
+          end: "8:00"
+
+        # 20 degrees on weekends, from x to y
+        - v: 20.5
+          weekdays: 6,7
+          start: "19:30"
+          end: "9:00"
 
         # for the rest, v degrees
       - v: 17
@@ -259,17 +278,22 @@ schedy_heating:
           off_temp: 14
 
       schedule:
-      # 20 degrees on weekdays, from 9pm to 9am
-      - v: 20
-        weekdays: 1-5
-        start: "7:00"
-        end: "8:30"
+      - v: 15
+        rules:
+        # if on holidays, just break
+        - x: "Break() if state('sensor.current_state') == 'on_vacation' else Skip()"
 
-      # 20 degrees on weekends, from x to y
-      # - v: 20
-      #   weekdays: 6,7
-      #   start: "7:45"
-      #   end: "8:30"
+        # 20 degrees on weekdays, from 9pm to 9am
+        - v: 20
+          weekdays: 1-5
+          start: "7:00"
+          end: "8:30"
+
+        # 20 degrees on weekends, from x to y
+        # - v: 20
+        #   weekdays: 6,7
+        #   start: "7:45"
+        #   end: "8:30"
 
         # for the rest, v degrees
       - v: 15
