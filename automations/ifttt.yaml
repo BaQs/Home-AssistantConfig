@@ -45,10 +45,10 @@
   - service_template: '{{ trigger.event.data.service }}'
     data_template:
       entity_id: '{{ trigger.event.data.entity_id }}'
-  - service: notify.ios_ipierre
-    data_template:
-      message: "Withings (via IFTTT): {{ trigger.event.data.service }} {{ trigger.event.data.entity_id }} )"
-      title: Bed
+  # - service: notify.ios_ipierre
+  #   data_template:
+  #     message: "Withings (via IFTTT): {{ trigger.event.data.service }} {{ trigger.event.data.entity_id }} )"
+  #     title: Bed
 
   # { "detail": "into_bed"}
     # Body: { "action": "call_service", "service": "input_boolean.turn_on", "entity_id": "input_boolean.ifttt_withings_sleep" }

@@ -12,9 +12,9 @@
   action:
     - service: display.turn_off
       entity_id: display.chuwi
-    - service: notify.ios_ipierre
-      data:
-        message: In bed, turning chuwi off
+    # - service: notify.ios_ipierre
+    #   data:
+    #     message: In bed, turning chuwi off
 
 - id: from_bed
   alias: 'From bed'
@@ -29,6 +29,6 @@
   action:
     - service: display.turn_on
       entity_id: display.chuwi
-    - service: notify.ios_ipierre
-      data:
-        message: Back up, turning chuwi on
+    # - service: notify.ios_ipierre
+    #   data:
+    #     message: Back up, turning chuwi on
