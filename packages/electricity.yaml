@@ -471,7 +471,7 @@ sensor:
   - platform: influxdb
     host: !secret influx_host
     port: 8086
-    max_retries: 10
+    # max_retries: 10
 
 
     queries:
