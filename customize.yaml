@@ -22,3 +22,12 @@
     icon: mdi:flash
 
 
+  switch.dafang_up:
+    icon: mdi:arrow-up-bold
+  switch.dafang_down:
+    icon: mdi:arrow-down-bold
+  switch.dafang_left:
+    icon: mdi:arrow-left-bold
+  switch.dafang_right:
+    icon: mdi:arrow-right-bold
+    
