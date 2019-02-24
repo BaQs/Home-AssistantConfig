@@ -35,5 +35,7 @@
       # it changes too often..
     entities:
       - automation.electricity_guess_what
+      - automation.chuwi_screensaver_stop
+      - device_tracker.xiao_mi_hu_lian_wang_yin_xiang_580123987
 
 
