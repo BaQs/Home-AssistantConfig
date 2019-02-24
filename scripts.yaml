@@ -114,3 +114,28 @@
       - service: media_player.media_stop
         data:
           entity_id:  media_player.panasonic_viera_tv 
+
+          
+
+  play_spotify_on_tv:
+    alias: "Play Spotify On TV"
+    sequence:
+
+      # spotify select source
+
+      - service: media_player.select_source
+        data:
+          entity_id: media_player.spotify
+          source: "Amazon FireTV Stick Gen 2 ☆"
+
+      # start tv on spotify (via harmony)
+
+      - service: homeassistant.turn_on
+        data:
+          entity_id: switch.harmony_fire_tv
+
+      # media player play on spotify
+
+      - service: media_player.media_play
+        data:
+          entity_id: media_player.spotify
