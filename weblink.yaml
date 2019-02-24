@@ -1,0 +1,13 @@
+  entities:
+    - name: Spotify
+      url: intent://spotify/#Intent;launchFlags=0x10000000;component=com.spotify.music/.MainActivity;end
+      # url: http://spotify.com
+      icon: mdi:spotify
+
+    - name: Harmony
+      url: 'intent://harmonyhub/#Intent;launchFlags=0x10000000;component=com.logitech.harmonyhub/.ui.SplashActivity;end'
+      icon: mdi:remote
+      
+    - name: Withings Home
+      url: 'intent://home/#Intent;launchFlags=0x10000000;component=com.withings.home/.MainActivity;end'
+      icon: mdi:webcam
