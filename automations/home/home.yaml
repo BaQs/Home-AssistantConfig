@@ -9,9 +9,10 @@
      event_type: button_pressed
      event_data: {"entity_id": "switch.sonnette","state": "group on"}
   action:
-    - service: display.fullykiosk_load_url
-      data:
-        url: !secret chuwi_tab_frontcam
+    - service: rest_command.fullykiosk_load_tab_frontcam
+    # - service: display.fullykiosk_load_url
+    #   data:
+    #     url: !secret chuwi_tab_frontcam
     - service: notify.telegram
       data:
         message: "Cameras"
@@ -20,7 +21,8 @@
              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
                caption: "On sonne!"
     - delay: 0:03
-    - service: display.fullykiosk_load_start_url
+    # - service: display.fullykiosk_load_start_url
+    - service: rest_command.fullykiosk_load_start_url
     - service: script.front_door_camera_on_tv
 
 
@@ -97,9 +99,10 @@
         url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}
       message: "La place est libre. (voiture: {{states.binary_sensor.detected_outside_car.state}})"
       title: Parking
-  - service: display.fullykiosk_load_url
-    data:
-      url: !secret chuwi_tab_frontcam
+  - service: rest_command.fullykiosk_load_tab_frontcam
+  # - service: display.fullykiosk_load_url
+  #   data:
+  #     url: !secret chuwi_tab_frontcam
 #  - service: tts.google_say
 #    data:
 #      entity_id: media_player.google_home__salon
@@ -134,6 +137,31 @@
 #     - service: notify.telegram
 #       data:
 #         message: "Living lights were on for 60 min, but TV is OFF since 15 min & no motion. So I shut them down"
+
+
+
+# Turn off music after 30min
+- id: music_off
+  alias: 'Music: auto off'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: media_player.xiaomi_network_speaker_upnp
+    to: 'on'
+    for:
+      minutes: 30
+  condition:
+    - condition: state
+      entity_id: sensor.current_state
+      state: 'home'
+
+  action:
+    - service: homeassistant.turn_off
+      entity_id: group.living_lights
+    - service: notify.telegram
+      data:
+        message: "Living lights were on for 60 min, but TV is OFF since 15 min & no motion. So I shut them down"
+
 
 
 
@@ -176,7 +204,7 @@
 
 
 # turn off screensaver of chuwi when somebody moves 
-- id: chuwi_stop_screensaver
+- id: chuwi_screensaver_stop
   alias: 'Chuwi: Screensaver stop'
   initial_state: true
   trigger:
@@ -184,9 +212,11 @@
      entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
      to: 'on'
   action:
-    - service: display.fullykiosk_screensaver_stop
-    - service: display.turn_on
-      entity_id: display.chuwi
+    # - service: display.fullykiosk_screensaver_stop
+    # - service: display.turn_on
+    #   entity_id: display.chuwi
+    - service: switch.turn_on
+      entity_id: switch.fullykiosk_screen
 
 
 # house keeping on thursday morning

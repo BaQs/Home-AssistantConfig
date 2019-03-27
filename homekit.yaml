@@ -12,7 +12,8 @@ filter:
         include_entities:
                 - alarm_control_panel.home_alarm
                 - alarm_control_panel.arlo
-                - display.chuwi
+                # - display.chuwi
+                - switch.fullykiosk_screen
                 - input_select.system_mode
                 - light.fibaro_system_fgd212_dimmer_2_level_4
                 - light.fibaro_system_fgd212_dimmer_2_level_7

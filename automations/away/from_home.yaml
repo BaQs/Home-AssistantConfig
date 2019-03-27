@@ -41,8 +41,10 @@
       data:
         entity_id: group.climate
         away_mode: true
-    - service: display.turn_off
-      entity_id: display.chuwi
+    - service: switch.turn_off
+      entity_id: switch.fullykiosk_screen
+    # - service: display.turn_off
+    #   entity_id: display.chuwi
 #     - climate.baby_bedroom_thermostat
 #     - climate.parents_bedroom_thermostat
 #     - climate.living_room_thermostat

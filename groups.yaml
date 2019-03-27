@@ -47,7 +47,8 @@
       - binary_sensor.motion_last30
       - binary_sensor.motion_detected
 #     - group.elecbill
-      - display.chuwi
+      # - display.chuwi
+      - switch.fullykiosk_screen
       - group.salon
       - group.shower
       - group.kitchen
@@ -113,7 +114,7 @@
       - vacuum.xiaomi_vacuum_cleaner
       - sensor.illumination_158d0001ddb2d3
       - binary_sensor.motion_sensor_158d0001ddb2d3
-      - switch.prise_lampe_boule
+      # - switch.prise_lampe_boule
       - switch.radiateur_1_salon
       - switch.radiateur_1_salon_inverted
       - switch.radiateur_2_salon

@@ -10,8 +10,10 @@
       state: 'home'
 
   action:
-    - service: display.turn_off
-      entity_id: display.chuwi
+    # - service: display.turn_off
+    #   entity_id: display.chuwi
+    - service: switch.turn_off
+      entity_id: switch.fullykiosk_screen
     # - service: notify.ios_ipierre
     #   data:
     #     message: In bed, turning chuwi off
@@ -27,8 +29,10 @@
       entity_id: sensor.current_state
       state: 'home'
   action:
-    - service: display.turn_on
-      entity_id: display.chuwi
+    # - service: display.turn_on
+    #   entity_id: display.chuwi
+    - service: switch.turn_on
+      entity_id: switch.fullykiosk_screen
     # - service: notify.ios_ipierre
     #   data:
     #     message: Back up, turning chuwi on

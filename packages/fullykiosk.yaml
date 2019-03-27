@@ -1,0 +1,154 @@
+################################################
+## Packages / Host / Updates
+## 
+## Inspired from https://community.home-assistant.io/t/fully-kiosk-browser/41675
+## 
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'fullykiosk'
+
+
+    ################################################
+    ## Binary Sensor
+    ################################################
+
+
+
+    ################################################
+    ## Sensor
+    ################################################
+
+    # sensor.hass_installed_version:
+    #   <<: *customize
+    #   friendly_name: 'Hass.io Installed Version'
+    #   icon: mdi:check-decagram
+
+
+
+
+################################################
+## Sensor
+################################################
+
+sensor:
+  - platform: rest
+    name: fullykiosk
+    json_attributes:
+      - batteryLevel
+      - kioskMode
+      - screenBrightness
+      - motionDetectorState
+      - maintenanceMode
+      - appFreeMemory
+      - appUsedMemory
+      - totalFreeMemory
+      - totalUsedMemory
+      - hostname4
+      - ip4
+      - mac
+      - locationLatitude
+      - locationLongitude
+      - locationAltitude
+      - startUrl
+      - currentPage
+      - foregroundApp
+      - currentFragment
+      - isScreenOn
+    resource: !secret fullykiosk_rest
+    value_template: '{{ value_json.isScreenOn }}'
+
+  - platform: template
+    sensors:
+      fullykiosk_battery_level:
+        friendly_name: "fullykiosk_battery_level"
+        unit_of_measurement: '%'
+        value_template: "{{ states.sensor.fullykiosk.attributes.batteryLevel }}"
+
+################################################
+## Input Select
+################################################
+
+input_select:
+
+
+################################################
+## Binary Sensor
+################################################
+
+binary_sensor:
+
+
+################################################
+## Automation
+################################################
+
+automation:
+
+
+
+################################################
+## Switch
+################################################
+switch:
+  # - platform: command_line
+  #   switches:
+  #     fullykiosk_screen:
+  #       command_on: 
+  #       command_off: !secret fullykiosk_screen_off
+  #       command_state: !secret fullykiosk_screen_state
+  #       value_template: '{{ value == "on" }}'
+  #       friendly_name: fullykiosk Screen
+
+  - platform: template
+    switches:
+      fullykiosk_screen:
+        value_template: "{{state_attr('sensor.fullykiosk', 'isScreenOn')}}"
+        turn_on:
+          service: rest_command.fullykiosk_rest_screen_on
+        turn_off:
+          service: rest_command.fullykiosk_rest_screen_off
+
+
+################################################
+## Script
+################################################
+
+# the following script can replace the section of scripts to activate each activity
+
+
+rest_command:
+  fullykiosk_launch_spotify:
+    url: !secret fullykiosk_app_spotify
+  fullykiosk_launch_harmony:
+    url: !secret fullykiosk_app_harmony
+    method: POST
+  fullykiosk_rest_screen_on:
+    url: !secret fullykiosk_rest_screen_on
+    method: POST
+  fullykiosk_rest_screen_off:
+    url: !secret fullykiosk_rest_screen_off
+    method: POST
+  fullykiosk_back_foreground:
+    url: !secret fullykiosk_back_foreground
+    method: POST
+  fullykiosk_load_start_url:
+    url: !secret fullykiosk_load_start_url
+    method: POST
+  fullykiosk_load_tab_frontcam:
+    url: !secret fullykiosk_load_tab_frontcam
+    method: POST
+
+
+script:
+  # spotify_app:
+  #   sequence:
+  #      - service: rest_command.launch_spotify_on_android_tab
+
