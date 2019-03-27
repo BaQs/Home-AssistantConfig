@@ -16,15 +16,24 @@ homeassistant:
   customize_glob: !include customize_glob.yaml
   packages: !include_dir_named packages
 
- 
+  auth_providers:
+  - type: legacy_api_password
+  - type: homeassistant
+  - type: trusted_networks
+    trusted_networks:
+      - 127.0.0.1
+      - ::1
+      - 192.168.0.0/24
+      - fd00::/8
+
 logger:
   default: info
-  # logs:
+  logs:
     # requests.packages.urllib3.connectionpool: error # critical #for this item anything below error will not be logged
     # py.warnings: critical
     # volvooncall: debug
     # homeassistant.components.volvooncall: debug
-    # homeassistant.components.influxdb: debug 
+    # homeassistant.components.influxdb: debug
   # homeassistant.components.image_processing: debug
     # homeassistant.components.sensor.influxdb: debug
     # homeassistant.components.device_tracker.bluetooth_le_tracker: debug
@@ -78,12 +87,13 @@ http:
    use_x_forwarded_for: true
   #  ip_ban_enabled: true
    login_attempts_threshold: 10
-   trusted_networks:
-     - 127.0.0.1
-     - ::1
-     - 192.168.0.0/24
-   # - fd00::/8#  
+  #  trusted_networks:
+  #    - 127.0.0.1
+  #    - ::1
+  #    - 192.168.0.0/24
+  #  # - fd00::/8#  
    # cors_allowed_origins:
+
 
 # Checks for available updates
 # Note: This component will send some information about your system to
@@ -145,17 +155,25 @@ rest_command: !include rest_command.yaml
 
 influxdb:
   host: !secret influx_host
-#  include:
-#    entities:
-#      - sensor.teleinfo_hchc
-#      - sensor.teleinfo_hchp
-#      - sensor.teleinfo_hhphc
-#      - sensor.teleinfo_iinst
-#      - sensor.teleinfo_imax
-#      - sensor.teleinfo_isousc
-#      - sensor.teleinfo_papp
-#      - sensor.teleinfo_ptec
-#
+  port: 8086
+  max_retries: 10
+  include:
+    domains:
+      - sensor
+      - binary_sensor
+      - climate
+      - switch
+  # include:
+  #   entities:
+  #     - sensor.teleinfo_hchc
+  #     - sensor.teleinfo_hchp
+  #     - sensor.teleinfo_hhphc
+  #     - sensor.teleinfo_iinst
+  #     - sensor.teleinfo_imax
+  #     - sensor.teleinfo_isousc
+  #     - sensor.teleinfo_papp
+  #     - sensor.teleinfo_ptec
+
 
 # APC Battery
 apcupsd:
@@ -176,7 +194,7 @@ sun:
 #     activity: Regarder la TV
 
 weather:
-  - platform: yweather
+  # - platform: yweather
   - platform: darksky
     api_key: !secret darksky_api_key 
     mode: daily
@@ -310,6 +328,13 @@ light:
     automatic_add: False
     signal_repetitions: 5
 
+  #  used by lovelace-fullykiosk.js
+  - platform: template
+    lights:
+      chuwi:
+        turn_on:
+        turn_off:
+        set_level:
 
 switch: !include switch.yaml
 
@@ -349,6 +374,7 @@ notify:
   - name: Telegram
     platform: telegram
     chat_id: !secret telegram_chat_id 
+  - platform: ios
 
 telegram_bot:
         #- platform: webhooks
@@ -407,11 +433,11 @@ arlo:
   password: !secret arlo_password
 
 
-display:
-  - platform: fully_kiosk
-    name: chuwi
-    host: !secret chuwi_host
-    password: !secret chuwi_password
+# display:
+#   - platform: fully_kiosk
+#     name: chuwi
+#     host: !secret chuwi_host
+#     password: !secret chuwi_password
 
 # climate: !include climate.yaml
 alert: !include alert.yaml
