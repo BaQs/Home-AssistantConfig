@@ -100,7 +100,20 @@ automation:
       service: script.turn_on
       entity_id: script.input_select_harmony
 
-
+  # Harmony Monitor  
+  - alias: Harmony monitor
+    trigger:
+      platform: state
+      entity_id: remote.harmony_hub
+      to: 'unavailable'
+    action:
+      - service: persistent_notification.create
+        data_template:
+          title: "Harmony Sync"
+          message: >
+            Harmony is {{ states('remote.harmony_hub') }}, trying to sync
+      - service: remote.harmony_sync
+        entity_id: remote.harmony_hub
 
 ################################################
 ## Switch
@@ -126,18 +139,27 @@ switch:
     switches:
       harmony_music:
         friendly_name: Musique
-        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Écouter la musique') }}"
+        value_template: "{{ is_state_attr('remote.harmony_hub', 'current_activity', 'Ecouter de la musique') }}"
         turn_on:
           service: remote.turn_on
           data:
             entity_id: remote.harmony_hub
-            activity: 'Écouter la musique'
+            activity: '\u00c9couter de la musique'
         turn_off:
           service: remote.turn_on
           data:
             entity_id: remote.harmony_hub
             activity: 'PowerOff'
 
+    # "Activities": {
+    #     "-1": "PowerOff",
+    #     "27280319": "Regarder la TV",
+    #     "27416411": "PS4",
+    #     "27823405": "\u00c9couter de la musique",
+    #     "28312619": "Android TV",
+    #     "34843663": "Regarder Netflix",
+    #     "36560571": "Regarder Fire TV"
+    # },
 
   - platform: template
     switches:
