@@ -7,7 +7,7 @@
     can_acknowledge: True
     skip_first: False
     notifiers:
-      - notify.ios_ipierre
+      - ios_ipierre
 
   xiaomi2:
     name: Xiaomi Floor1 unavailable
@@ -18,7 +18,7 @@
     can_acknowledge: True
     skip_first: False
     notifiers:
-      - notify.ios_ipierre
+      - ios_ipierre
 
   ups:
     name: UPS on battery
@@ -30,5 +30,5 @@
     can_acknowledge: True
     skip_first: False
     notifiers:
-      - notify.ios_ipierre
+      - ios_ipierre
 
