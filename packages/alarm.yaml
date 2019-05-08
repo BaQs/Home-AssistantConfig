@@ -10,7 +10,7 @@ homeassistant:
 
     package.node_anchors:
       customize: &customize
-        package: ''
+        package: 'alarm'
 
     ################################################
     ## Binary Sensor
@@ -25,48 +25,14 @@ homeassistant:
     ## Sensor
     ################################################
 
-    # sensor.hass_installed_version:
-    #   <<: *customize
-    #   friendly_name: 'Hass.io Installed Version'
-    #   icon: mdi:check-decagram
+# https://github.com/twrecked/hass-aarlo
+aarlo:
+  username: !secret arlo_username
+  password: !secret arlo_password
 
-    # sensor.hass_current_stable_version:
-    #   <<: *customize
-    #   friendly_name: 'Hass.io Current Stable Version'
-    #   icon: mdi:check-decagram
-
-    # sensor.hass_current_beta_version:
-    #   <<: *customize
-    #   friendly_name: 'Hass.io Beta Release'
-    #   icon: mdi:beta
-
-    # sensor.hass_current_dev_version:
-    #   <<: *customize
-    #   friendly_name: 'Hass.io Dev Release'
-    #   icon: mdi:alpha
-
-    # sensor.hass_current_supervisor_version:
-    #   <<: *customize
-    #   friendly_name: 'Hass.io Current Supervisor Version'
-    #   icon: mdi:check-decagram
-
-    # sensor.hass_current_hassos_version:
-    #   <<: *customize
-    #   friendly_name: 'Hass.io Current HassOS Version'
-    #   icon: mdi:check-decagram
-
-################################################
-## Updater
-## https://www.home-assistant.io/components/updater/
-## https://www.home-assistant.io/docs/backend/updater/
-################################################
-
-# updater:
-#   reporting: true # collect basic information about this instance and its environment
-#   include_used_components: true # report components to developers
-
-
-
+camera:
+  - platform: aarlo
+    ffmpeg_arguments: '-pred 1 -q:v 2'
 
 alarm_control_panel:
   - platform: manual
@@ -86,70 +52,46 @@ alarm_control_panel:
     armed_away:
       pending_time: 60
       delay_time: 0
-  - platform: arlo
-    home_mode_name: arm_home
+  
+  # - platform: arlo
+  #   home_mode_name: arm_home
 
+  - platform: aarlo
+    home_mode_name: arm_home
+    away_mode_name: armed
+    trigger_time: 30
+    alarm_volume: 8
 
 ################################################
 ## Sensor
 ################################################
 
-# sensor:
-#   - platform: version
-#     name: Hass Installed Version
-
+sensor:
+  - platform: aarlo
+    monitored_conditions:
+    - last_capture
+    - total_cameras
+    - battery_level
+    - captured_today
+    - signal_strength
 ################################################
 ## Binary Sensor
 ################################################
 
-# binary_sensor:
-#   - platform: template
-#     sensors:
-#       hass_update_available:
-#         value_template: >-
-#           {{ states.sensor.hass_current_stable_version.state != 'unavailable' and 
-#              states.sensor.hass_current_stable_version.state > states.sensor.hass_installed_version.state
-#               }}
-# group:
-#   host_updates:
-#     name: 'Updates'
-#     entities:
-#       - updater.updater
-#       - sensor.hass_installed_version
-#       - sensor.hass_current_stable_version
-#       - sensor.hass_current_beta_version
-#       - sensor.hass_current_dev_version
-#       - sensor.hass_current_supervisor_version
-#       - binary_sensor.hass_update_available
+binary_sensor:
+  - platform: aarlo
+    monitored_conditions:
+    - motion
+    - sound
+    - ding
 
 ################################################
 ## Automation
 ################################################
 
 automation:
-#   - alias: 'Update Available'
-#     initial_state: 'on'
-#     trigger:
-#       - platform: template
-#         value_template: >-
-#           {{ states.sensor.hass_current_stable_version.state != 'unavailable' and 
-#              states.sensor.hass_current_stable_version.state > states.sensor.hass_installed_version.state
-#              }}
-#     action:
-#       - service: notify.ios_ipierre
-#         data:
-#           message: 'Home Assistant version {{ states.sensor.hass_current_stable_version.state }} is now available for Hass.io'
-#           title: Home Assistant Update
 
-
-
-
-#
-## Alarm Trigger
-###
-
-
-  # Trigger
+  # Trigger (away)
   - id: trigger_alarm_while_armed_away
     alias: "Alarm: Trigger when armed away"
     trigger:
@@ -159,6 +101,9 @@ automation:
     - entity_id: group.perimeter_detectors
       platform: state
       to: 'on'
+    - entity_id: group.motion_detectors
+      platform: state
+      to: 'on'
     condition:
     - condition: state
       entity_id: alarm_control_panel.home_alarm
@@ -166,15 +111,24 @@ automation:
     action:
     - entity_id: alarm_control_panel.home_alarm
       service: alarm_control_panel.alarm_trigger
+    - entity_id: alarm_control_panel.aarlo_arlo
+      service: alarm_control_panel.alarm_trigger
+    - service: light.turn_on
+      data:
+        brightness: '100'
+        color_name: red
+        entity_id: light.gateway_light_7811dcb7afd1
+    - service: light.turn_on
+      data:
+        brightness: '100'
+        color_name: red
+        entity_id: light.gateway_light_34ce008c1873
 
 
-  # Trigger
+  # Trigger (home)
   - id: trigger_alarm_while_armed_home
     alias: "Alarm: Trigger when armed home"
     trigger:
-  #  - entity_id: binary_sensor.motion_detected
-  #    platform: state
-  #    to: 'on'
     - entity_id: group.perimeter_detectors
       platform: state
       to: 'on'
@@ -185,8 +139,18 @@ automation:
     action:
     - entity_id: alarm_control_panel.home_alarm
       service: alarm_control_panel.alarm_trigger
-
-
+    - entity_id: alarm_control_panel.aarlo_arlo
+      service: alarm_control_panel.alarm_trigger
+    - service: light.turn_on
+      data:
+        brightness: '100'
+        color_name: red
+        entity_id: light.gateway_light_7811dcb7afd1
+    - service: light.turn_on
+      data:
+        brightness: '100'
+        color_name: red
+        entity_id: light.gateway_light_34ce008c1873
 
 
   # notification
@@ -198,40 +162,6 @@ automation:
       to: triggered
     action:
     - service: script.presence_notifications_when_alarm_triggered
-    # - service: tts.google_say
-    #   data:
-    #     language: fr
-    #     entity_id: media_player.google_home__salon
-    #     message: e déclenchée
-
-
-  # - id: telegramCommandDisarm
-  #   alias: 'Telegram bot answer to command: /alarm_disarm'
-  #   hide_entity: true
-  #   trigger:
-  #     platform: event
-  #     event_type: telegram_command
-  #     event_data:
-  #       data: /alarm_disarm
-  #   action:
-  #   - service: alarm_control_panel.alarm_disarm
-  #   - service: notify.telegram
-  #     data:
-  #       message: Alarme désarmée
-
-  # - id: telegramCallbackDisarm
-  #   alias: 'Telegram bot answer to command: /alarm_disarm'
-  #   hide_entity: true
-  #   trigger:
-  #     platform: event
-  #     event_type: telegram_callback
-  #     event_data:
-  #       data: /alarm_disarm
-  #   action:
-  #   - service: alarm_control_panel.alarm_disarm
-  #   - service: notify.telegram
-  #     data:
-  #       message: Alarme désarmée
 
 
 #
@@ -240,21 +170,26 @@ automation:
 
 
   # Automatic away mode when nobody is at home during the day,
-  # and not on vacation
+  # and not on vacation, and no guest
   - id: away_from_home_away_mode
     alias: "Alarm: Away"
     hide_entity: True
     trigger:
       - platform: state
-        entity_id: binary_sensor.household_home
-        from: 'on'
-        to: 'off'
-        # entity_id: sensor.current_state
-        # from: 'home'
-        # to: 'away'
+        entity_id: sensor.current_state
+        from: 'home'
+        to: 'away'
         for:
-          minutes: 10
-    # Set away mode
+          minutes: 5
+      - platform: event
+        event_type: xiaomi_aqara.click
+        event_data:
+          entity_id: binary_sensor.switch_158d0001a6671d
+          click_type: single
+    condition:
+      - condition: state
+        entity_id: sensor.current_state
+        state: 'home'          
     action:
       - service: notify.ios_ipierre
         data_template:
@@ -264,18 +199,27 @@ automation:
       - service: alarm_control_panel.alarm_arm_away
         entity_id: alarm_control_panel.home_alarm
       - service: alarm_control_panel.alarm_arm_away
-        entity_id: alarm_control_panel.arlo
+        entity_id: alarm_control_panel.aarlo_arlo
 
 
   # Turn off automatic away mode
   - alias: 'Alarm: Disarm'
     hide_entity: false
     trigger:
+      # - platform: state
+      #   # entity_id: sensor.current_state
+      #   entity_id: binary_sensor.household_home
+      #   from: 'off'
+      #   to: 'on'
       - platform: state
-        # entity_id: sensor.current_state
-        entity_id: binary_sensor.household_home
-        from: 'off'
-        to: 'on'
+        entity_id: sensor.current_state
+        from: 'away'
+        to: 'home'
+      - platform: event
+        event_type: xiaomi_aqara.click
+        event_data:
+          entity_id: binary_sensor.switch_158d0001a6671d
+          click_type: double
     action:
       - service: notify.ios_ipierre
         data_template:
@@ -285,7 +229,13 @@ automation:
       - service: alarm_control_panel.alarm_disarm
         entity_id: alarm_control_panel.home_alarm
       - service: alarm_control_panel.alarm_disarm
-        entity_id: alarm_control_panel.arlo
+        entity_id: alarm_control_panel.aarlo_arlo
+      - service: light.turn_off
+        data:
+          entity_id: light.gateway_light_7811dcb7afd1
+      - service: light.turn_off
+        data:
+          entity_id: light.gateway_light_34ce008c1873
 
 
   # Night Alarm
@@ -298,23 +248,23 @@ automation:
         from: 'off'
         to: 'on'
         for:
-          minutes: 5
-    # condition:
-    #   - condition: state
-    #     entity_id: alarm_control_panel.home_alarm
-    #     state: armed_home
+          minutes: 3
+    condition:
+      - condition: state
+        entity_id: sensor.current_state
+        state: 'home'          
     action:
       - service: notify.ios_ipierre
         data_template:
           message: >
-            Alarm: Night Mode (in bed since 5min)
+            Alarm: Night Mode (in bed since 3 min)
       # Arm 
       - service: alarm_control_panel.alarm_arm_home
         entity_id: alarm_control_panel.home_alarm
       - service: alarm_control_panel.alarm_arm_home
-        entity_id: alarm_control_panel.arlo
+        entity_id: alarm_control_panel.aarlo_arlo
 
-  # Turn off automatic away mode
+  # Turn off from night mode
   - alias: 'Alarm: Disarm From Night Mode'
     hide_entity: false
     trigger:
@@ -323,6 +273,12 @@ automation:
         entity_id: binary_sensor.in_bed
         from: 'on'
         to: 'off'
+        for:
+          minutes: 3
+    condition:
+      - condition: state
+        entity_id: sensor.current_state
+        state: 'home'          
     action:
       - service: notify.ios_ipierre
         data_template:
@@ -332,7 +288,8 @@ automation:
       - service: alarm_control_panel.alarm_disarm
         entity_id: alarm_control_panel.home_alarm
       - service: alarm_control_panel.alarm_disarm
-        entity_id: alarm_control_panel.arlo
+        entity_id: alarm_control_panel.aarlo_arlo
+
 
 
 
@@ -353,4 +310,4 @@ alert:
     can_acknowledge: True
     skip_first: False
     notifiers:
-      - notify.ios_ipierre
+      - ios_ipierre
