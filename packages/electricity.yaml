@@ -110,56 +110,56 @@ sensor:
   - platform: template
     sensors:
         elecbill_cta:
-            value_template: 20.52
+            value_template: '20.52'
             friendly_name: 'CTA (/an)'
             unit_of_measurement: '€'
 
   - platform: template
     sensors:
         elecbill_options:
-            value_template: 4.99
+            value_template: '4.99'
             friendly_name: 'Options (/m.)'
             unit_of_measurement: '€'
 
   - platform: template
     sensors:
         elecbill_subscription:
-            value_template: 9.78
+            value_template: '9.78'
             friendly_name: 'Subscription (/m.)'
             unit_of_measurement: '€'
 
   - platform: template
     sensors:
         elecbill_cost_hp:
-            value_template: 0.0895
+            value_template: '0.0895'
             friendly_name: 'HP Cost (/kWh)'
             unit_of_measurement: '€'
 
   - platform: template
     sensors:
         elecbill_cost_hc:
-            value_template: 0.0632
+            value_template: '0.0632'
             friendly_name: 'HC Cost (/kWh)'
             unit_of_measurement: '€'
 
   - platform: template
     sensors:
         elecbill_cspe:
-            value_template: 0.0225
+            value_template: '0.0225'
             friendly_name: 'Public Electricity Service Contribution (/kWh)'
             unit_of_measurement: '€'
 
   - platform: template
     sensors:
         elecbill_tcfe_municipal:
-            value_template: 0.00638
+            value_template: '0.00638'
             friendly_name: 'Municipal Tax on final electricity consumption (/kWh)'
             unit_of_measurement: '€'
 
   - platform: template
     sensors:
         elecbill_tcfe_departmental:
-            value_template: 0.00319
+            value_template: '0.00319'
             friendly_name: 'Departmental Tax on final electricity consumption (/kWh)'
             unit_of_measurement: '€'
 
@@ -168,30 +168,28 @@ sensor:
         elecbill_today_so_far_hc:
             friendly_name: 'Electricity HC cost (Today so far)'
             unit_of_measurement: '€'
-            value_template: '
+            value_template: >
+              {{   
+              (
+              (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
+              )|round(2)
+              }}
 
-            {{   
-            (
-            (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
-            )|round(2)
-            }}
-
-            '
+            
             
   - platform: template
     sensors:
         elecbill_today_so_far_hp:
             friendly_name: 'Electricity HP cost (Today so far)'
             unit_of_measurement: '€'
-            value_template: '
+            value_template: >
+              {{   
+              (
+              (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
+              )|round(2)
+              }}
 
-            {{   
-            (
-            (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
-            )|round(2)
-            }}
 
-            '
 
   # number of hours since midnight
   # {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
@@ -206,15 +204,12 @@ sensor:
         elecbill_today_so_far_hc_heating:
             friendly_name: 'Heating HC cost (Today so far)'
             unit_of_measurement: '€'
-            value_template: '
-
-            {{   
-            (
-            (states.sensor.hc_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
-            )|round(2)
-            }}
-
-            '
+            value_template: >
+              {{   
+              (
+              (states.sensor.hc_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
+              )|round(2)
+              }}
   
   # we transform W to kWh , bu multiplying the W by nb_hours and / 1000
   # nb_hour = 16 cause HP, 8 cause HC
@@ -223,161 +218,150 @@ sensor:
         elecbill_today_so_far_hp_heating:
             friendly_name: 'Heating HP cost (Today so far)'
             unit_of_measurement: '€'
-            value_template: '
-
-            {{   
-            (
-            (states.sensor.hp_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
-            )|round(2)
-            }}
-
-            '
+            value_template: >
+              {{   
+              (
+              (states.sensor.hp_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
+              )|round(2)
+              }}
 
   - platform: template
     sensors:
         elecbill_today_so_far_sub:
             friendly_name: 'Electricity Subscription cost (Today so far)'
             unit_of_measurement: '€'
-            value_template: '
+            value_template: >
+              {{   
 
-            {{   
+              (
 
-            (
+              (states.sensor.elecbill_subscription.state |float / 30) + 
+              (states.sensor.elecbill_cta.state |float / 365)  
 
-            (states.sensor.elecbill_subscription.state |float / 30) + 
-            (states.sensor.elecbill_cta.state |float / 365)  
+              + (states.sensor.elecbill_options.state |float /30)
 
-            + (states.sensor.elecbill_options.state |float /30)
+              )|round(2)
 
-            )|round(2)
+              }}
 
-            }}
 
-            '
   - platform: template
     sensors:
         elecbill_today_so_far_taxes:
             friendly_name: 'Electricity Taxes cost (Today so far)'
             unit_of_measurement: '€'
-            value_template: '
+            value_template: >
+              {{   
 
-            {{   
+              (
 
-            (
+              (
+              (states.sensor.elecbill_subscription.state |float / 30) + 
+              (states.sensor.elecbill_cta.state |float / 365)  
+              ) * 0.055
 
-            (
-            (states.sensor.elecbill_subscription.state |float / 30) + 
-            (states.sensor.elecbill_cta.state |float / 365)  
-            ) * 0.055
+              +
 
-            +
+              (
+              (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
+              (states.sensor.elecbill_cost_hp.state|float)
 
-            (
-            (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
-            (states.sensor.elecbill_cost_hp.state|float)
+              + (states.sensor.elecbill_options.state |float /30)
 
-            + (states.sensor.elecbill_options.state |float /30)
-
-            ) * 0.20
+              ) * 0.20
 
 
-            + 
-            (
-            ( 
-            (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-            )
-            +
-            ( 
-            (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-            )
+              + 
+              (
+              ( 
+              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+              )
+              +
+              ( 
+              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+              )
 
-            ) * 1.20
+              ) * 1.20
 
-            )|round(2)
+              )|round(2)
 
-            }}
+              }}
 
-            '
   
   - platform: template
     sensors:
         elecbill_today_so_far_ttc:
             friendly_name: 'Electricity TTC cost (Today so far)'
             unit_of_measurement: '€'
-            value_template: '
+            value_template: >
+              {{   
 
-            {{   
+              (
 
-            (
+              (
+              (states.sensor.elecbill_subscription.state |float / 30) + 
+              (states.sensor.elecbill_cta.state |float / 365)  
+              ) * 1.055
 
-            (
-            (states.sensor.elecbill_subscription.state |float / 30) + 
-            (states.sensor.elecbill_cta.state |float / 365)  
-            ) * 1.055
+              +
 
-            +
+              (
+              (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
+              (states.sensor.elecbill_cost_hp.state|float)
 
-            (
-            (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
-            (states.sensor.elecbill_cost_hp.state|float)
+              + (states.sensor.elecbill_options.state |float /30)
 
-            + (states.sensor.elecbill_options.state |float /30)
+              + 
+              ( 
+              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+              )
+              +
+              ( 
+              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+              )
 
-            + 
-            ( 
-            (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-            )
-            +
-            ( 
-            (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-            )
+              ) * 1.20
 
-            ) * 1.20
+              )|round(2)
 
-            )|round(2)
-
-            }}
-
-            '
+              }}
  
   - platform: template
     sensors:
         elecbill_today_ttc:
-            value_template: '
+            value_template: >
+              {{   
 
-            {{   
+              (
 
-            (
+              (
+              (states.sensor.elecbill_subscription.state |float / 30) + 
+              (states.sensor.elecbill_cta.state |float / 365)  
+              ) * 1.055
 
-            (
-            (states.sensor.elecbill_subscription.state |float / 30) + 
-            (states.sensor.elecbill_cta.state |float / 365)  
-            ) * 1.055
+              +
 
-            +
+              (
+              (states.sensor.hc_energy_consumed_last_day.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_day.state |float /1000 ) *
+              (states.sensor.elecbill_cost_hp.state|float)
 
-            (
-            (states.sensor.hc_energy_consumed_last_day.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_day.state |float /1000 ) *
-            (states.sensor.elecbill_cost_hp.state|float)
+              + (states.sensor.elecbill_options.state |float /30)
 
-            + (states.sensor.elecbill_options.state |float /30)
+              + 
+              ( 
+              (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+              )
+              +
+              ( 
+              (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+              )
 
-            + 
-            ( 
-            (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-            )
-            +
-            ( 
-            (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-            )
+              ) * 1.20
 
-            ) * 1.20
+              )|round(2)
 
-            )|round(2)
+              }}
 
-            }}
-
-            '
             friendly_name: 'Energy cost today (TTC)'
             unit_of_measurement: '€'
 
@@ -385,40 +369,39 @@ sensor:
   - platform: template
     sensors:
         elecbill_last_week_ttc:
-            value_template: '
-            {{   
+            value_template: >
+              {{   
 
-            (
+              (
 
-            (
-            (states.sensor.elecbill_subscription.state |float / 7) + 
-            (states.sensor.elecbill_cta.state |float / 52)  
-            ) * 1.055
+              (
+              (states.sensor.elecbill_subscription.state |float / 7) + 
+              (states.sensor.elecbill_cta.state |float / 52)  
+              ) * 1.055
 
-            +
+              +
 
-            (
-            (states.sensor.hc_energy_consumed_last_week.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_week.state |float /1000 ) *
-            (states.sensor.elecbill_cost_hp.state|float)
+              (
+              (states.sensor.hc_energy_consumed_last_week.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_week.state |float /1000 ) *
+              (states.sensor.elecbill_cost_hp.state|float)
 
-            + (states.sensor.elecbill_options.state |float /7)
+              + (states.sensor.elecbill_options.state |float /7)
 
-            + 
-            ( 
-            (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-            )
-            +
-            ( 
-            (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-            )
+              + 
+              ( 
+              (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+              )
+              +
+              ( 
+              (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+              )
 
-            ) * 1.20
+              ) * 1.20
 
-            )|round(2)
+              )|round(2)
 
-            }} 
+              }} 
 
-            '
             friendly_name: 'Energy cost last week (TTC)'
             unit_of_measurement: '€'
 
@@ -427,39 +410,38 @@ sensor:
   - platform: template
     sensors:
         elecbill_last_month_ttc:
-            value_template: '
-            {{   
-            (
+            value_template: >
+              {{   
+              (
 
-            (
-            (states.sensor.elecbill_subscription.state |float) + 
-            (states.sensor.elecbill_cta.state |float / 12)  
-            ) * 1.055
+              (
+              (states.sensor.elecbill_subscription.state |float) + 
+              (states.sensor.elecbill_cta.state |float / 12)  
+              ) * 1.055
 
-            +
+              +
 
-            (
-            (states.sensor.hc_energy_consumed_last_month.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_month.state |float /1000 ) *
-            (states.sensor.elecbill_cost_hp.state|float)
+              (
+              (states.sensor.hc_energy_consumed_last_month.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_month.state |float /1000 ) *
+              (states.sensor.elecbill_cost_hp.state|float)
 
-            + (states.sensor.elecbill_options.state |float )
+              + (states.sensor.elecbill_options.state |float )
 
-            + 
-            ( 
-            (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-            )
-            +
-            ( 
-            (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-            )
+              + 
+              ( 
+              (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+              )
+              +
+              ( 
+              (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+              )
 
-            ) * 1.20
+              ) * 1.20
 
-            )|round(2)
+              )|round(2)
 
-            }} 
+              }} 
 
-            '
             friendly_name: 'Energy cost last month (TTC)'
             unit_of_measurement: '€'
 
@@ -592,7 +574,7 @@ sensor:
 
 binary_sensor:
 
-group:
+# group:
   # host_updates:
   #   name: 'Updates'
   #   entities:
