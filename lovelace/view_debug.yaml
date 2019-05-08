@@ -1,0 +1,106 @@
+title: Debug
+id: debug
+path: debug
+panel: false
+cards:
+
+  - type: custom:compact-custom-header
+
+  - type: custom:group-card
+    card:
+      type: entities
+      title: Schedy
+    group: group.schedy
+
+  - type: history-graph
+    title: State
+    entities:
+      - sensor.current_state
+      - group.perimeter_detectors
+      - group.motion_detectors
+      - alarm_control_panel.home
+      - alarm_control_panel.aarlo_arlo
+
+  - type: history-graph
+    title: HouseHold
+    entities:
+      - binary_sensor.household_home
+      - group.pierre
+      - group.gaetane
+      - binary_sensor.presence_home_known
+      - device_tracker.volvo_et_732_hn
+
+#   - type: history-graph
+#     title: Gaetane
+#     entities:
+#       - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
+#       - device_tracker.iphoneg
+
+  - type: custom:group-card
+    card:
+      type: history-graph
+      title: Gaetane
+    group: group.gaetane
+  - type: custom:group-card
+    card:
+      type: history-graph
+      title: Pierre
+    group: group.pierre
+
+#   - type: history-graph
+#     title: Pierre
+#     entities:
+#       - device_tracker.ipierre
+#       - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
+#       - device_tracker.volvo_et_732_hn
+
+  - id: 634c51d9c2ba458f853f65aea48168e7  # Automatically created id
+    type: history-graph
+    entities:
+      - climate.parents_bedroom_thermostat 
+
+  - id: 634c51d9c2ba458f853f65aea48168e8  # Automatically created id
+    type: history-graph
+    entities:
+      - climate.baby_bedroom_thermostat 
+
+  - id: 634c51d9c2ba458f853f65aea4816831  # Automatically created id
+    type: history-graph
+    entities:
+      - climate.living_room_thermostat
+
+  - id: 634c51d9c2ba458f853f65aea4816832  # Automatically created id
+    type: history-graph
+    entities:
+      - climate.library_thermostat
+      
+  - type: history-graph
+    entities:
+      - climate.shower_thermostat
+
+  - type: custom:mini-graph-card
+    entities:
+        # - sensor.teleinfo_papp
+        - climate.baby_bedroom_thermostat 
+    line_width: 1
+    hours_to_show: 12
+    points_per_hour: 4
+    hour24: true
+    show:
+      extrema: true
+      fill: true
+      state: true
+      labels: true
+      icon_adaptive_color: true
+      graph: bar
+    color_thresholds:
+      - value: 9000
+        color: "#ef476f" # pink "infra red"
+      - value: 6000
+        color: "#e74c3c" # red
+      - value: 2000
+        color: "#ffd166" # orange
+      - value: 1000
+        color: "#1db954" # green
+      - value: 0
+        color: "#3498db" # blue

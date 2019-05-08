@@ -1,0 +1,188 @@
+  title: Home
+  id: home
+  path: home
+  theme: night
+  panel: true
+  icon: mdi:home
+  cards:    
+    - type: vertical-stack
+      cards:
+        - type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: vertical-stack
+                  cards:
+                  - type: picture-entity
+                    title: Foscam Camera
+                    entity: camera.foscam_camera
+                    camera_image: camera.foscam_camera
+                    # camera_view: live
+                    show_info: true
+                    tap_action: dialog
+
+                    cards:
+                    - type: entity-button  
+                      entity: climate.living_room_thermostat
+                      icon: mdi:silverware
+                      name: " "
+                    - type: entity-button  
+                      entity: climate.baby_bedroom_thermostat
+                      icon: mdi:baby
+                      name: " "
+                    - type: entity-button  
+                      entity: climate.parents_bedroom_thermostat
+                      icon: mdi:bed-empty
+                      name: " "
+                    - type: entity-button  
+                      entity: climate.library_thermostat
+                      icon: mdi:library
+                      name: " "
+                - type: vertical-stack
+                  cards:
+
+                    # Example Lovelace UI config entry
+                  - type: custom:weather-card-chart
+                    title: " "
+                    weather: weather.dark_sky
+
+
+            - type: horizontal-stack
+              cards:
+                # - type: custom:polymer-markdown-card
+                # # - type: markdown
+                #   padding: 15%
+                #   fontSize: 180px
+                #   content: >
+
+                #     [[ sensor.time.state ]]
+                - type: 'custom:clock-card'
+
+                - type: vertical-stack
+                  cards:
+
+                  - type: horizontal-stack
+                    cards:
+                      - type: custom:button-card
+                        tap_action:
+                          action: more-info
+                        entity: switch.harmony_music
+                        # action: more-info
+                        name: Musique
+                        icon: mdi:music
+                      - type: custom:button-card
+                        tap_action:
+                          action: more-info
+                        entity: switch.harmony_tv
+                        # action: toggle
+                        name: TV
+                        icon: mdi:television
+
+                      - type: custom:button-card
+                        tap_action:
+                          action: more-info
+                        entity: switch.harmony_netflix
+                        # action: toggle
+                        name: Netlix
+                        icon: mdi:netflix
+
+                      - type: custom:button-card
+                        tap_action:
+                          action: more-info
+                        entity: script.play_spotify_on_tv
+                        name: Spotify
+                        icon: mdi:spotify
+
+
+                  # - type: glance
+                  #   show_state: false
+                  #   show_name: false
+                  #   entities: 
+                  #   - entity: switch.harmony_music
+                  #     name: Musique
+                  #     icon: mdi:music
+                  #     tap_action:
+                  #       action: toggle
+                  #   - entity: switch.harmony_tv
+                  #     name: TV
+                  #     icon: mdi:television
+                  #     tap_action:
+                  #       action: toggle
+                  #   - entity: switch.harmony_netflix
+                  #     name: Netflix
+                  #     icon: mdi:netflix
+                  #     tap_action:
+                  #       action: toggle
+                  #   - entity: script.play_spotify_on_tv
+                  #     name: Spotify
+                  #     icon: mdi:spotify
+                  #     # tap_action:
+                  #     #   action: call-service
+                  #     #   service: script.turn_on
+                  #     #   entity_id: script.play_spotify_on_tv
+                  #   - entity: group.living_lights
+                  #     icon: mdi:lightbulb
+
+
+
+                  - type: horizontal-stack
+                    cards:
+                      - type: custom:button-card
+                        entity: climate.baby_bedroom_thermostat
+                        tap_action:
+                          action: more-info
+                        icon: mdi:baby
+                        show_name: false
+                        color: "#a3a6a8" # grey
+                        state:
+                          - value: 'heat'
+                            color: "#e74c3c" # red
+
+                      - type: custom:button-card
+                        entity: climate.parents_bedroom_thermostat
+                        tap_action:
+                          action: more-info
+                        icon: mdi:bed-empty
+                        show_name: false
+                        color: "#a3a6a8" # grey
+                        state:
+                          - value: 'heat'
+                            color: "#e74c3c" # red
+                      - type: custom:button-card
+                        entity: climate.living_room_thermostat
+                        tap_action:
+                          action: more-info
+                        icon: mdi:silverware
+                        show_name: false
+                        color: "#a3a6a8" # grey
+                        state:
+                          - value: 'heat'
+                            color: "#e74c3c" # red
+                      - type: custom:button-card
+                        entity: climate.library_thermostat
+                        tap_action:
+                          action: more-info
+                        icon: mdi:library
+                        default_color: "#e74c3c" # red
+                        show_name: false
+                        color: "#a3a6a8" # grey
+                        state:
+                          - value: 'heat'
+                            color: "#e74c3c" # red
+                      - type: custom:button-card
+                        entity: climate.shower_thermostat
+                        tap_action:
+                          action: more-info
+                        icon: mdi:shower
+                        default_color: "#e74c3c" # red
+                        show_name: false
+                        color: "#a3a6a8" # grey
+                        state:
+                          - value: 'heat'
+                            color: "#e74c3c" # red
+
+
+        - type: custom:compact-custom-header  
+          main_config: false
+          header: true
+          clock_format: 24

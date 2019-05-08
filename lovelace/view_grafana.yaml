@@ -1,0 +1,9 @@
+title: Grafana
+panel: true
+path: grafana
+id: grafana
+icon: mdi:chart-areaspline
+cards:
+  - type: iframe
+    url: !secret panel_iframe_grafana_url
+    aspect_ratio: 100%

@@ -1,0 +1,59 @@
+title: Settings
+icon: mdi:settings
+path: settings
+id: settings
+cards:
+  - id: c31f3f618f3f41febdd94ca674249f8b  # Automatically created id
+    type: custom:monster-card
+    show_header_toggle: true
+    card:
+      type: entities
+      title: Automation
+    filter:
+      include:
+        - domain: automation
+  - id: 248fd566c7234206b4b21d06ec835253  # Automatically created id
+    type: custom:monster-card
+    show_header_toggle: true
+    card:
+      type: entities
+      title: Scripts
+    filter:
+      include:
+        - domain: script
+
+  - id: 755190fc9d3b4ecaaf96756876a61361  # Automatically created id
+    type: custom:monster-card
+    card:
+      type: glance
+      title: Low Battery
+    filter:
+      include:
+        - attributes:
+            battery_level: < 40
+          options:
+            secondary_info: battery_level
+
+  - id: bda24971e0324a6ab74d9de128e9661b  # Automatically created id
+    type: custom:home-setter
+    title: Home page
+    pages:
+      - name: Main
+        path: lovelace/0
+      - name: Mobile
+        path: lovelace/mobile
+
+
+  - type: custom:monster-card
+    card:
+      type: glance
+      title: Unavailable
+    filter:
+      include:
+      - state: 'unavailable'
+
+  - type: custom:tracker-card
+    title:
+    trackers:
+      - sensor.custom_card_tracker
+      - sensor.custom_component_tracker

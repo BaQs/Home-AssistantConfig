@@ -1,0 +1,9 @@
+title: Energy
+panel: true
+id: energy
+path: energy
+icon: mdi:flash
+cards:
+  - type: iframe
+    url: !secret panel_iframe_grafana_power_consumption_dark
+    aspect_ratio: 100%

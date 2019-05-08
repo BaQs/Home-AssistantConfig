@@ -1,0 +1,31 @@
+title: Security
+icon: mdi:security
+id: security
+path: security
+panel: true
+cards:
+
+  - id: 5f101caa458d4c2e8da132940194e7ef  # Automatically created id
+    type: vertical-stack
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: glance
+            column_width: calc(100% / 2)
+            columns: 2
+            entities:
+              - alarm_control_panel.aarlo_arlo
+              - alarm_control_panel.home_alarm
+      - type: horizontal-stack
+        cards:
+          - type: custom:group-card
+            card:
+              type: entities
+              title: Motion
+            group: group.motion_detectors
+          - type: custom:group-card
+            card:
+            
+              type: entities
+              title: Door/Windows Sensors
+            group: group.door_sensors

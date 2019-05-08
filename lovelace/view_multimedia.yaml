@@ -1,0 +1,47 @@
+title: Multimedia
+icon: mdi:play-circle-outline
+path: multimedia
+id: multimedia
+cards:
+  - id: 1082e6c0305d418eaba04d6a6f98f9a7  # Automatically created id
+    type: media-control
+    # entity: media_player.xiaomi_network_speaker_airplay
+    entity: media_player.xiaomi_network_speaker_upnp
+  - id: bc7651db35534256ba2fc025e5ff12fd  # Automatically created id
+    type: media-control
+    entity: media_player.google_home_salon
+  - type: media-control
+    entity: media_player.spotify 
+  - type: media-control
+    entity: media_player.panasonic_viera_tv 
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.harmony_music
+        # action: toggle
+        name: Musique
+        icon: mdi:music
+      - type: custom:button-card
+        entity: switch.harmony_tv
+        # action: toggle
+        name: TV
+        icon: mdi:television
+
+      - type: custom:button-card
+        entity: switch.harmony_netflix
+        # action: toggle
+        name: Netlix
+        icon: mdi:netflix
+
+      - type: custom:button-card
+        entity: script.play_spotify_on_tv
+        name: Spotify
+        icon: mdi:spotify
+
+
+      - type: custom:button-card
+        entity: remote.harmony_hub
+        name: Harmony
+        icon: mdi:remote
+        action: more_info

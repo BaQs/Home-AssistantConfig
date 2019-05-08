@@ -1,0 +1,79 @@
+  title: Rooms
+  icon: mdi:floor-plan
+  path: rooms
+  id: rooms
+  cards:
+    - id: ed7ed8164ec648998fafa7d8ee77e56f  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Salon
+      group: group.salon
+    - id: a9c55bb9ed794ca788c0c1b50d16e788  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Cuisine
+      group: group.kitchen
+    - id: 112fb9f03e574fcf836dd7f05c4b9fec  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Bibliothèque
+      group: group.library
+
+    - id: b70317947ac0427e9cbd0f6a78d4c2d3  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Chambre Parentale
+      group: group.bedroom_parents
+    - id: 0cd8c010aa714eb69fd309289a6780d0  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Chambre Bébé
+      group: group.bedroom_baby
+    - id: 660c83aa0c2c4350a6780f8aff481a74  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Chambre 2e Rue
+      group: group.bedroom_2_road
+
+    - id: 7570d4958bfe48f2bac293265ba1c9aa  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Chambre 2e Jardin
+      group: group.bedroom_2_garden
+    - id: df30b91f4c72486c9870f5d434daf2cf  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Salle de Douche
+      group: group.shower
+    - id: b6a849e32a0b42d3b56a9124632d3385  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Salle de Bain
+      group: group.bathroom
+    - id: b2f612465cf14e76a0d75e016d2b8b8c  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Entrée
+      group: group.entrance
+    - id: 5d0b864ba9254a979d3a3f8d4b5bcfb9  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Cave
+      group: group.cave
+    - id: 4eb0bbed563a40e49c71b53e86b3e016  # Automatically created id
+      type: custom:group-card
+      card:
+        type: entities
+        title: Buanderie
+      group: group.washroom

@@ -1,0 +1,362 @@
+  title: Temperatures
+  panel: true
+  path: temperatures
+  id: temperatures
+  icon: mdi:temperature-celsius
+  cards:
+
+    - type: vertical-stack
+    #- type: custom:column-card
+      cards:
+        - type: horizontal-stack
+          cards:
+        #     # - type: sensor
+            #   name: Chambre 2 Jardin
+            #   entity: sensor.temperature_158d0001ab1858
+            #   graph: line
+            # - type: sensor
+            #   name: Douche
+            #   entity: sensor.temperature_158d0001e421d9
+            #   graph: line
+            # - type: sensor
+            #   name: Chambre 2 Rue
+            #   entity: sensor.temperature_158d0001713f49
+            #   graph: line
+      # eaf4d3
+      # dbd8ae
+      # 
+          - type: custom:mini-graph-card
+            entities:
+                -  sensor.temperature_158d0001ab1858
+                  # color: '#b1b6a6'
+                # - entity: sensor.temperature_158d0001e421d9
+                #   show_state: true
+                #   show_indicator: true 
+                #   # state_adaptive_color: true 
+                #   color: '#819595'
+                # - entity: sensor.temperature_158d0001713f49
+                #   show_state: true
+                #   show_indicator: true 
+                #   # state_adaptive_color: true 
+                #   color: '#ca907e'
+            line_width: 1
+            # height: 30
+            # font_size: 70
+            hours_to_show: 24
+            points_per_hour: 4
+            hour24: true
+            animate: true
+            show:
+              extrema: true
+              fill: true
+              state: true
+              labels: true
+              icon_adaptive_color: true
+              # graph: bar
+            color_thresholds:
+              - value: 22
+                color: "#e74c3c"
+              - value: 18
+                color: "#1db954"
+              - value: 0
+                color: "#3498db"
+
+
+          - type: custom:mini-graph-card
+            entities:
+                - sensor.temperature_158d0001e421d9
+            line_width: 1
+            hours_to_show: 24
+            points_per_hour: 4
+            hour24: true
+            # lower_bound: 0
+            # upper_bound: 30
+            show:
+              extrema: true
+              fill: true
+              state: true
+              labels: true
+              icon_adaptive_color: true
+              # graph: bar
+            color_thresholds:
+              - value: 22
+                color: "#e74c3c"
+              - value: 18
+                color: "#1db954"
+              - value: 0
+                color: "#3498db"
+
+          - type: custom:mini-graph-card
+            entities:
+                - sensor.temperature_158d0001713f49
+            line_width: 1
+            hours_to_show: 24
+            points_per_hour: 4
+            hour24: true
+            # lower_bound: 0
+            # upper_bound: 30
+            show:
+              extrema: true
+              fill: true
+              state: true
+              labels: true
+              icon_adaptive_color: true
+              # graph: bar
+            color_thresholds:
+              - value: 22
+                color: "#e74c3c"
+              - value: 18
+                color: "#1db954"
+              - value: 0
+                color: "#3498db"
+
+
+
+                
+        - type: horizontal-stack
+          cards:
+            # - type: sensor
+            #   name: Chambre Bébé
+            #   entity: sensor.temperature_158d0001720782
+            #   graph: line
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001720782
+              line_width: 1
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              # height: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"
+
+            # - type: sensor
+            #   name: Chambre Parents
+            #   entity: sensor.temperature_158d0001ab75f3
+            #   graph: line
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001ab75f3
+              line_width: 1
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"
+
+
+            # - type: sensor
+            #   name: SDB
+            #   entity: sensor.temperature_158d0001ab75da
+            #   graph: line
+
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001ab75da
+              line_width: 1
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"
+
+
+
+        - type: horizontal-stack
+          cards:
+            # - type: sensor
+            #   name: Salon
+            #   entity: sensor.temperature_158d0001db60d9
+            #   graph: line
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001db60d9
+              line_width: 1
+              # height: 30
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"
+
+            # - type: sensor
+            #   name: Cuisine
+            #   entity: sensor.temperature_158d0001715c53
+            #   graph: line
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001715c53
+              line_width: 1
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"
+
+
+
+
+            # - type: sensor
+            #   name: Bibliothèque
+            #   entity: sensor.temperature_158d0001a4b91d
+            #   graph: line
+
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001a4b91d
+              line_width: 1
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"
+
+
+            # - type: sensor
+            #   name: Couloir
+            #   entity: sensor.temperature_158d0001d6dae3
+            #   graph: line
+
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001d6dae3
+              line_width: 1
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"
+
+            # - type: sensor
+            #   name: Entrée
+            #   entity: sensor.temperature_158d0001a1f903
+            #   graph: line
+
+            - type: custom:mini-graph-card
+              entities:
+                  - sensor.temperature_158d0001a1f903
+              line_width: 1
+              hours_to_show: 24
+              points_per_hour: 4
+              hour24: true
+              # lower_bound: 0
+              # upper_bound: 30
+              show:
+                extrema: true
+                fill: true
+                state: true
+                labels: true
+                icon_adaptive_color: true
+                # graph: bar
+              color_thresholds:
+                - value: 22
+                  color: "#e74c3c"
+                - value: 18
+                  color: "#1db954"
+                - value: 0
+                  color: "#3498db"

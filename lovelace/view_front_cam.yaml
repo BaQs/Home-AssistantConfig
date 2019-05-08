@@ -1,0 +1,19 @@
+title: Front Cam
+icon: mdi:camera-front-variant
+id: frontcam
+path: frontcam
+panel: true
+cards:
+- type: vertical-stack
+  cards:
+  - type: picture-entity
+    title: Foscam Camera
+    entity: camera.foscam_camera
+    camera_image: camera.foscam_camera
+    camera_view: live
+    show_info: false
+
+  - type: custom:compact-custom-header  
+    main_config: false
+    header: true
+    clock_format: 24

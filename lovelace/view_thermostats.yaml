@@ -1,0 +1,72 @@
+  title: Thermostats
+  icon: mdi:thermometer-lines
+  id: thermostats
+  path: thermostats
+  panel: true
+  cards:
+    - id: ed91a68029154279bcac30c20cac8f45  # Automatically created id
+      type: vertical-stack
+      cards:
+      - type: horizontal-stack
+        # style:
+        #   height: 200px;
+        cards:
+         
+          - type: custom:thermostat-card
+            title: Living Room
+            entity: climate.living_room_thermostat
+            highlight_tap: true
+            no_card: true
+
+          - type: custom:thermostat-card
+            title: Library
+            entity: climate.library_thermostat
+            highlight_tap: true
+            no_card: true
+
+          - type: custom:thermostat-card
+            title: Parents Bedroom
+            entity: climate.parents_bedroom_thermostat
+            highlight_tap: true
+            no_card: true
+
+          - type: custom:thermostat-card
+            title: Baby Bedroom
+            entity: climate.baby_bedroom_thermostat
+            highlight_tap: true
+            no_card: true
+
+
+      - type: horizontal-stack
+        cards:
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_living_room
+
+        # - type: custom:mini-graph-card
+        #   entities:
+        #     - sensor.temperature_158d0001db60d9
+        #   height: 65
+        #   line_width: 1
+        #   font_size: 70
+        #   hours_to_show: 24
+        #   points_per_hour: 4
+        #   show:
+        #     extrema: true
+        #     fill: true
+        #     # graph: bar
+        #   color_thresholds:
+        #     - value: 23
+        #       color: "#e74c3c"
+        #     - value: 15
+        #       color: "#1db954"
+        #     - value: 0
+        #   color: "#3498db"
+
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_library
+
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+
+        - type: iframe
+          url: !secret panel_iframe_grafana_card_climate_baby_bedroom
