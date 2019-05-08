@@ -1,0 +1,8 @@
+{
+    "domain": "teleinfo",
+    "name": "Provided by EDF Teleinfo.",
+    "dependencies": [],
+    "documentation": "https://community.home-assistant.io/t/teleinfo-new-platform/29660",
+    "codeowners": ["@noamirault"],
+    "requirements": ["kylin==0.3.0"]
+  }

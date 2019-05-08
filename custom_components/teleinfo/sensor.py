@@ -21,7 +21,8 @@ from homeassistant.helpers.entity import Entity
 from homeassistant.util import Throttle
 
 
-REQUIREMENTS = ["kylin==0.3.0"]
+# https://developers.home-assistant.io/blog/2019/04/12/new-integration-structure.html
+# REQUIREMENTS = ["kylin==0.3.0"]
 
 _LOGGER = logging.getLogger(__name__)
 

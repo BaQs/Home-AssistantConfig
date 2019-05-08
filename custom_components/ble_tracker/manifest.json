@@ -1,0 +1,8 @@
+{
+    "domain": "ble_tracker",
+    "name": "BLE Tracker - custom",
+    "dependencies": [],
+    "documentation": "https://home-assistant.io/components/device_tracker.bluetooth_le_tracker/",
+    "codeowners": [],
+    "requirements": ["pygatt==3.2.0"]
+  }

@@ -1,0 +1,8 @@
+{
+    "domain": "harmony",
+    "name": "Harmony - custom",
+    "dependencies": [],
+    "documentation": "https://raw.githubusercontent.com/home-assistant/home-assistant/0.84.3/homeassistant/components/remote/harmony.py",
+    "codeowners": [],
+    "requirements": ["pyharmony==1.0.20"]
+  }
