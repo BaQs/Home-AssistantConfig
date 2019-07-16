@@ -228,7 +228,8 @@ schedy_heating:
 
         # for the rest, v degrees
       - x: "20 if is_on('binary_sensor.in_bed') else Skip()"
-      - v: 15
+        # changed to 10, not 15 because of waitress...
+      - v: 10
 
       watched_entities:
       - climate.parents_bedroom_thermostat
