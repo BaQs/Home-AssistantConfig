@@ -419,7 +419,6 @@ google_assistant:
 # client_id: !secret google_assistant_client_id
 # access_token: !secret google_assistant_access_token
 # agent_user_id: [a string to identify user]
-#  api_key: AIzaSyBVn9-a3C_V8jAiCWcipvBqZXII0ugRsQI
   api_key: !secret google_assistant_api_key
 #  expose_by_default: false
   exposed_domains:
