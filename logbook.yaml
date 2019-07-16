@@ -16,6 +16,7 @@
       - script
     entities:
       - sensor.period_of_day
+      - sensor.current_state
   exclude:
     domains:
       - media_player
