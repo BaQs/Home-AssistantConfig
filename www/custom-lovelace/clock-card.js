@@ -19,7 +19,7 @@ class ClockCard extends Polymer.Element {
         .time {
           font-family: var(--paper-font-headline_-_font-family);
           -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
-          font-size: 160px;
+          font-size: 120px;
           // font-size: 3em;
           font-weight: var(--paper-font-headline_-_font-weight);
           letter-spacing: var(--paper-font-headline_-_letter-spacing);
