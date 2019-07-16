@@ -13,6 +13,9 @@
 .cloud
 .storage
 .uuid
+.id_rsa
+.spotify-token-cache
+.ios.conf_old
 core.*
 core
 OZW_Log.txt
