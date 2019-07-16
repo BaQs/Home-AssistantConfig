@@ -1,12 +1,16 @@
-  - platform: opencv_darknet
-    # name: Front Door Object Detection
-    source:
-      - entity_id: camera.foscam_camera 
-    options:
-      detect_model: !secret yolo_model_path 
-      weights: !secret yolo_weights 
-      labels: !secret yolo_labels 
-      confidence: 0.35
+  # - platform: opencv_darknet
+  #   # name: Front Door Object Detection
+  #   source:
+  #     - entity_id: camera.foscam_camera 
+  #   options:
+  #     detect_model: !secret yolo_model_path 
+  #     weights: !secret yolo_weights 
+  #     labels: !secret yolo_labels 
+  #     confidence: 0.35
+
+
+
+
       # Optional parameter if you want to crop the input image
 #      crop:
 #        # Left X coordinate
