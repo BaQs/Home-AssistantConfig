@@ -4,14 +4,13 @@
   id: temperatures
   icon: mdi:temperature-celsius
   cards:
-
     - type: vertical-stack
-    #- type: custom:column-card
+    # - type: custom:column-card
       cards:
         - type: horizontal-stack
           cards:
-        #     # - type: sensor
-            #   name: Chambre 2 Jardin
+            # - type: sensor
+              # name: Chambre 2 Jardin
             #   entity: sensor.temperature_158d0001ab1858
             #   graph: line
             # - type: sensor
@@ -22,9 +21,9 @@
             #   name: Chambre 2 Rue
             #   entity: sensor.temperature_158d0001713f49
             #   graph: line
-      # eaf4d3
-      # dbd8ae
-      # 
+            # eaf4d3
+            # dbd8ae
+            
           - type: custom:mini-graph-card
             entities:
                 -  sensor.temperature_158d0001ab1858
@@ -47,7 +46,7 @@
             hour24: true
             animate: true
             show:
-              extrema: true
+              # extrema: true
               fill: true
               state: true
               labels: true
@@ -72,7 +71,7 @@
             # lower_bound: 0
             # upper_bound: 30
             show:
-              extrema: true
+              # extrema: true
               fill: true
               state: true
               labels: true
@@ -96,7 +95,7 @@
             # lower_bound: 0
             # upper_bound: 30
             show:
-              extrema: true
+              # extrema: true
               fill: true
               state: true
               labels: true
@@ -131,7 +130,7 @@
               # upper_bound: 30
               # height: 30
               show:
-                extrema: true
+                # extrema: true
                 fill: true
                 state: true
                 labels: true
@@ -160,7 +159,7 @@
               # lower_bound: 0
               # upper_bound: 30
               show:
-                extrema: true
+                # extrema: true
                 fill: true
                 state: true
                 labels: true
@@ -191,7 +190,7 @@
               # lower_bound: 0
               # upper_bound: 30
               show:
-                extrema: true
+                # extrema: true
                 fill: true
                 state: true
                 labels: true
@@ -225,7 +224,7 @@
               # lower_bound: 0
               # upper_bound: 30
               show:
-                extrema: true
+                # extrema: true
                 fill: true
                 state: true
                 labels: true
@@ -254,7 +253,7 @@
               # lower_bound: 0
               # upper_bound: 30
               show:
-                extrema: true
+                # extrema: true
                 fill: true
                 state: true
                 labels: true
@@ -287,7 +286,7 @@
               # lower_bound: 0
               # upper_bound: 30
               show:
-                extrema: true
+                # extrema: true
                 fill: true
                 state: true
                 labels: true
@@ -318,7 +317,7 @@
               # lower_bound: 0
               # upper_bound: 30
               show:
-                extrema: true
+                # extrema: true
                 fill: true
                 state: true
                 labels: true
@@ -337,26 +336,31 @@
             #   entity: sensor.temperature_158d0001a1f903
             #   graph: line
 
-            - type: custom:mini-graph-card
-              entities:
-                  - sensor.temperature_158d0001a1f903
-              line_width: 1
-              hours_to_show: 24
-              points_per_hour: 4
-              hour24: true
-              # lower_bound: 0
-              # upper_bound: 30
-              show:
-                extrema: true
-                fill: true
-                state: true
-                labels: true
-                icon_adaptive_color: true
-                # graph: bar
-              color_thresholds:
-                - value: 22
-                  color: "#e74c3c"
-                - value: 18
-                  color: "#1db954"
-                - value: 0
-                  color: "#3498db"
+            # - type: custom:mini-graph-card
+            #   entities:
+            #       - sensor.temperature_158d0001a1f903
+            #   line_width: 1
+            #   hours_to_show: 24
+            #   points_per_hour: 4
+            #   hour24: true
+            #   # lower_bound: 0
+            #   # upper_bound: 30
+            #   show:
+            #     # extrema: true
+            #     fill: true
+            #     state: true
+            #     labels: true
+            #     icon_adaptive_color: true
+            #     # graph: bar
+            #   color_thresholds:
+            #     - value: 22
+            #       color: "#e74c3c"
+            #     - value: 18
+            #       color: "#1db954"
+            #     - value: 0
+            #       color: "#3498db"
+
+        - type: custom:compact-custom-header  
+          main_config: false
+          header: true
+          clock_format: 24

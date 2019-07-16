@@ -4,9 +4,12 @@
   path: thermostats
   panel: true
   cards:
-    - id: ed91a68029154279bcac30c20cac8f45  # Automatically created id
-      type: vertical-stack
+    - type: vertical-stack
       cards:
+
+      - type: custom:compact-custom-header
+        main_config: false
+        
       - type: horizontal-stack
         # style:
         #   height: 200px;
@@ -37,36 +40,108 @@
             no_card: true
 
 
-      - type: horizontal-stack
-        cards:
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_living_room
-
-        # - type: custom:mini-graph-card
+      # - type: horizontal-stack
+      #   cards:
+        # - type: iframe
+        #   url: !secret panel_iframe_grafana_card_climate_living_room
+        # - type: iframe
+        #   url: !secret panel_iframe_grafana_card_climate_library
+        # - type: iframe
+        #   url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+        # - type: iframe
+        #   url: !secret panel_iframe_grafana_card_climate_baby_bedroom
+        # - type: history-graph
         #   entities:
-        #     - sensor.temperature_158d0001db60d9
-        #   height: 65
-        #   line_width: 1
-        #   font_size: 70
-        #   hours_to_show: 24
-        #   points_per_hour: 4
-        #   show:
-        #     extrema: true
-        #     fill: true
-        #     # graph: bar
-        #   color_thresholds:
-        #     - value: 23
-        #       color: "#e74c3c"
-        #     - value: 15
-        #       color: "#1db954"
-        #     - value: 0
-        #   color: "#3498db"
+        #     - climate.living_room_thermostat
+        # - type: history-graph
+        #   entities:
+        #     - climate.library_thermostat
+        # - type: history-graph
+        #   entities:
+        #     - climate.parents_bedroom_thermostat 
+        # - type: history-graph
+        #   entities:
+        #     - climate.baby_bedroom_thermostat 
 
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_library
 
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_parents_bedroom
+            
+      - type: horizontal-stack 
+        cards:
 
-        - type: iframe
-          url: !secret panel_iframe_grafana_card_climate_baby_bedroom
+        - type: custom:mini-graph-card
+          name: Living Room
+          entities:
+              - entity: sensor.climate_living_room_thermostat_current_temperature
+              - entity: sensor.climate_living_room_thermostat_operation_temperature
+                color: red
+          hour24: true
+          show:
+            state: false
+            graph: bar
+            legend: false
+          color_thresholds:
+            - value: 24
+              color: "#e74c3c"
+            - value: 19
+              color: "#1db954"
+            - value: 0
+              color: "#3498db"
+
+
+        - type: custom:mini-graph-card
+          name: Library
+          entities:
+              - entity: sensor.climate_library_thermostat_current_temperature
+              - entity: sensor.climate_library_thermostat_operation_temperature
+                color: red
+          hour24: true
+          show:
+            state: false
+            graph: bar
+            legend: false
+          color_thresholds:
+            - value: 24
+              color: "#e74c3c"
+            - value: 19
+              color: "#1db954"
+            - value: 0
+              color: "#3498db"
+
+        - type: custom:mini-graph-card
+          name: Parents Bedroom
+          entities:
+              - entity: sensor.climate_parents_bedroom_thermostat_current_temperature
+              - entity: sensor.climate_parents_bedroom_thermostat_operation_temperature
+                color: red
+          hour24: true
+          show:
+            state: false
+            graph: bar
+            legend: false
+          color_thresholds:
+            - value: 24
+              color: "#e74c3c"
+            - value: 19
+              color: "#1db954"
+            - value: 0
+              color: "#3498db"
+
+        - type: custom:mini-graph-card
+          name: Baby Bedroom
+          entities:
+              - entity: sensor.climate_baby_bedroom_thermostat_current_temperature
+              - entity: sensor.climate_baby_bedroom_thermostat_operation_temperature
+                color: red
+          hour24: true
+          show:
+            state: false
+            graph: bar
+            legend: false
+          color_thresholds:
+            - value: 24
+              color: "#e74c3c"
+            - value: 19
+              color: "#1db954"
+            - value: 0
+              color: "#3498db"
+
