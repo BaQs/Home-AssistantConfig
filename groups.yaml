@@ -53,35 +53,6 @@
       - group.shower
       - group.kitchen
       - group.bedroom_baby
-  Gaetane:
-    name: Gaetane
-    view: no
-    entities:
-      # iOS app
-      # - device_tracker.igaetane
-      # nmap
-      # - device_tracker.6c8dc126c257
-      # owntracks
-      # - device_tracker.gaetane_f30c159e4c374930a3d7fe1b3137f3ef
-      # - device_tracker.gaetane_igaetaneowntracks
-      # - device_tracker.gaetane_a6556411426e460184ad90ae5cee0999
-      - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
-      - device_tracker.iphoneg
-  Pierre:
-    name: Pierre
-    view: no
-    entities:
-      #- sensor.ipierre_battery_state_2
-      #- sensor.ipierre_battery_level_2
-        # ios HA app
-      - device_tracker.ipierre
-        # nmap
-      # - device_tracker.2c61f6c08b90
-        # owntracks
-      # - device_tracker.pierre_ipierre
-      # - device_tracker.pierre_17d0c2f5e7ef4f59bd9d7159b50a2f9b 
-      - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
-#     - binary_sensor.pierre_home
   washroom:
     name: Buanderie 
     entities:
@@ -285,7 +256,8 @@
 # porte
 #     - binary_sensor.door_window_sensor_158d0001e44c14
 # fenetre
-      - binary_sensor.door_window_sensor_158d00017010c1
+      # it's summer, we leave the window open
+      # - binary_sensor.door_window_sensor_158d00017010c1
 # / chambre parents
       - binary_sensor.door_window_sensor_158d00019ff246
       - binary_sensor.door_window_sensor_158d00019df284
@@ -333,6 +305,13 @@
       - light.fibaro_system_fgd212_dimmer_2_level_5
       - light.fibaro_system_fgd212_dimmer_2_level_7
  
+  xiaomi_lights:
+    name: Xiaomi Lights 
+    view: no
+    entities: 
+    - light.gateway_light_34ce008c1873
+    - light.gateway_light_7811dcb7afd1
+ 
 # used for automation_detection
   living_motions:
     name: Living Motions
@@ -341,13 +320,6 @@
       - binary_sensor.motion_sensor_158d0001ddb2d3
       - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor
       - binary_sensor.motion_sensor_158d0001ab34c1
-
-  household:
-    name: Household
-    view: no
-    entities:
-      - group.gaetane
-      - group.pierre
 
   teleinfo:
     name: EDF
@@ -407,28 +379,6 @@
      - sensor.ups_time_left
      - sensor.ups_time_on_battery
      - sensor.ups_transfer_count
-
-  arlo:
-    name: Arlo
-    view: no
-    entities:
-     - alarm_control_panel.arlo
-     - camera.etage_1
-     - camera.etage_2
-     - camera.jardin
-     - sensor.arlo_cameras
-     - sensor.battery_level_etage_1
-     - sensor.battery_level_etage_2
-     - sensor.battery_level_jardin
-     - sensor.captured_today_etage_1
-     - sensor.captured_today_etage_2
-     - sensor.captured_today_jardin
-     - sensor.last_etage_1
-     - sensor.last_etage_2
-     - sensor.last_jardin
-     - sensor.signal_strength_etage_1
-     - sensor.signal_strength_etage_2
-     - sensor.signal_strength_jardin
 
 
   qubino:
@@ -552,42 +502,6 @@
      - sensor.neo_coolcam_power_plug_12a_interval_3
      - sensor.neo_coolcam_power_plug_12a_interval_4
 
-  volvo:
-    name: Volvo
-    view: no
-    entities:
-      - device_tracker.volvo_et_732_hn 
-      - binary_sensor.et_732_hn_brake_fluid
-      - binary_sensor.et_732_hn_bulbs
-      - binary_sensor.et_732_hn_doors
-      - binary_sensor.et_732_hn_engine
-      - binary_sensor.et_732_hn_front_left_door
-      - binary_sensor.et_732_hn_front_left_tyre
-      - binary_sensor.et_732_hn_front_left_window
-      - binary_sensor.et_732_hn_front_right_door
-      - binary_sensor.et_732_hn_front_right_tyre
-      - binary_sensor.et_732_hn_front_right_window
-      - binary_sensor.et_732_hn_hood
-      - binary_sensor.et_732_hn_rear_left_door
-      - binary_sensor.et_732_hn_rear_left_tyre
-      - binary_sensor.et_732_hn_rear_left_window
-      - binary_sensor.et_732_hn_rear_right_door
-      - binary_sensor.et_732_hn_rear_right_tyre
-      - binary_sensor.et_732_hn_rear_right_window
-      - binary_sensor.et_732_hn_service
-      - binary_sensor.et_732_hn_washer_fluid
-      - binary_sensor.et_732_hn_windows
-      - lock.et_732_hn_door_lock 
-      - sensor.et_732_hn_fuel_amount
-      - sensor.et_732_hn_fuel_consumption
-      - sensor.et_732_hn_fuel_level
-      - sensor.et_732_hn_last_trip
-      - sensor.et_732_hn_odometer
-      - sensor.et_732_hn_range
-      - sensor.et_732_hn_trip_meter_1
-      - sensor.et_732_hn_trip_meter_2
-      - switch.et_732_hn_heater 
-
   chuwi:
     name: Chuwi
     view: no
@@ -612,3 +526,16 @@
     - sensor.time
     - sensor.time_date
     - sensor.time_utc 
+
+  schedy:
+    name: Schedy
+    view: no
+    entities:
+    - schedy_room.schedy_heating_bedroom_baby
+    - schedy_room.schedy_heating_bedroom_parents
+    - schedy_room.schedy_heating_library
+    - schedy_room.schedy_heating_living_room
+    - schedy_room.schedy_heating_shower
+    - schedy_room.schedy_heating_statistics
+
+    
