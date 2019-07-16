@@ -18,6 +18,7 @@ homeassistant:
 
   auth_providers:
   - type: legacy_api_password
+    api_password: !secret http_password  
   - type: homeassistant
   - type: trusted_networks
     trusted_networks:
@@ -27,25 +28,41 @@ homeassistant:
       - fd00::/8
 
 logger:
-  default: info
+  default: debug
   logs:
+    homeassistant.components.remote.harmony: debug
+    homeassistant.components.harmony.remote: debug
+    aioharmony.harmonyclient: debug
+    aioharmony.responsehandler: debug
+    aioharmony.hubconnector: debug
+    homeassistant.components.netatmo.climate: debug
+    homeassistant.components.netatmo.camera: debug
+    homeassistant.components.netatmo: debug
+    # aioharmony.hubconnector: debug
     # requests.packages.urllib3.connectionpool: error # critical #for this item anything below error will not be logged
     # py.warnings: critical
     # volvooncall: debug
     # homeassistant.components.volvooncall: debug
     # homeassistant.components.influxdb: debug
-  # homeassistant.components.image_processing: debug
+    # homeassistant.components.image_processing: debug
     # homeassistant.components.sensor.influxdb: debug
     # homeassistant.components.device_tracker.bluetooth_le_tracker: debug
-  # homeassistant.components.arlo: debug
-  # homeassistant.components.display: debug
-  # homeassistant.components.rfxtrx: debug
-  # homeassistant.components.teleinfo: debug
-  #  homeassistant.components.xiaomi_aqara: debug
-  #  homeassistant.components.binary_sensor.xiaomi_aqara: debug
-  #  homeassistant.components.sensor.xiaomi_aqara: debug
-  #  homeassistant.components.light.xiaomi_aqara: debug
-  #  homeassistant.components.switch.xiaomi_aqara: debug
+    # homeassistant.components.arlo: debug
+    # homeassistant.components.display: debug
+    # homeassistant.components.rfxtrx: debug
+    homeassistant.components.teleinfo: debug
+    teleinfo: debug
+    # homeassistant.components.xiaomi_aqara: debug
+    # homeassistant.components.binary_sensor.xiaomi_aqara: debug
+    # homeassistant.components.sensor.xiaomi_aqara: debug
+    # homeassistant.components.light.xiaomi_aqara: debug
+    # homeassistant.components.switch.xiaomi_aqara: debug
+    # the chatty ones
+    homeassistant.components.influxdb.sensor: warning 
+    influxdb.sensor: warning 
+    kylin: debug
+
+    # / the chatty ones
 
 #  whitelist_external_dirs: 
 #    - '/home/homeassistant/.homeassistant/downloads'
@@ -79,11 +96,11 @@ config:
 
 http:
   # Secrets are defined in the file secrets.yaml
-   api_password: !secret http_password
+  #  api_password: !secret http_password #replated by auth component
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
    base_url: !secret base_url 
-   trusted_proxies: 192.168.0.27
+   trusted_proxies: !secret trusted_proxies 
    use_x_forwarded_for: true
   #  ip_ban_enabled: true
    login_attempts_threshold: 10
@@ -163,6 +180,7 @@ influxdb:
       - binary_sensor
       - climate
       - switch
+      - person
   # include:
   #   entities:
   #     - sensor.teleinfo_hchc
@@ -220,7 +238,8 @@ weather:
 
 # Text to speech
 tts:
-  - platform: google
+  - platform: google_translate
+    service_name: google_say
     cache: true
     time_memory: 300
     language: 'fr'
@@ -239,34 +258,46 @@ binary_sensor: !include binary_sensor.yaml
 media_player:
   - platform: squeezebox
     host: !secret squeezebox_host
-  # - platform: cast
   - platform: spotify
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
   - platform: panasonic_viera
     host: !secret panasonic_tv_host
+  # Use the Python ADB implementation without authentication
+  # - platform: androidtv
+  #   name: Fire TV
+  #   host: 192.168.0.44
+
 
 cast:
   media_player:
     - host: !secret google_home_host
 
-netatmo:
-  api_key: !secret netatmo_api_key
-  secret_key: !secret netatmo_secret_key
-  username: !secret netatmo_username
-  password: !secret netatmo_password 
 
-camera:
-  - platform: foscam
-    ip: !secret foscam_ip
-    username: !secret foscam_username
-    password: !secret foscam_password
-  - platform: arlo
-    ffmpeg_arguments: '-pred 1 -q:v 2'
-  - platform: ffmpeg
-    name: DaFang3
-    input: !secret dafang_rtsp 
-    # https://192.168.0.105/cgi-bin/action.cgi?cmd=motor_right
+# camera:
+#   - platform: foscam
+#     ip: !secret foscam_ip
+#     username: !secret foscam_username
+#     password: !secret foscam_password
+#   # - platform: arlo
+#   #   ffmpeg_arguments: '-pred 1 -q:v 2'
+#   # - platform: ffmpeg
+#   #   name: DaFang3
+#   #   input: !secret dafang_rtsp 
+#   - platform: generic
+#     name: DaFang3
+#     still_image_url: !secret dafang_still_image_url
+#     stream_source: !secret dafang_rtsp_url
+#     verify_ssl: false
+#     username: !secret dafang_username
+#     password:  !secret dafang_password
+#     authentication: basic
+  
+
+
+
+
+
 
 xiaomi_aqara:
   discovery_retry: 5
@@ -287,10 +318,10 @@ vacuum:
 
 
 panel_iframe:
-  configurator:
-    title: Configurator
-    icon: mdi:wrench
-    url: !secret panel_iframe_configurator_url 
+  # configurator:
+  #   title: Configurator
+  #   icon: mdi:wrench
+  #   url: !secret panel_iframe_configurator_url 
   grafana:
     title: Grafana
     icon: mdi:chart-areaspline
@@ -338,32 +369,25 @@ light:
 
 switch: !include switch.yaml
 
-owntracks:
-    max_gps_accuracy: 100
-    waypoints: true
-    waypoint_whitelist:
-    - pierre
-    - gaetane
 
 
-device_tracker:
-#   - platform: owntracks_http
-#     max_gps_accuracy: 100
-#     # - platform: bluetooth_tracker
-  # - platform: bluetooth_le_tracker
-    # track_new_devices: true
-  - platform: bluetooth_tracker
-  - platform: ble_tracker
+# device_tracker:
+# #   - platform: owntracks_http
+# #     max_gps_accuracy: 100
+# #     # - platform: bluetooth_tracker
+#   # - platform: bluetooth_le_tracker
+#     # track_new_devices: true
+#   - platform: bluetooth_tracker
+#   - platform: ble_tracker
 
-  # #   track_new_devices: true
-# # - platform: icloud
-# #   username: !secret icloud_username
-# #   password: !secret icloud_password
-  - platform: nmap_tracker
-    hosts:
-            - 192.168.0.19
-            - 192.168.0.32
-    home_interval: 30
+# - platform: icloud
+#   username: !secret icloud_username
+#   password: !secret icloud_password
+  # - platform: nmap_tracker
+  #   hosts:
+  #           - 192.168.0.19
+  #           - 192.168.0.32
+  #   home_interval: 30
 #  - platform: icloud2
 #    username: !secret icloud_username
 #    password: !secret icloud_password
@@ -428,9 +452,9 @@ homekit: !include homekit.yaml
 ffmpeg:
   # run_test: false
 
-arlo:
-  username: !secret arlo_username
-  password: !secret arlo_password
+# arlo:
+#   username: !secret arlo_username
+#   password: !secret arlo_password
 
 
 # display:
@@ -447,11 +471,6 @@ proximity: !include proximity.yaml
 lovelace:
   mode: yaml
 
-volvooncall:
-  username: !secret volvooncall_username
-  password: !secret volvooncall_password
-  
-
 
 custom_updater:
   # mode: yaml
@@ -463,7 +482,20 @@ custom_updater:
   # card_urls:
   #   - https://raw.githubusercontent.com/sgttrs/lovelace-weather-card-chart/master/custom-updater.json
   #   - https://raw.githubusercontent.com/ljmerza/light-entity-card/master/custom_updater.json
-
+    # - https://raw.githubusercontent.com/kalkih/mini-graph-card/master/tracker.json
 
 weblink: !include weblink.yaml
 system_health:
+# stream:
+
+
+asuswrt:
+  host: !secret asus_router_ip 
+  username: !secret asus_router_username
+  password: !secret asus_router_password
+  # ssh_key: !secret asus_router_ssh_key 
+  # sensors:
+  #   - upload
+  #   - download
+  #   - upload_speed
+  #   - download_speed
