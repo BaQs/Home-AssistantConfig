@@ -1,102 +1,64 @@
-# Automatic away mode when nobody is at home during the day,
-# and not on vacation
-- id: away_from_home_away_mode
-  alias: "Away: From Home"
-  initial_state: true
-  hide_entity: True
-  trigger:
-    - platform: state
-      entity_id: sensor.current_state
-      from: 'home'
-      to: 'away'
-      for:
-        minutes: 10
-  # Set away mode
-  action:
-    - service: notify.ios_ipierre
-      data:
-        message: Nobody is at home. Turning off lights, arming alarm, turning off TV, launching vacuum, switching on the cave pump & putting the thermostats in away mode.
-    # Turn off lights and hot water recirculation pump
-    - service: light.turn_off
-      data:
-        entity_id:
-          - group.all_lights
-    # Arm alarm
-    # - service: alarm_control_panel.alarm_arm_away
-    #   entity_id: alarm_control_panel.home_alarm
-    # - service: alarm_control_panel.alarm_arm_away
-    #   entity_id: alarm_control_panel.arlo
-    # Start the vacuum
-    - service: vacuum.start
-      entity_id: vacuum.xiaomi_vacuum_cleaner
-    # - service: script.vacuum_zoned_clean
-    # Turn off TV
-    - service: remote.turn_off
-      entity_id: remote.harmony_hub
-    # Turn ON Cave pump
-    - service: homeassistant.turn_on
-      entity_id: switch.prise_cave
-    # Thermostats in away mode
-    - service: climate.set_away_mode
-      data:
-        entity_id: group.climate
-        away_mode: true
-    - service: switch.turn_off
-      entity_id: switch.fullykiosk_screen
-    # - service: display.turn_off
-    #   entity_id: display.chuwi
-#     - climate.baby_bedroom_thermostat
-#     - climate.parents_bedroom_thermostat
-#     - climate.living_room_thermostat
-#     - climate.library_thermostat
-
-# - id: '1533471702628'
-#   alias: Pierre leaves
+# # Automatic away mode when nobody is at home during the day,
+# # and not on vacation
+# - id: away_from_home_away_mode
+#   alias: "Away: From Home"
+#   initial_state: true
+#   hide_entity: True
 #   trigger:
-#   - entity_id: binary_sensor.pierre_is_home
-#     platform: state
-#     to: 'off'
-#   condition: []
+#     - platform: state
+#       entity_id: sensor.current_state
+#       from: 'home'
+#       to: 'away'
+#       for:
+#         minutes: 10
+#   # Set away mode
 #   action:
-#   - data:
-#       message: Pierre est parti!
-#       title: Pierre leaves
-#     service: notify.ios_ipierre
-
-# - id: pierre_home
-#   alias: Pierre home
+#     - service: notify.ios_ipierre
+#       data:
+#         message: Nobody is at home. Turning off lights, arming alarm, turning off TV, launching vacuum, switching on the cave pump & putting the thermostats in away mode.
+#     # Turn off lights and hot water recirculation pump
+#     - service: light.turn_off
+#       data:
+#         entity_id:
+#           - group.all_lights
+#     # Arm alarm (now handled via package alarm.yaml)
+#     # Start the vacuum
+#     - service: vacuum.start
+#       entity_id: vacuum.xiaomi_vacuum_cleaner
+#     # Turn off TV
+#     - service: remote.turn_off
+#       entity_id: remote.harmony_hub
+#     # Turn ON Cave pump
+#     - service: homeassistant.turn_on
+#       entity_id: switch.prise_cave
+#     # Thermostats in away mode (now handled by scheedy)
+#     # - service: climate.set_away_mode
+#     #   data:
+#     #     entity_id: group.climate
+#     #     away_mode: true
+#     - service: switch.turn_off
+#       entity_id: switch.fullykiosk_screen
+  
+# - alias: 'Notification: open door when leaving'
+#   initial_state: true
+#   hide_entity: True
 #   trigger:
-#   - entity_id: binary_sensor.pierre_is_home
-#     platform: state
-#     to: 'on'
-#   condition: []
+#     - platform: state
+#       entity_id: sensor.current_state
+#       from: 'home'
+#       to: 'away'
+#   condition: 
+#     - condition: state
+#       entity_id: group.perimeter_detectors
+#       state: 'on'
 #   action:
-#   - data:
-#       message: Pierre est à la maison!
-#       title: Pierre is home
-#     service: notify.ios_ipierre
-
-- id: away_from_home_notif_open_door
-  alias: 'Notification: open door when leaving'
-  initial_state: true
-  hide_entity: True
-  trigger:
-    - platform: state
-      entity_id: sensor.current_state
-      from: 'home'
-      to: 'away'
-  condition: 
-    - condition: state
-      entity_id: group.perimeter_detectors
-      state: 'on'
-  action:
-    - service: notify.ios_ipierre
-      data_template:
-        message: >
-          Une porte est restée ouverte 
-          {%- for entity_id in states.group.perimeter_detectors.attributes.entity_id -%}
-          {% set parts = entity_id.split('.') -%}
-          {%- if states(entity_id) == 'on' %}
-          {%- if loop.first %} {% elif loop.last %} et la {% else %}, la {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
-          {%- endfor %}
+#     - service: notify.ios_ipierre
+#       data_template:
+#         message: >
+#           "Une porte est restée ouverte:"
+#           {%- for entity_id in states.group.perimeter_detectors.attributes.entity_id -%}
+#           {% set parts = entity_id.split('.') -%}
+#           {%- if states(entity_id) == 'on' %}
+#           {%- if loop.first %} {% elif loop.last %} et la {% else %}, la {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
+#           {%- endfor %}
  

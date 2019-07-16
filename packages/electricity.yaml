@@ -2,8 +2,10 @@
 ## Packages / Host / Electricity
 ################################################
 
-# homeassistant:
-#  customize:
+homeassistant:
+  customize:
+    sensor.elecbill_today_so_far_ttc:
+      icon: mdi:power-socket-eu
 #    ################################################
 #    ## Node Anchors
 #    ################################################
@@ -34,7 +36,6 @@
 ## Sensor
 ################################################
 
-
 sensor:
   # - platform: teleinfo
   #   name: "edf"
@@ -43,6 +44,11 @@ sensor:
     name: "edf"
     device: "/dev/ttyUSB0"
   
+  - platform: linky
+    username: !secret linky_username
+    password: !secret linky_password
+
+
   - platform: template
     sensors:
       teleinfo_hchc:

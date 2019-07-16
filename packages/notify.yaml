@@ -1,0 +1,309 @@
+################################################
+## Packages / Host / Updates
+################################################
+
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+
+    package.node_anchors:
+      customize: &customize
+        package: 'notify'
+
+    ################################################
+    ## Binary Sensor
+    ################################################
+
+    # binary_sensor.hass_update_available:
+    #   <<: *customize
+    #   friendly_name: 'Update Available Hass'
+    #   device_class: problem
+
+    ################################################
+    ## Sensor
+    ################################################
+
+
+
+
+################################################
+## Configurations
+################################################
+
+notify:
+  - name: ios_all
+    platform: group
+    services:
+      - service: ios_ipierre
+      - service: ios_iphoneg
+
+
+ios:
+  push:
+    categories:
+      - name: Alarm
+        identifier: 'alarm'
+        actions:
+          - identifier: 'SOUND_ALARM'
+            title: 'Sound Alarm'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: yes
+            behavior: 'default'
+          - identifier: 'DISARM_ALARM'
+            title: 'Disarm ?'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: no
+            behavior: 'default'
+
+
+
+            
+################################################
+## Alert
+################################################
+
+alert:
+
+  alarm:
+    name: Alarm Triggered
+    message: "Alarm Triggered!"
+    done_message: "Alarm Disarmed"
+    entity_id: alarm_control_panel.home_alarm
+    state: 'triggered'
+    repeat: 3
+    can_acknowledge: True
+    skip_first: False
+    notifiers:
+      - ios_ipierre
+
+
+# TODO: alert when away, and work's laptop is detected
+
+################################################
+## Notifications
+################################################
+
+
+################################################
+## Automations
+################################################
+
+automation:
+###
+## Alarm
+#
+  - id: alarm_notification_triggered
+    alias: "Alarm: Send notification when triggered"
+    trigger:
+    - entity_id: alarm_control_panel.home_alarm
+      platform: state
+      to: triggered
+    action:
+    - service: script.presence_notifications_when_alarm_triggered
+
+  - id: alarm_notification_disarmed_from_night
+    alias: "Alarm: Send notification when disarmed (from night mode)"
+    trigger:
+    - entity_id: alarm_control_panel.home_alarm
+      platform: state
+      from: armed_home
+      to: disarmed
+    action:
+      - service: notify.ios_all
+        data_template:
+          message: >
+            Alarm OFF (disarmed from night mode)
+
+  - id: alarm_notification_disarmed_from_night
+    alias: "Alarm: Send notification when disarmed"
+    trigger:
+    - entity_id: alarm_control_panel.home_alarm
+      platform: state
+      from: armed
+      to: disarmed
+    action:
+      - service: notify.ios_all
+        data_template:
+          message: >
+            Alarm OFF (disarmed)
+
+  - id: alarm_notification_disarmed_from_night
+    alias: "Alarm: Send notification from disarmed"
+    trigger:
+    - entity_id: alarm_control_panel.home_alarm
+      platform: state
+      from: disarmed
+    action:
+      - service: notify.ios_all
+        data_template:
+          message: >
+            Alarm {{ states.alarm_control_panel.home_alarm.state  }}
+
+#
+## Alarm
+###
+
+
+
+###
+## Home
+#
+  - id: notify_doorbell
+    alias: 'Notify: Doorbell'
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: button_pressed
+      event_data: {"entity_id": "switch.sonnette","state": "group on"}
+    action:
+      - service: notify.ios_all
+        data:
+          message: On sonne!
+          data:
+            push:
+              category: camera
+            entity_id: camera.foscam_camera
+      - service: notify.telegram
+        data:
+          message: "Cameras"
+          data:
+            photo:
+              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+                caption: "On sonne!"
+      - service: rest_command.fullykiosk_load_tab_frontcam
+      - service: script.front_door_camera_on_tv
+
+
+
+
+  - id: notify_postmail
+    alias: 'Notify: You ve got mail'
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.door_window_sensor_158d00015b5fc7
+      to: 'on'
+    action:
+      - service: notify.ios_all
+        data:
+          message: Du courrier!
+          data:
+            push:
+              category: camera
+            entity_id: camera.foscam_camera
+      - service: notify.telegram
+        data:
+          message: "Courrier"
+          data:
+            photo:
+              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+                caption: "Du courrier!"
+
+
+#
+## Home
+###
+
+
+################################################
+## Scripts
+################################################
+
+script:
+  alarm_triggered:
+    alias: "Alarm: Triggered!"
+    sequence:
+    - service: notify.ios_ipierre
+      data_template:
+        message: "Alarme déclenchée!"
+        data:
+          push:
+            badge: 1
+  #         sound: <SOUND FILE HERE>
+            category: "alarm" # Needs to match the top level identifier you used in the ios configuration
+  #       action_data: # Anything passed in action_data will get echoed back to Home Assistant.
+  #         entity_id: light.test
+  #         my_custom_data: foo_bar
+
+          attachment:
+            content-type: jpeg
+            hide-thumbnail: false
+            url: "https://hassio.ourdouille.maison{{ states.camera.dafang3.attributes.entity_picture }}"
+
+    - service: script.telegram_snapshots_all_cameras
+    - service: script.ios_notify_stream
+    # - delay: 
+    #     seconds: 3
+    # - service: notify.telegram
+    #     data:
+    #     message: "L'alarme vient de se déclencher"
+    #     # data:
+    #     #   inline_keyboard:
+    #     #      - 'Pictures Again:/cameras, Disarm Alarm:/disarm_alarm'
+
+
+
+  ios_notify_stream_dafang3: 
+    alias: "IOS Notify: camera stream"
+    sequence:
+    - service: notify.ios_ipierre
+      data:
+        message: Video Stream
+        data:
+          # attachment:
+          #   content-type: jpeg
+          push:
+            category: camera
+          entity_id: camera.dafang3
+
+  telegram_snapshots_all_cameras: 
+    alias: "Telegram: send a snapshot from all cameras"
+    sequence:
+    - service: notify.telegram
+      data:
+        message: "Cameras"
+        data:
+          photo:
+             - url: "https://hassio.ourdouille.maison{{ states.camera.aarlo_jardin.attributes.entity_picture }}"
+               caption: "Jardin"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+               caption: "Entrée"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.aarlo_etage_1.attributes.entity_picture }}"
+               caption: "Etage 1"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.aarlo_etage_2.attributes.entity_picture }}"
+               caption: "Etage 2"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.welcam_3.attributes.entity_picture }}"
+               caption: "Cuisine"
+             - url: "https://hassio.ourdouille.maison{{ states.camera.dafang3.attributes.entity_picture }}"
+               caption: "Salon"
+
+
+
+  front_door_camera_on_tv:
+    alias: "TV: Show who's at the door"
+    sequence:
+      - service: media_player.turn_on
+        data:
+          entity_id:  media_player.panasonic_viera_tv 
+      - service: media_player.play_media
+        data:
+          entity_id:  media_player.panasonic_viera_tv 
+          media_content_type: "url"
+          media_content_id: !secret foscam_snapshot_url
+          # media_content_id: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+          # media_content_id: "https://hassio.ourdouille.maison/lovelace/frontcam"
+      - delay: 
+          seconds: 4
+      - service: media_player.play_media
+        data:
+          entity_id:  media_player.panasonic_viera_tv 
+          media_content_type: "url"
+          media_content_id: !secret foscam_snapshot_url
+      - delay: 
+          seconds: 10
+      - service: media_player.media_stop
+        data:
+          entity_id:  media_player.panasonic_viera_tv 

@@ -86,12 +86,6 @@ input_select:
 binary_sensor:
 
 
-################################################
-## Automation
-################################################
-
-automation:
-
 
 
 ################################################
@@ -118,7 +112,7 @@ switch:
 
 
 ################################################
-## Script
+## Rest Commands
 ################################################
 
 # the following script can replace the section of scripts to activate each activity
@@ -127,6 +121,13 @@ switch:
 rest_command:
   fullykiosk_launch_spotify:
     url: !secret fullykiosk_app_spotify
+    method: POST
+  fullykiosk_launch_withings_home:
+    url: !secret fullykiosk_app_withings_home
+    method: POST
+  fullykiosk_launch_asus_aihome:
+    url: !secret fullykiosk_app_asus_aihome
+    method: POST
   fullykiosk_launch_harmony:
     url: !secret fullykiosk_app_harmony
     method: POST
@@ -145,6 +146,16 @@ rest_command:
   fullykiosk_load_tab_frontcam:
     url: !secret fullykiosk_load_tab_frontcam
     method: POST
+  fullykiosk_rest_screensaver_off:
+    url: !secret fullykiosk_rest_screensaver_off
+    method: POST
+
+
+################################################
+## Script
+################################################
+
+# the following script can replace the section of scripts to activate each activity
 
 
 script:
@@ -152,3 +163,22 @@ script:
   #   sequence:
   #      - service: rest_command.launch_spotify_on_android_tab
 
+
+
+
+################################################
+## Automation
+################################################
+
+automation:
+
+# disable screensaver when moving in living room
+
+- id: fullykiosk_screensaver_off_when_movement
+  alias: 'Fullykiosk: disable screensaver when movement'
+  trigger:
+   - platform: state
+     entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
+     to: 'on'
+  action:
+    - service: rest_command.fullykiosk_rest_screensaver_off

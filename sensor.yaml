@@ -111,7 +111,7 @@
             dusk
           {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
             dawn
-          {% elif (states.sun.sun.attributes.elevation) < -4 %}
+          {% elif (states.sun.sun.attributes.elevation) < -5 %}
             night
           {% else %}
             day
@@ -121,7 +121,7 @@
             mdi:weather-sunset-down
           {% elif (as_timestamp(states.sun.sun.attributes.next_rising)) - (as_timestamp(states.sun.sun.attributes.next_dawn)) < 0 %}
             mdi:weather-sunset-up
-          {% elif (states.sun.sun.attributes.elevation) < -4 %}
+          {% elif (states.sun.sun.attributes.elevation) < -5 %}
             mdi:weather-night
           {% else %}
             mdi:weather-sunny
@@ -129,28 +129,28 @@
  
 
 
-      # Main house state:
-      # home - we are home
-      # away - we are away from home for a short period of time
-      # on_vacation - we are away from home for a long period of time (vacation)
-      # have_guests - we have guests over
-      current_state:
-        friendly_name: Current State
-        entity_id:
-          - input_select.system_mode
-          # - binary_sensor.somebody_home
-          - binary_sensor.household_home
+      # # Main house state:
+      # # home - we are home
+      # # away - we are away from home for a short period of time
+      # # on_vacation - we are away from home for a long period of time (vacation)
+      # # have_guests - we have guests over
+      # current_state:
+      #   friendly_name: Current State
+      #   entity_id:
+      #     - input_select.system_mode
+      #     # - binary_sensor.somebody_home
+      #     - binary_sensor.household_home
 
-        value_template: >-
-          {% if is_state('input_select.system_mode', 'On vacation') %}
-          on_vacation
-          {% elif is_state('input_select.system_mode', 'Have guests') %}
-          have_guests
-          {% elif is_state('binary_sensor.household_home', 'on') %}
-          home
-          {% else %}
-          away
-          {% endif %}
+      #   value_template: >-
+      #     {% if is_state('input_select.system_mode', 'On vacation') %}
+      #     on_vacation
+      #     {% elif is_state('input_select.system_mode', 'Have guests') %}
+      #     have_guests
+      #     {% elif is_state('binary_sensor.household_home', 'on') %}
+      #     home
+      #     {% else %}
+      #     away
+      #     {% endif %}
   
 
 #  - name: "Home to OVH"
@@ -195,13 +195,13 @@
 #        friendly_name: Pierre
 # 
 
-  - platform: arlo
-    monitored_conditions:
-      - captured_today
-      - last_capture
-#     - total_cameras
-#     - battery_level
-#     - signal_strength
+#   - platform: arlo
+#     monitored_conditions:
+#       - captured_today
+#       - last_capture
+# #     - total_cameras
+# #     - battery_level
+# #     - signal_strength
 
 
 

@@ -1,38 +1,38 @@
-- id: to_bed
-  alias: 'To bed'
-  trigger:
-  - entity_id: binary_sensor.in_bed
-    platform: state
-    to: 'on'
-  condition:
-    - condition: state
-      entity_id: sensor.current_state
-      state: 'home'
+# - id: to_bed
+#   alias: 'To bed'
+#   trigger:
+#   - entity_id: binary_sensor.in_bed
+#     platform: state
+#     to: 'on'
+#   condition:
+#     - condition: state
+#       entity_id: sensor.current_state
+#       state: 'home'
 
-  action:
-    # - service: display.turn_off
-    #   entity_id: display.chuwi
-    - service: switch.turn_off
-      entity_id: switch.fullykiosk_screen
-    # - service: notify.ios_ipierre
-    #   data:
-    #     message: In bed, turning chuwi off
+#   action:
+#     # - service: display.turn_off
+#     #   entity_id: display.chuwi
+#     - service: switch.turn_off
+#       entity_id: switch.fullykiosk_screen
+#     # - service: notify.ios_ipierre
+#     #   data:
+#     #     message: In bed, turning chuwi off
 
-- id: from_bed
-  alias: 'From bed'
-  trigger:
-  - entity_id: binary_sensor.in_bed
-    platform: state
-    to: 'off'
-  condition:
-    - condition: state
-      entity_id: sensor.current_state
-      state: 'home'
-  action:
-    # - service: display.turn_on
-    #   entity_id: display.chuwi
-    - service: switch.turn_on
-      entity_id: switch.fullykiosk_screen
-    # - service: notify.ios_ipierre
-    #   data:
-    #     message: Back up, turning chuwi on
+# - id: from_bed
+#   alias: 'From bed'
+#   trigger:
+#   - entity_id: binary_sensor.in_bed
+#     platform: state
+#     to: 'off'
+#   condition:
+#     - condition: state
+#       entity_id: sensor.current_state
+#       state: 'home'
+#   action:
+#     # - service: display.turn_on
+#     #   entity_id: display.chuwi
+#     - service: switch.turn_on
+#       entity_id: switch.fullykiosk_screen
+#     # - service: notify.ios_ipierre
+#     #   data:
+#     #     message: Back up, turning chuwi on

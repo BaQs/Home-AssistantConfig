@@ -79,37 +79,3 @@
 #    switches:
 #      chuwi_screen:
 #        command_on: !secret chuwi_screen_on
-
-  - platform: template
-    switches:
-      dafang_up:
-        value_template: "on"
-        turn_on:
-          service: rest_command.dafang_up
-        turn_off:
-          service: rest_command.dafang_up
-  - platform: template
-    switches:
-      dafang_down:
-        value_template: "on"
-        turn_on:
-          service: rest_command.dafang_down
-        turn_off:
-          service: rest_command.dafang_down
-  - platform: template
-    switches:
-      dafang_left:
-        value_template: "on"
-        turn_on:
-          service: rest_command.dafang_left
-        turn_off:
-          service: rest_command.dafang_left
-
-  - platform: template
-    switches:
-      dafang_right:
-        value_template: "on"
-        turn_on:
-          service: rest_command.dafang_right
-        turn_off:
-          service: rest_command.dafang_right

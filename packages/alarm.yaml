@@ -33,17 +33,54 @@ aarlo:
 camera:
   - platform: aarlo
     ffmpeg_arguments: '-pred 1 -q:v 2'
+  - platform: foscam
+    ip: !secret foscam_ip
+    username: !secret foscam_username
+    password: !secret foscam_password
+  - platform: generic
+    name: DaFang3
+    still_image_url: !secret dafang_still_image_url
+    stream_source: !secret dafang_rtsp_url
+    verify_ssl: false
+    username: !secret dafang_username
+    password:  !secret dafang_password
+    authentication: basic
+
+rest_command:
+  dafang_right:
+    url: !secret dafang_url_right 
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+  dafang_left:
+    url: !secret dafang_url_left
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+  dafang_up:
+    url: !secret dafang_url_up 
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+  dafang_down:
+    url: !secret dafang_url_down 
+    verify_ssl: false
+    username: !secret dafang_username
+    password: !secret dafang_password
+    
+
 
 alarm_control_panel:
   - platform: manual
     name: Home Alarm
-    #code: 1234
+    # If true, the alarm will automatically disarm after it has been triggered instead of returning to the previous state.
     disarm_after_trigger: false
-    # time to leave
+    # The time in seconds of the pending time before effecting a state change.
     pending_time: 30
-    # time to disarm
-    delay_time: 20
-    trigger_time: 120
+    # The time in seconds of the pending time before triggering the alarm. (i.e. the time to disarm alarm when it triggered)
+    delay_time: 60
+    # The time in seconds of the trigger time in which the alarm is firing
+    trigger_time: 180
     disarmed:
       trigger_time: 0
     armed_home:
@@ -62,6 +99,39 @@ alarm_control_panel:
     trigger_time: 30
     alarm_volume: 8
 
+
+
+################################################
+## Arlo
+################################################
+
+group:
+  arlo:
+    name: Arlo
+    view: no
+    entities:
+    - alarm_control_panel.aarlo_arlo
+    - binary_sensor.aarlo_motion_etage_1
+    - binary_sensor.aarlo_motion_etage_2
+    - binary_sensor.aarlo_motion_jardin
+    - camera.aarlo_etage_1
+    - camera.aarlo_etage_2
+    - camera.aarlo_jardin
+    - sensor.aarlo_arlo_cameras
+    - sensor.aarlo_battery_level_etage_1
+    - sensor.aarlo_battery_level_etage_2
+    - sensor.aarlo_battery_level_jardin
+    - sensor.aarlo_captured_today_etage_1
+    - sensor.aarlo_captured_today_etage_2
+    - sensor.aarlo_captured_today_jardin
+    - sensor.aarlo_last_etage_1
+    - sensor.aarlo_last_etage_2
+    - sensor.aarlo_last_jardin
+    - sensor.aarlo_signal_strength_etage_1
+    - sensor.aarlo_signal_strength_etage_2
+    - sensor.aarlo_signal_strength_jardin
+
+
 ################################################
 ## Sensor
 ################################################
@@ -74,6 +144,7 @@ sensor:
     - battery_level
     - captured_today
     - signal_strength
+
 ################################################
 ## Binary Sensor
 ################################################
@@ -85,19 +156,128 @@ binary_sensor:
     - sound
     - ding
 
+  - platform: rest
+    name: "Foscam C1 Motion Sensor"
+    resource: !secret foscam_resource_url 
+    verify_ssl: false
+    device_class: motion
+    scan_interval: 5
+    value_template: >-
+      {%- if "<motionDetectAlarm>2</motionDetectAlarm>" in value -%}
+        {{ true }}
+      {%- else -%}
+        {{ false }}
+      {%- endif -%}
+
+
+
+
+################################################
+## Switch
+################################################
+
+switch:
+  - platform: template
+    switches:
+      dafang_up:
+        value_template: "on"
+        turn_on:
+          service: rest_command.dafang_up
+        turn_off:
+          service: rest_command.dafang_up
+  - platform: template
+    switches:
+      dafang_down:
+        value_template: "on"
+        turn_on:
+          service: rest_command.dafang_down
+        turn_off:
+          service: rest_command.dafang_down
+  - platform: template
+    switches:
+      dafang_left:
+        value_template: "on"
+        turn_on:
+          service: rest_command.dafang_left
+        turn_off:
+          service: rest_command.dafang_left
+
+  - platform: template
+    switches:
+      dafang_right:
+        value_template: "on"
+        turn_on:
+          service: rest_command.dafang_right
+        turn_off:
+          service: rest_command.dafang_right
+
 ################################################
 ## Automation
 ################################################
 
 automation:
 
+#
+## Alarm Arming
+###
+
+
+  # Automatic away mode when nobody is at home during the day,
+  # and not on vacation, and no guest
+  - id: away_from_home_away_mode
+    alias: "Alarm: Away"
+    hide_entity: false
+    trigger:
+    - platform: state
+      entity_id: sensor.current_state
+      # from: 'home'
+      to: 'away'
+      for:
+        minutes: 3
+    - platform: event
+      event_type: xiaomi_aqara.click
+      event_data:
+        entity_id: binary_sensor.switch_158d0001a6671d
+        click_type: single
+    action:
+    # Arm 
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.home_alarm
+    - service: alarm_control_panel.alarm_arm_away
+      entity_id: alarm_control_panel.aarlo_arlo
+
+
+  # Night Alarm
+  - alias: 'Alarm: Night'
+    hide_entity: false
+    trigger:
+      - platform: state
+        # entity_id: sensor.current_state
+        entity_id: binary_sensor.in_bed
+        from: 'off'
+        to: 'on'
+        for:
+          minutes: 3
+    condition:
+      - condition: state
+        entity_id: sensor.current_state
+        state: 'home'          
+    action:
+      # Arm 
+      - service: alarm_control_panel.alarm_arm_home
+        entity_id: alarm_control_panel.home_alarm
+      - service: alarm_control_panel.alarm_arm_home
+        entity_id: alarm_control_panel.aarlo_arlo
+
+
+#
+## Alarm Trigger
+###
+
   # Trigger (away)
   - id: trigger_alarm_while_armed_away
     alias: "Alarm: Trigger when armed away"
     trigger:
-  #  - entity_id: binary_sensor.motion_detected
-  #    platform: state
-  #    to: 'on'
     - entity_id: group.perimeter_detectors
       platform: state
       to: 'on'
@@ -117,12 +297,16 @@ automation:
       data:
         brightness: '100'
         color_name: red
-        entity_id: light.gateway_light_7811dcb7afd1
-    - service: light.turn_on
+        entity_id: group.xiaomi_lights
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home_salon
+        volume_level: 0.7
+    - service: tts.google_say
       data:
-        brightness: '100'
-        color_name: red
-        entity_id: light.gateway_light_34ce008c1873
+        entity_id: media_player.google_home_salon
+        message: >
+          Alarme déclenchée! Le centre de sécurité a été prévenu. Intervention en cours!
 
 
   # Trigger (home)
@@ -133,9 +317,15 @@ automation:
       platform: state
       to: 'on'
     condition:
-    - condition: state
-      entity_id: alarm_control_panel.home_alarm
-      state: armed_home
+      condition: and
+      conditions:
+      - condition: state
+        entity_id: alarm_control_panel.home_alarm
+        state: armed_home
+        # if someone known has been seen by the camera, we don't trigger the alarm
+        # for 13min (as last change of binary_sensor is after 2 min)
+      - condition: template
+        value_template: "{{ now().timestamp()- as_timestamp(states.binary_sensor.welcam_3_someone_known.last_changed) < 700}}"
     action:
     - entity_id: alarm_control_panel.home_alarm
       service: alarm_control_panel.alarm_trigger
@@ -145,64 +335,25 @@ automation:
       data:
         brightness: '100'
         color_name: red
-        entity_id: light.gateway_light_7811dcb7afd1
-    - service: light.turn_on
+        entity_id: group.xiaomi_lights
+    - service: media_player.volume_set
+      data_template:
+        entity_id: media_player.google_home_salon
+        volume_level: 0.4
+    - service: tts.google_say
       data:
-        brightness: '100'
-        color_name: red
-        entity_id: light.gateway_light_34ce008c1873
+        entity_id: media_player.google_home_salon
+        message: >
+          Alarme déclenchée!
 
 
-  # notification
-  - id: send_notification_when_alarm_triggered
-    alias: "Alarm: Send notification when triggered"
-    trigger:
-    - entity_id: alarm_control_panel.home_alarm
-      platform: state
-      to: triggered
-    action:
-    - service: script.presence_notifications_when_alarm_triggered
+
 
 
 #
-## Alarm Arming
+## Alarm Disarm
 ###
 
-
-  # Automatic away mode when nobody is at home during the day,
-  # and not on vacation, and no guest
-  - id: away_from_home_away_mode
-    alias: "Alarm: Away"
-    hide_entity: True
-    trigger:
-      - platform: state
-        entity_id: sensor.current_state
-        from: 'home'
-        to: 'away'
-        for:
-          minutes: 5
-      - platform: event
-        event_type: xiaomi_aqara.click
-        event_data:
-          entity_id: binary_sensor.switch_158d0001a6671d
-          click_type: single
-    condition:
-      - condition: state
-        entity_id: sensor.current_state
-        state: 'home'          
-    action:
-      - service: notify.ios_ipierre
-        data_template:
-          message: >
-            Alarm ON
-      # Arm 
-      - service: alarm_control_panel.alarm_arm_away
-        entity_id: alarm_control_panel.home_alarm
-      - service: alarm_control_panel.alarm_arm_away
-        entity_id: alarm_control_panel.aarlo_arlo
-
-
-  # Turn off automatic away mode
   - alias: 'Alarm: Disarm'
     hide_entity: false
     trigger:
@@ -221,10 +372,10 @@ automation:
           entity_id: binary_sensor.switch_158d0001a6671d
           click_type: double
     action:
-      - service: notify.ios_ipierre
-        data_template:
-          message: >
-            Alarm OFF (disarmed)
+      # - service: notify.ios_ipierre
+      #   data_template:
+      #     message: >
+      #       Alarm OFF (disarmed)
       # Disarm alarm
       - service: alarm_control_panel.alarm_disarm
         entity_id: alarm_control_panel.home_alarm
@@ -232,37 +383,8 @@ automation:
         entity_id: alarm_control_panel.aarlo_arlo
       - service: light.turn_off
         data:
-          entity_id: light.gateway_light_7811dcb7afd1
-      - service: light.turn_off
-        data:
-          entity_id: light.gateway_light_34ce008c1873
+          entity_id: group.xiaomi_lights
 
-
-  # Night Alarm
-  - alias: 'Alarm: Night'
-    hide_entity: false
-    trigger:
-      - platform: state
-        # entity_id: sensor.current_state
-        entity_id: binary_sensor.in_bed
-        from: 'off'
-        to: 'on'
-        for:
-          minutes: 3
-    condition:
-      - condition: state
-        entity_id: sensor.current_state
-        state: 'home'          
-    action:
-      - service: notify.ios_ipierre
-        data_template:
-          message: >
-            Alarm: Night Mode (in bed since 3 min)
-      # Arm 
-      - service: alarm_control_panel.alarm_arm_home
-        entity_id: alarm_control_panel.home_alarm
-      - service: alarm_control_panel.alarm_arm_home
-        entity_id: alarm_control_panel.aarlo_arlo
 
   # Turn off from night mode
   - alias: 'Alarm: Disarm From Night Mode'
@@ -280,17 +402,18 @@ automation:
         entity_id: sensor.current_state
         state: 'home'          
     action:
-      - service: notify.ios_ipierre
-        data_template:
-          message: >
-            Alarm OFF (from night mode)
+      # - service: notify.ios_ipierre
+      #   data_template:
+      #     message: >
+      #       Alarm OFF (from night mode)
       # Disarm alarm
       - service: alarm_control_panel.alarm_disarm
         entity_id: alarm_control_panel.home_alarm
       - service: alarm_control_panel.alarm_disarm
         entity_id: alarm_control_panel.aarlo_arlo
-
-
+      - service: light.turn_off
+        data:
+          entity_id: group.xiaomi_lights
 
 
 
@@ -298,16 +421,166 @@ automation:
 ## Alerts
 ###
 
-alert:
+  # # notification
+  # - id: send_notification_when_alarm_triggered
+  #   alias: "Alarm: Send notification when triggered"
+  #   trigger:
+  #   - entity_id: alarm_control_panel.home_alarm
+  #     platform: state
+  #     to: triggered
+  #   action:
+  #   - service: script.presence_notifications_when_alarm_triggered
 
-  alarm:
-    name: Alarm Triggered
-    message: "Alarm Triggered!"
-    done_message: "Alarm Disarmed"
-    entity_id: alarm_control_panel.home_alarm
-    state: 'triggered'
-    repeat: 3
-    can_acknowledge: True
-    skip_first: False
-    notifiers:
-      - ios_ipierre
+
+
+
+################################################
+## iOS control
+################################################
+
+  - alias: Disarm the alarm
+    initial_state: true
+    trigger:
+      platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: DISARM_ALARM
+    action:
+    - service: alarm_control_panel.alarm_disarm
+
+
+  - alias: Sound the alarm
+    initial_state: true
+    trigger:
+      platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: SOUND_ALARM
+    action:
+    - service: tts.google_say
+      data:
+        language: fr
+        entity_id: media_player.google_home_salon
+        message: Alarme déclenchée
+
+
+# notify:
+#   - name: ios_all
+#     platform: group
+#     services:
+#       - service: ios_ipierre
+#       - service: ios_iphoneg
+
+
+# ios:
+#   push:
+#     categories:
+#       - name: Alarm
+#         identifier: 'alarm'
+#         actions:
+#           - identifier: 'SOUND_ALARM'
+#             title: 'Sound Alarm'
+#             activationMode: 'background'
+#             authenticationRequired: yes
+#             destructive: yes
+#             behavior: 'default'
+#           - identifier: 'DISARM_ALARM'
+#             title: 'Disarm ?'
+#             activationMode: 'background'
+#             authenticationRequired: yes
+#             destructive: no
+#             behavior: 'default'
+
+
+
+            
+# ################################################
+# ## Alert
+# ################################################
+
+# alert:
+
+#   alarm:
+#     name: Alarm Triggered
+#     message: "Alarm Triggered!"
+#     done_message: "Alarm Disarmed"
+#     entity_id: alarm_control_panel.home_alarm
+#     state: 'triggered'
+#     repeat: 3
+#     can_acknowledge: True
+#     skip_first: False
+#     notifiers:
+#       - ios_ipierre
+
+
+
+
+################################################
+## Scripts
+################################################
+script:
+  # presence_notifications_when_alarm_triggered:
+  #   alias: "Alarm: Triggered!"
+  #   sequence:
+  #   - service: notify.ios_ipierre
+  #     data_template:
+  #       message: "Alarme déclenchée!"
+  #       data:
+  #         push:
+  #           badge: 1
+  # #         sound: <SOUND FILE HERE>
+  #           category: "alarm" # Needs to match the top level identifier you used in the ios configuration
+  # #       action_data: # Anything passed in action_data will get echoed back to Home Assistant.
+  # #         entity_id: light.test
+  # #         my_custom_data: foo_bar
+
+  #         attachment:
+  #           content-type: jpeg
+  #           hide-thumbnail: false
+  #           url: "https://hassio.ourdouille.maison{{ states.camera.dafang3.attributes.entity_picture }}"
+
+  #   - service: script.telegram_snapshots_all_cameras
+  #   - delay: 
+  #       seconds: 3
+  #   - service: notify.telegram
+  #       data:
+  #       message: "L'alarme vient de se déclencher"
+  #       # data:
+  #       #   inline_keyboard:
+  #       #      - 'Pictures Again:/cameras, Disarm Alarm:/disarm_alarm'
+
+
+
+  # ios_notify_stream: 
+  #   alias: "IOS Notify: camera stream"
+  #   sequence:
+  #   - service: notify.ios_ipierre
+  #     data:
+  #       message: Video Stream
+  #       data:
+  #         # attachment:
+  #         #   content-type: jpeg
+  #         push:
+  #           category: camera
+  #         entity_id: camera.dafang3
+
+  # telegram_snapshots_all_cameras: 
+  #   alias: "Telegram: send a snapshot from all cameras"
+  #   sequence:
+  #   - service: notify.telegram
+  #     data:
+  #       message: "Cameras"
+  #       data:
+  #         photo:
+  #            - url: "https://hassio.ourdouille.maison{{ states.camera.aarlo_jardin.attributes.entity_picture }}"
+  #              caption: "Jardin"
+  #            - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+  #              caption: "Entrée"
+  #            - url: "https://hassio.ourdouille.maison{{ states.camera.aarlo_etage_1.attributes.entity_picture }}"
+  #              caption: "Etage 1"
+  #            - url: "https://hassio.ourdouille.maison{{ states.camera.aarlo_etage_2.attributes.entity_picture }}"
+  #              caption: "Etage 2"
+  #            - url: "https://hassio.ourdouille.maison{{ states.camera.welcam_3.attributes.entity_picture }}"
+  #              caption: "Cuisine"
+  #            - url: "https://hassio.ourdouille.maison{{ states.camera.dafang3.attributes.entity_picture }}"
+  #              caption: "Salon"

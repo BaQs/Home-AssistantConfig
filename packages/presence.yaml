@@ -1,0 +1,835 @@
+################################################
+## Packages / Presence
+################################################
+
+homeassistant:
+  customize:
+    sensor.current_state:
+      icon: mdi:home-outline
+      templates:
+        hs_color: >
+          if (state === 'home') return '#ffd166' ; else return '#343330';
+        icon: >  
+          if (state === 'home') return 'mdi:home-account'; 
+          if (state === 'away') return 'mdi:home-outline'; 
+          if (state === 'Have guests') return 'mdi:home-group'; 
+          if (state === 'On vacation') return 'mdi:airballoon'; 
+          else return 'mdi:home-alert';
+    binary_sensor.in_bed:
+      templates:
+        icon: >
+          if (state === 'on') return 'mdi:hotel'; else return 'mdi:bed-empty';
+        hs_color: >
+          if (state === 'on') return '#ffd166'; else return '#343330';
+    binary_sensor.household_home:
+      templates:
+        icon: >
+          if (state === 'on') return 'mdi:account-heart'; else return 'account-heart-outline';
+        hs_color: >
+          if (state === 'on') return '#ffd166'; else return '#343330';
+    binary_sensor.somebody_home:
+      templates:
+        icon: >
+          if (state === 'on') return 'account-circle'; else return 'mdi:account-circle-outline';
+        hs_color: >
+          if (state === 'on') return '#ffd166'; else return '#343330';
+
+################################################
+## Modules
+################################################
+
+volvooncall:
+  username: !secret volvooncall_username
+  password: !secret volvooncall_password
+
+owntracks:
+    max_gps_accuracy: 100
+    waypoints: true
+    waypoint_whitelist:
+    - pierre
+    - gaetane
+
+device_tracker:
+  - platform: bluetooth_tracker
+  - platform: bluetooth_le_tracker
+    track_new_devices: true
+  # - platform: icloud
+  #   username: !secret icloud_username
+  #   password: !secret icloud_password
+  # - platform: nmap_tracker
+  #   hosts:
+  #           - 192.168.0.19
+  #           - 192.168.0.32
+  #   home_interval: 30 
+
+  - platform: ping
+    hosts:
+      ipierre_ping: 192.168.0.190
+      iphoneg_ping: 192.168.0.33
+      ovhlaptop_ping: 192.168.0.53
+      # Gae:
+      # bluetooth: E4:B2:FB:AF:67:56
+      # wifi: E4:B2:FB:B1:6E:BD
+
+
+################################################
+## Person
+################################################
+
+person:
+  - name: Pierre
+    id: person_pierre
+    device_trackers:
+      - device_tracker.ipierre
+      # - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
+      - device_tracker.volvo_et_732_hn 
+      # - input_boolean.netatmo_home_pierre
+
+  - name: Gaetane
+    id: person_gaetane
+    device_trackers:
+      # - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
+      - device_tracker.iphoneg
+      # - input_boolean.netatmo_home_gaetane
+
+
+################################################
+## Group
+################################################
+
+group:
+  Gaetane:
+    name: Gaetane
+    view: no
+    entities:
+      # - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
+      - device_tracker.iphoneg
+      - input_boolean.netatmo_home_gaetane
+  Pierre:
+    name: Pierre
+    view: no
+    entities:
+      - device_tracker.ipierre
+      # - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
+      - input_boolean.netatmo_home_pierre
+  household:
+    name: Household
+    view: no
+    entities:
+      - person.gaetane
+      - person.pierre
+
+  volvo:
+    name: Volvo
+    view: no
+    entities:
+      - device_tracker.volvo_et_732_hn 
+      - binary_sensor.et_732_hn_brake_fluid
+      - binary_sensor.et_732_hn_bulbs
+      - binary_sensor.et_732_hn_doors
+      - binary_sensor.et_732_hn_engine
+      - binary_sensor.et_732_hn_front_left_door
+      - binary_sensor.et_732_hn_front_left_tyre
+      - binary_sensor.et_732_hn_front_left_window
+      - binary_sensor.et_732_hn_front_right_door
+      - binary_sensor.et_732_hn_front_right_tyre
+      - binary_sensor.et_732_hn_front_right_window
+      - binary_sensor.et_732_hn_hood
+      - binary_sensor.et_732_hn_rear_left_door
+      - binary_sensor.et_732_hn_rear_left_tyre
+      - binary_sensor.et_732_hn_rear_left_window
+      - binary_sensor.et_732_hn_rear_right_door
+      - binary_sensor.et_732_hn_rear_right_tyre
+      - binary_sensor.et_732_hn_rear_right_window
+      - binary_sensor.et_732_hn_service
+      - binary_sensor.et_732_hn_washer_fluid
+      - binary_sensor.et_732_hn_windows
+      - lock.et_732_hn_door_lock 
+      - sensor.et_732_hn_fuel_amount
+      - sensor.et_732_hn_fuel_consumption
+      - sensor.et_732_hn_fuel_level
+      - sensor.et_732_hn_last_trip
+      - sensor.et_732_hn_odometer
+      - sensor.et_732_hn_range
+      - sensor.et_732_hn_trip_meter_1
+      - sensor.et_732_hn_trip_meter_2
+      - switch.et_732_hn_heater 
+
+
+################################################
+## Input Boolean
+################################################
+
+input_boolean:
+
+
+################################################
+## Proximity
+################################################
+
+proximity:
+  home:
+    # ignored_zones:
+    #   - work
+    #   - school
+    devices:
+      # - device_tracker.gaetane_igaetaneowntracks
+      # - device_tracker.ipierre
+      - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
+      # - device_tracker.volvo_et_732_hn
+    # tolerance: 100
+    # unit_of_measurement: m
+
+  work:
+    devices:
+      # - device_tracker.gaetane_igaetaneowntracks
+      # - device_tracker.ipierre
+      - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
+
+    # tolerance: 100
+    # unit_of_measurement: m
+
+
+
+################################################
+## Sensor
+################################################
+
+sensor:
+  # Main house state:
+  # home - we are home
+  # away - we are away from home for a short period of time
+  # on_vacation - we are away from home for a long period of time (vacation)
+  # have_guests - we have guests over
+  - platform: template
+    sensors:
+      current_state:
+        friendly_name: Current State
+        entity_id:
+          - input_select.system_mode
+          # - binary_sensor.somebody_home
+          # - binary_sensor.household_home
+          - group.household
+
+          # {% elif is_state('binary_sensor.household_home', 'on') %}
+        value_template: >-
+          {% if is_state('input_select.system_mode', 'On vacation') %}
+          on_vacation
+          {% elif is_state('input_select.system_mode', 'Have guests') %}
+          have_guests
+          {% elif is_state('group.household', 'home') %}
+          home
+          {% else %}
+          away
+          {% endif %}
+
+
+################################################
+## Waze
+################################################
+
+
+## Waze Travel Time
+  - platform: waze_travel_time
+    name: 'Home to Work'
+    origin: zone.home
+    destination: zone.work
+    region: 'EU'
+    
+  - platform: waze_travel_time
+    name: 'Pierre to Home'
+    origin: device_tracker.ipierre
+    destination: zone.home
+    region: 'EU'
+    
+  - platform: waze_travel_time
+    name: 'Gaë to Home'
+    origin: device_tracker.iphoneg
+    destination: zone.home
+    region: 'EU'
+       
+
+
+################################################
+## Binary Sensor
+################################################
+
+binary_sensor:
+  # 
+  # It means somebody SAFE is home :)
+  # 
+
+  - platform: bayesian
+    name: HouseHold home
+    prior: 0.6  # 60% chance that somebody is at home at any given moment
+    probability_threshold: 0.8
+    observations:
+      # Somebody at home -> Very likely at least one household member is at home
+      - entity_id: person.pierre
+        platform: state
+        to_state: home
+        prob_given_true: 0.9 # 99% chance that if we are home, household is home
+        prob_given_false: 0.1 # 0.2% chance that if we are not home, household is home
+
+      - entity_id: person.gaetane
+        platform: state
+        to_state: home
+        prob_given_true: 0.9 # 99% chance that if we are home, household is home
+        prob_given_false: 0.1 # 0.2% chance that if we are not home, household is home
+
+      # - entity_id: 'binary_sensor.presence_home_known'
+      - entity_id: binary_sensor.welcam_3_someone_known
+        prob_given_true: 0.9 # 90% chance that if we are home, somebody known
+        prob_given_false: 0.01 # 1% chance that if we are not home, somebody known
+        platform: 'state'
+        to_state: 'on'
+
+      - entity_id:  device_tracker.volvo_et_732_hn 
+        platform: state
+        to_state: home
+        prob_given_true: 0.7 # 70% chance that if we are home, car is home
+        prob_given_false: 0.1 # 0.2% chance that if we are not home, car is home
+
+
+  # 
+  # It does NOT mean it's somebody safe. It can be a burglar.
+  # BUT yes, there is somebody home :)
+  # 
+  - platform: bayesian
+    name: Somebody home
+    prior: 0.6  # 60% chance that somebody is at home at any given moment
+    probability_threshold: 0.80
+    observations:
+      # Somebody at home -> Very likely at least one household member is at home
+      - entity_id: person.pierre
+        platform: state
+        to_state: home
+        prob_given_true: 0.5 # 99% chance that if we are home, household is home
+        prob_given_false: 0.1 # 0.2% chance that if we are not home, household is home
+      - entity_id: person.gaetane
+        platform: state
+        to_state: home
+        prob_given_true: 0.5 # 99% chance that if we are home, household is home
+        prob_given_false: 0.1 # 0.2% chance that if we are not home, household is home
+      # Somebody at home -> likely that at least one indoor light is turned on
+#     - entity_id: group.all_lights
+      - entity_id: 'group.living_lights'
+        platform: state
+        to_state: 'on'
+        prob_given_true: 0.5 # 50% chance that if we are home, light is on
+      # Somebody at home -> Very Likely motion will be detected
+      - entity_id: binary_sensor.motion_detected
+        platform: state
+        to_state: 'on'
+        prob_given_true: 0.6 # 60% chance that if we are home, motion detected
+        prob_given_false: 0.4 # 0.01 chance that if we are not home, motion detected
+
+      # - entity_id: 'binary_sensor.welcam_3_someone_known'
+      #   prob_given_true: 0.9 # 90% chance that if we are home, somebody known
+      #   prob_given_false: 0.01 # 1% chance that if we are not home, somebody known
+      #   platform: 'state'
+      #   to_state: 'on'
+
+      - entity_id: 'binary_sensor.presence_home_known'
+        prob_given_true: 0.9 # 90% chance that if we are home, somebody known
+        prob_given_false: 0.01 # 1% chance that if we are not home, somebody known
+        platform: 'state'
+        to_state: 'on'
+
+      - entity_id: 'binary_sensor.motion_last30'
+        platform: 'state'
+        to_state: 'on'
+        prob_given_true: 0.9 # 90% chance that if somebody's home, motion since 30min
+        # prob_given_false: 0.1 # 40% chance that if nobody's home, motion since 30min
+
+
+
+      # - entity_id: remote.harmony_hub
+      #   platform: state
+      #   to_state: 'on'
+      #   prob_given_true: 0.7 # 79% chance that if we are home, remote is on
+      #   prob_given_false: 0.3 # 0.1% chance that if we are not home, remote is on
+
+  - platform: template
+    sensors:
+      # Is on for 5 minutes after motion detectors trigger
+      motion_detected:
+        friendly_name: Motion detected
+        delay_off:
+          minutes: 3
+        entity_id:
+          - group.motion_detectors
+        value_template: "{{is_state('group.motion_detectors', 'on')}}"
+   
+  - platform: template
+    sensors:
+      motion_last10:
+        friendly_name: Motion in Last 10min
+        device_class: motion
+        #value_template: '{{(  as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))-as_timestamp(states.binary_sensor.motion_detected.last_changed)) < 600 }}'
+        #value_template: '{{(as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
+        value_template: '{{(  as_timestamp(strptime(states.sensor.date_time.state, "%Y-%m-%d, %H:%M"))   - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 600)}}'
+  
+  - platform: template
+    sensors:
+      motion_last30:
+        friendly_name: Motion in Last 30min
+        device_class: motion
+        #value_template: '{{(  as_timestamp(strptime(states.sensor.date__time.state, "%Y-%m-%d, %H:%M"))-as_timestamp(states.binary_sensor.motion_detected.last_changed)) < 1800 }}'
+        #value_template: '{{(as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
+        value_template: '{{(  as_timestamp(strptime(states.sensor.date_time.state, "%Y-%m-%d, %H:%M"))   - as_timestamp(states.binary_sensor.motion_detected.last_changed) < 1800)}}'
+  
+  - platform: template
+    sensors:
+      detected_outside_car:
+        friendly_name: "Car detected outside"
+        value_template: >-
+          {% if states.image_processing.opencv_foscam_camera.attributes.matches["car"] is defined -%}True{%- endif %}
+
+  - platform: template
+    sensors:
+      ipierre_pluggedin:
+        friendly_name: "iPierre Plugged In ?"
+        value_template: "{% if is_state('sensor.ipierre_battery_state', 'Unplugged') %} false {%- else -%} true  {%- endif %}"
+
+        
+  - platform: template
+    sensors:
+      igaetane_pluggedin:
+        friendly_name: "iPhoneG Plugged In ?"
+        value_template: "{% if is_state('sensor.iphoneg_battery_state', 'Unplugged') %} false {%- else -%} true  {%- endif %}"
+
+
+
+  # True if last motion is the one from floor1
+  - platform: template
+    sensors:
+      last_motion_is_floor_1:
+        friendly_name: "Is last motion floor 1 ?"
+        value_template: "{% if as_timestamp(states.group.motion_detectors.last_changed) | round(0) == as_timestamp(states.binary_sensor.motion_sensor_158d0001ab34e1.last_changed) | round(0) %} true {%- else -%} false  {%- endif %}"
+
+
+  - platform: template
+    sensors:
+      in_bed:
+        # device_class: occupancy
+        friendly_name: "In Bed"
+        value_template: "{{ is_state('input_boolean.ifttt_withings_sleep', 'on') }}"
+
+
+
+
+################################################
+## Automations
+################################################
+
+automation:
+
+################################################
+## From Home
+################################################
+
+# Automatic away mode when nobody is at home during the day,
+# and not on vacation
+- id: away_from_home_away_mode
+  alias: "Away: From Home"
+  initial_state: true
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: sensor.current_state
+      from: 'home'
+      to: 'away'
+      for:
+        minutes: 5
+  # Set away mode
+  action:
+    # - service: notify.ios_ipierre
+    #   data:
+    #     message: Nobody is at home. Turning off lights, arming alarm, turning off TV, launching vacuum, switching on the cave pump & putting the thermostats in away mode.
+    # Turn off lights and hot water recirculation pump
+    - service: light.turn_off
+      data:
+        entity_id:
+          - group.all_lights
+    # Arm alarm (now handled via package alarm.yaml)
+    # Start the vacuum
+    - service: vacuum.start
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    # Turn off TV
+    - service: remote.turn_off
+      entity_id: remote.harmony_hub
+    # Turn ON Cave pump
+    - service: homeassistant.turn_on
+      entity_id: switch.prise_cave
+    # Thermostats in away mode (now handled by scheedy)
+    # - service: climate.set_away_mode
+    #   data:
+    #     entity_id: group.climate
+    #     away_mode: true
+    - service: switch.turn_off
+      entity_id: switch.fullykiosk_screen
+  
+- alias: 'Notification: open door when leaving'
+  initial_state: true
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: sensor.current_state
+      from: 'home'
+      to: 'away'
+  condition: 
+    - condition: state
+      entity_id: group.perimeter_detectors
+      state: 'on'
+  action:
+    - service: notify.ios_ipierre
+      data_template:
+        message: >
+          "Une porte est restée ouverte:"
+          {%- for entity_id in states.group.perimeter_detectors.attributes.entity_id -%}
+          {% set parts = entity_id.split('.') -%}
+          {%- if states(entity_id) == 'on' %}
+          {%- if loop.first %} {% elif loop.last %} et la {% else %}, la {% endif -%}{{ states[parts[0]][parts[1]].name }}{% endif -%}
+          {%- endfor %}
+ 
+
+################################################
+## From Away
+################################################
+
+# Turn off automatic away mode
+- alias: 'Home: From Away'
+  initial_state: true
+  hide_entity: false
+  trigger:
+    - platform: state
+      entity_id: sensor.current_state
+      from: 'away'
+      to: 'home'
+  action:
+    # Send a notification
+    # - service: notify.ios_ipierre
+    #   data:
+    #     message: Somebody is home. Cancelling Away mode, disarming alarm, and turning off cave pump.
+    # Vacuum back home
+    - service: vacuum.return_to_base
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    # Disarm alarm
+    # - service: alarm_control_panel.alarm_disarm
+    #   entity_id: alarm_control_panel.home_alarm
+    # - service: alarm_control_panel.alarm_disarm
+    #   entity_id: alarm_control_panel.arlo
+    # Turn on TV
+   # - service: remote.turn_on
+   #   entity_id: remote.harmony_hub
+    # Turn Off Cave pump
+    - service: homeassistant.turn_off
+      entity_id: switch.prise_cave
+    # - service: display.turn_on
+    #   entity_id: display.chuwi
+    - service: switch.turn_on
+      entity_id: switch.fullykiosk_screen
+
+
+
+################################################
+## Home
+################################################
+
+
+# turn off screensaver of chuwi when somebody moves 
+- id: chuwi_screensaver_stop
+  alias: 'Chuwi: Screensaver stop'
+  initial_state: true
+  trigger:
+   - platform: state
+     entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
+     to: 'on'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.fullykiosk_screen
+    - service: rest_command.fullykiosk_back_foreground
+
+
+
+################################################
+## House Keeping
+################################################
+
+# house keeping on thursday morning
+- id: house_keeping_on
+  alias: 'HouseKeeping: on'
+  initial_state: true
+  trigger:
+    platform: time
+    at: '09:00:00'
+  condition:
+    condition: and
+    conditions:
+    # - condition: state
+    #   entity_id: sensor.current_state
+    #   state: 'home'
+    - condition: time
+      weekday:
+        - thu
+  action:
+  # - service: tts.google_say
+  #   data:
+  #     entity_id: media_player.google_home__salon
+  #     message: "Il est l'heure de plus belle la vie!"
+
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.system_mode
+        option: "Have guests"
+        # option: "{{ states.remote.family_room_tv.attributes.current_activity | default('Power Off') }}"
+    - service: notify.ios_ipierre
+      data:
+        message: 'I put the house in "Guest Mode" for 3 hours'
+        title: HouseKeeping
+
+# house keeping on thursday morning
+- id: house_keeping_off
+  alias: 'HouseKeeping: off'
+  initial_state: true
+  trigger:
+    platform: time
+    at: '12:15:00'
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: sensor.current_state
+      state: 'have_guests'
+    - condition: time
+      weekday:
+        - thu
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.system_mode
+        option: "Normal"
+    - service: notify.ios_ipierre
+      data:
+        message: 'Guest mode: off'
+        title: HouseKeeping
+
+
+################################################
+## In Bed
+################################################
+
+- id: ifttt_withings_sleep
+  alias: "Withings Sleep: Triggered by IFTTT"
+  trigger:
+    platform: event
+    event_type: ifttt_webhook_received
+    event_data:
+      action: call_service
+  action:
+  - service_template: '{{ trigger.event.data.service }}'
+    data_template:
+      entity_id: '{{ trigger.event.data.entity_id }}'
+
+- id: to_bed
+  alias: 'To bed'
+  trigger:
+  - entity_id: binary_sensor.in_bed
+    platform: state
+    to: 'on'
+  condition:
+    - condition: state
+      entity_id: sensor.current_state
+      state: 'home'
+
+  action:
+    - service: switch.turn_off
+      entity_id: switch.fullykiosk_screen
+
+- id: from_bed
+  alias: 'From bed'
+  trigger:
+  - entity_id: binary_sensor.in_bed
+    platform: state
+    to: 'off'
+  condition:
+    - condition: state
+      entity_id: sensor.current_state
+      state: 'home'
+  action:
+    - service: switch.turn_on
+      entity_id: switch.fullykiosk_screen
+
+
+
+################################################
+## Lights - Night
+################################################
+
+- id: light_enlight_by_night
+  alias: 'Light: Enlight by night'
+  initial_state: true
+  trigger:
+  - entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sensor.period_of_day
+    state: 'night'
+  - condition: state
+    entity_id: sensor.current_state
+    state: 'home'
+  action:
+  - data:
+      brightness: '100'
+      entity_id: group.xiaomi_lights
+    service: light.turn_on
+
+- id: light_night_back_normal
+  alias: 'Light: Night back to normal'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    to: 'off'
+    for:
+      minutes: 3
+  condition:
+    condition: and
+    conditions:
+    - condition: state
+      entity_id: light.gateway_light_7811dcb7afd1
+      state: 'on'
+    - condition: state
+      entity_id: sensor.period_of_day
+      state: night
+    - condition: state
+      entity_id: sensor.current_state
+      state: 'home'
+  action:
+  - data:
+      brightness: '5'
+      # color_name: blue
+      entity_id: group.xiaomi_lights
+    service: light.turn_on
+
+
+- id: light_color_when_alarm_armed_home
+  alias: "Light: Night - color when alarm armed_home"
+  initial_state: true
+  trigger:
+  - entity_id: alarm_control_panel.home_alarm
+    platform: state
+    to: armed_home
+  action:
+  - data:
+      # brightness: '100'
+      color_name: purple
+      entity_id: group.xiaomi_lights
+    service: light.turn_on
+
+
+  # Green light if someone known
+        # value_template: '{{ as_timestamp(states.binary_sensor.welcam_3_someone_known.last_changed) > (as_timestamp(states.binary_sensor.door_window_sensor_158d00015b63fb.last_changed)  + 3*60   )}}'
+      # {{ now().timestamp()< as_timestamp(states.binary_sensor.welcam_3_someone_known.last_changed)  +15*60  }}
+
+      #  if alarm is armed, then green light :)
+
+- id: green_light_when_armed_home_and_presence_known
+  alias: "Light: Green light when Alarmed armed and somebody is known"
+  initial_state: true
+  trigger:
+  - entity_id: binary_sensor.welcam_3_someone_known
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_home
+  action:
+  - data:
+      brightness: '100'
+      color_name: green
+      entity_id: group.xiaomi_lights
+    service: light.turn_on
+
+- id: back_light_when_armed_home_and_presence_known
+  alias: "Light: Purple light when Alarm armed after somebody is known"
+  initial_state: true
+  trigger:
+  - platform: template
+    # after 13 + 2 min, we switch
+    value_template: "{{ now().timestamp()- as_timestamp(states.binary_sensor.welcam_3_someone_known.last_changed) > 700}}"
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_home
+  action:
+  - data:
+      brightness: '10'
+      color_name: purple
+      entity_id: group.xiaomi_lights
+    service: light.turn_on
+
+
+################################################
+## SunRise / SunSet
+################################################
+
+
+- id: Sunrise
+  alias: 'Script: Sunrise'
+  initial_state: true
+  trigger:
+#  - event: sunrise
+#    offset: +00:30:00
+#    platform: sun
+  - platform: template
+    #value_template: "{% if is_state('states.sensor.period_of_day.state', 'dawn') %}true{% endif %}"
+    value_template: "{% if is_state('sensor.period_of_day', 'dawn') %}true{% endif %}"
+  action:
+  - service: light.turn_off
+    entity_id: light.gateway_light_7811dcb7afd1
+  - service: light.turn_off
+    entity_id: light.gateway_light_34ce008c1873
+
+
+- id: Sunset
+  alias: 'Script: Sunset'
+  initial_state: true
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: '-00:45:00'
+    # value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
+  condition:
+  - condition: state
+    entity_id: sensor.current_state
+    state: 'home'
+  action:
+  # - service: notify.telegram
+  #   data:
+  #     message: "Sunset time. As somebody is home, I turn on the lights"
+  - data:
+      brightness: '10'
+      color_name: blue
+      entity_id: light.gateway_light_7811dcb7afd1
+    service: light.turn_on
+  - data:
+      brightness: '10'
+      color_name: blue
+      entity_id: light.gateway_light_34ce008c1873
+    service: light.turn_on
+
+  - service: light.turn_on
+    data:
+            entity_id: light.fibaro_system_fgd212_dimmer_2_level_5
+  - service: light.turn_on
+    data:
+            entity_id: light.fibaro_system_fgd212_dimmer_2_level_4
+  - service: light.turn_on
+    data:
+            entity_id: light.fibaro_system_fgd212_dimmer_2_level_7
+

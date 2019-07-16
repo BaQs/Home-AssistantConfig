@@ -1,0 +1,149 @@
+###############################################################################
+# PACKAGE:      Netatmo
+# Description:  netatmo sensor requires username, password.
+###############################################################################
+
+# homeassistant:
+#     customize:
+#         sensor.netatmo_chambre_battery:
+#             hidden: true
+#         sensor.netatmo_chambre_radio:
+#             hidden: true
+#         sensor.netatmo_chambre_enfant_battery:
+#             hidden: true
+#         sensor.netatmo_chambre_enfant_radio:
+#             hidden: true
+#         sensor.netatmo_exterieur_battery:
+#             hidden: true
+#         sensor.netatmo_exterieur_radio:
+#             hidden: true
+#         sensor.netatmo_station_wifi:
+#             hidden: true
+
+#Netatmo Component
+
+netatmo:
+  api_key: !secret netatmo_api_key
+  secret_key: !secret netatmo_secret_key
+  username: !secret netatmo_username
+  password: !secret netatmo_password 
+  webhooks: true
+  discovery: true
+
+group:
+  netatmo_home:
+      name: Netatmo Home Presence
+      view: no
+      entities:
+        - input_boolean.netatmo_home_pierre
+        - input_boolean.netatmo_home_gaetane
+        - input_boolean.netatmo_home_valentine
+        - input_boolean.netatmo_home_kadidja
+        - input_boolean.netatmo_home_flavie
+      
+
+
+input_boolean:
+  netatmo_home_pierre:
+    name: Pierre seen by netatmo
+    icon: mdi:presence
+
+  netatmo_home_gaetane:
+    name: Gaetane seen by netatmo
+    icon: mdi:presence
+
+  netatmo_home_valentine:
+    name: Valentine seen by netatmo
+    icon: mdi:presence
+
+  netatmo_home_kadjija:
+    name: Kadjija seen by netatmo
+    icon: mdi:presence
+
+  netatmo_home_flavie:
+    name: Flavie seen by netatmo
+    icon: mdi:presence
+
+binary_sensor:
+  # if netatmo welcome returns somebody_known AFTER the door's status changed. i.e.: the door didn't open and there is somebody known inside
+  - platform: template
+    sensors:
+      presence_home_known:
+        friendly_name: Presence Home Known
+        device_class: presence
+        value_template: '{{ as_timestamp(states.binary_sensor.welcam_3_someone_known.last_changed) > (as_timestamp(states.binary_sensor.door_window_sensor_158d00015b63fb.last_changed)  + 3*60   )}}'
+        #  we add 3 minutes, as the welcam sensor lasts 1 min...
+
+
+automation:
+  - id: netatmo_event_somebody_known
+    alias: 'Netatmo: Event - Somebody Known'
+    initial_state: true
+    trigger:
+    - platform: event
+      event_type: netatmo_person
+    condition: 
+    # let's be sure someone known is home, to avoid late webhooks
+    - condition: state
+      entity_id: binary_sensor.welcam_3_someone_known
+      state: 'on'
+    action:
+    # - service: notify.telegram
+    #   data_template:
+    #     message: |
+    #       "NETATMO event: {{trigger.event.data.name}} "
+    #       "someone known last changed: {{ states.binary_sensor.welcam_3_someone_known.last_changed }}"
+    #       "door last changed:          {{states.binary_sensor.door_window_sensor_158d00015b63fb.last_changed}}"
+    #       "Gae:                        {{states.input_boolean.netatmo_home_gaetane.state}}"
+    #       "Pierre:                     {{states.input_boolean.netatmo_home_pierre.state}}"
+
+    #     title: NETATMO 
+    - service: input_boolean.turn_on
+      data_template: 
+        entity_id: >
+          {% set mapper = {
+            'Gaë':'input_boolean.netatmo_home_gaetane',
+            'Valentine':'input_boolean.netatmo_home_valentine',
+            'Flavie':'input_boolean.netatmo_home_flavie',
+            'Kadidja':'input_boolean.netatmo_home_kadidja',
+            'Pierre':'input_boolean.netatmo_home_pierre' } %}
+          {{ mapper[trigger.event.data.name] }}
+
+
+  - id: netatmo_reset_somebody_known
+    alias: 'Netatmo: Reset - Somebody Known'
+    initial_state: true
+    trigger:
+    - platform: state
+      entity_id: binary_sensor.presence_home_known
+      to: 'off'
+    action:
+    # - service: notify.telegram
+    #   data_template:
+    #     message: |
+    #       "As we reset presence_home_known, we turn_off all input booleans"
+    #       "someone known last changed: {{ states.binary_sensor.welcam_3_someone_known.last_changed }}"
+    #       "door last changed:          {{states.binary_sensor.door_window_sensor_158d00015b63fb.last_changed}}"
+    #       "Gae:                        {{states.input_boolean.netatmo_home_gaetane.state}}"
+    #       "Pierre:                     {{states.input_boolean.netatmo_home_pierre.state}}"
+
+    #     title: NETATMO RESET
+    - service: input_boolean.turn_off
+      data:
+        entity_id: group.netatmo_home
+
+
+  # - id: netatmo_event_other
+  #   alias: 'Netatmo: Event - Other'
+  #   initial_state: true
+  #   trigger:
+  #     - platform: event
+  #       event_type: netatmo_other
+  #   action:
+  #   - service: notify.telegram
+  #     data_template:
+  #       message: "NETATMO OTHER: {{trigger.event.data}}"
+  #       title: NETATMO OTHER
+    
+
+        

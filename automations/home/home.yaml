@@ -1,29 +1,42 @@
 #################################################################
 ## Home Related
 #################################################################
-- id: doorbell
-  alias: 'Doorbell'
-  initial_state: true
-  trigger:
-   - platform: event
-     event_type: button_pressed
-     event_data: {"entity_id": "switch.sonnette","state": "group on"}
-  action:
-    - service: rest_command.fullykiosk_load_tab_frontcam
-    # - service: display.fullykiosk_load_url
-    #   data:
-    #     url: !secret chuwi_tab_frontcam
-    - service: notify.telegram
-      data:
-        message: "Cameras"
-        data:
-          photo:
-             - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
-               caption: "On sonne!"
-    - delay: 0:03
-    # - service: display.fullykiosk_load_start_url
-    - service: rest_command.fullykiosk_load_start_url
-    - service: script.front_door_camera_on_tv
+# - id: doorbell
+#   alias: 'Doorbell'
+#   initial_state: true
+#   trigger:
+#    - platform: event
+#      event_type: button_pressed
+#      event_data: {"entity_id": "switch.sonnette","state": "group on"}
+#   action:
+#     - service: rest_command.fullykiosk_load_tab_frontcam
+#     # - service: display.fullykiosk_load_url
+#     #   data:
+#     #     url: !secret chuwi_tab_frontcam
+#     - service: notify.telegram
+#       data:
+#         message: "Cameras"
+#         data:
+#           photo:
+#              - url: "https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}"
+#                caption: "On sonne!"
+
+
+#     - service: notify.ios_ipierre
+#       data:
+#         message: Video Stream
+#         data:
+#           # attachment:
+#           #   content-type: jpeg
+#           push:
+#             category: camera
+#           entity_id: camera.dafang3
+
+#     # - delay: 0:03
+#     # - service: display.fullykiosk_load_start_url
+#     - service: rest_command.fullykiosk_load_start_url
+#     - service: script.front_door_camera_on_tv
+
 
 
 - id: postmail
@@ -67,46 +80,46 @@
 
 # TODO
 
-- id: '153461612241'
-  alias: 'Motion: Parking space!'
-  initial_state: true
-  trigger:
-  - entity_id: binary_sensor.foscam_c1_motion_sensor
-    platform: state
-    to: 'on'
-  condition:
-    condition: and
-    conditions:
-      # - condition: state
-      #   entity_id: binary_sensor.detected_outside_car
-      #   state: 'off'
-      - condition: state
-        # entity_id: binary_sensor.somebody_home
-        entity_id: binary_sensor.household_home
-        state: 'on'
-  #    - condition: state
-  #      entity_id: sensor.period_of_day
-  #      state: 'day'
-      - condition: state
-        entity_id: binary_sensor.in_bed
-        state: 'off'
+# - id: '153461612241'
+#   alias: 'Motion: Parking space!'
+#   initial_state: true
+#   trigger:
+#   - entity_id: binary_sensor.foscam_c1_motion_sensor
+#     platform: state
+#     to: 'on'
+#   condition:
+#     condition: and
+#     conditions:
+#       # - condition: state
+#       #   entity_id: binary_sensor.detected_outside_car
+#       #   state: 'off'
+#       - condition: state
+#         # entity_id: binary_sensor.somebody_home
+#         entity_id: binary_sensor.household_home
+#         state: 'on'
+#   #    - condition: state
+#   #      entity_id: sensor.period_of_day
+#   #      state: 'day'
+#       - condition: state
+#         entity_id: binary_sensor.in_bed
+#         state: 'off'
 
-  action:
-  - service: notify.telegram
-    data_template:
-      photo:
-      - caption: Ca bouge sur le parking !
-        url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}
-      message: "La place est libre. (voiture: {{states.binary_sensor.detected_outside_car.state}})"
-      title: Parking
-  - service: rest_command.fullykiosk_load_tab_frontcam
-  # - service: display.fullykiosk_load_url
-  #   data:
-  #     url: !secret chuwi_tab_frontcam
-#  - service: tts.google_say
-#    data:
-#      entity_id: media_player.google_home__salon
-#      message: "La place de parking vient de se libérer"
+#   action:
+#   - service: notify.telegram
+#     data_template:
+#       photo:
+#       - caption: Ca bouge sur le parking !
+#         url: https://hassio.ourdouille.maison{{ states.camera.foscam_camera.attributes.entity_picture }}
+#       message: "La place est libre. (voiture: {{states.binary_sensor.detected_outside_car.state}})"
+#       title: Parking
+#   - service: rest_command.fullykiosk_load_tab_frontcam
+#   # - service: display.fullykiosk_load_url
+#   #   data:
+#   #     url: !secret chuwi_tab_frontcam
+# #  - service: tts.google_say
+# #    data:
+# #      entity_id: media_player.google_home__salon
+# #      message: "La place de parking vient de se libérer"
 
 
 
@@ -203,76 +216,74 @@
 
 
 
-# turn off screensaver of chuwi when somebody moves 
-- id: chuwi_screensaver_stop
-  alias: 'Chuwi: Screensaver stop'
-  initial_state: true
-  trigger:
-   - platform: state
-     entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
-     to: 'on'
-  action:
-    # - service: display.fullykiosk_screensaver_stop
-    # - service: display.turn_on
-    #   entity_id: display.chuwi
-    - service: switch.turn_on
-      entity_id: switch.fullykiosk_screen
+# # turn off screensaver of chuwi when somebody moves 
+# - id: chuwi_screensaver_stop
+#   alias: 'Chuwi: Screensaver stop'
+#   initial_state: true
+#   trigger:
+#    - platform: state
+#      entity_id: binary_sensor.motion_sensor_158d0001ddb2d3
+#      to: 'on'
+#   action:
+#     - service: switch.turn_on
+#       entity_id: switch.fullykiosk_screen
+#     - service: rest_command.fullykiosk_back_foreground
 
 
-# house keeping on thursday morning
-- id: house_keeping_on
-  alias: 'HouseKeeping: on'
-  initial_state: true
-  trigger:
-    platform: time
-    at: '09:00:00'
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sensor.current_state
-      state: 'home'
-    - condition: time
-      weekday:
-        - thu
-  action:
-  # - service: tts.google_say
-  #   data:
-  #     entity_id: media_player.google_home__salon
-  #     message: "Il est l'heure de plus belle la vie!"
+# # house keeping on thursday morning
+# - id: house_keeping_on
+#   alias: 'HouseKeeping: on'
+#   initial_state: true
+#   trigger:
+#     platform: time
+#     at: '09:00:00'
+#   condition:
+#     condition: and
+#     conditions:
+#     # - condition: state
+#     #   entity_id: sensor.current_state
+#     #   state: 'home'
+#     - condition: time
+#       weekday:
+#         - thu
+#   action:
+#   # - service: tts.google_say
+#   #   data:
+#   #     entity_id: media_player.google_home__salon
+#   #     message: "Il est l'heure de plus belle la vie!"
 
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.system_mode
-        option: "Have guests"
-        # option: "{{ states.remote.family_room_tv.attributes.current_activity | default('Power Off') }}"
-    - service: notify.ios_ipierre
-      data:
-        message: 'I put the house in "Guest Mode" for 3 hours'
-        title: HouseKeeping
+#     - service: input_select.select_option
+#       data:
+#         entity_id: input_select.system_mode
+#         option: "Have guests"
+#         # option: "{{ states.remote.family_room_tv.attributes.current_activity | default('Power Off') }}"
+#     - service: notify.ios_ipierre
+#       data:
+#         message: 'I put the house in "Guest Mode" for 3 hours'
+#         title: HouseKeeping
 
-# house keeping on thursday morning
-- id: house_keeping_off
-  alias: 'HouseKeeping: off'
-  initial_state: true
-  trigger:
-    platform: time
-    at: '12:15:00'
-  condition:
-    condition: and
-    conditions:
-    - condition: state
-      entity_id: sensor.current_state
-      state: 'have_guests'
-    - condition: time
-      weekday:
-        - thu
-  action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.system_mode
-        option: "Normal"
-    - service: notify.ios_ipierre
-      data:
-        message: 'Guest mode: off'
-        title: HouseKeeping
+# # house keeping on thursday morning
+# - id: house_keeping_off
+#   alias: 'HouseKeeping: off'
+#   initial_state: true
+#   trigger:
+#     platform: time
+#     at: '12:15:00'
+#   condition:
+#     condition: and
+#     conditions:
+#     - condition: state
+#       entity_id: sensor.current_state
+#       state: 'have_guests'
+#     - condition: time
+#       weekday:
+#         - thu
+#   action:
+#     - service: input_select.select_option
+#       data:
+#         entity_id: input_select.system_mode
+#         option: "Normal"
+#     - service: notify.ios_ipierre
+#       data:
+#         message: 'Guest mode: off'
+#         title: HouseKeeping

@@ -305,8 +305,66 @@ switch:
 ## Sensor
 ################################################
 
+# # fake sensors to show off graphs in lovelace using mini-graph custom card (that only supports sensors)
+sensor:
+  - platform: template
+    sensors:
+      climate_parents_bedroom_thermostat_operation_mode:
+        value_template: "{% if  is_state_attr('climate.parents_bedroom_thermostat', 'operation_mode', 'heat') %} 1 {% else %} 0 {% endif %}"
+        entity_id: climate.parents_bedroom_thermostat
+      climate_living_room_thermostat_operation_mode:
+        value_template: "{% if  is_state_attr('climate.living_room_thermostat', 'operation_mode', 'heat') %} 1 {% else %}0{% endif %}"
+        entity_id: climate.living_room_thermostat
+      climate_baby_bedroom_thermostat_operation_mode:
+        value_template: "{% if  is_state_attr('climate.baby_bedroom_thermostat', 'operation_mode', 'heat') %} 1 {% else %}0{% endif %}"
+        entity_id: climate.baby_bedroom_thermostat
+      climate_library_thermostat_operation_mode:
+        value_template: "{% if  is_state_attr('climate.library_thermostat', 'operation_mode', 'heat') %} 1 {% else %}0{% endif %}"
+        entity_id: climate.library_thermostat
 
+      climate_parents_bedroom_thermostat_operation_temperature:
+        # value_template: "{% if  is_state_attr('climate.parents_bedroom_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
+        value_template: "{% if  is_state('climate.parents_bedroom_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
 
+        entity_id: climate.parents_bedroom_thermostat
+      climate_living_room_thermostat_operation_temperature:
+        # value_template: "{% if  is_state_attr('climate.living_room_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %}0{% endif %}"
+        value_template: "{% if  is_state('climate.living_room_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
+        entity_id: climate.living_room_thermostat
+      climate_baby_bedroom_thermostat_operation_temperature:
+        # value_template: "{% if  is_state_attr('climate.baby_bedroom_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %}0{% endif %}"
+        value_template: "{% if  is_state('climate.baby_bedroom_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
+        entity_id: climate.baby_bedroom_thermostat
+      climate_library_thermostat_operation_temperature:
+        # value_template: "{% if  is_state_attr('climate.library_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %}0{% endif %}"
+        value_template: "{% if  is_state('climate.library_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
+        entity_id: climate.library_thermostat
+
+      climate_parents_bedroom_thermostat_temperature:
+        value_template: "{{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} "
+        entity_id: climate.parents_bedroom_thermostat
+      climate_living_room_thermostat_temperature:
+        value_template: "{{ state_attr('climate.living_room_thermostat', 'temperature') }} "
+        entity_id: climate.living_room_thermostat
+      climate_baby_bedroom_thermostat_temperature:
+        value_template: "{{ state_attr('climate.baby_bedroom_thermostat', 'temperature') }} "
+        entity_id: climate.baby_bedroom_thermostat
+      climate_library_thermostat_temperature:
+        value_template: "{{ state_attr('climate.library_thermostat', 'temperature') }} "
+        entity_id: climate.library_thermostat
+
+      climate_parents_bedroom_thermostat_current_temperature:
+        value_template: "{{ state_attr('climate.parents_bedroom_thermostat', 'current_temperature') }} "
+        entity_id: climate.parents_bedroom_thermostat
+      climate_living_room_thermostat_current_temperature:
+        value_template: "{{ state_attr('climate.living_room_thermostat', 'current_temperature') }} "
+        entity_id: climate.living_room_thermostat
+      climate_baby_bedroom_thermostat_current_temperature:
+        value_template: "{{ state_attr('climate.baby_bedroom_thermostat', 'current_temperature') }} "
+        entity_id: climate.baby_bedroom_thermostat
+      climate_library_thermostat_current_temperature:
+        value_template: "{{ state_attr('climate.library_thermostat', 'current_temperature') }} "
+        entity_id: climate.library_thermostat
 
 ################################################
 ## Binary Sensor

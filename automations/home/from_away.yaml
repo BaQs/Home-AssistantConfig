@@ -1,45 +1,47 @@
-# Turn off automatic away mode
-- alias: 'Home: From Away'
-  initial_state: true
-  hide_entity: false
-  trigger:
-    - platform: state
-      entity_id: sensor.current_state
-      from: 'away'
-      to: 'home'
-  action:
-    # Send a notification
-    - service: notify.ios_ipierre
-      data:
-        message: Somebody is home. Cancelling Away mode, disarming alarm, and turning off cave pump.
-    # Vacuum back home
-    - service: vacuum.return_to_base
-      entity_id: vacuum.xiaomi_vacuum_cleaner
-    # Disarm alarm
-    # - service: alarm_control_panel.alarm_disarm
-    #   entity_id: alarm_control_panel.home_alarm
-    # - service: alarm_control_panel.alarm_disarm
-    #   entity_id: alarm_control_panel.arlo
-    # Turn on TV
-   # - service: remote.turn_on
-   #   entity_id: remote.harmony_hub
-    # Turn Off Cave pump
-    - service: homeassistant.turn_off
-      entity_id: switch.prise_cave
-    - service: display.turn_on
-      entity_id: display.chuwi
+# # Turn off automatic away mode
+# - alias: 'Home: From Away'
+#   initial_state: true
+#   hide_entity: false
+#   trigger:
+#     - platform: state
+#       entity_id: sensor.current_state
+#       from: 'away'
+#       to: 'home'
+#   action:
+#     # Send a notification
+#     - service: notify.ios_ipierre
+#       data:
+#         message: Somebody is home. Cancelling Away mode, disarming alarm, and turning off cave pump.
+#     # Vacuum back home
+#     - service: vacuum.return_to_base
+#       entity_id: vacuum.xiaomi_vacuum_cleaner
+#     # Disarm alarm
+#     # - service: alarm_control_panel.alarm_disarm
+#     #   entity_id: alarm_control_panel.home_alarm
+#     # - service: alarm_control_panel.alarm_disarm
+#     #   entity_id: alarm_control_panel.arlo
+#     # Turn on TV
+#    # - service: remote.turn_on
+#    #   entity_id: remote.harmony_hub
+#     # Turn Off Cave pump
+#     - service: homeassistant.turn_off
+#       entity_id: switch.prise_cave
+#     # - service: display.turn_on
+#     #   entity_id: display.chuwi
+#     - service: switch.turn_on
+#       entity_id: switch.fullykiosk_screen
 
-# Turn off automatic away mode
-#- alias: 'Turn off automatic away mode'
-#  hide_entity: True
-#  trigger:
-#    - platform: state
-#      entity_id: sensor.current_state
-#      from: 'away'
-#      to: 'home'
-#  condition:
-#    - condition: 
-#      platform: template
-#      value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
-#  action:
-# 
+# # Turn off automatic away mode
+# #- alias: 'Turn off automatic away mode'
+# #  hide_entity: True
+# #  trigger:
+# #    - platform: state
+# #      entity_id: sensor.current_state
+# #      from: 'away'
+# #      to: 'home'
+# #  condition:
+# #    - condition: 
+# #      platform: template
+# #      value_template: "{% if is_state('sensor.period_of_day', 'dusk') %}true{% endif %}"
+# #  action:
+# # 
