@@ -35,3 +35,5 @@
   type: module    
 - url: /local/aarlo-glance.js
   type: module
+- url: /local/custom-lovelace/text-divider-row.js?v=0
+  type: module

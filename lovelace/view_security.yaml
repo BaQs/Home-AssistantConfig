@@ -11,7 +11,7 @@ cards:
       - type: horizontal-stack
         cards:
           - type: glance
-            column_width: calc(100% / 2)
+            # column_width: calc(100% / 2)
             columns: 2
             entities:
               - alarm_control_panel.aarlo_arlo
@@ -22,10 +22,17 @@ cards:
             card:
               type: entities
               title: Motion
+              show_header_toggle: false
             group: group.motion_detectors
           - type: custom:group-card
             card:
             
               type: entities
               title: Door/Windows Sensors
+              show_header_toggle: false
             group: group.door_sensors
+          - type: custom:group-card
+            card:
+              type: glance
+              title: Arlo
+            group: group.arlo

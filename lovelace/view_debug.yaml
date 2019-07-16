@@ -18,89 +18,224 @@ cards:
       - sensor.current_state
       - group.perimeter_detectors
       - group.motion_detectors
-      - alarm_control_panel.home
+      - alarm_control_panel.home_alarm
       - alarm_control_panel.aarlo_arlo
+      - group.household
+      - binary_sensor.welcam_3_someone_known
 
-  - type: history-graph
-    title: HouseHold
+  # - type: history-graph
+  #   title: HouseHold
+  #   entities:
+  #     - sensor.current_state
+  #     - binary_sensor.household_home
+  #     - person.pierre
+  #     - person.gaetane
+  #     - binary_sensor.presence_home_known
+  #     # - device_tracker.volvo_et_732_hn
+  #     - binary_sensor.door_window_sensor_158d00015b63fb
+  #     - input_boolean.netatmo_home_pierre
+  #     - input_boolean.netatmo_home_gaetane
+  #     - group.household
+
+  # - type: history-graph
+  #   title: Gaetane
+  #   entities:
+  #     - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
+  #     - device_tracker.iphoneg
+
+  # - type: custom:group-card
+  #   card:
+  #     type: history-graph
+  #     title: Group Gaetane
+  #   group: group.gaetane
+  # - type: custom:group-card
+  #   card:
+  #     type: history-graph
+  #     title: Group Pierre
+  #   group: group.pierre
+  # - type: custom:group-card
+  #   card:
+  #     type: history-graph
+  #     title: Group HouseHold
+  #   group: group.household
+
+  - type: glance
     entities:
-      - binary_sensor.household_home
-      - group.pierre
-      - group.gaetane
-      - binary_sensor.presence_home_known
-      - device_tracker.volvo_et_732_hn
+    - person.pierre
+    - person.gaetane
 
-#   - type: history-graph
-#     title: Gaetane
-#     entities:
-#       - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
-#       - device_tracker.iphoneg
+  # - type: history-graph
+  #   entities:
+  #     - climate.parents_bedroom_thermostat 
 
-  - type: custom:group-card
-    card:
-      type: history-graph
-      title: Gaetane
-    group: group.gaetane
-  - type: custom:group-card
-    card:
-      type: history-graph
-      title: Pierre
-    group: group.pierre
+  # - type: history-graph
+  #   entities:
+  #     - climate.baby_bedroom_thermostat 
 
-#   - type: history-graph
-#     title: Pierre
-#     entities:
-#       - device_tracker.ipierre
-#       - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
-#       - device_tracker.volvo_et_732_hn
+  # - type: history-graph
+  #   entities:
+  #     - climate.living_room_thermostat
 
-  - id: 634c51d9c2ba458f853f65aea48168e7  # Automatically created id
-    type: history-graph
-    entities:
-      - climate.parents_bedroom_thermostat 
-
-  - id: 634c51d9c2ba458f853f65aea48168e8  # Automatically created id
-    type: history-graph
-    entities:
-      - climate.baby_bedroom_thermostat 
-
-  - id: 634c51d9c2ba458f853f65aea4816831  # Automatically created id
-    type: history-graph
-    entities:
-      - climate.living_room_thermostat
-
-  - id: 634c51d9c2ba458f853f65aea4816832  # Automatically created id
-    type: history-graph
-    entities:
-      - climate.library_thermostat
+  # - type: history-graph
+  #   entities:
+  #     - climate.library_thermostat
       
-  - type: history-graph
-    entities:
-      - climate.shower_thermostat
+  # - type: history-graph
+  #   entities:
+  #     - climate.shower_thermostat
+      
+  # - type: history-graph
+  #   entities:
+  #     - sensor.climate_parents_bedroom_thermostat_current_temperature
+  #     - sensor.climate_parents_bedroom_thermostat_operation_temperature
 
-  - type: custom:mini-graph-card
+  - type: glance
+    show_name: false
     entities:
-        # - sensor.teleinfo_papp
-        - climate.baby_bedroom_thermostat 
-    line_width: 1
-    hours_to_show: 12
-    points_per_hour: 4
-    hour24: true
-    show:
-      extrema: true
-      fill: true
-      state: true
-      labels: true
-      icon_adaptive_color: true
-      graph: bar
-    color_thresholds:
-      - value: 9000
-        color: "#ef476f" # pink "infra red"
-      - value: 6000
-        color: "#e74c3c" # red
-      - value: 2000
-        color: "#ffd166" # orange
-      - value: 1000
-        color: "#1db954" # green
-      - value: 0
-        color: "#3498db" # blue
+    - entity: sensor.current_state
+      name: State
+      icon: mdi:home-outline
+    - entity: sensor.elecbill_today_so_far_ttc
+      name: Elec
+      icon: mdi:power-socket-eu
+    - device_tracker.volvo_et_732_hn
+    - entity: sensor.status_volume_1
+      name: NAS
+      icon: mdi:nas
+    - entity: sensor.us_air_quality_index 
+      name: Air
+      icon: mdi:air-purifier
+    - entity: binary_sensor.somebody_home
+      icon: mdi:account-question
+    - entity: binary_sensor.household_home
+      icon: mdi:account-supervisor-circle
+    - entity: binary_sensor.in_bed
+      # icon: mdi:hotel
+
+
+  - type: horizontal-stack 
+    cards:
+    - type: custom:mini-graph-card
+      name: Baby Bedroom
+      entities:
+          - entity: sensor.climate_baby_bedroom_thermostat_current_temperature
+          - entity: sensor.climate_baby_bedroom_thermostat_operation_temperature
+            color: red
+      hour24: true
+      show:
+        graph: bar
+        legend: false
+      color_thresholds:
+        - value: 24
+          color: "#e74c3c"
+        - value: 19
+          color: "#1db954"
+        - value: 0
+          color: "#3498db"
+
+    - type: custom:mini-graph-card
+      name: Parents Bedroom
+      entities:
+          - entity: sensor.climate_parents_bedroom_thermostat_current_temperature
+          - entity: sensor.climate_parents_bedroom_thermostat_operation_temperature
+            color: red
+      hour24: true
+      show:
+        graph: bar
+        legend: false
+      color_thresholds:
+        - value: 24
+          color: "#e74c3c"
+        - value: 19
+          color: "#1db954"
+        - value: 0
+          color: "#3498db"
+
+
+    - type: custom:mini-graph-card
+      name: Living Room
+      entities:
+          - entity: sensor.climate_living_room_thermostat_current_temperature
+          - entity: sensor.climate_living_room_thermostat_operation_temperature
+            color: red
+      hour24: true
+      show:
+        graph: bar
+        legend: false
+      color_thresholds:
+        - value: 24
+          color: "#e74c3c"
+        - value: 19
+          color: "#1db954"
+        - value: 0
+          color: "#3498db"
+
+
+    - type: custom:mini-graph-card
+      name: Library
+      entities:
+          - entity: sensor.climate_library_thermostat_current_temperature
+          - entity: sensor.climate_library_thermostat_operation_temperature
+            color: red
+      hour24: true
+      show:
+        graph: bar
+        legend: false
+      color_thresholds:
+        - value: 24
+          color: "#e74c3c"
+        - value: 19
+          color: "#1db954"
+        - value: 0
+          color: "#3498db"
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:mini-graph-card
+        name: Download
+        entities: 
+          - sensor.asuswrt_download_speed
+        # height: 50
+        line_width: 2
+        # font_size: 70
+        hours_to_show: 2
+        points_per_hour: 30
+        icon: mdi:download
+        show:
+          extrema: true
+          fill: true
+          icon_adaptive_color: true
+        color_thresholds:
+          - value: 80
+            color: "#e74c3c" # red
+          - value: 20
+            color: "#ffd166" # orange / yellow
+          - value: 10
+            color: "#1db954" # green
+          - value: 00
+            color: "#3498db" # blue
+
+
+      - type: custom:mini-graph-card
+        name: Upload
+        entities: 
+          - sensor.asuswrt_upload_speed
+        # height: 50
+        line_width: 2
+        # font_size: 70
+        hours_to_show: 2
+        points_per_hour: 30
+        icon: mdi:upload
+        show:
+          extrema: true
+          fill: true
+          icon_adaptive_color: true
+        color_thresholds:
+          - value: 3
+            color: "#e74c3c" # red
+          - value: 2
+            color: "#ffd166" # orange / yellow
+          - value: 1
+            color: "#1db954" # green
+          - value: 00
+            color: "#3498db" # blue

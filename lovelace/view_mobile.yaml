@@ -2,21 +2,158 @@
   id: mobile
   path: mobile
   icon: mdi:cellphone-iphone
-  badges:
-    - sensor.teleinfo_papp
-    - sensor.current_state
-    - sensor.period_of_day
-    - sensor.elecbill_today_so_far_ttc
-    - device_tracker.volvo_et_732_hn
-    - sensor.status_volume_1
-    - sensor.us_air_pollution_level
-    - binary_sensor.somebody_home
-    - binary_sensor.household_home
-    - binary_sensor.motion_detected
-    - binary_sensor.in_bed
-    # - binary_sensor.detected_outside_car
+  # # badges:
+  #   # - sensor.teleinfo_papp
+  #   - sensor.current_state
+  #   # - sensor.period_of_day
+  #   - sensor.elecbill_today_so_far_ttc
+  #   - device_tracker.volvo_et_732_hn
+  #   - sensor.status_volume_1
+  #   - sensor.us_air_quality_index 
+  #   - binary_sensor.somebody_home
+  #   - binary_sensor.household_home
+  #   # - binary_sensor.motion_detected
+  #   - binary_sensor.in_bed
+  #   # - binary_sensor.detected_outside_car
 
   cards:
+    # - type: glance
+    #   show_name: false
+    #   columns: 6
+    #   entities:
+    #   - entity: sensor.current_state
+    #     name: State
+    #     icon: mdi:home-outline
+    #   - entity: sensor.elecbill_today_so_far_ttc
+    #     name: Elec
+    #     icon: mdi:power-socket-eu
+    #   - entity: sensor.us_air_quality_index 
+    #     name: Air
+    #     icon: mdi:flower-poppy
+    #   - entity: binary_sensor.somebody_home
+    #     icon: mdi:account-circle
+    #   - entity: binary_sensor.household_home
+    #     icon: mdi:account-heart
+    #   - entity: binary_sensor.in_bed
+    #     icon: mdi:hotel
+
+    - type: horizontal-stack
+      cards:
+        - type: custom:button-card
+          entity: sensor.current_state
+          show_name: false
+          show_state: false
+          icon: mdi:home-outline
+          tap_action:
+            action: more-info
+          state:
+            - value: 'home'
+              color: "#ffd166" # orange / yellow
+            - value: 'away'
+              color: "#343330" # grey
+            - value: 'Have guests'
+              color: "#ffd166" # orange / yellow
+            - value: 'On vacation'
+              color: "#3498db" # blue
+
+        - type: custom:button-card
+          entity: device_tracker.volvo_et_732_hn
+          show_name: false
+          show_state: false
+          tap_action:
+            action: more-info
+          state:
+            - value: 'home'
+              color: "#ffd166" # orange / yellow
+            - value: 'away'
+              color: "#343330" # grey
+        - type: custom:button-card
+          entity: sensor.status_volume_1
+          icon: mdi:nas
+          show_name: false
+          show_state: false
+          tap_action:
+            action: more-info
+          state:
+            - value: 'normal'
+              color: "#1db954" # green
+            - value: 'normal'
+              operator: "!="
+              color: "#343330" # grey
+        - type: custom:button-card
+          entity: sensor.us_air_quality_index
+          icon: mdi:flower-poppy
+          show_name: false
+          show_state: false
+          tap_action:
+            action: more-info
+          state:
+            - value: '50'
+              operator: '<'
+              color: "#1db954" # green
+            - value: '50'
+              operator: '>'
+              color: "#ffd166" # orange / yellow
+            - value: '100'
+              operator: '>'
+              color: "#e74c3c" # red
+
+        - type: custom:button-card
+          entity: binary_sensor.somebody_home
+          icon: mdi:account-circle
+          show_name: false
+          show_state: false
+          tap_action:
+            action: more-info
+          state:
+            - value: 'on'
+              color: "#ffd166" # orange / yellow
+            - value: 'off'
+              color: "#343330" # grey
+        - type: custom:button-card
+          entity: binary_sensor.household_home
+          icon: mdi:account-heart
+          show_name: false
+          show_state: false
+          tap_action:
+            action: more-info
+          state:
+            - value: 'on'
+              color: "#ffd166" # orange / yellow
+            - value: 'off'
+              color: "#343330" # grey
+        - type: custom:button-card
+          entity: binary_sensor.in_bed
+          icon: mdi:hotel
+          show_name: false
+          show_state: false
+          tap_action:
+            action: more-info
+          state:
+            - value: 'on'
+              color: "#ffd166" # orange / yellow
+            - value: 'off'
+              color: "#343330" # grey
+    - type: horizontal-stack
+      cards:
+      # - type: entities
+      #   entities:
+      #     - type: divider
+      - type: custom:button-card
+        entity: sensor.teleinfo_papp
+        show_name: false
+        show_state: true
+        show_icon: false
+        tap_action:
+          action: more-info
+
+      - type: custom:button-card
+        entity: sensor.elecbill_today_so_far_ttc
+        show_name: false
+        show_state: true
+        show_icon: false
+        tap_action:
+          action: more-info
     - type: custom:compact-custom-header
       main_config: true
       header: true
@@ -29,6 +166,7 @@
         config:
           hide_tabs: 1
           # show_tabs: 0,1,3,8
+
     - type: horizontal-stack
       cards:
         - type: horizontal-stack
@@ -111,6 +249,9 @@
           show_name: false
           tap_action:
             action: more-info
+          hold_action:
+            action: call-service
+            service: rest_command.fullykiosk_rest_screensaver_off
           state:
             - value: 'on'
               color: "#3498db" # blue
@@ -145,26 +286,31 @@
 
     - type: horizontal-stack
       cards:
-        - type: custom:button-card
-          entity: group.climate
-          icon: mdi:radiator
-          show_name: false
-          tap_action:
-            action: more-info
-          state:
-            - value: 'on'
-              color: "#e74c3c" # red
-            - value: 'off'
-              color: "#a3a6a8" # grey
+        # - type: custom:button-card
+        #   entity: group.climate
+        #   icon: mdi:radiator
+        #   show_name: false
+        #   tap_action:
+        #     action: more-info
+        #   state:
+        #     - value: 'on'
+        #       color: "#e74c3c" # red
+        #     - value: 'off'
+        #       color: "#a3a6a8" # grey
 
-        - type: entity-button
-          show_name: false
-          hold_action: toggle
-          tap_action:
-            action: more-info
-          entity: input_select.system_mode
-          icon: mdi:home-heart
-
+        # - type: entity-button
+        #   show_name: false
+        #   hold_action: toggle
+        #   tap_action:
+        #     action: more-info
+        #   entity: input_select.system_mode
+        #   icon: mdi:home-heart
+    
+        - type: glance
+          entities:
+          - person.pierre
+          - person.gaetane
+          
     - type: horizontal-stack
       cards:
         - type: custom:button-card
@@ -263,32 +409,216 @@
               color: "#e74c3c" # red
             - value: 'off'
               color: "#a3a6a8" # grey
+
     - type: horizontal-stack
       cards:
-          - type: custom:mini-graph-card
-            entities:
-                - sensor.teleinfo_papp
-                # - sensor.owl_180_energy_usage 
-            line_width: 1
-            hours_to_show: 12
-            points_per_hour: 3
-            hour24: true
-            show:
-              extrema: true
-              fill: true
-              state: true
-              labels: true
-              icon_adaptive_color: true
-              graph: bar
-            color_thresholds:
-              - value: 9000
-                color: "#ef476f" # pink "infra red"
-              - value: 6000
-                color: "#e74c3c" # red
-              - value: 2000
-                color: "#ffd166" # orange
-              - value: 1000
-                color: "#1db954" # green
-              - value: 0
-                color: "#3498db" # blue
+        - type: custom:button-card
+          tap_action:
+            action: toggle
+          entity: switch.harmony_music
+          # action: more-info
+          name: Musique
+          icon: mdi:music
+        - type: custom:button-card
+          tap_action:
+            action: toggle
+          entity: switch.harmony_tv
+          # action: toggle
+          name: TV
+          icon: mdi:television
 
+        - type: custom:button-card
+          tap_action:
+            action: toggle
+          entity: switch.harmony_fire_tv
+          # action: toggle
+          name: Fire TV
+          icon: mdi:amazon
+
+        - type: custom:button-card
+          tap_action:
+            action: toggle
+          entity: script.play_spotify_on_tv
+          name: Spotify
+          icon: mdi:spotify
+
+    # - type: horizontal-stack
+    #   cards:
+    #       - type: custom:mini-graph-card
+    #         name: Electricity
+    #         entities:
+    #             - sensor.teleinfo_papp
+    #             # - sensor.owl_180_energy_usage 
+    #         line_width: 1
+    #         hours_to_show: 12
+    #         points_per_hour: 3
+    #         hour24: true
+    #         show:
+    #           name: false
+    #           icon: false
+    #           extrema: false
+    #           fill: true
+    #           state: false
+    #           labels: true
+    #           icon_adaptive_color: true
+    #           name_adaptative_color: true
+    #           graph: bar
+    #         color_thresholds:
+    #           - value: 9000
+    #             color: "#ef476f" # pink "infra red"
+    #           - value: 6000
+    #             color: "#e74c3c" # red
+    #           - value: 2000
+    #             color: "#ffd166" # orange
+    #           - value: 1000
+    #             color: "#1db954" # green
+    #           - value: 0
+    #             color: "#3498db" # blue
+
+    #       # - type: sensor
+    #       #   entity: sensor.elecbill_today_so_far_ttc
+    #       #   name: Cost
+    #       #   graph: none
+
+
+    - type: horizontal-stack 
+      cards:
+      - type: custom:mini-graph-card
+        name: Baby Bedroom
+        font_size: 90
+        font_size_header: 10
+        entities:
+            - entity: sensor.climate_baby_bedroom_thermostat_current_temperature
+            - entity: sensor.climate_baby_bedroom_thermostat_operation_temperature
+              color: red
+        hour24: true
+        show:
+          icon: false
+          graph: bar
+          legend: false
+        color_thresholds:
+          - value: 24
+            color: "#e74c3c"
+          - value: 19
+            color: "#1db954"
+          - value: 0
+            color: "#3498db"
+
+      - type: custom:mini-graph-card
+        name: Parents Bedroom
+        font_size: 90
+        font_size_header: 10
+        entities:
+            - entity: sensor.climate_parents_bedroom_thermostat_current_temperature
+            - entity: sensor.climate_parents_bedroom_thermostat_operation_temperature
+              color: red
+        hour24: true
+        show:
+          icon: false
+          graph: bar
+          legend: false
+        color_thresholds:
+          - value: 24
+            color: "#e74c3c"
+          - value: 19
+            color: "#1db954"
+          - value: 0
+            color: "#3498db"
+
+
+      - type: custom:mini-graph-card
+        name: Living Room
+        font_size: 90
+        font_size_header: 10
+        entities:
+            - entity: sensor.climate_living_room_thermostat_current_temperature
+            - entity: sensor.climate_living_room_thermostat_operation_temperature
+              color: red
+        hour24: true
+        show:
+          icon: false
+          graph: bar
+          legend: false
+        color_thresholds:
+          - value: 24
+            color: "#e74c3c"
+          - value: 19
+            color: "#1db954"
+          - value: 0
+            color: "#3498db"
+
+
+      - type: custom:mini-graph-card
+        name: Library
+        font_size: 90
+        font_size_header: 10
+        entities:
+            - entity: sensor.climate_library_thermostat_current_temperature
+            - entity: sensor.climate_library_thermostat_operation_temperature
+              color: red
+        hour24: true
+        show:
+          icon: false
+          graph: bar
+          legend: false
+        color_thresholds:
+          - value: 24
+            color: "#e74c3c"
+          - value: 19
+            color: "#1db954"
+          - value: 0
+            color: "#3498db"
+
+
+
+
+    - type: horizontal-stack
+      cards:
+        - type: custom:mini-graph-card
+          name: Download
+          entities: 
+            - sensor.asuswrt_download_speed
+          # height: 50
+          line_width: 2
+          # font_size: 70
+          hours_to_show: 2
+          points_per_hour: 30
+          icon: mdi:download
+          show:
+            extrema: true
+            fill: true
+            icon_adaptive_color: true
+          color_thresholds:
+            - value: 80
+              color: "#e74c3c" # red
+            - value: 20
+              color: "#ffd166" # orange / yellow
+            - value: 10
+              color: "#1db954" # green
+            - value: 00
+              color: "#3498db" # blue
+
+
+        - type: custom:mini-graph-card
+          name: Upload
+          entities: 
+            - sensor.asuswrt_upload_speed
+          # height: 50
+          line_width: 2
+          # font_size: 70
+          hours_to_show: 2
+          points_per_hour: 30
+          icon: mdi:upload
+          show:
+            extrema: true
+            fill: true
+            icon_adaptive_color: true
+          color_thresholds:
+            - value: 3
+              color: "#e74c3c" # red
+            - value: 2
+              color: "#ffd166" # orange / yellow
+            - value: 1
+              color: "#1db954" # green
+            - value: 00
+              color: "#3498db" # blue

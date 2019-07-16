@@ -13,31 +13,150 @@
               cards:
                 - type: vertical-stack
                   cards:
-                  - type: picture-entity
-                    title: Foscam Camera
-                    entity: camera.foscam_camera
-                    camera_image: camera.foscam_camera
-                    # camera_view: live
-                    show_info: true
-                    tap_action: dialog
+                  # - type: picture-entity
+                  #   title: Foscam Camera
+                  #   entity: camera.foscam_camera
+                  #   camera_image: camera.foscam_camera
+                  #   # camera_view: live
+                  #   show_info: true
+                  #   tap_action: dialog
 
+
+                  # - type: entities
+                  #   show_header_toggle: false
+                  #   entities:
+                  #     - type: divider
+                  #     - type: 'custom:text-divider-row'
+                  #       text: Lights
+                  #     - type: divider
+                  - type: horizontal-stack
                     cards:
-                    - type: entity-button  
-                      entity: climate.living_room_thermostat
-                      icon: mdi:silverware
-                      name: " "
-                    - type: entity-button  
-                      entity: climate.baby_bedroom_thermostat
-                      icon: mdi:baby
-                      name: " "
-                    - type: entity-button  
-                      entity: climate.parents_bedroom_thermostat
-                      icon: mdi:bed-empty
-                      name: " "
-                    - type: entity-button  
-                      entity: climate.library_thermostat
-                      icon: mdi:library
-                      name: " "
+
+                      # - type: custom:mini-graph-card
+                      #   name: Download
+                      #   entities: 
+                      #     - sensor.asuswrt_download_speed
+                      #   # height: 50
+                      #   line_width: 2
+                      #   # font_size: 70
+                      #   hours_to_show: 2
+                      #   points_per_hour: 30
+                      #   icon: mdi:download
+                      #   show:
+                      #     extrema: false
+                      #     fill: true
+                      #     icon_adaptive_color: true
+                      #   color_thresholds:
+                      #     - value: 80
+                      #       color: "#e74c3c" # red
+                      #     - value: 20
+                      #       color: "#ffd166" # orange / yellow
+                      #     - value: 10
+                      #       color: "#1db954" # green
+                      #     - value: 00
+                      #       color: "#3498db" # blue
+
+
+                      # - type: custom:mini-graph-card
+                      #   name: Upload
+                      #   entities: 
+                      #     - sensor.asuswrt_upload_speed
+                      #   # height: 50
+                      #   line_width: 2
+                      #   # font_size: 70
+                      #   hours_to_show: 2
+                      #   points_per_hour: 30
+                      #   icon: mdi:upload
+                      #   show:
+                      #     extrema: false
+                      #     fill: true
+                      #     icon_adaptive_color: true
+                      #   color_thresholds:
+                      #     - value: 3
+                      #       color: "#e74c3c" # red
+                      #     - value: 2
+                      #       color: "#ffd166" # orange / yellow
+                      #     - value: 1
+                      #       color: "#1db954" # green
+                      #     - value: 00
+                      #       color: "#3498db" # blue
+
+
+                      - type: entities
+                        entities:
+                        - type: custom:slider-entity-row
+                          entity:  light.fibaro_system_fgd212_dimmer_2_level_4
+                        - type: custom:slider-entity-row
+                          entity: light.fibaro_system_fgd212_dimmer_2_level_5 
+                        - type: custom:slider-entity-row
+                          entity: light.fibaro_system_fgd212_dimmer_2_level_7
+
+
+
+                  - type: horizontal-stack
+                    cards:
+                    - type: custom:mini-graph-card
+                      entities:
+                          - sensor.temperature_158d0001db60d9
+                      line_width: 1
+                      # height: 70
+                      hours_to_show: 24
+                      points_per_hour: 4
+                      hour24: true
+                      # lower_bound: 0
+                      # upper_bound: 30
+                      show:
+                        extrema: false
+                      #   fill: true
+                        state: true
+                      #   labels: false
+                        icon_adaptive_color: true
+                      #   # graph: bar
+                      color_thresholds:
+                        - value: 22
+                          color: "#e74c3c"
+                        - value: 18
+                          color: "#1db954"
+                        - value: 0
+                          color: "#3498db"
+                          
+                    - type: vertical-stack
+                      cards:
+                      - type: horizontal-stack
+                        cards:
+                        # harmony
+                        - type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: rest_command.fullykiosk_launch_harmony
+                          name: Harmony
+                          icon: mdi:remote
+
+                        # withings home
+                        - type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: rest_command.fullykiosk_launch_withings_home
+                          name: Withings Home
+                          icon: mdi:baby
+
+                      - type: horizontal-stack
+                        cards:
+                        # spotify
+                        - type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: rest_command.fullykiosk_launch_spotify
+                          name: Spotify
+                          icon: mdi:spotify
+                        # withings home
+                        - type: custom:button-card
+                          tap_action:
+                            action: call-service
+                            service: rest_command.fullykiosk_launch_harmony
+                          name: Moments
+                          icon: mdi:image
+
                 - type: vertical-stack
                   cards:
 
@@ -65,14 +184,14 @@
                     cards:
                       - type: custom:button-card
                         tap_action:
-                          action: more-info
+                          action: toggle
                         entity: switch.harmony_music
                         # action: more-info
                         name: Musique
                         icon: mdi:music
                       - type: custom:button-card
                         tap_action:
-                          action: more-info
+                          action: toggle
                         entity: switch.harmony_tv
                         # action: toggle
                         name: TV
@@ -80,15 +199,15 @@
 
                       - type: custom:button-card
                         tap_action:
-                          action: more-info
-                        entity: switch.harmony_netflix
+                          action: toggle
+                        entity: switch.harmony_fire_tv
                         # action: toggle
-                        name: Netlix
-                        icon: mdi:netflix
+                        name: Fire TV
+                        icon: mdi:amazon
 
                       - type: custom:button-card
                         tap_action:
-                          action: more-info
+                          action: toggle
                         entity: script.play_spotify_on_tv
                         name: Spotify
                         icon: mdi:spotify
