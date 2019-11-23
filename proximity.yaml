@@ -1,20 +1,17 @@
-  # home:
-  #   # ignored_zones:
-  #   #   - work
-  #   #   - school
-  #   devices:
-  #     # - device_tracker.gaetane_igaetaneowntracks
-  #     - device_tracker.ipierre
-  #     - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
-  #     # - device_tracker.volvo_et_732_hn
-  #   # tolerance: 100
-  #   # unit_of_measurement: m
+  home:
+    ignored_zones:
+      - work
+    #   - school
+    devices:
+      - device_tracker.ipierre
+      - device_tracker.iphoneg
+    tolerance: 100
+    unit_of_measurement: m
 
-  # work:
-  #   devices:
-  #     # - device_tracker.gaetane_igaetaneowntracks
-  #     - device_tracker.ipierre
-  #     - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
+  work:
+    devices:
+      - device_tracker.ipierre
+      - device_tracker.iphoneg
+    tolerance: 100
+    unit_of_measurement: m
 
-  #   # tolerance: 100
-  #   # unit_of_measurement: m
