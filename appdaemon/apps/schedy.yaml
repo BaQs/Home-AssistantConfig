@@ -131,8 +131,8 @@ schedy_heating:
           off_temp: 15
 
       schedule:
-      # 21 degrees on weekdays, from 9pm to 9am
-      - v: 21
+      # 22 degrees on weekdays, from 9pm to 9am
+      - v: 22
         rules:
 
         # if on holidays, just break
@@ -272,7 +272,7 @@ schedy_heating:
     shower:
       friendly_name: Shower Room
       allow_manual_changes: true
-      # rescheduling_delay: 120
+      rescheduling_delay: 40
       actors:
         climate.shower_thermostat:
           # template: default
