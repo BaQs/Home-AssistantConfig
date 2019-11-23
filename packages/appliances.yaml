@@ -1,0 +1,204 @@
+################################################
+## Packages / Appliances
+################################################
+
+homeassistant:
+  customize:
+    sensor.neo_coolcam_power_plug_12a_power:
+      icon: mdi:washing-machine
+
+################################################
+##  Washing Machine
+################################################
+input_select:
+  washing_machine_status:
+    name: Washing Machine Status
+    options:
+      - Idle
+      - Running
+      - Finishing
+      - Clean
+    initial: Idle
+
+
+automation:
+## When power is detected, and the washing machine is not in
+## the Running state, change the status of the washing machine
+## to Running.
+## The status check will ensure we don't try to put the state
+## to Running each time the power level changes, and we're already
+## in the Running state. 
+
+  - alias: Wash - Set washing machine active when power detected
+    trigger:
+    - platform: numeric_state
+      entity_id: sensor.neo_coolcam_power_plug_12a_power
+      above: 10
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: input_select.washing_machine_status
+          state: Idle
+        - condition: state
+          entity_id: input_select.washing_machine_status
+          state: Clean
+        - condition: state
+          entity_id: input_select.washing_machine_status
+          state: Finishing
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.washing_machine_status
+          option: Running
+          
+## When the power drops, move the state of the washing machine to
+## Finishing.
+
+  - alias: Wash - Set washing machine finished when power drops
+    trigger:
+    - platform: numeric_state
+      entity_id: sensor.neo_coolcam_power_plug_12a_power
+      below: 6
+      for:
+        minutes: 1
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.washing_machine_status
+          state: Running
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.washing_machine_status
+          option: Finishing
+          
+## Wait 1 minutes for us to be in the Finishing state before we
+## decide the washing machine has finished. This way, if the
+## washing machine is in between cycles and the power drops, we
+## won't mark the washing machine cycle as finished too early.
+
+  - alias: Wash - Set washing machine clean after timeout
+    trigger:
+    - platform: state
+      entity_id: input_select.washing_machine_status
+      to: Finishing
+      for:
+        minutes: 2
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.washing_machine_status
+          state: Finishing
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.washing_machine_status
+          option: Clean
+          
+## When we open the washing machine door, reset the status back to
+## idle, so we don't spam people that the washing machine has
+## finished, and someone has already emptied it
+
+  - alias: Wash - Set washing machine dirty when door opens
+  #   trigger:
+  #     - platform: state
+  #       entity_id: binary_sensor.door_window_sensor_158d0001e73a83
+  #       to: 'on'
+  #   condition:
+  #     condition: or
+  #     conditions:
+  #       - condition: state
+  #         entity_id: input_select.washing_machine_status
+  #         state: Clean
+  #       - condition: state
+  #         entity_id: input_select.washing_machine_status
+  #         state: Finishing
+  #   action:
+  #     - service: input_select.select_option
+  #       data:
+  #         entity_id: input_select.washing_machine_status
+  #         option: Idle
+    trigger:
+    - platform: state
+      entity_id: input_select.washing_machine_status
+      to: Clean
+      for:
+        minutes: 2
+    condition:
+      condition: and
+      conditions:
+        - condition: state
+          entity_id: input_select.washing_machine_status
+          state: Clean
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.washing_machine_status
+          option: Idle          
+  # TODO: add window sensor
+
+## Washing Machine Alerts
+  - alias: Wash - Send alert when washing machine is finished
+    trigger:
+    - platform: state
+      entity_id: input_select.washing_machine_status
+      to: Clean
+      for:
+        minutes: 1
+    # - platform: state
+    #   entity_id: device_tracker.admin_samsung
+    #   to: 'home'
+    #   for:
+    #     minutes: 2
+    # - platform: state
+    #   entity_id: device_tracker.admin_iphone
+    #   to: 'home'
+    #   for:
+    #     minutes: 2
+    - platform: state
+      entity_id: sensor.current_state
+      to: 'home'          
+      for:
+        minutes: 3
+    - platform: time
+      at: '20:45:00'
+    condition:
+      condition: and
+      conditions:
+        - condition: time
+          before: '21:00:00'
+          after: '08:30:00'
+        - condition: state
+          entity_id: sensor.current_state
+          state: 'home'          
+        - condition: state
+          entity_id: input_select.washing_machine_status
+          state: Clean
+        # - condition: state
+        #   entity_id: input_boolean.disable_washing_machine_notification
+        #   state: 'off'
+        # - condition: template
+        #   value_template: >
+        #     {% if states.automation.send_alert_when_washing_machine_is_finished.last_triggered is not none %}
+        #       {% if as_timestamp(now()) | int   -  as_timestamp(states.automation.send_alert_when_washing_machine_is_finished.attributes.last_triggered) | int > 1800 %} true {% else %} false
+        #       {% endif %}
+        #     {% else %}
+        #     false
+        #     {% endif %}
+    action:
+      - service: media_player.volume_set
+        data_template:
+          entity_id: media_player.google_home_salon
+          volume_level: 0.4
+      - service: tts.google_say
+        data:
+          entity_id: media_player.google_home_salon
+          message: "La lessive est terminée. Gaëtane, tu peux sortir le linge."
+      - service: notify.ios_all
+        data_template:
+          message: >
+            La lessive est terminée
+

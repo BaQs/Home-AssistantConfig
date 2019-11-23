@@ -51,7 +51,7 @@ climate:
       seconds: 30
     keep_alive:
       minutes: 3
-    initial_operation_mode: "auto"
+    initial_hvac_mode: "off"
     away_temp: 17
     
   - platform: generic_thermostat
@@ -68,7 +68,7 @@ climate:
       seconds: 30
     keep_alive:
       minutes: 1
-    initial_operation_mode: "auto"
+    initial_hvac_mode: "off"
     away_temp: 15
 
   - platform: generic_thermostat
@@ -85,7 +85,7 @@ climate:
       seconds: 30
     keep_alive:
       minutes: 3
-    initial_operation_mode: "auto"
+    initial_hvac_mode: "off"
     away_temp: 16
 
   - platform: generic_thermostat
@@ -102,7 +102,7 @@ climate:
       seconds: 30
     # keep_alive:
     #   minutes: 3
-    initial_operation_mode: "auto"
+    initial_hvac_mode: "off"
     away_temp: 17
 
   - platform: generic_thermostat
@@ -119,9 +119,16 @@ climate:
       seconds: 30
     # keep_alive:
     #   minutes: 3
-    initial_operation_mode: "auto"
+    initial_hvac_mode: "off"
     away_temp: 17
 
+
+# climate:
+#   - platform: climate_group
+#     name: 'Climate Friendly Name'
+#     entities:
+#     - climate.clima1
+#     - climate.clima2
 
 #  - platform: smart_thermostat
 #    name: Parents Bedroom Smart Thermostat
@@ -137,7 +144,7 @@ climate:
 ##     seconds: 5
 #    keep_alive:
 #      seconds: 15
-#    initial_operation_mode: "auto"
+#    initial_hvac_mode: "off"
 #    away_temp: 17
 #    kp : 5
 #    ki : 3
@@ -147,12 +154,39 @@ climate:
 #    difference : 100
 #    noiseband : 0.5
 
+group:
+  radiateurs_salon:
+    name: Radiateurs Salon
+    view: no
+    entities:
+      # the one under the tablet
+      # removed for now, just to test
+      - switch.radiateur_1_salon
+      # the one on the big wall
+      - switch.radiateur_2_salon
 ################################################
 ## Switch
 ################################################
 
 
 switch:
+
+###
+## RFX
+#
+  - platform: rfxtrx
+    automatic_add: True
+    signal_repetitions: 5
+    devices:
+      "0B11002F67134A5A03010F70":
+              name: Radiateur Bibliothèque
+      "0B11002F144637B903010F70":
+              name: Radiateur Cuisine
+      "0B11002F6BD03FB803010F70":
+              name: Radiateur 1 Salon
+      "0B11002F57651E4D03010F70":
+              name: Radiateur 2 Salon
+
   # Qubino thermostat, used as heater for generic thermostat
   # - platform: template
   #   switches:
@@ -260,6 +294,7 @@ switch:
           data:
             entity_id: switch.radiateur_2_salon
 #       icon_template: "{% if is_state('switch.radiateur_2_salon', 'on') %}mdi:garage{% else %}mdi:garage-open{% endif %}"
+
   - platform: template
     switches:
       radiateurs_salon:
@@ -310,34 +345,29 @@ sensor:
   - platform: template
     sensors:
       climate_parents_bedroom_thermostat_operation_mode:
-        value_template: "{% if  is_state_attr('climate.parents_bedroom_thermostat', 'operation_mode', 'heat') %} 1 {% else %} 0 {% endif %}"
+        value_template: "{% if  is_state_attr('climate.parents_bedroom_thermostat', 'hvac_action', 'heating') %} 1 {% else %} 0 {% endif %}"
         entity_id: climate.parents_bedroom_thermostat
       climate_living_room_thermostat_operation_mode:
-        value_template: "{% if  is_state_attr('climate.living_room_thermostat', 'operation_mode', 'heat') %} 1 {% else %}0{% endif %}"
+        value_template: "{% if  is_state_attr('climate.living_room_thermostat', 'hvac_action', 'heating') %} 1 {% else %}0{% endif %}"
         entity_id: climate.living_room_thermostat
       climate_baby_bedroom_thermostat_operation_mode:
-        value_template: "{% if  is_state_attr('climate.baby_bedroom_thermostat', 'operation_mode', 'heat') %} 1 {% else %}0{% endif %}"
+        value_template: "{% if  is_state_attr('climate.baby_bedroom_thermostat', 'hvac_action', 'heating') %} 1 {% else %}0{% endif %}"
         entity_id: climate.baby_bedroom_thermostat
       climate_library_thermostat_operation_mode:
-        value_template: "{% if  is_state_attr('climate.library_thermostat', 'operation_mode', 'heat') %} 1 {% else %}0{% endif %}"
+        value_template: "{% if  is_state_attr('climate.library_thermostat', 'hvac_action', 'heating') %} 1 {% else %}0{% endif %}"
         entity_id: climate.library_thermostat
 
       climate_parents_bedroom_thermostat_operation_temperature:
-        # value_template: "{% if  is_state_attr('climate.parents_bedroom_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
-        value_template: "{% if  is_state('climate.parents_bedroom_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
-
+        value_template: "{{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }}"
         entity_id: climate.parents_bedroom_thermostat
       climate_living_room_thermostat_operation_temperature:
-        # value_template: "{% if  is_state_attr('climate.living_room_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %}0{% endif %}"
-        value_template: "{% if  is_state('climate.living_room_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
+        value_template: "{{ state_attr('climate.living_room_thermostat', 'temperature') }}"
         entity_id: climate.living_room_thermostat
       climate_baby_bedroom_thermostat_operation_temperature:
-        # value_template: "{% if  is_state_attr('climate.baby_bedroom_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %}0{% endif %}"
-        value_template: "{% if  is_state('climate.baby_bedroom_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
+        value_template: "{{ state_attr('climate.baby_bedroom_thermostat', 'temperature') }}"
         entity_id: climate.baby_bedroom_thermostat
       climate_library_thermostat_operation_temperature:
-        # value_template: "{% if  is_state_attr('climate.library_thermostat', 'operation_mode', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %}0{% endif %}"
-        value_template: "{% if  is_state('climate.library_thermostat', 'heat') %} {{ state_attr('climate.parents_bedroom_thermostat', 'temperature') }} {% else %} 0 {% endif %}"
+        value_template: "{{ state_attr('climate.library_thermostat', 'temperature') }}"
         entity_id: climate.library_thermostat
 
       climate_parents_bedroom_thermostat_temperature:
@@ -371,40 +401,32 @@ sensor:
 ################################################
 
 binary_sensor:
-
-group:
-  # host_updates:
-  #   name: 'Updates'
-  #   entities:
-  #     - updater.updater
-  #     - sensor.hass_installed_version
-
-
-
-
+################################################
+## Input Select
+################################################
 
 input_select:
 
   qubino_bedroom_baby:
     name: Qubino Baby Bedroom
     options:
-     - Stop
-     - Anti-Freeze
-     - Eco
-     - Comfort -2
-     - Comfort -1
-     - Comfort
+      - Stop
+      - Anti-Freeze
+      - Eco
+      - Comfort -2
+      - Comfort -1
+      - Comfort
     initial: Comfort
 
   qubino_bedroom_parents:
     name: Qubino Parents Bedroom
     options:
-     - Stop
-     - Anti-Freeze
-     - Eco
-     - Comfort -2
-     - Comfort -1
-     - Comfort
+      - Stop
+      - Anti-Freeze
+      - Eco
+      - Comfort -2
+      - Comfort -1
+      - Comfort
     initial: Comfort
     
 
@@ -599,16 +621,20 @@ automation:
 
 
   - id: shower_heating_off_after_30min
-    alias: 'Heating: shower off after 60min'
+    alias: 'Heating: shower off after 30min'
     trigger:
       platform: state
       entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
       to: 'on'
       for:
-        minutes: 60
+        minutes: 30
     action:
-      - service: switch.turn_off
-        entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+      # - service: switch.turn_off
+      #   entity_id: switch.qubino_zmnhadx_flush_1_relay_switch
+      - service: climate.set_temperature
+        entity_id: climate.shower_thermostat
+        data:
+          temperature: 15
       - service: notify.ios_ipierre
         data:
           message: "Shower heater has been on for 30min, shutting it off automatically"

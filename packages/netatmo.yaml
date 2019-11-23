@@ -40,6 +40,15 @@ group:
         - input_boolean.netatmo_home_valentine
         - input_boolean.netatmo_home_kadidja
         - input_boolean.netatmo_home_flavie
+  presence_netatmo_home:
+      name: Netatmo Home Presence
+      view: no
+      entities:
+        - device_tracker.netatmo_home_pierre
+        - device_tracker.netatmo_home_gaetane
+        - device_tracker.netatmo_home_valentine
+        - device_tracker.netatmo_home_kadidja
+        - device_tracker.netatmo_home_flavie
       
 
 
@@ -74,6 +83,52 @@ binary_sensor:
         value_template: '{{ as_timestamp(states.binary_sensor.welcam_3_someone_known.last_changed) > (as_timestamp(states.binary_sensor.door_window_sensor_158d00015b63fb.last_changed)  + 3*60   )}}'
         #  we add 3 minutes, as the welcam sensor lasts 1 min...
 
+  - platform: template
+    sensors:
+      presence_netatmo_pierre:
+        friendly_name: "Présence Pierre (netatmo)"
+        device_class: presence
+        value_template: >-
+          {{ is_state('input_boolean.netatmo_home_pierre', 'on') }}      
+
+  - platform: template
+    sensors:
+      presence_netatmo_gae:
+        friendly_name: "Présence Gae (netatmo)"
+        device_class: presence
+        value_template: >-
+          {{ is_state('input_boolean.netatmo_home_gaetane', 'on') }}
+  - platform: template
+    sensors:
+      presence_netatmo_valentine:
+        friendly_name: "Présence Valentine (netatmo)"
+        device_class: presence
+        value_template: >-
+          {{ is_state('input_boolean.netatmo_home_valentine', 'on') }}
+
+  
+# automation:
+#   - id: '123456789'
+#     alias: Custom Tracker
+#     trigger:
+#     - entity_id: binary_sensor.richard
+#       platform: state
+#     - event: start
+#       platform: homeassistant
+#     action:
+#     - service: device_tracker.see
+#       data_template:
+#         dev_id: >
+#           {% set mapper = {
+#             'Gaë':'netatmo_home_gaetane',
+#             'Valentine':'netatmo_home_valentine',
+#             'Flavie':'netatmo_home_flavie',
+#             'Kadidja':'netatmo_home_kadidja',
+#             'Pierre':'netatmo_home_pierre' } %}
+#           {{ mapper[trigger.event.data.name] }}
+#         location_name: 'home'
+
+
 
 automation:
   - id: netatmo_event_somebody_known
@@ -84,9 +139,9 @@ automation:
       event_type: netatmo_person
     condition: 
     # let's be sure someone known is home, to avoid late webhooks
-    - condition: state
-      entity_id: binary_sensor.welcam_3_someone_known
-      state: 'on'
+    # - condition: state
+    #   entity_id: binary_sensor.welcam_3_someone_known
+    #   state: 'on'
     action:
     # - service: notify.telegram
     #   data_template:
@@ -108,6 +163,17 @@ automation:
             'Kadidja':'input_boolean.netatmo_home_kadidja',
             'Pierre':'input_boolean.netatmo_home_pierre' } %}
           {{ mapper[trigger.event.data.name] }}
+    - service: device_tracker.see
+      data_template:
+        dev_id: >
+          {% set mapper = {
+            'Gaë':'netatmo_home_gaetane',
+            'Valentine':'netatmo_home_valentine',
+            'Flavie':'netatmo_home_flavie',
+            'Kadidja':'netatmo_home_kadidja',
+            'Pierre':'netatmo_home_pierre' } %}
+          {{ mapper[trigger.event.data.name] }}
+        location_name: 'home'
 
 
   - id: netatmo_reset_somebody_known
@@ -118,19 +184,30 @@ automation:
       entity_id: binary_sensor.presence_home_known
       to: 'off'
     action:
-    # - service: notify.telegram
-    #   data_template:
-    #     message: |
-    #       "As we reset presence_home_known, we turn_off all input booleans"
-    #       "someone known last changed: {{ states.binary_sensor.welcam_3_someone_known.last_changed }}"
-    #       "door last changed:          {{states.binary_sensor.door_window_sensor_158d00015b63fb.last_changed}}"
-    #       "Gae:                        {{states.input_boolean.netatmo_home_gaetane.state}}"
-    #       "Pierre:                     {{states.input_boolean.netatmo_home_pierre.state}}"
-
-    #     title: NETATMO RESET
     - service: input_boolean.turn_off
       data:
         entity_id: group.netatmo_home
+    - service: device_tracker.see
+      data:
+        dev_id: device_tracker.netatmo_home_pierre
+        location_name: 'not_home'
+    - service: device_tracker.see
+      data:
+        dev_id: device_tracker.netatmo_home_gaetane
+        location_name: 'not_home'
+    - service: device_tracker.see
+      data:
+        dev_id: device_tracker.netatmo_home_valentine
+        location_name: 'not_home'
+    - service: device_tracker.see
+      data:
+        dev_id: device_tracker.netatmo_home_kadidja
+        location_name: 'not_home'
+    - service: device_tracker.see
+      data:
+        dev_id: device_tracker.netatmo_home_flavie
+        location_name: 'not_home'
+
 
 
   # - id: netatmo_event_other

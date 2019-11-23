@@ -1,0 +1,109 @@
+google_assistant:
+  project_id: !secret google_assistant_project_id
+  api_key: !secret google_assistant_api_key
+  # report_state: true
+  expose_by_default: false
+  exposed_domains:
+  # - switch
+  #   - light
+  #   # - lock
+  #   - alarm_control_panel
+  #   - climate
+  #   - media_player
+  #   - remote
+  #   - switch
+  #   - vacuum
+  #   - script
+  #   - camera
+  #   - sensor
+  entity_config:
+
+
+###
+## Salon
+#
+    alarm_control_panel.home_alarm:
+      name: Alarme
+      expose: true
+
+###
+## Salon
+#
+    switch.harmony_tv:
+      name: Télévision
+      expose: true
+      room: Salon
+      aliases:
+        - TV
+        - télé 
+
+
+    switch.harmony_ps4:
+      name: PS4
+      expose: true
+      room: Salon
+      aliases:
+        - console
+        - playstation
+        - ps 4
+
+    light.fibaro_system_fgd212_dimmer_2_level_7: # salon
+      name: Lumière Salon
+      expose: true
+      room: Salon
+
+    climate.living_room_thermostat :
+      name: Thermostat Salon
+      expose: true
+      room: Salon
+
+###
+## Cuisine
+#
+    light.fibaro_system_fgd212_dimmer_2_level_5: # cuisine
+      name: Lumière Cuisine
+      expose: true
+      room: Cuisine
+
+###
+## S à M
+#
+    light.fibaro_system_fgd212_dimmer_2_level_4: # sam      
+      name: Lumière Salle à manger
+      expose: true
+      room: Salon
+
+
+###
+## Chambre Bébé
+#
+    switch.prise_bambi:
+      name: Bambi
+      expose: true
+      room: Chambre bébé
+      aliases:
+        - lampe bébé
+        - lampe bambi
+
+    climate.baby_bedroom_thermostat :
+      name: Thermostat Valentine
+      expose: true
+      room: Chambre bébé
+
+###
+## Chambre Parents
+#
+
+    climate.parents_bedroom_thermostat :
+      name: Thermostat Chambre Parents
+      expose: true
+      room: Chambre Parents
+
+###
+## Bibliothèque
+#
+
+    climate.library_thermostat :
+      name: Thermostat Bibliothèque
+      expose: true
+      room: Bibliothèque

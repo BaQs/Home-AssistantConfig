@@ -52,7 +52,7 @@ owntracks:
 device_tracker:
   - platform: bluetooth_tracker
   - platform: bluetooth_le_tracker
-    track_new_devices: true
+    track_new_devices: false
   # - platform: icloud
   #   username: !secret icloud_username
   #   password: !secret icloud_password
@@ -63,6 +63,7 @@ device_tracker:
   #   home_interval: 30 
 
   - platform: ping
+    consider_home: 180
     hosts:
       ipierre_ping: 192.168.0.190
       iphoneg_ping: 192.168.0.33
@@ -71,6 +72,23 @@ device_tracker:
       # bluetooth: E4:B2:FB:AF:67:56
       # wifi: E4:B2:FB:B1:6E:BD
 
+  - platform: iphonedetect
+    consider_home: 60
+    hosts:
+      ipierre: 192.168.0.190
+      iphoneg: 192.168.0.33
+
+asuswrt:
+  # consider_home: 180
+  host: !secret asus_router_ip 
+  username: !secret asus_router_username
+  password: !secret asus_router_password
+  # ssh_key: !secret asus_router_ssh_key 
+  # sensors:
+  #   - upload
+  #   - download
+  #   - upload_speed
+  #   - download_speed
 
 ################################################
 ## Person
@@ -81,17 +99,36 @@ person:
     id: person_pierre
     device_trackers:
       - device_tracker.ipierre
+      - device_tracker.ipierre_2
+      - device_tracker.ipierre_ping 
+      # - device_tracker.ipierre_6s 
+      - device_tracker.pierre_ping 
       # - device_tracker.pierre_17d0c2f5_e7ef_4f59_bd9d_7159b50a2f9b
       - device_tracker.volvo_et_732_hn 
       # - input_boolean.netatmo_home_pierre
+      # - device_tracker.netatmo_home_pierre
 
   - name: Gaetane
     id: person_gaetane
     device_trackers:
       # - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
+      # router
       - device_tracker.iphoneg
+      # bluetooth
+      - device_tracker.iphoneg_2
+      - device_tracker.iphoneg_ping 
+      - device_tracker.gaetane_ping 
+      # - input_boolean.netatmo_home_gaetane
+      # - device_tracker.netatmo_home_gaetane
+
+  - name: Sac
+    id: person_bag
+    device_trackers:
+      # - device_tracker.gaetane_a6556411_426e_4601_84ad_90ae5cee0999
+      - device_tracker.nut
       # - input_boolean.netatmo_home_gaetane
 
+      # - device_tracker.qilive_tfk 
 
 ################################################
 ## Group
@@ -192,6 +229,25 @@ proximity:
 
 
 ################################################
+## Switch
+################################################
+
+switch:
+  - platform: rfxtrx
+    automatic_add: True
+    signal_repetitions: 5
+    devices:
+      "0B110000464D8E6909000090":
+        name: Prise Cave
+      # "0B1100002025EA1909010F90":
+      "0B1100002025EA1909000090":
+        name: Prise Bambi - HS
+      "0B110000445BBC9B09000090":
+        name: Prise Bambi
+      "0B1100000144449201040F60":
+        name: Sonnette
+        fire_event: true
+################################################
 ## Sensor
 ################################################
 
@@ -222,7 +278,6 @@ sensor:
           {% else %}
           away
           {% endif %}
-
 
 ################################################
 ## Waze
@@ -567,23 +622,14 @@ automation:
   condition:
     condition: and
     conditions:
-    # - condition: state
-    #   entity_id: sensor.current_state
-    #   state: 'home'
     - condition: time
       weekday:
         - thu
   action:
-  # - service: tts.google_say
-  #   data:
-  #     entity_id: media_player.google_home__salon
-  #     message: "Il est l'heure de plus belle la vie!"
-
     - service: input_select.select_option
       data:
         entity_id: input_select.system_mode
         option: "Have guests"
-        # option: "{{ states.remote.family_room_tv.attributes.current_activity | default('Power Off') }}"
     - service: notify.ios_ipierre
       data:
         message: 'I put the house in "Guest Mode" for 3 hours'
@@ -667,11 +713,18 @@ automation:
 ## Lights - Night
 ################################################
 
+
+# brings back the light to life scene if somebody moves around
 - id: light_enlight_by_night
   alias: 'Light: Enlight by night'
   initial_state: true
   trigger:
+  # etage 1
   - entity_id: binary_sensor.motion_sensor_158d0001ab34e1
+    platform: state
+    to: 'on'
+  # entree
+  - entity_id: binary_sensor.motion_sensor_158d0001e163a1
     platform: state
     to: 'on'
   condition:
@@ -682,10 +735,8 @@ automation:
     entity_id: sensor.current_state
     state: 'home'
   action:
-  - data:
-      brightness: '100'
-      entity_id: group.xiaomi_lights
-    service: light.turn_on
+  - service: scene.turn_on
+    entity_id: scene.night_move
 
 - id: light_night_back_normal
   alias: 'Light: Night back to normal'
@@ -780,7 +831,7 @@ automation:
 
 
 - id: Sunrise
-  alias: 'Script: Sunrise'
+  alias: 'Sunrise'
   initial_state: true
   trigger:
 #  - event: sunrise
@@ -790,14 +841,20 @@ automation:
     #value_template: "{% if is_state('states.sensor.period_of_day.state', 'dawn') %}true{% endif %}"
     value_template: "{% if is_state('sensor.period_of_day', 'dawn') %}true{% endif %}"
   action:
-  - service: light.turn_off
-    entity_id: light.gateway_light_7811dcb7afd1
-  - service: light.turn_off
-    entity_id: light.gateway_light_34ce008c1873
+  - service: script.sunrise
+
+  # - service: light.turn_off
+  #   entity_id: light.gateway_light_7811dcb7afd1
+  # - service: light.turn_off
+  #   entity_id: light.gateway_light_34ce008c1873
+  # - service: browser_mod.set_theme
+  #   data:
+  #     deviceID: alldocube
+  #     theme: clear
 
 
 - id: Sunset
-  alias: 'Script: Sunset'
+  alias: 'Sunset'
   initial_state: true
   trigger:
   - platform: sun
@@ -809,27 +866,213 @@ automation:
     entity_id: sensor.current_state
     state: 'home'
   action:
+  - service: script.sunset
   # - service: notify.telegram
   #   data:
   #     message: "Sunset time. As somebody is home, I turn on the lights"
-  - data:
-      brightness: '10'
-      color_name: blue
-      entity_id: light.gateway_light_7811dcb7afd1
-    service: light.turn_on
-  - data:
-      brightness: '10'
-      color_name: blue
-      entity_id: light.gateway_light_34ce008c1873
-    service: light.turn_on
+  # - data:
+  #     brightness: '10'
+  #     color_name: blue
+  #     entity_id: light.gateway_light_7811dcb7afd1
+  #   service: light.turn_on
+  # - data:
+  #     brightness: '10'
+  #     color_name: blue
+  #     entity_id: light.gateway_light_34ce008c1873
+  #   service: light.turn_on
 
-  - service: light.turn_on
-    data:
-            entity_id: light.fibaro_system_fgd212_dimmer_2_level_5
-  - service: light.turn_on
-    data:
-            entity_id: light.fibaro_system_fgd212_dimmer_2_level_4
-  - service: light.turn_on
-    data:
-            entity_id: light.fibaro_system_fgd212_dimmer_2_level_7
+  # - service: light.turn_on
+  #   data:
+  #           entity_id: light.fibaro_system_fgd212_dimmer_2_level_5
+  # - service: light.turn_on
+  #   data:
+  #           entity_id: light.fibaro_system_fgd212_dimmer_2_level_4
+  # - service: light.turn_on
+  #   data:
+  #           entity_id: light.fibaro_system_fgd212_dimmer_2_level_7
 
+  # - service: browser_mod.set_theme
+  #   data:
+  #     deviceID: alldocube
+  #     theme: dark_blue
+
+
+# Home Assistant has a built-in integration called device_sun_light_trigger to help you automate your lights. The integration will:
+#     Fade in the lights when the sun is setting and there are people home
+#     Turn on the lights when people get home after the sun has set
+#     Turn off the lights when all people leave the house
+
+
+- id: good_morning_infos
+  alias: 'Good Morning Infos'
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_netatmo_pierre
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      weekday:
+        - thu
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - condition: template
+      # Only run if more than 6 hours (21,600 sec) since it last ran 
+      value_template: '{{(as_timestamp(now()) - as_timestamp(states.automation.good_morning_infos.attributes.last_triggered | default(0)) | int > (20 * 3600) )}}'
+  action:
+    - service: media_player.play_media
+      entity_id: media_player.google_home_salon
+      data_template:
+        media_content_id: "{{ states('sensor.podcast_nrj_infos') }}"
+        media_content_type: "music"
+
+- id: good_morning_pierre
+  alias: 'Good Morning Pierre'
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_netatmo_pierre
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      weekday:
+        - thu
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - condition: template
+      # Only run if more than 6 hours (21,600 sec) since it last ran 
+      value_template: '{{(as_timestamp(now()) - as_timestamp(states.automation.good_morning_pierre.attributes.last_triggered | default(0)) | int > (20 * 3600) )}}'
+  action:
+    - service: media_player.play_media
+      entity_id: media_player.google_home_salon
+      data_template:
+        media_content_id: "{{ states('sensor.podcast_nrj_horoscope_balance') }}"
+        media_content_type: "music"
+    - delay: '00:01:30'
+    - service: automation.trigger
+      entity_id: automation.good_morning_infos
+
+
+
+- id: good_morning_gaetane
+  alias: 'Good Morning Gaetane'
+  initial_state: true
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.presence_netatmo_gae
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+    - condition: time
+      weekday:
+        - thu
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - condition: template
+      # Only run if more than 6 hours (21,600 sec) since it last ran 
+      value_template: '{{(as_timestamp(now()) - as_timestamp(states.automation.good_morning_gaetane.attributes.last_triggered | default(0)) | int > (20 * 3600) )}}'
+  action:
+    - service: media_player.play_media
+      entity_id: media_player.google_home_salon
+      data_template:
+        media_content_id: "{{ states('sensor.podcast_nrj_horoscope_taureau') }}"
+        media_content_type: "music"
+    - delay: '00:01:30'
+    - service: automation.trigger
+      entity_id: automation.good_morning_infos
+
+device_sun_light_trigger:
+  light_group: group.living_lights
+  light_profile: relax
+  device_group: group.household
+  disable_turn_off: 0
+# Scenes
+
+scene:
+  - name: Night
+    entities:
+    #   light.fibaro_system_fgd212_dimmer_2_level_4: 
+    #     state: on
+    #     transition: 600
+    #   light.fibaro_system_fgd212_dimmer_2_level_5:
+    #     state: on
+    #     transition: 600
+    #   light.fibaro_system_fgd212_dimmer_2_level_7:
+    #     state: on
+    #     transition: 600
+      light.gateway_light_7811dcb7afd1:
+        brightness: '10'
+        color_name: blue
+        state: on
+      light.gateway_light_34ce008c1873:
+        brightness: '10'
+        color_name: blue
+        state: on
+
+scene:
+  - name: Night Move
+    entities:
+      light.gateway_light_7811dcb7afd1:
+        brightness: '90'
+        # color_name: blue
+        state: on
+      light.gateway_light_34ce008c1873:
+        brightness: '90'
+        # color_name: blue
+        state: on
+
+
+  - name: Day
+    entities:
+      light.fibaro_system_fgd212_dimmer_2_level_4: off
+      light.fibaro_system_fgd212_dimmer_2_level_5: off
+      light.fibaro_system_fgd212_dimmer_2_level_7: off
+
+  - name: TV
+    entities:
+      light.fibaro_system_fgd212_dimmer_2_level_4:
+        brightness_pct: '10'
+        state: on
+      light.fibaro_system_fgd212_dimmer_2_level_5:
+        brightness_pct: '10'
+        state: on
+      light.fibaro_system_fgd212_dimmer_2_level_7:
+        brightness_pct: '10'
+        state: on
+
+
+script:
+  sunset:
+    alias: 'Sunset'
+    sequence:
+    - condition: template
+      value_template: '{{ state_attr("sun.sun", "elevation") < 10 }}'
+    # not replaced by "device_sun_light_trigger"
+    - service: scene.turn_on
+      entity_id: scene.night
+    - service: browser_mod.set_theme
+      data:
+        deviceID: alldocube
+        theme: amoled
+
+  sunrise:
+    alias: 'Sunrise'
+    sequence:
+    - service: browser_mod.set_theme
+      data:
+        deviceID: alldocube
+        theme: clear

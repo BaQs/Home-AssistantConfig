@@ -31,6 +31,9 @@ homeassistant:
 #      <<: *customize
 #      friendly_name: 'Hass.io Installed Version'
 #      icon: mdi:check-decagram
+linky:
+  username: !secret linky_username
+  password: !secret linky_password
 
 ################################################
 ## Sensor
@@ -40,160 +43,306 @@ sensor:
   # - platform: teleinfo
   #   name: "edf"
   #   device: "/dev/ttyUSB0"
-  - platform: teleinfo
-    name: "edf"
-    device: "/dev/ttyUSB0"
+  # - platform: teleinfo
+  #   name: "edf"
+  #   device: "/dev/ttyUSB0"
   
   - platform: linky
     username: !secret linky_username
     password: !secret linky_password
 
+  - platform: atome
+    username: !secret atome_username
+    password: !secret atome_password
+
+
+  - platform: linky_custom
+    username: !secret linky_username
+    password: !secret linky_password
+    # HP/HC
+    peak_hours:
+      - ["23:54","07:54"]
+    peak_hours_cost: 0.16439
+    offpeak_hours_cost: 0.12731
+
+
+    # monitored_variables:
+    # - halfhourly_00_00_consumption
+    # - halfhourly_00_30_consumption
+    # - halfhourly_01_00_consumption
+    # - halfhourly_01_30_consumption
+    # - halfhourly_02_00_consumption
+    # - halfhourly_02_30_consumption
+    # - halfhourly_03_00_consumption
+    # - halfhourly_03_30_consumption
+    # - halfhourly_04_00_consumption
+    # - halfhourly_04_30_consumption
+    # - halfhourly_05_00_consumption
+    # - halfhourly_05_30_consumption
+    # - halfhourly_06_00_consumption
+    # - halfhourly_06_30_consumption
+    # - halfhourly_07_00_consumption
+    # - halfhourly_07_30_consumption
+    # - halfhourly_08_00_consumption
+    # - halfhourly_08_30_consumption
+    # - halfhourly_09_00_consumption
+    # - halfhourly_09_30_consumption
+    # - halfhourly_10_00_consumption
+    # - halfhourly_10_30_consumption
+    # - halfhourly_11_00_consumption
+    # - halfhourly_11_30_consumption
+    # - halfhourly_12_00_consumption
+    # - halfhourly_12_30_consumption
+    # - halfhourly_13_00_consumption
+    # - halfhourly_13_30_consumption
+    # - halfhourly_14_00_consumption
+    # - halfhourly_14_30_consumption
+    # - halfhourly_15_00_consumption
+    # - halfhourly_15_30_consumption
+    # - halfhourly_16_00_consumption
+    # - halfhourly_16_30_consumption
+    # - halfhourly_17_00_consumption
+    # - halfhourly_17_30_consumption
+    # - halfhourly_18_00_consumption
+    # - halfhourly_18_30_consumption
+    # - halfhourly_19_00_consumption
+    # - halfhourly_19_30_consumption
+    # - halfhourly_20_00_consumption
+    # - halfhourly_20_30_consumption
+    # - halfhourly_21_00_consumption
+    # - halfhourly_21_30_consumption
+    # - halfhourly_22_00_consumption
+    # - halfhourly_22_30_consumption
+    # - halfhourly_23_00_consumption
+    # - halfhourly_23_30_consumption
+    # - daily_1d_consumption
+    # - daily_2d_consumption
+    # - daily_3d_consumption
+    # - daily_4d_consumption
+    # - daily_5d_consumption
+    # - daily_6d_consumption
+    # - daily_7d_consumption
+    # - daily_8d_consumption
+    # - daily_9d_consumption
+    # - daily_10d_consumption
+    # - daily_11d_consumption
+    # - daily_12d_consumption
+    # - daily_13d_consumption
+    # - daily_14d_consumption
+    # - daily_15d_consumption
+    # - daily_16d_consumption
+    # - daily_17d_consumption
+    # - daily_18d_consumption
+    # - daily_19d_consumption
+    # - daily_20d_consumption
+    # - daily_21d_consumption
+    # - daily_22d_consumption
+    # - daily_23d_consumption
+    # - daily_24d_consumption
+    # - daily_25d_consumption
+    # - daily_26d_consumption
+    # - daily_27d_consumption
+    # - daily_28d_consumption
+    # - daily_29d_consumption
+    # - monthly_1m_consumption
+
+
+
+
+#     type: 'custom:linky-card'
+# entity: sensor.linky
+
 
   - platform: template
     sensors:
-      teleinfo_hchc:
-        value_template: '{{ states.sensor.edf.attributes["HCHC"] }}'
-        unit_of_measurement: 'Wh'
-        icon_template: mdi:flash
-        entity_id: sensor.edf
+      atome_daily_cost:
+        friendly_name: "Atome Daily Cost"
+        unit_of_measurement: '€'
+        value_template: '{{ states.sensor.atome_daily.attributes["price"] | round(2) }}'
+      linky_daily_cost:
+        friendly_name: "Linky Daily Cost"
+        unit_of_measurement: '€'
+        value_template: '{{ states.sensor.linky.attributes["daily_cost"] | round(2) }}'
 
-  - platform: template
-    sensors:
-      teleinfo_hchp:
-        value_template: '{{ states.sensor.edf.attributes["HCHP"] }}'
-        unit_of_measurement: 'Wh'
-        icon_template: mdi:flash
-        entity_id: sensor.edf
+
+
+
+
+  #     # linky_conso_hp:
+  #     #   friendly_name: "Consommation de la veille en heures pleines"
+  #     #   unit_of_measurement: 'kWh'
+  #     #   value_template: "{{(float(states.sensor.linky_halfhourly_00_00_consumption.state)+float(states.sensor.linky_halfhourly_01_00_consumption.state)+float(states.sensor.linky_halfhourly_07_00_consumption.state)+float(states.sensor.linky_halfhourly_08_00_consumption.state)+float(states.sensor.linky_halfhourly_09_00_consumption.state)+float(states.sensor.linky_halfhourly_10_00_consumption.state)+float(states.sensor.linky_halfhourly_11_00_consumption.state)+float(states.sensor.linky_halfhourly_12_00_consumption.state)+float(states.sensor.linky_halfhourly_13_00_consumption.state)+float(states.sensor.linky_halfhourly_17_00_consumption.state)+float(states.sensor.linky_halfhourly_18_00_consumption.state)+float(states.sensor.linky_halfhourly_19_00_consumption.state)+float(states.sensor.linky_halfhourly_20_00_consumption.state)+float(states.sensor.linky_halfhourly_21_00_consumption.state)+float(states.sensor.linky_halfhourly_22_00_consumption.state)+float(states.sensor.linky_halfhourly_23_00_consumption.state)+float(states.sensor.linky_halfhourly_00_30_consumption.state)+float(states.sensor.linky_halfhourly_01_30_consumption.state)+float(states.sensor.linky_halfhourly_07_30_consumption.state)+float(states.sensor.linky_halfhourly_08_30_consumption.state)+float(states.sensor.linky_halfhourly_09_30_consumption.state)+float(states.sensor.linky_halfhourly_10_30_consumption.state)+float(states.sensor.linky_halfhourly_11_30_consumption.state)+float(states.sensor.linky_halfhourly_12_30_consumption.state)+float(states.sensor.linky_halfhourly_13_30_consumption.state)+float(states.sensor.linky_halfhourly_17_30_consumption.state)+float(states.sensor.linky_halfhourly_18_30_consumption.state)+float(states.sensor.linky_halfhourly_19_30_consumption.state)+float(states.sensor.linky_halfhourly_20_30_consumption.state)+float(states.sensor.linky_halfhourly_21_30_consumption.state)+float(states.sensor.linky_halfhourly_22_30_consumption.state)+float(states.sensor.linky_halfhourly_23_30_consumption.state)) / 2}}"
+  #     # linky_conso_hc:
+  #     #   friendly_name: "Consommation de la veille en heures creuses"
+  #     #   unit_of_measurement: 'kWh'
+  #     #   value_template: '{{(float(states.sensor.linky_halfhourly_02_00_consumption.state)+float(states.sensor.linky_halfhourly_04_00_consumption.state)+float(states.sensor.linky_halfhourly_05_00_consumption.state)+float(states.sensor.linky_halfhourly_06_00_consumption.state)+float(states.sensor.linky_halfhourly_14_00_consumption.state)+float(states.sensor.linky_halfhourly_15_00_consumption.state)+float(states.sensor.linky_halfhourly_16_00_consumption.state)+float(states.sensor.linky_halfhourly_02_30_consumption.state)+float(states.sensor.linky_halfhourly_04_30_consumption.state)+float(states.sensor.linky_halfhourly_05_30_consumption.state)+float(states.sensor.linky_halfhourly_06_30_consumption.state)+float(states.sensor.linky_halfhourly_14_30_consumption.state)+float(states.sensor.linky_halfhourly_15_30_consumption.state)+float(states.sensor.linky_halfhourly_16_30_consumption.state))/2}}'
+  #     # linky_conso_mensuelle_glissante:
+  #     #   friendly_name: "Consommation sur 1 mois glissant"
+  #     #   unit_of_measurement: "kWh"
+  #     #   value_template: "{{(float(states.sensor.linky_daily_1d_consumption.state) + float(states.sensor.linky_daily_2d_consumption.state) + float(states.sensor.linky_daily_3d_consumption.state) + float(states.sensor.linky_daily_4d_consumption.state) + float(states.sensor.linky_daily_5d_consumption.state) + float(states.sensor.linky_daily_6d_consumption.state) + float(states.sensor.linky_daily_7d_consumption.state) + float(states.sensor.linky_daily_8d_consumption.state) + float(states.sensor.linky_daily_9d_consumption.state) + float(states.sensor.linky_daily_10d_consumption.state) + float(states.sensor.linky_daily_11d_consumption.state) + float(states.sensor.linky_daily_12d_consumption.state) + float(states.sensor.linky_daily_13d_consumption.state) + float(states.sensor.linky_daily_14d_consumption.state) + float(states.sensor.linky_daily_15d_consumption.state) + float(states.sensor.linky_daily_16d_consumption.state) + float(states.sensor.linky_daily_17d_consumption.state) + float(states.sensor.linky_daily_18d_consumption.state) + float(states.sensor.linky_daily_19d_consumption.state) + float(states.sensor.linky_daily_20d_consumption.state) + float(states.sensor.linky_daily_21d_consumption.state) + float(states.sensor.linky_daily_22d_consumption.state) + float(states.sensor.linky_daily_23d_consumption.state) + float(states.sensor.linky_daily_24d_consumption.state) + float(states.sensor.linky_daily_25d_consumption.state) + float(states.sensor.linky_daily_26d_consumption.state) + float(states.sensor.linky_daily_27d_consumption.state) + float(states.sensor.linky_daily_28d_consumption.state) + float(states.sensor.linky_daily_29d_consumption.state))}}"
+  #     # linky_cout:
+  #     #   friendly_name: "Coût de la veille"
+  #     #   unit_of_measurement: '€'
+  #     #   value_template: "{{((float(states.sensor.conso_hc.state) * float(0.1244)) + (float(states.sensor.conso_hp.state) * float(0.1593)))}}"
+  #     # linky_rapport_hc_hp:
+  #     #   friendly_name: "Taux de consommation en heures creuses"
+  #     #   unit_of_measurement: '%'
+  #     #   value_template: "{%- set conso_totale = float(states.sensor.conso_hc.state) + float(states.sensor.conso_hp.state) -%}{% if conso_totale > 0 %}{{(float(states.sensor.conso_hc.state) / conso_totale * 100)}}{% else %}N/A{% endif %}"
+  #     # linky_evolution_conso_mensuelle:
+  #     #   friendly_name: "Évolution de la consommation mensuelle"
+  #     #   unit_of_measurement: '%'
+  #     #   value_template: "{{((float(states.sensor.conso_mensuelle_glissante.state) - float(states.sensor.linky_monthly_1m_consumption.state)) / float(states.sensor.linky_monthly_1m_consumption.state) * 100)}}"
+
+
+
+
+
+
+  # - platform: template
+  #   sensors:
+  #     teleinfo_hchc:
+  #       value_template: '{{ states.sensor.edf.attributes["HCHC"] }}'
+  #       unit_of_measurement: 'Wh'
+  #       icon_template: mdi:flash
+  #       entity_id: sensor.edf
+
+  # - platform: template
+  #   sensors:
+  #     teleinfo_hchp:
+  #       value_template: '{{ states.sensor.edf.attributes["HCHP"] }}'
+  #       unit_of_measurement: 'Wh'
+  #       icon_template: mdi:flash
+  #       entity_id: sensor.edf
   
-  - platform: template
-    sensors:
-      teleinfo_hhphc:
-        value_template: '{{ states.sensor.edf.attributes["HHPHC"] }}'
-        unit_of_measurement: ''
-        icon_template: mdi:information-outline
-        entity_id: sensor.edf
+  # - platform: template
+  #   sensors:
+  #     teleinfo_hhphc:
+  #       value_template: '{{ states.sensor.edf.attributes["HHPHC"] }}'
+  #       unit_of_measurement: ''
+  #       icon_template: mdi:information-outline
+  #       entity_id: sensor.edf
   
-  - platform: template
-    sensors:
-      teleinfo_iinst:
-        value_template: '{{ states.sensor.edf.attributes["IINST"] }}'
-        unit_of_measurement: 'A'
-        icon_template: mdi:flash
-        entity_id: sensor.edf
+  # - platform: template
+  #   sensors:
+  #     teleinfo_iinst:
+  #       value_template: '{{ states.sensor.edf.attributes["IINST"] }}'
+  #       unit_of_measurement: 'A'
+  #       icon_template: mdi:flash
+  #       entity_id: sensor.edf
   
-  - platform: template
-    sensors:
-      teleinfo_imax:
-        value_template: '{{ states.sensor.edf.attributes["IMAX"] }}'
-        unit_of_measurement: 'A'
-        icon_template: mdi:flash
-        entity_id: sensor.edf
+  # - platform: template
+  #   sensors:
+  #     teleinfo_imax:
+  #       value_template: '{{ states.sensor.edf.attributes["IMAX"] }}'
+  #       unit_of_measurement: 'A'
+  #       icon_template: mdi:flash
+  #       entity_id: sensor.edf
   
-  - platform: template
-    sensors:
-      teleinfo_papp:
-        value_template: '{{ states.sensor.edf.attributes["PAPP"] }}'
-        unit_of_measurement: 'vA'
-        icon_template: mdi:flash
-        entity_id: sensor.edf
+  # - platform: template
+  #   sensors:
+  #     teleinfo_papp:
+  #       value_template: '{{ states.sensor.edf.attributes["PAPP"] }}'
+  #       unit_of_measurement: 'vA'
+  #       icon_template: mdi:flash
+  #       entity_id: sensor.edf
   
-  - platform: template
-    sensors:
-      teleinfo_ptec:
-        value_template: '{{ states.sensor.edf.attributes["PTEC"] }}'
-        unit_of_measurement: ''
-        icon_template: mdi:information-outline
-        entity_id: sensor.edf
+  # - platform: template
+  #   sensors:
+  #     teleinfo_ptec:
+  #       value_template: '{{ states.sensor.edf.attributes["PTEC"] }}'
+  #       unit_of_measurement: ''
+  #       icon_template: mdi:information-outline
+  #       entity_id: sensor.edf
   
-  - platform: template
-    sensors:
-      teleinfo_isousc:
-        value_template: '{{ states.sensor.edf.attributes["ISOUSC"] }}'
-        unit_of_measurement: 'A'
-        icon_template: mdi:flash
-        entity_id: sensor.edf
+  # - platform: template
+  #   sensors:
+  #     teleinfo_isousc:
+  #       value_template: '{{ states.sensor.edf.attributes["ISOUSC"] }}'
+  #       unit_of_measurement: 'A'
+  #       icon_template: mdi:flash
+  #       entity_id: sensor.edf
   
-  - platform: template
-    sensors:
-        elecbill_cta:
-            value_template: '20.52'
-            friendly_name: 'CTA (/an)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_cta:
+  #           value_template: '20.52'
+  #           friendly_name: 'CTA (/an)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_options:
-            value_template: '4.99'
-            friendly_name: 'Options (/m.)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_options:
+  #           value_template: '4.99'
+  #           friendly_name: 'Options (/m.)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_subscription:
-            value_template: '9.78'
-            friendly_name: 'Subscription (/m.)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_subscription:
+  #           value_template: '9.78'
+  #           friendly_name: 'Subscription (/m.)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_cost_hp:
-            value_template: '0.0895'
-            friendly_name: 'HP Cost (/kWh)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_cost_hp:
+  #           value_template: '0.0895'
+  #           friendly_name: 'HP Cost (/kWh)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_cost_hc:
-            value_template: '0.0632'
-            friendly_name: 'HC Cost (/kWh)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_cost_hc:
+  #           value_template: '0.0632'
+  #           friendly_name: 'HC Cost (/kWh)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_cspe:
-            value_template: '0.0225'
-            friendly_name: 'Public Electricity Service Contribution (/kWh)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_cspe:
+  #           value_template: '0.0225'
+  #           friendly_name: 'Public Electricity Service Contribution (/kWh)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_tcfe_municipal:
-            value_template: '0.00638'
-            friendly_name: 'Municipal Tax on final electricity consumption (/kWh)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_tcfe_municipal:
+  #           value_template: '0.00638'
+  #           friendly_name: 'Municipal Tax on final electricity consumption (/kWh)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_tcfe_departmental:
-            value_template: '0.00319'
-            friendly_name: 'Departmental Tax on final electricity consumption (/kWh)'
-            unit_of_measurement: '€'
+  # - platform: template
+  #   sensors:
+  #       elecbill_tcfe_departmental:
+  #           value_template: '0.00319'
+  #           friendly_name: 'Departmental Tax on final electricity consumption (/kWh)'
+  #           unit_of_measurement: '€'
 
-  - platform: template
-    sensors:
-        elecbill_today_so_far_hc:
-            friendly_name: 'Electricity HC cost (Today so far)'
-            unit_of_measurement: '€'
-            value_template: >
-              {{   
-              (
-              (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
-              )|round(2)
-              }}
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_so_far_hc:
+  #           friendly_name: 'Electricity HC cost (Today so far)'
+  #           unit_of_measurement: '€'
+  #           value_template: >
+  #             {{   
+  #             (
+  #             (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
+  #             )|round(2)
+  #             }}
 
             
             
-  - platform: template
-    sensors:
-        elecbill_today_so_far_hp:
-            friendly_name: 'Electricity HP cost (Today so far)'
-            unit_of_measurement: '€'
-            value_template: >
-              {{   
-              (
-              (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
-              )|round(2)
-              }}
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_so_far_hp:
+  #           friendly_name: 'Electricity HP cost (Today so far)'
+  #           unit_of_measurement: '€'
+  #           value_template: >
+  #             {{   
+  #             (
+  #             (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
+  #             )|round(2)
+  #             }}
 
 
 
@@ -204,374 +353,374 @@ sensor:
           
   # we transform W to kWh , bu multiplying the W by nb_hours and / 1000
   # nb_hour = 16 cause HP, 8 cause HC
-  #
-  - platform: template
-    sensors:
-        elecbill_today_so_far_hc_heating:
-            friendly_name: 'Heating HC cost (Today so far)'
-            unit_of_measurement: '€'
-            value_template: >
-              {{   
-              (
-              (states.sensor.hc_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
-              )|round(2)
-              }}
+  # #
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_so_far_hc_heating:
+  #           friendly_name: 'Heating HC cost (Today so far)'
+  #           unit_of_measurement: '€'
+  #           value_template: >
+  #             {{   
+  #             (
+  #             (states.sensor.hc_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) 
+  #             )|round(2)
+  #             }}
   
-  # we transform W to kWh , bu multiplying the W by nb_hours and / 1000
-  # nb_hour = 16 cause HP, 8 cause HC
-  - platform: template
-    sensors:
-        elecbill_today_so_far_hp_heating:
-            friendly_name: 'Heating HP cost (Today so far)'
-            unit_of_measurement: '€'
-            value_template: >
-              {{   
-              (
-              (states.sensor.hp_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
-              )|round(2)
-              }}
+  # # we transform W to kWh , bu multiplying the W by nb_hours and / 1000
+  # # nb_hour = 16 cause HP, 8 cause HC
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_so_far_hp_heating:
+  #           friendly_name: 'Heating HP cost (Today so far)'
+  #           unit_of_measurement: '€'
+  #           value_template: >
+  #             {{   
+  #             (
+  #             (states.sensor.hp_heating_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hp.state |float) 
+  #             )|round(2)
+  #             }}
 
-  - platform: template
-    sensors:
-        elecbill_today_so_far_sub:
-            friendly_name: 'Electricity Subscription cost (Today so far)'
-            unit_of_measurement: '€'
-            value_template: >
-              {{   
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_so_far_sub:
+  #           friendly_name: 'Electricity Subscription cost (Today so far)'
+  #           unit_of_measurement: '€'
+  #           value_template: >
+  #             {{   
 
-              (
+  #             (
 
-              (states.sensor.elecbill_subscription.state |float / 30) + 
-              (states.sensor.elecbill_cta.state |float / 365)  
+  #             (states.sensor.elecbill_subscription.state |float / 30) + 
+  #             (states.sensor.elecbill_cta.state |float / 365)  
 
-              + (states.sensor.elecbill_options.state |float /30)
+  #             + (states.sensor.elecbill_options.state |float /30)
 
-              )|round(2)
+  #             )|round(2)
 
-              }}
-
-
-  - platform: template
-    sensors:
-        elecbill_today_so_far_taxes:
-            friendly_name: 'Electricity Taxes cost (Today so far)'
-            unit_of_measurement: '€'
-            value_template: >
-              {{   
-
-              (
-
-              (
-              (states.sensor.elecbill_subscription.state |float / 30) + 
-              (states.sensor.elecbill_cta.state |float / 365)  
-              ) * 0.055
-
-              +
-
-              (
-              (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
-              (states.sensor.elecbill_cost_hp.state|float)
-
-              + (states.sensor.elecbill_options.state |float /30)
-
-              ) * 0.20
+  #             }}
 
 
-              + 
-              (
-              ( 
-              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-              )
-              +
-              ( 
-              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-              )
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_so_far_taxes:
+  #           friendly_name: 'Electricity Taxes cost (Today so far)'
+  #           unit_of_measurement: '€'
+  #           value_template: >
+  #             {{   
 
-              ) * 1.20
+  #             (
 
-              )|round(2)
+  #             (
+  #             (states.sensor.elecbill_subscription.state |float / 30) + 
+  #             (states.sensor.elecbill_cta.state |float / 365)  
+  #             ) * 0.055
 
-              }}
+  #             +
+
+  #             (
+  #             (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
+  #             (states.sensor.elecbill_cost_hp.state|float)
+
+  #             + (states.sensor.elecbill_options.state |float /30)
+
+  #             ) * 0.20
+
+
+  #             + 
+  #             (
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+  #             )
+  #             +
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+  #             )
+
+  #             ) * 1.20
+
+  #             )|round(2)
+
+  #             }}
 
   
-  - platform: template
-    sensors:
-        elecbill_today_so_far_ttc:
-            friendly_name: 'Electricity TTC cost (Today so far)'
-            unit_of_measurement: '€'
-            value_template: >
-              {{   
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_so_far_ttc:
+  #           friendly_name: 'Electricity TTC cost (Today so far)'
+  #           unit_of_measurement: '€'
+  #           value_template: >
+  #             {{   
 
-              (
+  #             (
 
-              (
-              (states.sensor.elecbill_subscription.state |float / 30) + 
-              (states.sensor.elecbill_cta.state |float / 365)  
-              ) * 1.055
+  #             (
+  #             (states.sensor.elecbill_subscription.state |float / 30) + 
+  #             (states.sensor.elecbill_cta.state |float / 365)  
+  #             ) * 1.055
 
-              +
+  #             +
 
-              (
-              (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
-              (states.sensor.elecbill_cost_hp.state|float)
+  #             (
+  #             (states.sensor.hc_energy_consumed_today_so_far.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_today_so_far.state |float /1000 ) *
+  #             (states.sensor.elecbill_cost_hp.state|float)
 
-              + (states.sensor.elecbill_options.state |float /30)
+  #             + (states.sensor.elecbill_options.state |float /30)
 
-              + 
-              ( 
-              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-              )
-              +
-              ( 
-              (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-              )
+  #             + 
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+  #             )
+  #             +
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_today_so_far.state|float/1000 + states.sensor.hp_energy_consumed_today_so_far.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+  #             )
 
-              ) * 1.20
+  #             ) * 1.20
 
-              )|round(2)
+  #             )|round(2)
 
-              }}
+  #             }}
  
-  - platform: template
-    sensors:
-        elecbill_today_ttc:
-            value_template: >
-              {{   
+  # - platform: template
+  #   sensors:
+  #       elecbill_today_ttc:
+  #           value_template: >
+  #             {{   
 
-              (
+  #             (
 
-              (
-              (states.sensor.elecbill_subscription.state |float / 30) + 
-              (states.sensor.elecbill_cta.state |float / 365)  
-              ) * 1.055
+  #             (
+  #             (states.sensor.elecbill_subscription.state |float / 30) + 
+  #             (states.sensor.elecbill_cta.state |float / 365)  
+  #             ) * 1.055
 
-              +
+  #             +
 
-              (
-              (states.sensor.hc_energy_consumed_last_day.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_day.state |float /1000 ) *
-              (states.sensor.elecbill_cost_hp.state|float)
+  #             (
+  #             (states.sensor.hc_energy_consumed_last_day.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_day.state |float /1000 ) *
+  #             (states.sensor.elecbill_cost_hp.state|float)
 
-              + (states.sensor.elecbill_options.state |float /30)
+  #             + (states.sensor.elecbill_options.state |float /30)
 
-              + 
-              ( 
-              (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-              )
-              +
-              ( 
-              (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-              )
+  #             + 
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+  #             )
+  #             +
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_last_day.state|float/1000 + states.sensor.hp_energy_consumed_last_day.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+  #             )
 
-              ) * 1.20
+  #             ) * 1.20
 
-              )|round(2)
+  #             )|round(2)
 
-              }}
+  #             }}
 
-            friendly_name: 'Energy cost today (TTC)'
-            unit_of_measurement: '€'
-
-
-  - platform: template
-    sensors:
-        elecbill_last_week_ttc:
-            value_template: >
-              {{   
-
-              (
-
-              (
-              (states.sensor.elecbill_subscription.state |float / 7) + 
-              (states.sensor.elecbill_cta.state |float / 52)  
-              ) * 1.055
-
-              +
-
-              (
-              (states.sensor.hc_energy_consumed_last_week.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_week.state |float /1000 ) *
-              (states.sensor.elecbill_cost_hp.state|float)
-
-              + (states.sensor.elecbill_options.state |float /7)
-
-              + 
-              ( 
-              (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-              )
-              +
-              ( 
-              (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-              )
-
-              ) * 1.20
-
-              )|round(2)
-
-              }} 
-
-            friendly_name: 'Energy cost last week (TTC)'
-            unit_of_measurement: '€'
+  #           friendly_name: 'Energy cost today (TTC)'
+  #           unit_of_measurement: '€'
 
 
+  # - platform: template
+  #   sensors:
+  #       elecbill_last_week_ttc:
+  #           value_template: >
+  #             {{   
 
-  - platform: template
-    sensors:
-        elecbill_last_month_ttc:
-            value_template: >
-              {{   
-              (
+  #             (
 
-              (
-              (states.sensor.elecbill_subscription.state |float) + 
-              (states.sensor.elecbill_cta.state |float / 12)  
-              ) * 1.055
+  #             (
+  #             (states.sensor.elecbill_subscription.state |float / 7) + 
+  #             (states.sensor.elecbill_cta.state |float / 52)  
+  #             ) * 1.055
 
-              +
+  #             +
 
-              (
-              (states.sensor.hc_energy_consumed_last_month.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_month.state |float /1000 ) *
-              (states.sensor.elecbill_cost_hp.state|float)
+  #             (
+  #             (states.sensor.hc_energy_consumed_last_week.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_week.state |float /1000 ) *
+  #             (states.sensor.elecbill_cost_hp.state|float)
 
-              + (states.sensor.elecbill_options.state |float )
+  #             + (states.sensor.elecbill_options.state |float /7)
 
-              + 
-              ( 
-              (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
-              )
-              +
-              ( 
-              (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
-              )
+  #             + 
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+  #             )
+  #             +
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_last_week.state|float/1000 + states.sensor.hp_energy_consumed_last_week.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+  #             )
 
-              ) * 1.20
+  #             ) * 1.20
 
-              )|round(2)
+  #             )|round(2)
 
-              }} 
+  #             }} 
 
-            friendly_name: 'Energy cost last month (TTC)'
-            unit_of_measurement: '€'
+  #           friendly_name: 'Energy cost last week (TTC)'
+  #           unit_of_measurement: '€'
 
 
+
+  # - platform: template
+  #   sensors:
+  #       elecbill_last_month_ttc:
+  #           value_template: >
+  #             {{   
+  #             (
+
+  #             (
+  #             (states.sensor.elecbill_subscription.state |float) + 
+  #             (states.sensor.elecbill_cta.state |float / 12)  
+  #             ) * 1.055
+
+  #             +
+
+  #             (
+  #             (states.sensor.hc_energy_consumed_last_month.state |float /1000 ) *(states.sensor.elecbill_cost_hc.state |float) + (states.sensor.hp_energy_consumed_last_month.state |float /1000 ) *
+  #             (states.sensor.elecbill_cost_hp.state|float)
+
+  #             + (states.sensor.elecbill_options.state |float )
+
+  #             + 
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_municipal.state|float
+  #             )
+  #             +
+  #             ( 
+  #             (states.sensor.hc_energy_consumed_last_month.state|float/1000 + states.sensor.hp_energy_consumed_last_month.state|float/1000) * states.sensor.elecbill_tcfe_departmental.state|float
+  #             )
+
+  #             ) * 1.20
+
+  #             )|round(2)
+
+  #             }} 
+
+  #           friendly_name: 'Energy cost last month (TTC)'
+  #           unit_of_measurement: '€'
 
 
 
 
-  - platform: influxdb
-    host: !secret influx_host
-    port: 8086
-    # max_retries: 10
 
 
-    queries:
-#
-#      - name: HC Energy Consumed (last hour)
-#        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1h'
-#        measurement: '"Wh"'
-#        group_function: spread
-#        value_template: '{{ value | round(2) }}'
-#        unit_of_measurement: Wh
-#
-#      - name: HP Energy Consumed (last hour)
-#        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1h'
-#        measurement: '"Wh"'
-#        group_function: spread
-#        value_template: '{{ value | round(2) }}'
-#        unit_of_measurement: Wh
-#
-      - name: HC Energy Consumed (today so far)
-        where: '"entity_id" = ''teleinfo_hchc'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}'' TZ(''Europe/Paris'')  '
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-
-      - name: HP Energy Consumed (today so far)
-        where: '"entity_id" = ''teleinfo_hchp'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}''  TZ(''Europe/Paris'') '
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
+#   - platform: influxdb
+#     host: !secret influx_host
+#     port: 8086
+#     # max_retries: 10
 
 
-        # number of seconds since midnight
-        # {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
+#     queries:
+# #
+# #      - name: HC Energy Consumed (last hour)
+# #        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1h'
+# #        measurement: '"Wh"'
+# #        group_function: spread
+# #        value_template: '{{ value | round(2) }}'
+# #        unit_of_measurement: Wh
+# #
+# #      - name: HP Energy Consumed (last hour)
+# #        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1h'
+# #        measurement: '"Wh"'
+# #        group_function: spread
+# #        value_template: '{{ value | round(2) }}'
+# #        unit_of_measurement: Wh
+# #
+#       - name: HC Energy Consumed (today so far)
+#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}'' TZ(''Europe/Paris'')  '
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+#       - name: HP Energy Consumed (today so far)
+#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d") }}''  TZ(''Europe/Paris'') '
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+
+#         # number of seconds since midnight
+#         # {{ ( (as_timestamp(now()) - as_timestamp(strptime(states("sensor.date"), "%Y-%m-%d")) )|float /60/60 )|round(2)}}
         
-      - name: HC Heating Consumed (today so far)
-        where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 00:00:00''  AND time < ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00'' TZ(''Europe/Paris'') '
-        measurement: '"W"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-        field:  '"Total usage"'
+#       - name: HC Heating Consumed (today so far)
+#         where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 00:00:00''  AND time < ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00'' TZ(''Europe/Paris'') '
+#         measurement: '"W"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+#         field:  '"Total usage"'
 
-        # NB/ the space after %d is important! otherwise it generates automatically 00:00:00
+#         # NB/ the space after %d is important! otherwise it generates automatically 00:00:00
 
-      - name: HP Heating Consumed (today so far)
-        where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00''  TZ(''Europe/Paris'') '
-        measurement: '"W"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-        field:  '"Total usage"'
-
-
-      - name: HC Energy Consumed (last day)
-        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1d'
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-
-      - name: HP Energy Consumed (last day)
-        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1d'
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-
-      - name: HC Energy Consumed (last week)
-        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1w'
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-
-      - name: HP Energy Consumed (last week)
-        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1w'
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-
-      - name: HC Energy Consumed (last month)
-        where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1m'
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-
-      - name: HP Energy Consumed (last month)
-        where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1m'
-        measurement: '"Wh"'
-        group_function: spread
-        value_template: '{{ value | round(2) }}'
-        unit_of_measurement: Wh
-
-      - name: Spread Teleinfo PAPP
-        where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 180s TZ(''Europe/Paris'') '
-        group_function: spread
-        measurement: '"vA"'
-        unit_of_measurement: vA
-      # value_template: '{{ value | round(2) }}'
+#       - name: HP Heating Consumed (today so far)
+#         where: '"entity_id" = ''owl_180_energy_usage'' AND "Total usage" > 0 AND time >= ''{{ strptime(states("sensor.date"), "%Y-%m-%d ") }} 08:00:00''  TZ(''Europe/Paris'') '
+#         measurement: '"W"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+#         field:  '"Total usage"'
 
 
-      - name: Derivative Teleinfo PAPP
-        where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 120s TZ(''Europe/Paris'') '
-        group_function: derivative
-        field:  '"value",2m'
-        measurement: '"vA"'
-        unit_of_measurement: vA
-      # value_template: '{{ value | round(2) }}'
+#       - name: HC Energy Consumed (last day)
+#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1d'
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+#       - name: HP Energy Consumed (last day)
+#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1d'
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+#       - name: HC Energy Consumed (last week)
+#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1w'
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+#       - name: HP Energy Consumed (last week)
+#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1w'
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+#       - name: HC Energy Consumed (last month)
+#         where: '"entity_id" = ''teleinfo_hchc'' AND time >= now() - 1m'
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+#       - name: HP Energy Consumed (last month)
+#         where: '"entity_id" = ''teleinfo_hchp'' AND time >= now() - 1m'
+#         measurement: '"Wh"'
+#         group_function: spread
+#         value_template: '{{ value | round(2) }}'
+#         unit_of_measurement: Wh
+
+#       - name: Spread Teleinfo PAPP
+#         where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 180s TZ(''Europe/Paris'') '
+#         group_function: spread
+#         measurement: '"vA"'
+#         unit_of_measurement: vA
+#       # value_template: '{{ value | round(2) }}'
+
+
+#       - name: Derivative Teleinfo PAPP
+#         where: '"entity_id" = ''teleinfo_papp'' AND time >= now() - 120s TZ(''Europe/Paris'') '
+#         group_function: derivative
+#         field:  '"value",2m'
+#         measurement: '"vA"'
+#         unit_of_measurement: vA
+#       # value_template: '{{ value | round(2) }}'
  
 
 ################################################
@@ -621,103 +770,103 @@ automation:
       data:
         title: Electricité
         message: |
-          Hier, l'électricité a coûté <b> {{ states.sensor.elecbill_today_ttc.state |float | round(2) }}</b>€
+          Hier, l'électricité a coûté <b> {{ states. sensor.linky_daily_cost.state |float | round(2) }}</b>€
   
-  - id: electricity_bill_weekly
-    alias: 'Electricity: Weekly Bill'
-    trigger:
-      platform: time
-      # When 'at' is used, you cannot also match on hour, minute, seconds.
-      # Military time format.
-      at: '08:00:00'
-    condition:
-      - condition: time
-        weekday:
-          - mon
-    action:
-    - service: notify.telegram
-      data:
-        title: Electricité
-        message: |
-          Cette semaine, l'électricité a coûté <b> {{ states.sensor.elecbill_last_week_ttc.state |float | round(2) }}</b>€
+  # - id: electricity_bill_weekly
+  #   alias: 'Electricity: Weekly Bill'
+  #   trigger:
+  #     platform: time
+  #     # When 'at' is used, you cannot also match on hour, minute, seconds.
+  #     # Military time format.
+  #     at: '08:00:00'
+  #   condition:
+  #     - condition: time
+  #       weekday:
+  #         - mon
+  #   action:
+  #   - service: notify.telegram
+  #     data:
+  #       title: Electricité
+  #       message: |
+  #         Cette semaine, l'électricité a coûté <b> {{ states.sensor.elecbill_last_week_ttc.state |float | round(2) }}</b>€
   
-  - id: electricity_bill_monthly
-    alias: 'Electricity: Weekly Bill'
-    trigger:
-    - platform: template
-      value_template: '{{ now().strftime("%d") == "01" }}'
-    action:
-    - service: notify.telegram
-      data:
-        title: Electricité
-        message: |
-          Ce mois-ci, l'électricité a coûté <b> {{ states.sensor.elecbill_last_month_ttc.state |float | round(2) }}</b>€
-  
-  
-  
-  
-  
-  - id: electricity_monthly_report
-    alias: 'Electricity: Monthly Report'
-    trigger:
-    - platform: template
-      value_template: '{{ now().strftime("%d") == "01" }}'
-  # condition:
-    action:
-    - service: notify.telegram
-      data:
-        title: Electricité
-        message: |
-          Il est temps de déclarer la conso !
-          HP: {{ '<b>{0}{1}{2}{3}{4}</b>.{5}{6}{7}'.format(*states.sensor.teleinfo_hchp.state) }}kWh
-          HC: {{ '<b>{0}{1}{2}{3}{4}</b>.{5}{6}{7}'.format(*states.sensor.teleinfo_hchc.state) }}kWh
-          https://clients.direct-energie.com/ma-conso/faire-mon-e-releve/
-  #       HP: {{ states.sensor.teleinfo_hchp.state  }}
-  #       HC: {{ states.sensor.teleinfo_hchc.state  }} 
-  #     message: Test
-  #  - service: tts.google_say
-  #    data:
-  #      entity_id: media_player.google_home__salon
-  #      message: "La place de parking vient de se libérer"
+  # - id: electricity_bill_monthly
+  #   alias: 'Electricity: Weekly Bill'
+  #   trigger:
+  #   - platform: template
+  #     value_template: '{{ now().strftime("%d") == "01" }}'
+  #   action:
+  #   - service: notify.telegram
+  #     data:
+  #       title: Electricité
+  #       message: |
+  #         Ce mois-ci, l'électricité a coûté <b> {{ states.sensor.elecbill_last_month_ttc.state |float | round(2) }}</b>€
   
   
   
   
   
-  ################################################
-  ## Store meter readings at midnight so that power consumption per day can be caculated
-  ################################################
-  - id: electricity_store_meter_readings_at_midnight
-    alias: 'Electricity: store metrics at midnight'
-    initial_state: 'on'
-    trigger:
-      - platform: time
-        at: '00:00:00'
-    action:
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.24hour_power_hp_consumption
-          value: "{{ (((states.sensor.teleinfo_hchp.state  | float) - states('input_number.power_hp_meter_value_at_midnight') | float ) | round(3))}}"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.24hour_power_hc_consumption
-          value: "{{ (((states.sensor.teleinfo_hchc.state  | float) - states('input_number.power_hc_meter_value_at_midnight') | float ) | round(3))}}"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.24hour_heat_consumption
-          value: "{{ (((  state_attr('sensor.owl_180_energy_usage', 'Total usage') | float) - states('input_number.heat_meter_value_at_midnight') | float ) | round(3))}}"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.power_hp_meter_value_at_midnight
-          value: "{{ states.sensor.teleinfo_hchp.state }}"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.power_hc_meter_value_at_midnight
-          value: "{{ states.sensor.teleinfo_hchc.state }}"
-      - service: input_number.set_value
-        data_template:
-          entity_id: input_number.heat_meter_value_at_midnight
-          value: "{{  state_attr('sensor.owl_180_energy_usage', 'Total usage') }}"
+  # - id: electricity_monthly_report
+  #   alias: 'Electricity: Monthly Report'
+  #   trigger:
+  #   - platform: template
+  #     value_template: '{{ now().strftime("%d") == "01" }}'
+  # # condition:
+  #   action:
+  #   - service: notify.telegram
+  #     data:
+  #       title: Electricité
+  #       message: |
+  #         Il est temps de déclarer la conso !
+  #         HP: {{ '<b>{0}{1}{2}{3}{4}</b>.{5}{6}{7}'.format(*states.sensor.teleinfo_hchp.state) }}kWh
+  #         HC: {{ '<b>{0}{1}{2}{3}{4}</b>.{5}{6}{7}'.format(*states.sensor.teleinfo_hchc.state) }}kWh
+  #         https://clients.direct-energie.com/ma-conso/faire-mon-e-releve/
+  # #       HP: {{ states.sensor.teleinfo_hchp.state  }}
+  # #       HC: {{ states.sensor.teleinfo_hchc.state  }} 
+  # #     message: Test
+  # #  - service: tts.google_say
+  # #    data:
+  # #      entity_id: media_player.google_home__salon
+  # #      message: "La place de parking vient de se libérer"
+  
+  
+  
+  
+  
+  # ################################################
+  # ## Store meter readings at midnight so that power consumption per day can be caculated
+  # ################################################
+  # - id: electricity_store_meter_readings_at_midnight
+  #   alias: 'Electricity: store metrics at midnight'
+  #   initial_state: 'on'
+  #   trigger:
+  #     - platform: time
+  #       at: '00:00:00'
+  #   action:
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.24hour_power_hp_consumption
+  #         value: "{{ (((states.sensor.teleinfo_hchp.state  | float) - states('input_number.power_hp_meter_value_at_midnight') | float ) | round(3))}}"
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.24hour_power_hc_consumption
+  #         value: "{{ (((states.sensor.teleinfo_hchc.state  | float) - states('input_number.power_hc_meter_value_at_midnight') | float ) | round(3))}}"
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.24hour_heat_consumption
+  #         value: "{{ (((  state_attr('sensor.owl_180_energy_usage', 'Total usage') | float) - states('input_number.heat_meter_value_at_midnight') | float ) | round(3))}}"
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.power_hp_meter_value_at_midnight
+  #         value: "{{ states.sensor.teleinfo_hchp.state }}"
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.power_hc_meter_value_at_midnight
+  #         value: "{{ states.sensor.teleinfo_hchc.state }}"
+  #     - service: input_number.set_value
+  #       data_template:
+  #         entity_id: input_number.heat_meter_value_at_midnight
+  #         value: "{{  state_attr('sensor.owl_180_energy_usage', 'Total usage') }}"
   
   
   

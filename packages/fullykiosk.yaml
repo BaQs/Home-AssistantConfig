@@ -31,8 +31,11 @@ homeassistant:
     #   friendly_name: 'Hass.io Installed Version'
     #   icon: mdi:check-decagram
 
-
-
+# To enable browser_mod extension
+browser_mod:
+  devices:
+    d646dfbb-c10b45d0:
+      name: alldocube
 
 ################################################
 ## Sensor
