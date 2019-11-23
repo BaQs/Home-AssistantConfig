@@ -1,7 +1,6 @@
   title: Home
   id: home
   path: home
-  theme: night
   panel: true
   icon: mdi:home
   cards:    
@@ -301,7 +300,7 @@
                             color: "#e74c3c" # red
 
 
-        - type: custom:compact-custom-header  
-          main_config: false
-          header: true
-          clock_format: 24
+        # - type: custom:compact-custom-header  
+        #   main_config: false
+        #   header: true
+        #   clock_format: 24

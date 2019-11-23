@@ -4,7 +4,7 @@ path: debug
 panel: false
 cards:
 
-  - type: custom:compact-custom-header
+  # - type: custom:compact-custom-header
 
   - type: custom:group-card
     card:
@@ -64,6 +64,10 @@ cards:
     - person.pierre
     - person.gaetane
 
+
+  - type: history-graph
+    entities:
+      - device_tracker.nut
   # - type: history-graph
   #   entities:
   #     - climate.parents_bedroom_thermostat 

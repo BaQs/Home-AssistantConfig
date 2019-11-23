@@ -154,18 +154,18 @@
         show_icon: false
         tap_action:
           action: more-info
-    - type: custom:compact-custom-header
-      main_config: true
-      header: true
-      hide_tabs: 0,14
-      # notifications: clock
-      clock_format: 24
-      exceptions:
-      - conditions:
-          user_agent: Mobile
-        config:
-          hide_tabs: 1
-          # show_tabs: 0,1,3,8
+    # - type: custom:compact-custom-header
+    #   main_config: true
+    #   header: true
+    #   hide_tabs: 0,14
+    #   # notifications: clock
+    #   clock_format: 24
+    #   exceptions:
+    #   - conditions:
+    #       user_agent: Mobile
+    #     config:
+    #       hide_tabs: 1
+    #       # show_tabs: 0,1,3,8
 
     - type: horizontal-stack
       cards:
@@ -283,6 +283,13 @@
             - value: 'off'
               color: "#a3a6a8" # grey
             
+        - type: entity-button
+          show_name: false
+          hold_action: toggle
+          tap_action:
+            action: more-info
+          entity: input_select.system_mode
+          icon: mdi:home-heart
 
     - type: horizontal-stack
       cards:
