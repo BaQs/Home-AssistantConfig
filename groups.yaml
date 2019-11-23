@@ -25,12 +25,12 @@
     entities:
 #     - sun.sun
       - alarm_control_panel.home_alarm
-      - alarm_control_panel.arlo
+      - alarm_control_panel.aarlo_arlo
       - weather.dark_sky 
       - sensor.period_of_day
       - binary_sensor.in_bed
-      - binary_sensor.pierre_is_home
-      - device_tracker.igaetane
+      # - binary_sensor.pierre_is_home
+      - device_tracker.iphoneg
       - binary_sensor.welcam_3_someone_known
       - binary_sensor.welcam_3_someone_unknown
       # - binary_sensor.somebody_home
@@ -101,14 +101,16 @@
 #       - camera.welcam
       - climate.living_room_thermostat 
       - switch.radiateurs_salon
-  radiateurs_salon:
-    name: Radiateurs Salon
-    view: no
-    entities:
-      # the one under the tablet
-      - switch.radiateur_1_salon
-      # the one on the big wall
-      - switch.radiateur_2_salon
+
+  # radiateurs_salon:
+  #   name: Radiateurs Salon
+  #   view: no
+  #   entities:
+  #     # the one under the tablet
+  #     # removed for now, just to test
+  #     # - switch.radiateur_1_salon
+  #     # the one on the big wall
+  #     - switch.radiateur_2_salon
 
   bedroom_baby:
     name: Chambre Bébé
@@ -502,13 +504,13 @@
      - sensor.neo_coolcam_power_plug_12a_interval_3
      - sensor.neo_coolcam_power_plug_12a_interval_4
 
-  chuwi:
-    name: Chuwi
-    view: no
-    entities:
-     - sensor.chuwi
-     - switch.chuwi_screen
-     - switch.chuwi_tts
+  # chuwi:
+  #   name: Chuwi
+  #   view: no
+  #   entities:
+  #    - sensor.chuwi
+  #    - switch.chuwi_screen
+  #    - switch.chuwi_tts
 
   climate:
     name: Climate
@@ -538,4 +540,12 @@
     - schedy_room.schedy_heating_shower
     - schedy_room.schedy_heating_statistics
 
-    
+  # linky:
+  #   name: linky
+  #   view: no
+  #   entities:
+  #   - sensor.linky_current_month
+  #   - sensor.linky_current_year
+  #   - sensor.linky_last_month
+  #   - sensor.linky_last_year
+  #   - sensor.linky_yesterday
