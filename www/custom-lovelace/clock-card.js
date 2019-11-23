@@ -72,10 +72,14 @@ class ClockCard extends Polymer.Element {
     this._hass = hass;
   }
 
-  _updateTime(force = false) {
-    // this.time.innerHTML = moment().format('h:mm A');
-    this.time.innerHTML = moment().format('HH:mm');
-    this.date.innerHTML = moment().format('dddd, MMMM DD');
+  _updateTime(force = true) { 
+    if(typeof(moment) == "undefined") {
+      setTimeout(() => this._updateTime(), 200);
+      return;
+    }
+    moment().locale(this._hass.language);
+    this.time.innerHTML = moment().format('HH:mm:ss');
+    this.date.innerHTML = moment().format('ddd DD/MM/YYYY');
   }
 
   // The height of your card. Home Assistant uses this to automatically
