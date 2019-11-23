@@ -1,0 +1,9 @@
+{
+  "domain": "energy",
+  "name": "Linky",
+  "documentation": "https://github.com/Pirionfr/Home-AssistantConfig/blob/master/custom_components/sensor/linky.py",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": ["pylinky==0.4.0"],
+  "homeassistant":"0.94.0"
+} 
