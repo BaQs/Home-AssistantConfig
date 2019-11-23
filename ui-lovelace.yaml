@@ -5,6 +5,9 @@ title: Home
 resources:
   !include lovelace/resources.yaml
 
+cch:
+  !include lovelace/cch.yaml
+  
 # color: "#ef476f" # pink "infra red"
 # color: "#e74c3c" # red
 # color: "#ffd166" # orange / yellow
