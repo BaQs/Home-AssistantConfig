@@ -43,3 +43,4 @@ JEEDOM
 .homekit.state
 .HA_VERSION
 home-panel*
+.spotify-token-cache
