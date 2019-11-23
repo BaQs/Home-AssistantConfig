@@ -1,8 +1,8 @@
 ---
 #
-# Grey Night Theme
+# Blue Night Theme
 #
-grey_night:
+blue_night:
   accent-color: "hsl(var(--huesat) 30%)"
   base-hue: "220"
   base-sat: "5%"
@@ -18,7 +18,7 @@ grey_night:
   label-badge-red: "hsl(20, 50%, 25%)"
   label-badge-text-color: "var(--primary-text-color)"
   light-divider-opacity: "0"
-  light-primary-color: "hsl(var(--huesat) 90%)"
+  light-primary-color: "hsl(var(--huesat) 30%)"
   lumo-base-color: "var(--medium-grey-color)"
   lumo-body-text-color: "var(--primary-text-color)"
   lumo-header-text-color: "var(--lumo-body-text-color)"
@@ -73,7 +73,7 @@ grey_night:
   paper-toggle-button-unchecked-bar-color: "hsl(var(--huesat) 5%)"
   paper-toggle-button-unchecked-button-color: "hsl(var(--huesat) 25%)"
   primary-background-color: "hsl(var(--huesat) 16%)"
-  primary-color: "hsl(var(--huesat) 36%)"
+  primary-color: "#2581ab"
   primary-text-color: "hsl(var(--huesat) 90%)"
   secondary-background-color: "hsl(var(--huesat) 16%)"
   secondary-text-color: "hsl(var(--huesat) 80%)"
